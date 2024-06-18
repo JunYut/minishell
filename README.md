@@ -24,3 +24,4 @@
   - Fixed issue/bug: 		"@<commit_hash>: fixed <issue_example>. Solved by <changes>"
   - Code refactor: 		"REFACTOR: <file_path/function_name>: <changes>"
   - TODO: 			"TODO: implement <feature_name>"
+4. For whitespace changes, use `git commit --amend` with `:q` to avoid useless messages
