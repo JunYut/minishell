@@ -19,9 +19,9 @@
   	- `git reset --soft HEAD~1`: Go back to previous commit while keeping the changes
 3. Template messages for different scenarios:
   - New feature prototype:	"PROTOTYPE: implemented prototype of <function_name>"
-  - Featurt tweaking: 		"<file_path/function_name>: now does <functionality>"
+  - Featurt tweaking: 		"<file_path/function_name>: now does <functionality> "
   - Found issue/bug: 		"ISSUE: <issue_example>"
-  - Fixed issue/bug: 		"@<commit_hash>: fixed <issue_example>. Solved by <changes>"
-  - Code refactor: 		"REFACTOR: <file_path/function_name>: <changes>"
+  - Fixed issue/bug: 		"@<commit_hash>: fixed <issue_example>. Solved by <changes> "
+  - Code refactor: 		"REFACTOR: <file_path/function_name>: <changes> "
   - TODO: 			"TODO: implement <feature_name>"
 4. For whitespace changes, use `git commit --amend` with `:q` to avoid useless messages
