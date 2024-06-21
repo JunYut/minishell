@@ -97,7 +97,20 @@
 */
 
 /*
-	ttyslot()
+	int ttyslot(void)
+
+	int: the number of the terminal device file
+
+	The ttyslot() function doesn't take any arguments and returns an integer. If
+	the user's terminal is found in the utmp file, ttyslot() returns the index
+	of the entry. If the user's terminal is not found or if an error occurs,
+	ttyslot() returns 0.
+
+	Note:
+	- The utmp file is a system file that contains information about the users
+	who are currently logged in to the system. It is located at /var/run/utmp
+	and is used by various system utilities to display information about the
+	users who are logged in.
 */
 
 # include <unistd.h>
@@ -138,4 +151,7 @@ int main(void)
 	printf("SHELL: %s\n", getenv("SHELL"));
 	printf("PWD: %s\n", getenv("PWD"));
 	printf("\n");
+
+	// ttyslot()
+	printf("Terminal number: %d\n", ttyslot());
 }
