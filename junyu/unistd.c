@@ -96,6 +96,10 @@
 	13. PS1: the prompt string that is displayed by the shell
 */
 
+/*
+	ttyslot()
+*/
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>

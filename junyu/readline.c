@@ -4,8 +4,8 @@
 	char *: the line read from the user
 	const char *: the prompt to display
 
-	When readline() is called, it will display the prompt to the user and wait 
-	for the user to enter a line of text. The line of text is then returned to 
+	When readline() is called, it will display the prompt to the user and wait
+	for the user to enter a line of text. The line of text is then returned to
 	the caller.
 
 	If the user presses Ctrl-D, readline() will return NULL. If the user presses
@@ -25,7 +25,19 @@
 */
 
 /*
+	rl_clear_history()
+*/
 
+/*
+	rl_on_new_line()
+*/
+
+/*
+	rl_replace_line(const char *, int)
+*/
+
+/*
+	rl_redisplay()
 */
 
 # include <readline/readline.h>
