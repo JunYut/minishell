@@ -52,5 +52,5 @@ Mkfile.old
 dkms.conf
 
 # Local files
-.minishell
+minishell
 .vscode
