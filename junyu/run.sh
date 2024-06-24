@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 CFLAGS="-Wall -Wextra -Werror -Wpedantic"
-LIBS="-lreadline"
+LIBS="-lreadline -ltermcap -lcurses"
 
 # Input validation
 if [ $# -lt 1 ]; then
