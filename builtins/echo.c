@@ -6,13 +6,13 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:14:40 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/06/24 14:16:09 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/06/24 14:29:54 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	echo(const char *const argv[])
+void	echo(const char *const argv[])
 {
 	int	is_n;
 	int	i;
@@ -20,7 +20,7 @@ int	echo(const char *const argv[])
 	if (!argv)
 	{
 		printf("\n");
-		return (0);
+		return;
 	}
 	is_n = 1;
 	if (argv[0] && ft_strcmp(argv[0], "-n") == 0)
@@ -37,5 +37,4 @@ int	echo(const char *const argv[])
 	}
 	if (is_n)
 		printf("\n");
-	return (0);
 }
