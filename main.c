@@ -2,6 +2,12 @@
 
 int main(void)
 {
-	execve("/bin/ls", NULL, NULL);
-	cd("../");
+	// cd()
+	char buf[1024];
+
+	getcwd(buf, 1024);
+	printf("Before: %s\n", buf);
+	cd(NULL);
+	getcwd(buf, 1024);
+	printf("After: %s\n", buf);
 }
