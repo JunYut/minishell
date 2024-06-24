@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:00:59 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/06/24 14:30:05 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/06/24 14:31:03 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 
 void	echo(const char *const argv[]);
 int		cd(const char *path);
+void	pwd(void);
 
 #endif

@@ -12,8 +12,9 @@ int main(void)
 	// printf("After: %s\n", buf);
 
 	// echo()
-	const char *const argv[] = {"-z", "Hello", "World", NULL};
-	echo(argv);
+	// const char *const argv[] = {"-z", "Hello", "World", NULL};
+	// echo(argv);
 
-	(void)argv;
+	// pwd()
+	pwd();
 }
