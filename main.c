@@ -1,8 +1,7 @@
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
+# include "builtins.h"
 
 int main(void)
 {
 	execve("/bin/ls", NULL, NULL);
+	cd("../");
 }
