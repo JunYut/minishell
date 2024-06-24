@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 11:00:59 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/06/24 13:36:18 by tjun-yu          ###   ########.fr       */
+/*   Created: 2023/10/22 14:36:26 by kkhai-ki          #+#    #+#             */
+/*   Updated: 2023/10/22 14:41:17 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-
-int	echo(const char *const argv[]);
-int	cd(const char *path);
-
-#endif
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	if (!*lst)
+		*lst = new;
+	else
+		ft_lstlast(*lst)->next = new;
+}

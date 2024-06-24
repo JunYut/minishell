@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 11:00:59 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/06/24 13:36:18 by tjun-yu          ###   ########.fr       */
+/*   Created: 2023/10/16 17:14:56 by kkhai-ki          #+#    #+#             */
+/*   Updated: 2023/10/23 14:31:21 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-
-int	echo(const char *const argv[]);
-int	cd(const char *path);
-
-#endif
+void	ft_bzero(void *s, size_t n)
+{
+	ft_memset(s, 0, n);
+}
+/*
+#include <stdio.h>
+int	main(void)
+{
+	char	test[20] = "";
+	ft_bzero(test, sizeof(test));
+	printf("%s\n", test);
+	return (0);
+}
+*/

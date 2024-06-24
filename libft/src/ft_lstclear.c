@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 11:00:59 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/06/24 13:36:18 by tjun-yu          ###   ########.fr       */
+/*   Created: 2023/10/22 14:53:03 by kkhai-ki          #+#    #+#             */
+/*   Updated: 2023/10/22 20:46:50 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
+void	ft_lstclear(t_list **lst, void (*del)(void*))
+{
+	t_list	*buffer;
 
-int	echo(const char *const argv[]);
-int	cd(const char *path);
-
-#endif
+	if (!lst || !del)
+		return ;
+	while (*lst)
+	{
+		buffer = (*lst)->next;
+		del((*lst)->content);
+		free(*lst);
+		*lst = buffer;
+	}
+	*lst = 0;
+}

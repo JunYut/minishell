@@ -6,8 +6,15 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:14:40 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/06/24 13:14:45 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/06/24 13:51:00 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+int	echo(const char *const argv[])
+{
+	// check if '-n' option is present
+	(void)argv;
+	return (0);
+}
