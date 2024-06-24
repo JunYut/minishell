@@ -6,16 +6,17 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/06/23 23:53:20 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/06/24 19:56:49 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
+t_minishell g_minishell;
 
 int	main(void)
 {
-	t_minishell	g_minishell;
-
+	g_minishell.token_list = NULL;
+	g_minishell.line = NULL;
 	while (1)
 	{
 		g_minishell.line = readline("minishell> ");
@@ -23,6 +24,15 @@ int	main(void)
 			break ;
 		if (*g_minishell.line != '\0')
 			add_history(g_minishell.line);
+		tokenize(g_minishell.line);
+		if (g_minishell.token_list == NULL)
+			continue ;
+		while (g_minishell.token_list != NULL)
+		{
+			printf("value: %s\n", g_minishell.token_list->value);
+			printf("type: %d\n", g_minishell.token_list->type);
+			g_minishell.token_list = g_minishell.token_list->next;
+		}
 	}
 	return (0);
 }
@@ -35,18 +45,43 @@ void	tokenize(char *line)
 	while (*line != '\0')
 	{
 		if (!ft_strncmp(line, "<", 1))
-			append_token(line, &token_list);
+			append_operator_token(T_REDIRECT_IN, &line, &token_list);
+		else if (!ft_strncmp(line, ">>", 2))
+			append_operator_token(T_HERE_DOC, &line, &token_list);
+		else if (!ft_strncmp(line, ">", 1))
+			append_operator_token(T_REDIRECT_OUT, &line, &token_list);
+		else if (!ft_strncmp(line, "||", 2))
+			append_operator_token(T_OR, &line, &token_list);
+		else
+			line++;
 	}
+	g_minishell.token_list = token_list;
 }
 
-void	append_token(char *line, t_token **token_list)
+void	append_operator_token(t_token_type type, char **line, t_token **token_list)
 {
-	t_token	*token
+	t_token	*token;
+	char	*value;
+	int		char_count;
 
-	token =
+	char_count = 1;
+	if (type == T_HERE_DOC || type == T_APPEND || type == T_OR || type == T_AND)
+		char_count++;
+	value = ft_substr(*line, 0, char_count);
+	token = init_new_token(type, value);
+	add_token_to_list(token_list, token);
+	*line += char_count;
 }
 
-t_token	*init_new_token(char *value, t_token_type type)
+// void	append_identifier_token(t_token_type type, char **line, t_token **token_list)
+// {
+// 	t_token	*token;
+// 	char	*value;
+// 	int		char_count;
+
+// }
+
+t_token	*init_new_token(t_token_type type, char *value)
 {
 	t_token *token;
 
@@ -55,8 +90,31 @@ t_token	*init_new_token(char *value, t_token_type type)
 		return (NULL);
 	token->value = value;
 	token->type = type;
+	token->next = NULL;
+	token->prev = NULL;
 	return (token);
 }
 
-//TODO: Implement function to append tokens to list
+void	add_token_to_list(t_token **token_list, t_token *token)
+{
+	t_token	*current;
+
+	if (*token_list == NULL)
+	{
+		*token_list = token;
+		return	;
+	}
+	current = *token_list;
+	while (current != NULL && current->next != NULL)
+		current = current->next;
+	current->next = token;
+	token->prev = current;
+}
+
+//TODO: Finish functions for appending tokens to list
 //TODO: Test and implement function for assigning token types
+//TODO: Implement utility functions for checking whitespace, seperators, etc
+//TODO: Implement utility functions for managing linked lists
+
+//NOTES: When encountering multiple syntax errors, Bash will report the first one
+//NOTES: We can tokenize first then validate or validate sequentially
