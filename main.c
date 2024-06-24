@@ -13,5 +13,7 @@ int main(void)
 
 	// echo()
 	const char *const argv[] = {"-n", "Hello", "World", NULL};
-	echo(argv);
+	echo(NULL);
+
+	(void)argv;
 }
