@@ -61,13 +61,13 @@ pwd
 5. After an `operator`, the next command string should be a `command`
 
 # Operators
-`<`
-`>`
-`<<`
-`>>`
-`|`
-`&&`
-`||`
-`()`
-`''`
-`""`
+`<`: Redirects standard input (stdin) from a file.\
+`>`: Redirects standard output (stdout) to a file, overwriting the file.\
+`<<`: Redirects heredoc to a command.\
+`>>`: Redirects standard output (stdout) to a file, appending to the file.\
+`|`: Pipe. Sends the output of one command to another command as input.\
+`&&`: Logical AND. Executes the second command only if the first command succeeds.\
+`||`: Logical OR. Executes the second command only if the first command fails.\
+`()`: Create a subshell to execute commands in the parentheses. Any changes to variables in the subshell should not affect the parent shell.\
+`''`: Single quotes. Encloses a string, preventing variable expansion and command substitution.\
+`""` : Double quotes. Encloses a string, allowing variable expansion and command substitution.

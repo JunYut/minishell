@@ -12,7 +12,7 @@ int main(void)
 	{
 		line = readline("\033[0;33mminishell\033[0m$ ");
 		add_history(line);
-		printf("[%s]", line);
+		printf("[%s]\n", line);	// Debug
 		if (ft_strcmp(line, "exit") == 0)
 			break;
 		// ft_lstadd_back(&commands.cmd, ft_lstnew());
