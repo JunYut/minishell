@@ -59,3 +59,15 @@ pwd
 3. After `options`, the next command string should be either `arguments` or `operator`
 4. After `arguments`, the next command string should be an `operator`
 5. After an `operator`, the next command string should be a `command`
+
+# Operators
+`<`
+`>`
+`<<`
+`>>`
+`|`
+`&&`
+`||`
+`()`
+`''`
+`""`
