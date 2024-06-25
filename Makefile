@@ -10,6 +10,7 @@ INCL_DIR = include -Ilibft/include
 # Files
 SRC = $(wildcard $(BUILTIN_DIR)/*.c)
 OBJ = $(SRC:$(BUILTIN_DIR)/%.c=$(OBJ_DIR)/%.o)
+HEADER = $(wildcard $(INCL_DIR)/*.h)
 LIBFT = $(LIBFT_DIR)/libft.a
 LIB = ft -lreadline
 EXEC = shell
@@ -23,7 +24,7 @@ $(EXEC): $(LIBFT) $(OBJ) main.c
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
-$(OBJ_DIR)/%.o: $(BUILTIN_DIR)/%.c
+$(OBJ_DIR)/%.o: $(BUILTIN_DIR)/%.c $(HEADER)
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -I$(INCL_DIR) -c -o $@ $<
 
