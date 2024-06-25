@@ -57,9 +57,26 @@ pwd
 1. First command string should be a `command`
 2. After a `command`, the next command string should be either `options`, `arguments` or `operator`
 3. After `options`, the next command string should be either `arguments` or `operator`
-4. After `arguments`, the next command string should be an `operator`
+4. After `arguments`, the next command string should be either `operator` or `options`
 5. After an `operator`, the next command string should be a `command`
-
+6. Syntax Tree
+```
+	|- [command]
+	|	|- [command] [arguments]
+	|	|	|- [command] [arguments] [options]
+	|	|	|- [command] [arguments] [operator]
+	|	|
+	|	|- [command] [options]
+	|	|	|- [command] [options] [arguments]
+	|	|	|- [command] [options] [operator]
+	|	|
+	|	|- [command] [operator]
+	|		|- [command] [operator] [command]
+	|
+	|- [heredoc]
+		|- [heredoc] [command]
+		|- [heredoc] [operator]
+```
 # Operators
 `<`: Redirects standard input (stdin) from a file.\
 `>`: Redirects standard output (stdout) to a file, overwriting the file.\
