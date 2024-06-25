@@ -1,20 +1,16 @@
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "builtins.h"
 
 int main(void)
 {
-	// cd()
-	// char buf[1024];
+	char	*line;
 
-	// getcwd(buf, 1024);
-	// printf("Before: %s\n", buf);
-	// cd(NULL);
-	// getcwd(buf, 1024);
-	// printf("After: %s\n", buf);
-
-	// echo()
-	// const char *const argv[] = {"-z", "Hello", "World", NULL};
-	// echo(argv);
-
-	// pwd()
-	pwd();
+	while (1)
+	{
+		line = readline("minishell$ ");
+		add_history(line);
+		free(line);
+	}
+	rl_clear_history();
 }

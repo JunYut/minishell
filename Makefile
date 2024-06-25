@@ -11,13 +11,14 @@ INCL_DIR = include -Ilibft/include
 SRC = $(wildcard $(BUILTIN_DIR)/*.c)
 OBJ = $(SRC:$(BUILTIN_DIR)/%.c=$(OBJ_DIR)/%.o)
 LIBFT = $(LIBFT_DIR)/libft.a
+LIB = ft -lreadline
 EXEC = shell
 
 # Rules
 all: $(EXEC)
 
 $(EXEC): $(LIBFT) $(OBJ) main.c
-	$(CC) $(CFLAGS) -I$(INCL_DIR) $^ -L$(LIBFT_DIR) -lft -o $@
+	$(CC) $(CFLAGS) -I$(INCL_DIR) $^ -L$(LIBFT_DIR) -l$(LIB) -o $@
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
