@@ -1,0 +1,42 @@
+[command]
+ls
+
+[command] [operator] [command]
+ls && pwd
+ls || pwd
+ls | cat
+
+[command] [arguments]
+ls ../
+ls ../ .
+
+[command] [options]
+ls -a
+ls -al
+ls -a -l
+ls -al -pS
+
+[command] [options] [arguments]
+ls -a ../
+ls -a ../ .
+ls -al ../
+ls -al ../ .
+ls -a -l ../
+ls -a -l ../ .
+ls -al -pS ../
+ls -al -pS ../ .
+
+[command] [options] [operator] [command] [options]
+ls -a | cat -e
+ls -al | cat -en
+ls -a -l | cat -e -n
+
+
+[command] [options] [arguments] [operator] [command] [options] [arguments]
+ls -a ../ && cat -e test.txt
+ls -al ../ && cat -en test.txt
+ls -a -l ../ && cat -e -n test.txt
+
+(ls test || pwd && echo hello world) | cat -e
+<<EOF
+<< EOF
