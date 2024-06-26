@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/06/25 17:23:54 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/06/26 08:05:50 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	tokenize(char *line)
 	g_minishell.token_list = token_list;
 }
 
-void	handle_operator_token(char **line, t_token **list)
+void	handle_operator_token(char **line, t_token **token_list)
 {
 		if (!ft_strncmp(*line, "<<", 2))
 			append_operator_token(T_HERE_DOC, line, token_list);
