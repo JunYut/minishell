@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:11 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/06/24 19:41:55 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:13:08 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ extern t_minishell	g_minishell;
 
 void	tokenize(char *line);
 void	append_operator_token(t_token_type type, char **line, t_token **token_list);
+void	handle_operator_token(char **line, t_token **list);
 // void	append_identifier_token(t_token_type type, char **line, t_token **token_list);
 t_token	*init_new_token(t_token_type type, char *value);
 void	add_token_to_list(t_token **token_list, t_token *token);
