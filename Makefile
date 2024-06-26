@@ -6,7 +6,7 @@
 #    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/06 14:33:10 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/06/24 19:57:19 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/06/26 17:57:20 by kkhai-ki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ INCLUDE = -Iinclude -I$(LIBFT_DIR)
 
 SRC_DIR = tokenizer
 
-SRC_FILES =	main
+SRC_FILES =	main	\
+			utils
 
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
 
