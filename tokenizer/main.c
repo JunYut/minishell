@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/06/26 08:05:50 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/06/26 18:29:21 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ void	tokenize(char *line)
 	token_list = NULL;
 	while (*line != '\0')
 	{
-		if (!ft_strncmp(line, "<", 1) || !ft_strncmp(line, ">", 1)
-			|| !ft_strncmp(line, "|", 1) || !ft_strncmp(line, "&&", 2)
-			|| !ft_strncmp(line, "(", 1) || !ft_strncmp(line, ")", 1))
+		skip_spaces(&line);
+		// if (!ft_strncmp(line, "<", 1) || !ft_strncmp(line, ">", 1)
+		// 	|| !ft_strncmp(line, "|", 1) || !ft_strncmp(line, "&&", 2)
+		// 	|| !ft_strncmp(line, "(", 1) || !ft_strncmp(line, ")", 1))
+		if (!ft_strncmp(line, "&&", 2) || is_in_set(*line, OPERATORS_SET))
 			handle_operator_token(&line, &token_list);
 		else
 			line++;
@@ -132,9 +134,7 @@ void	add_token_to_list(t_token **token_list, t_token *token)
 
 //TODO: Finish functions for appending tokens to list
 //TODO: Test and implement function for assigning token types
-//TODO: Implement utility functions for checking whitespace, seperators, etc
 //TODO: Implement utility functions for managing linked lists
-//TODO: Seperate check for operators or identifiers into their own function
 
 //NOTES: When encountering multiple syntax errors, Bash will report the first one
 //NOTES: We can tokenize first then validate or validate sequentially
