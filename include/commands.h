@@ -2,12 +2,13 @@
 
 # include "libft.h"
 
-enum e_str_type
+enum e_token
 {
 	CMD,
 	OPTION,
 	ARG,
-	OPERATOR
+	OPERATOR,
+	HERE_DOC
 };
 
 typedef struct s_cmd
@@ -24,4 +25,6 @@ typedef struct s_cmd_table
 }	t_cmd_table;
 
 t_cmd	*new_cmd(const char *line);
+int		*tokenize(const char *argv[]);
+int		is_operator(const char *line);
 void	free_cmd(void *cmd);
