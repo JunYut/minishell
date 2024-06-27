@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 09:32:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/06/26 18:23:40 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/06/26 21:30:43 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,29 @@ int	is_in_set(char c, char *set)
 		if (c == *set)
 			return (1);
 		set++;
+	}
+	return (0);
+}
+
+int	is_quote(char c)
+{
+	if (c == '\'' || c == '"')
+		return (1);
+	return (0);
+}
+
+int	is_quote_closed(char *line, int	*i)
+{
+	char	quote_type;
+
+	quote_type = line[*i];
+	if (ft_strchr(line + *i + 1, quote_type))
+	{
+		(*i)++;
+		while ((line[*i]) != quote_type)
+			(*i)++;
+		(*i)++;
+		return (1);
 	}
 	return (0);
 }

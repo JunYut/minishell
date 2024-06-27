@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/06/26 18:29:21 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/06/28 01:07:00 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	tokenize(char *line)
 		if (!ft_strncmp(line, "&&", 2) || is_in_set(*line, OPERATORS_SET))
 			handle_operator_token(&line, &token_list);
 		else
-			line++;
+			append_word_token(&line, &token_list);
 	}
 	g_minishell.token_list = token_list;
 }
@@ -94,13 +94,34 @@ void	append_operator_token(t_token_type type, char **line, t_token **token_list)
 	*line += char_count;
 }
 
-// void	append_identifier_token(t_token_type type, char **line, t_token **token_list)
-// {
-// 	t_token	*token;
-// 	char	*value;
-// 	int		char_count;
+void	append_word_token(char **line, t_token **token_list)
+{
+	t_token	*token;
+	char	*value;
+	int		char_count;
+	char	*buffer;
 
-// }
+	buffer = *line;
+	char_count = 0;
+	while (buffer[char_count] && !is_seperator(*(buffer + char_count)))
+	{
+		if (is_quote(buffer[char_count]))
+		{
+			if (!is_quote_closed(buffer, &char_count))
+				return ;
+		}
+		else
+			char_count++;
+	}
+	value = ft_substr(buffer, 0, char_count);
+	if (!value)
+		exit(1); //TODO: Handle this error appropriately
+	token = init_new_token(T_WORD, value);
+	if (!token)
+		exit(1); //TODO: Handle this error appropriately
+	*line += char_count;
+	add_token_to_list(token_list, token);
+}
 
 t_token	*init_new_token(t_token_type type, char *value)
 {
@@ -138,3 +159,4 @@ void	add_token_to_list(t_token **token_list, t_token *token)
 
 //NOTES: When encountering multiple syntax errors, Bash will report the first one
 //NOTES: We can tokenize first then validate or validate sequentially
+//NOTES: Multiple string literals without any seperators that are not in quotes in-between are considered 1 token only e.g. "ls""-l" is treated as ls-l
