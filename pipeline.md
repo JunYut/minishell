@@ -1,15 +1,6 @@
-# minishell
-while (1)
-{
-	Read the input from the user
-	Check if the input is valid
-	If the input is valid, call the function to perform the operation
-	If the input is invalid, print an error message
-}
-
 # Input Analyzing
 ## Display current working directory
-pwd
+`pwd`
 
 [command]
 
@@ -93,36 +84,40 @@ pwd
 `string`: can be enclosed in quotes(' or ") to preserve spaces & `$variable`
 
 # Operators
-`<`: Redirects standard input (stdin) from a file.\
+`<`: Redirects standard input (stdin) from a file.
 ```
 [command] < [file] [options]
 ```
-`>`: Redirects standard output (stdout) to a file, overwriting the file.\
+`>`: Redirects standard output (stdout) to a file, overwriting the file.
 ```
 [command] > [file] [options]
 ```
-`<<`: Redirects heredoc to a command.\
+`<<`: Redirects heredoc to a command.
 ```
 |- << [delimiter] [command]
 |- [command] << [delimiter]
 ```
-`>>`: Redirects standard output (stdout) to a file, appending to the file.\
+`>>`: Redirects standard output (stdout) to a file, appending to the file.
 ```
 [comamnd] >> [file]
 ```
-`|`: Pipe. Sends the output of one command to another command as input.\
+`|`: Pipe. Sends the output of one command to another command as input.
 ```
 [command1] | [command2]
 ```
-`&&`: Logical AND. Executes the second command only if the first command succeeds.\
+`&&`: Logical AND. Executes the second command only if the first command succeeds.
 ```
 [command1] && [command2]
 ```
-`||`: Logical OR. Executes the second command only if the first command fails.\
+`||`: Logical OR. Executes the second command only if the first command fails.
 ```
 [command1] || [command2]
 ```
-`''`: Single quotes. Encloses a string, preventing variable expansion and command substitution.\
+`(subshell)`: Create a subshell to execute commands in the parentheses. Any changes to variables in the subshell should not affect the parent shell.
+```
+([command] [options/arguments] [operator] [command/argument] ...)
+```
+`''`: Single quotes. Encloses a string, preventing variable expansion and command substitution.
 ```
 '[string]'
 ```
@@ -130,7 +125,12 @@ pwd
 ```
 "[$variable/$(subshell)/string]"
 ```
-`(subshell)`: Create a subshell to execute commands in the parentheses. Any changes to variables in the subshell should not affect the parent shell.\
-```
-([command] [options/arguments] [operator] [command/argument] ...)
-```
+
+# Pipeline
+`[operator] > [subshell] > [command]`
+
+   1. Start loop token list.
+   2. Setup operators.
+   3. Setup subshell, go back to `step 1`.
+   4. Execute commands.
+   5. End loop token list.

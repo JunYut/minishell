@@ -43,4 +43,4 @@ fclean: clean
 	rm -f $(EXEC)
 	make -C $(LIBFT_DIR) fclean
 
-re: fclean all
+re: clean fclean all
