@@ -6,12 +6,15 @@
 
 int main(void)
 {
-	char *cmd_line;
+	t_list	*cmds;
+	char *cmd;
 
-	cmd_line = readline("minishell$ ");
-	if (cmd_line)
+	cmd = readline("minishell$ ");
+	if (cmd)
 	{
-		printf("You entered: %s\n", cmd_line);
+		printf("You entered: %s\n", cmd);
+		ft_lstadd_back(&cmds, ft_lstnew(init_cmd(cmd)));
+		print_cmd(ft_lstlast(cmds)->content);
 	}
-	free(cmd_line);
+	free(cmd);
 }
