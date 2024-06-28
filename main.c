@@ -1,24 +1,17 @@
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <stdio.h>
 # include "builtins.h"
 # include "commands.h"
 
 int main(void)
 {
-	t_cmd_table	commands;
-	char		*line;
+	char *cmd_line;
 
-	while (1)
+	cmd_line = readline("minishell$ ");
+	if (cmd_line)
 	{
-		line = readline("\033[0;33mminishell\033[0m$ ");
-		add_history(line);
-		printf("[%s]\n", line);	// Debug
-		if (ft_strcmp(line, "exit") == 0)
-			break;
-		// ft_lstadd_back(&commands.cmd, ft_lstnew());
-		free(line);
+		printf("You entered: %s\n", cmd_line);
 	}
-	free(line);
-	ft_lstclear(&commands.cmd, free_cmd);
-	rl_clear_history();
+	free(cmd_line);
 }

@@ -1,30 +1,22 @@
 # pragma once
 
-# include "libft.h"
+# include <stdlib.h>
+# include <stdio.h>
 
-enum e_token
+typedef enum e_token_type	t_token_type;
+
+typedef struct s_cmd_args
 {
-	CMD,
-	OPTION,
-	ARG,
-	OPERATOR,
-	HERE_DOC
-};
+	const char	*cmd;
+	const char	**args;
+}	t_cmd_args;
 
+// This will be linked list's content
 typedef struct s_cmd
 {
-	char	*raw;
-	char	**argv;
-	int		*type;
+	// syntax: [cmd_token] [args_token] [op_token] ...
+	const char		*raw;
+	const char		**tokens;
+	t_cmd_args		*cmds;
+	t_token_type	*operators;
 }	t_cmd;
-
-typedef struct s_cmd_table
-{
-	t_list	*cmd;
-	int		cmd_count;
-}	t_cmd_table;
-
-t_cmd	*new_cmd(const char *line);
-int		*tokenize(const char *argv[]);
-int		is_operator(const char *line);
-void	free_cmd(void *cmd);
