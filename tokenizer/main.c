@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/06/28 01:07:00 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/06/28 13:56:46 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(void)
 		{
 			printf("value: %s\n", g_minishell.token_list->value);
 			printf("type: %d\n", g_minishell.token_list->type);
+			printf("-------------------------------------\n");
 			g_minishell.token_list = g_minishell.token_list->next;
 		}
 	}
@@ -45,9 +46,6 @@ void	tokenize(char *line)
 	while (*line != '\0')
 	{
 		skip_spaces(&line);
-		// if (!ft_strncmp(line, "<", 1) || !ft_strncmp(line, ">", 1)
-		// 	|| !ft_strncmp(line, "|", 1) || !ft_strncmp(line, "&&", 2)
-		// 	|| !ft_strncmp(line, "(", 1) || !ft_strncmp(line, ")", 1))
 		if (!ft_strncmp(line, "&&", 2) || is_in_set(*line, OPERATORS_SET))
 			handle_operator_token(&line, &token_list);
 		else
