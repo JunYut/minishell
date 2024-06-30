@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:11 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/06/28 01:07:20 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/06/30 22:18:29 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_token
 typedef struct s_minishell
 {
 	t_token	*token_list;
+	t_token *curr_token;
 	char	*line;
 }	t_minishell;
 
