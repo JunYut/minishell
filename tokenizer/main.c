@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/06/28 13:56:46 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/01 08:50:02 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	append_word_token(char **line, t_token **token_list)
 
 	buffer = *line;
 	char_count = 0;
-	while (buffer[char_count] && !is_seperator(*(buffer + char_count)))
+	while (buffer[char_count] && !is_seperator((buffer + char_count)))
 	{
 		if (is_quote(buffer[char_count]))
 		{

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 09:32:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/06/26 21:30:43 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/01 08:39:06 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	skip_spaces(char **line)
 		(*line)++;
 }
 
-int	is_seperator(char c)
+int	is_seperator(char *s)
 {
-	if (is_space(c) || c == '>' || c == '<' || c == '|' || c == '(' || c == ')')
+	if (is_space(*s) || !ft_strncmp(s, "&&", 2) || *s == '>' || *s == '<' || *s == '|' || *s == '(' || *s == ')')
 		return (1);
 	return (0);
 }

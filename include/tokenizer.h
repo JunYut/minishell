@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:11 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/06/28 01:07:20 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/01 08:49:59 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	append_word_token(char **line, t_token **token_list);
 t_token	*init_new_token(t_token_type type, char *value);
 void	add_token_to_list(t_token **token_list, t_token *token);
 int	is_space(char c);
-int	is_seperator(char c);
+int	is_seperator(char *s);
 void	skip_spaces(char **line);
 int	is_in_set(char c, char *set);
 int	is_quote_closed(char *line, int	*i);
