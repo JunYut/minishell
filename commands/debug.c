@@ -1,4 +1,6 @@
+# include "enum.h"
 # include "commands.h"
+# include "debug.h"
 
 void	print_cmd(t_cmd_line *cmd)
 {
