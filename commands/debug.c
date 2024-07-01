@@ -3,13 +3,24 @@
 void	print_cmd(t_cmd *cmd)
 {
 	int	i;
+	int	j;
 
 	i = -1;
 	while (cmd->identifiers[++i])
 		printf("identifiers[%d]: %s\n", i, cmd->identifiers[i]);
+	printf("\n");
 	i = -1;
 	while (cmd->tokens[++i] != T_INVALID)
 		printf("tokens[%d]: %d\n", i, cmd->tokens[i]);
+	printf("\n");
+	i = -1;
+	while (cmd->cmds[++i].cmd)
+	{
+		printf("cmd[%d]: %s\n", i, cmd->cmds[i].cmd);
+		j = -1;
+		while (cmd->cmds[i].args[++j])
+			printf("args[%d]: %s\n", j, cmd->cmds[i].args[j]);
+	}
 }
 
 void	debug(char *msg)

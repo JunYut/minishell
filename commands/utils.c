@@ -1,5 +1,6 @@
 # include "utils.h"
 
+// requires full path
 int	is_cmd(const char *iden)
 {
 	if (!iden)
@@ -13,7 +14,7 @@ int	is_cmd(const char *iden)
 	}
 }
 
-int	is_operator(t_token_type t)
+int	is_operator(t_token t)
 {
 	return (t == T_PIPE || t == T_REDIRECT_IN || t == T_REDIRECT_OUT
 		|| t == T_APPEND || t == T_HERE_DOC || t == T_AND || t == T_OR);
