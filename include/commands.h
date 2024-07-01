@@ -40,11 +40,12 @@ typedef struct s_cmd
 	// syntax: [cmd_token] [args_token] [op_token] ...
 	t_token_type	*tokens;
 	t_cmd_args		*cmds;
-	t_token_type	*operators;
 }	t_cmd;
 
 t_cmd			*init_cmd(const char *raw);
+t_cmd_args		*parse(t_token_type *tokens, char **identifiers);
 t_token_type	*tokenize(char **identifiers);
 
+// Debugging functions
 void	print_cmd(t_cmd *cmd);
 void	debug(char *msg);

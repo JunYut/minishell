@@ -7,7 +7,6 @@ void	print_cmd(t_cmd *cmd)
 	i = -1;
 	while (cmd->identifiers[++i])
 		printf("identifiers[%d]: %s\n", i, cmd->identifiers[i]);
-	printf("i: %d\n", i);
 	i = -1;
 	while (cmd->tokens[++i] != T_INVALID)
 		printf("tokens[%d]: %d\n", i, cmd->tokens[i]);
