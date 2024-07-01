@@ -4,6 +4,8 @@
 # include <stdio.h>
 # include <libft.h>
 
+# define DEBUG 1
+
 typedef enum e_token_type
 {
 	T_CMD,
@@ -38,6 +40,7 @@ typedef struct s_cmd
 }	t_cmd;
 
 t_cmd			*init_cmd(const char *raw);
-t_token_type	*tokenize(const char **identifiers);
+t_token_type	*tokenize(char **identifiers);
 
 void	print_cmd(t_cmd *cmd);
+void	debug(char *msg);

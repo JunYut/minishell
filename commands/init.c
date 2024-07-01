@@ -11,15 +11,16 @@ t_cmd	*init_cmd(const char *raw)
 	return (cmd);
 }
 
-t_token_type	*tokenize(const char **identifiers)
+t_token_type	*tokenize(char **identifiers)
 {
 	t_token_type	*tokens;
 	int				count;
 
 	count = -1;
 	while (identifiers[++count]);
-	tokens = (t_token_type *)ft_calloc(count, sizeof(t_token_type));
-	while (identifiers[count - 1] >= 0)
+	tokens = (t_token_type *)ft_calloc(count + 1, sizeof(t_token_type));
+	tokens[count] = -1;
+	while (--count > 0)
 	{
 		if (ft_strncmp(identifiers[count], ">", 1) == 0)
 			tokens[count] = T_REDIRECT_OUT;
@@ -43,7 +44,6 @@ t_token_type	*tokenize(const char **identifiers)
 			tokens[count] = T_NEWLINE;
 		else
 			tokens[count] = T_ARG;
-		--count;
 	}
 	return (tokens);
 }
