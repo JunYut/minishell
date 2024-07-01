@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:11 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/06/30 22:17:17 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/01 12:15:53 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@
 #include "libft.h"
 #include "tokenizer.h"
 #include <stdio.h>
+#include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
+#define FAIL 0
+#define SUCCESS 1
 
 typedef enum e_node_type
 {
@@ -34,6 +38,12 @@ typedef enum e_io_type
 	IO_HEREDOC,
 	IO_APPEND,
 }	t_io_type;
+
+typedef enum e_parse_err_type
+{
+	E_MEM = 1,
+	E_SYNTAX,
+}	t_parse_err_type;
 
 typedef	struct s_io_node
 {
@@ -55,5 +65,11 @@ typedef struct s_node
 	struct s_node	*left;
 	struct s_node	*right;
 }	t_node;
+
+typedef struct s_parse_err
+{
+	t_parse_err_type	type;
+	char				*str;
+}	t_parse_err;
 
 #endif

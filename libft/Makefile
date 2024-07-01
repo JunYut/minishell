@@ -6,7 +6,7 @@
 #    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/02 17:12:39 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/06/10 15:17:16 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/07/01 12:14:45 by kkhai-ki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,8 @@ SRC_FILES =	ft_isalpha			\
 			get_next_line_utils	\
 			get_next_line		\
 			ft_free_s_arr		\
-			ft_atoi_base
+			ft_atoi_base		\
+			ft_strjoin_delim
 
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
 

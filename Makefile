@@ -6,7 +6,7 @@
 #    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/06 14:33:10 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/06/26 17:57:20 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/07/01 13:49:35 by kkhai-ki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,17 +21,17 @@ ORANGE = \033[0;38;5;166m
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror # -fsanitize=address -g3
 
-INCLUDE = -Iinclude -I$(LIBFT_DIR)
+INCLUDE = -Iinclude -I$(LIBFT_DIR) -I$(LIBFT_DIR)/include
 
-SRC_DIR = tokenizer
+TOKENIZER = tokenizer/main.c	\
+			tokenizer/utils.c
 
-SRC_FILES =	main	\
-			utils
+PARSER = parser/parser.c
 
-SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
+SRC =	$(TOKENIZER) $(PARSER)
 
 OBJ_DIR = obj
-OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(SRC_FILES)))
+OBJ = $(SRC:%.c=%.o)
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -39,16 +39,16 @@ LIBFT = $(LIBFT_DIR)/libft.a
 LIBRARIES = -L$(LIBFT_DIR) -lft -lreadline
 
 all :
-		@mkdir -p $(OBJ_DIR)
-		@make -C libft
-		@make $(NAME)
+		mkdir -p $(OBJ_DIR)
+		make -C libft
+		make $(NAME)
 
-$(OBJ_DIR)/%.o:		$(SRC_DIR)/%.c
-					@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+$(OBJ_DIR)/%.o:		$(SRC)%.c | $(OBJ_DIR)
+					$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(NAME) :	$(OBJ)
 			@printf "$(GREEN)minishell object files created.$(RESET)\n"
-			@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBRARIES) && echo "$(GREEN)minishell created.$(RESET)"
+			$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) -o $(NAME) $(LIBRARIES) && echo "$(GREEN)minishell created.$(RESET)"
 
 clean :
 			@rm -rf $(OBJ_DIR) && echo "$(RED)minishell object files deleted.$(RESET)"
