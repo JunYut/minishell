@@ -1,8 +1,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
-# include "builtins.h"
 # include "commands.h"
+# include "parser.h"
+# include "builtins.h"
 # include "utils.h"
 
 # define DEBUG 1
@@ -16,6 +17,7 @@ int main(int argc, char *argv[], char *envp[])
 
 
 	printf("is_cmd: %d\n", is_cmd("/usr/bin/echo"));	// debug
+	print_paths(parse_path(envp, "echo"));	// debug
 	// Executing one command line
 	cmd = readline("minishell$ ");
 	if (cmd)

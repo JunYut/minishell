@@ -17,15 +17,16 @@ t_cmd	*init_cmd(const char *raw, char *envp[])
 t_cmd_args	*parse(t_token *tokens, char **identifiers, char *envp[])
 {
 	t_cmd_args	*cmd_args;
-	int			cmdc;
-	int			i;
-	int			j;
+
 
 	// append full path to command
 	// count number of commands
 	// count number of arguments for each command
-
-	return (cmd_args);
+	(void)tokens;
+	(void)identifiers;
+	(void)envp;
+	(void)cmd_args;
+	return (NULL);
 }
 
 // only works if command line is split by spaces

@@ -1,14 +1,16 @@
-# include "commands.h"
+# include "parser.h"
+# include "debug.h"
 
-void	parser(t_pipex *var, char **argv, char *envp[])
-{
-	var->cmd1 = ft_split(argv[2], ' ');
-	var->cmd2 = ft_split(argv[3], ' ');
-	var->path1 = path_parser(envp, *(var->cmd1));
-	var->path2 = path_parser(envp, *(var->cmd2));
-}
+// void	parser(t_pipex *var, char **argv, char *envp[])
+// {
+// 	var->cmd1 = ft_split(argv[2], ' ');
+// 	var->cmd2 = ft_split(argv[3], ' ');
+// 	var->path1 = parse_path(envp, *(var->cmd1));
+// 	var->path2 = parse_path(envp, *(var->cmd2));
+// }
 
-char	**path_parser(char *envp[], char *cmd)
+// returns a NULL terminated list
+char	**parse_path(char *envp[], char *cmd)
 {
 	char	**path_list;
 	int		i;
@@ -41,7 +43,7 @@ void	prepend_cmd(char **path_list, char *cmd)
 	i = -1;
 	while (path_list[++i])
 	{
-		path_list[i] = c_strjoin(path_list + i, "/");
-		path_list[i] = c_strjoin(path_list + i, cmd);
+		path_list[i] = gnl_strjoin(path_list[i], "/");
+		path_list[i] = gnl_strjoin(path_list[i], cmd);
 	}
 }

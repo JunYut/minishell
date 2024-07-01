@@ -47,4 +47,4 @@ t_token		*tokenize(char **identifiers);
 
 // Debugging functions
 void	print_cmd(t_cmd *cmd);
-void	debug(char *msg);
+void	print_paths(char **path_list);
