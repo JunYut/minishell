@@ -4,17 +4,22 @@
 # include "builtins.h"
 # include "commands.h"
 
+# define DEBUG 1
+
 int main(void)
 {
 	t_list	*cmds;
 	char *cmd;
 
+	// Executing one command line
 	cmd = readline("minishell$ ");
 	if (cmd)
 	{
 		printf("You entered: %s\n", cmd);
-		ft_lstadd_back(&cmds, ft_lstnew(init_cmd(cmd)));
-		print_cmd(ft_lstlast(cmds)->content);
+		cmds = ft_lstnew(init_cmd(cmd));
+		print_cmd(cmds->content);
 	}
 	free(cmd);
+
+	// TODO: Executing multiple command lines
 }

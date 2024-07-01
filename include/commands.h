@@ -4,11 +4,13 @@
 # include <stdio.h>
 # include <libft.h>
 
-# define DEBUG 1
+# ifndef DEBUG
+# 	define DEBUG 1
+# endif
 
 typedef enum e_token_type
 {
-	T_WORD,
+	T_IDEN,
 	T_CMD,
 	T_ARG,
 	T_REDIRECT_IN,
@@ -22,6 +24,7 @@ typedef enum e_token_type
 	T_OR,
 	T_AND,
 	T_NEWLINE,
+	T_INVALID = -1
 }	t_token_type;
 
 typedef struct s_cmd_args

@@ -6,9 +6,7 @@ t_cmd	*init_cmd(const char *raw)
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
-	debug(NULL);
 	cmd->identifiers = ft_split(raw, ' ');	// Not legit
-	debug(NULL);
 	cmd->tokens = tokenize(cmd->identifiers);
 	// parse
 	return (cmd);
@@ -22,7 +20,7 @@ t_token_type	*tokenize(char **identifiers)
 	count = -1;
 	while (identifiers[++count]);
 	tokens = (t_token_type *)ft_calloc(count + 1, sizeof(t_token_type));
-	tokens[count] = -1;
+	tokens[count] = T_INVALID;
 	while (--count > 0)
 	{
 		if (ft_strncmp(identifiers[count], ">", 1) == 0)
@@ -46,7 +44,7 @@ t_token_type	*tokenize(char **identifiers)
 		else if (ft_strncmp(identifiers[count], "\\n", 1) == 0)
 			tokens[count] = T_NEWLINE;
 		else
-			tokens[count] = T_ARG;
+			tokens[count] = T_IDEN;
 	}
 	return (tokens);
 }
