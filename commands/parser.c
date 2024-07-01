@@ -8,9 +8,16 @@ t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
 {
 	t_cmd	*cmd_args;
 
+	// count number of commands & args
+		// loop to first operator, record position
+		// go back until first identifier (before is operator/is first)
+		// increment cmd count
+		// loop to operator, increment args count at the same time
 	// append full path to command
-	// count number of commands
-	// count number of arguments for each command
+		// loop to first operator, record position
+		// go back until first identifier (before is operator/is first)
+		// set cmd path
+		// loop to operator, set args at the same time
 	(void)tokens;
 	(void)identifiers;
 	(void)envp;
