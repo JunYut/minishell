@@ -1,12 +1,27 @@
 # include "parser.h"
+# include "utils.h"
 # include "debug.h"
 
+// will not handle '*', quotes and subshells
+t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
+{
+	t_cmd	*cmd_args;
 
+	// append full path to command
+	// count number of commands
+	// count number of arguments for each command
+	(void)tokens;
+	(void)identifiers;
+	(void)envp;
+	(void)cmd_args;
+	return (NULL);
+}
 
 // returns a NULL terminated list
-char	**parse_path(char *envp[], char *cmd)
+char	*parse_path(char *envp[], char *cmd)
 {
 	char	**path_list;
+	char	*path;
 	int		i;
 
 	i = -1;
@@ -15,7 +30,19 @@ char	**parse_path(char *envp[], char *cmd)
 	path_list = ft_split(envp[i], ':');
 	prepend_cmd(path_list, cmd);
 	trim_path(path_list[0], "PATH=");
-	return (path_list);
+	path = find_bin(path_list);
+	return (path);
+}
+
+char	*find_bin(char **path_list)
+{
+	int	i;
+
+	i = -1;
+	while (path_list[++i])
+		if (is_cmd(path_list[i]))
+			return (ft_strdup(path_list[i]));
+	return (NULL);
 }
 
 void	trim_path(char *cmd, char *path)

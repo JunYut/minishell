@@ -8,11 +8,7 @@ int	is_cmd(const char *iden)
 		return (0);
 	if (access(iden, X_OK) == 0)
 		return (1);
-	else
-	{
-		perror("minishell");
-		return (0);
-	}
+	return (0);
 }
 
 int	is_operator(t_token t)

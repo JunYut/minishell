@@ -15,21 +15,6 @@ t_cmd_line	*init_cmd(const char *raw, char *envp[])
 	return (cmd);
 }
 
-// will not handle '*', quotes and subshells
-t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
-{
-	t_cmd	*cmd_args;
-
-	// append full path to command
-	// count number of commands
-	// count number of arguments for each command
-	(void)tokens;
-	(void)identifiers;
-	(void)envp;
-	(void)cmd_args;
-	return (NULL);
-}
-
 // only works if command line is split by spaces
 t_token	*tokenize(char **identifiers)
 {

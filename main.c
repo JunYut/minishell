@@ -17,7 +17,7 @@ int main(int argc, char *argv[], char *envp[])
 
 
 	printf("is_cmd: %d\n", is_cmd("/usr/bin/echo"));	// debug
-	print_paths(parse_path(envp, "echo"));	// debug
+	printf("path: %s\n", parse_path(envp, "echo"));	// debug
 	// Executing one command line
 	cmd = readline("minishell$ ");
 	if (cmd)
