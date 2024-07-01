@@ -23,6 +23,15 @@ void	print_cmd(t_cmd *cmd)
 	}
 }
 
+void	print_paths(char **path_list)
+{
+	while (*path_list)
+	{
+		printf("%s\n", *path_list);
+		++path_list;
+	}
+}
+
 void	debug(char *msg)
 {
 	static int	i;
