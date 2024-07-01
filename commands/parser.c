@@ -1,5 +1,6 @@
 # include "parser.h"
 # include "utils.h"
+# include "libft.h"
 # include "debug.h"
 
 // will not handle '*', quotes and subshells
@@ -17,7 +18,7 @@ t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
 	return (NULL);
 }
 
-// returns a NULL terminated list
+// returns full path to command (allocated)
 char	*parse_path(char *envp[], char *cmd)
 {
 	char	**path_list;
@@ -31,6 +32,7 @@ char	*parse_path(char *envp[], char *cmd)
 	prepend_cmd(path_list, cmd);
 	trim_path(path_list[0], "PATH=");
 	path = find_bin(path_list);
+	free_2d((void **)path_list);
 	return (path);
 }
 
