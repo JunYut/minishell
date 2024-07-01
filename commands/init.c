@@ -1,12 +1,14 @@
 # include "commands.h"
+# include "parser.h"
 # include "utils.h"
+# include "debug.h"
 
 // assumes that raw is a valid command line
-t_cmd	*init_cmd(const char *raw, char *envp[])
+t_cmd_line	*init_cmd(const char *raw, char *envp[])
 {
-	t_cmd	*cmd;
+	t_cmd_line	*cmd;
 
-	cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+	cmd = (t_cmd_line *)ft_calloc(1, sizeof(t_cmd_line));
 	cmd->identifiers = ft_split(raw, ' ');	// Not legit
 	cmd->tokens = tokenize(cmd->identifiers);
 	cmd->cmds = parse(cmd->tokens, cmd->identifiers, envp);
@@ -14,10 +16,9 @@ t_cmd	*init_cmd(const char *raw, char *envp[])
 }
 
 // will not handle '*', quotes and subshells
-t_cmd_args	*parse(t_token *tokens, char **identifiers, char *envp[])
+t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
 {
-	t_cmd_args	*cmd_args;
-
+	t_cmd	*cmd_args;
 
 	// append full path to command
 	// count number of commands

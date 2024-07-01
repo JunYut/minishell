@@ -1,4 +1,5 @@
 # include "utils.h"
+# include "debug.h"
 
 // requires full path
 int	is_cmd(const char *iden)

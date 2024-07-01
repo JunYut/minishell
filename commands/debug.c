@@ -1,6 +1,6 @@
 # include "commands.h"
 
-void	print_cmd(t_cmd *cmd)
+void	print_cmd(t_cmd_line *cmd)
 {
 	int	i;
 	int	j;

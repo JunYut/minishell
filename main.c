@@ -1,10 +1,10 @@
 # include <readline/readline.h>
-# include <readline/history.h>
 # include <stdio.h>
 # include "commands.h"
 # include "parser.h"
 # include "builtins.h"
 # include "utils.h"
+# include "debug.h"
 
 # define DEBUG 1
 

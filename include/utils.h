@@ -1,9 +1,8 @@
 # pragma once
 
-# include <commands.h>
+# include "enum.h"
 # include <unistd.h>
-
-typedef enum e_token_type	t_token;
+# include <stdio.h>
 
 int	is_cmd(const char *iden);
 int	is_operator(t_token t);
