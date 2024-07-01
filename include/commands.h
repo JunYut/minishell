@@ -8,6 +8,7 @@
 
 typedef enum e_token_type
 {
+	T_WORD,
 	T_CMD,
 	T_ARG,
 	T_REDIRECT_IN,

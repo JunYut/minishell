@@ -19,7 +19,8 @@ void	debug(char *msg)
 	if (!DEBUG)
 		return ;
 	if (msg)
-		printf("DEBUG[%d]: %s\n", i, msg);
+		printf("\033[0;33mDEBUG[%d]: %s\033[0m\n", i, msg);
 	else
-		printf("DEBUG[%d]:\n", i);
+		printf("\033[0;33mDEBUG[%d]\033[0m\n", i);
+	++i;
 }

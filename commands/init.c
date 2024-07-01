@@ -6,8 +6,11 @@ t_cmd	*init_cmd(const char *raw)
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+	debug(NULL);
 	cmd->identifiers = ft_split(raw, ' ');	// Not legit
+	debug(NULL);
 	cmd->tokens = tokenize(cmd->identifiers);
+	// parse
 	return (cmd);
 }
 
