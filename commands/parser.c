@@ -1,4 +1,5 @@
 # include "parser.h"
+# include "commands.h"
 # include "utils.h"
 # include "libft.h"
 # include "debug.h"
@@ -7,23 +8,18 @@
 t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
 {
 	t_cmd	*cmd_args;
-	// int		cmd_c;
-	// int		arg_c;
+	int		cmd_c;
+	int		arg_c;
 	int		i;
 
-	// count number of commands & args
-		// loop to first operator, record position
-		// go back until first identifier (before is operator/is first)
-		// increment cmd count
-		// loop to operator, increment args count at the same time
+	cmd_c = 0;
+	arg_c = 0;
 	i = -1;
 	while (tokens[++i] != T_INVALID)
-	{
-		// while (tokens[i] != T_INVALID && !is_operator(tokens[i]))
-		// {
-			
-		// }
-	}
+		if (tokens[i] == T_CMD)
+			cmd_c++;
+	cmd_args = (t_cmd *)ft_calloc(cmd_c + 1, sizeof(t_cmd));
+	cmd_args[cmd_c].cmd = NULL;
 	// append full path to command
 		// loop to first operator, record position
 		// go back until first identifier (before is operator/is first)

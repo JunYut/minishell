@@ -1,7 +1,7 @@
 # include "tokenizer.h"
 # include "parser.h"
 
-// only works if command line is split by spaces
+// only works if command line is split by spaces, terminated by T_INVALID
 t_token	*tokenize(char **identifiers, char *envp[])
 {
 	t_token	*tokens;
