@@ -7,12 +7,23 @@
 t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
 {
 	t_cmd	*cmd_args;
+	// int		cmd_c;
+	// int		arg_c;
+	int		i;
 
 	// count number of commands & args
 		// loop to first operator, record position
 		// go back until first identifier (before is operator/is first)
 		// increment cmd count
 		// loop to operator, increment args count at the same time
+	i = -1;
+	while (tokens[++i] != T_INVALID)
+	{
+		while (tokens[i] != T_INVALID && !is_operator(tokens[i]))
+		{
+			
+		}
+	}
 	// append full path to command
 		// loop to first operator, record position
 		// go back until first identifier (before is operator/is first)

@@ -21,7 +21,7 @@ EXEC = shell
 all: $(EXEC)
 
 $(EXEC): $(LIBFT) $(OBJ) main.c
-	$(CC) $(CFLAGS) $(INCL_DIR) $(OBJ) main.c -L$(LIBFT_DIR) $(LIB) -o $@
+	cc $(CFLAGS) $(INCL_DIR) $(OBJ) main.c -L$(LIBFT_DIR) $(LIB) -o $@
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
