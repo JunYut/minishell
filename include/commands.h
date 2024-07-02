@@ -9,6 +9,7 @@ typedef struct s_cmd
 {
 	char	*cmd;
 	char	**args;
+	int		argc;
 }	t_cmd;
 
 // This will be linked list's content

@@ -7,50 +7,37 @@
 // will not handle '*', quotes and subshells
 t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
 {
-	t_cmd	*cmd_args;
+	t_cmd	*cmds;
 	int		cmd_c;
-	int		arg_c;
 	int		i;
 	int		j;
+	int		k;
 
 	cmd_c = 0;
 	i = -1;
 	while (tokens[++i] != T_INVALID)
 		if (tokens[i] == T_CMD)
 			cmd_c++;
-	printf("cmd_c: %d\n", cmd_c);	// DEBUG
-	cmd_args = (t_cmd *)ft_calloc(cmd_c + 1, sizeof(t_cmd));
-	cmd_args[cmd_c].cmd = NULL;
+	cmds = (t_cmd *)ft_calloc(cmd_c + 1, sizeof(t_cmd));
+	cmds[cmd_c].cmd = NULL;
+	j = -1;
 	i = -1;
 	while (tokens[++i] != T_INVALID)
 	{
-		arg_c = 0;
-		if (tokens[i] == T_CMD)
-		{
-			printf("i: %d\n", i);	// DEBUG
-			printf("cmd: %s\n", identifiers[i]);	// DEBUG
-			cmd_args[i].cmd = parse_path(envp, identifiers[i]);
-			printf("cmd: %s\n", cmd_args[i].cmd);	// DEBUG
-			j = i;
-			while (tokens[++j] == T_ARG)
-				arg_c++;
-			printf("arg_c: %d\n", arg_c);	// DEBUG
-			cmd_args[i].args = (char **)ft_calloc(arg_c + 1, sizeof(char *));
-			cmd_args[i].args[arg_c] = NULL;
-			j = i;
-			while (tokens[++j] == T_ARG)
-			{
-				// printf("identifiers[%d]: %s\n", j, identifiers[j]);	// DEBUG
-				cmd_args[i].args[j - i - 1] = ft_strdup(identifiers[j]);
-			}
-		}
+		if (tokens[i] != T_CMD)
+			continue ;
+		cmds[++j].cmd = parse_path(envp, identifiers[i]);
+		cmds[j].argc = 0;
+		k = i;
+		while (tokens[++k] == T_ARG)
+			cmds[j].argc++;
+		cmds[j].args = (char **)ft_calloc(cmds[j].argc + 1, sizeof(char *));
+		cmds[j].args[cmds[j].argc] = NULL;
+		k = i;
+		while (tokens[++k] == T_ARG)
+			cmds[j].args[k - i - 1] = ft_strdup(identifiers[k]);
 	}
-	printf("cmd_args[0].cmd: %s\n", cmd_args[0].cmd);	// DEBUG
-	print_arr(cmd_args[0].args);	// DEBUG
-	printf("cmd_args[1].cmd: %s\n", cmd_args[1].cmd);	// DEBUG
-	print_arr(cmd_args[1].args);	// DEBUG
-	printf("\n");	// DEBUG
-	return (cmd_args);
+	return (cmds);
 }
 
 // returns full path to command (allocated)
