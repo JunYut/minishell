@@ -19,7 +19,6 @@ int main(int argc, char *argv[], char *envp[])
 	cmd = readline("minishell$ ");
 	if (cmd)
 	{
-		printf("You entered: %s\n", cmd);
 		cmds = ft_lstnew(init_cmd(cmd, envp));
 		print_cmd(cmds->content);
 	}

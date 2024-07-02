@@ -18,6 +18,7 @@ t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
 	while (tokens[++i] != T_INVALID)
 		if (tokens[i] == T_CMD)
 			cmd_c++;
+	printf("cmd_c: %d\n", cmd_c);	// DEBUG
 	cmd_args = (t_cmd *)ft_calloc(cmd_c + 1, sizeof(t_cmd));
 	cmd_args[cmd_c].cmd = NULL;
 	i = -1;
@@ -30,6 +31,7 @@ t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
 			j = i;
 			while (tokens[++j] == T_ARG)
 				arg_c++;
+			printf("arg_c: %d\n", arg_c);	// DEBUG
 			cmd_args[i].args = (char **)ft_calloc(arg_c + 1, sizeof(char *));
 			cmd_args[i].args[arg_c] = NULL;
 			j = i;
@@ -53,21 +55,13 @@ char	*parse_path(char *envp[], char *cmd)
 	path_list = ft_split(envp[i], ':');
 	prepend_cmd(path_list, cmd);
 	trim_path(path_list[0], "PATH=");
-	path = find_bin(path_list);
+	path = NULL;
+	i = -1;
+	while (path_list[++i] && !path)
+		if (access(path_list[i], X_OK) == 0)
+			path = ft_strdup(path_list[i]);
 	free_2d((void **)path_list);
 	return (path);
-}
-
-// search through path_list & return a copy of the first valid command
-char	*find_bin(char **path_list)
-{
-	int	i;
-
-	i = -1;
-	while (path_list[++i])
-		if (is_cmd(path_list[i]))
-			return (ft_strdup(path_list[i]));
-	return (NULL);
 }
 
 void	trim_path(char *cmd, char *path)
