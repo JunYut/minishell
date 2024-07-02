@@ -9,5 +9,5 @@
 typedef struct s_cmd_line	t_cmd_line;
 
 void	print_cmd(t_cmd_line *cmd);
-void	print_paths(char **path_list);
+void	print_arr(char **arr);
 void	debug(char *msg);

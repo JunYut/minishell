@@ -26,14 +26,14 @@ void	print_cmd(t_cmd_line *cmd)
 	}
 }
 
-void	print_paths(char **path_list)
+void	print_arr(char **arr)
 {
-	if (!DEBUG || !path_list)
+	if (!DEBUG || !arr)
 		return ;
-	while (*path_list)
+	while (*arr)
 	{
-		printf("%s\n", *path_list);
-		++path_list;
+		printf("%s\n", *arr);
+		++arr;
 	}
 }
 
