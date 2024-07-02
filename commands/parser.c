@@ -27,8 +27,10 @@ t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
 		arg_c = 0;
 		if (tokens[i] == T_CMD)
 		{
-			// printf("cmd: %s\n", identifiers[i]);	// DEBUG
+			printf("i: %d\n", i);	// DEBUG
+			printf("cmd: %s\n", identifiers[i]);	// DEBUG
 			cmd_args[i].cmd = parse_path(envp, identifiers[i]);
+			printf("cmd: %s\n", cmd_args[i].cmd);	// DEBUG
 			j = i;
 			while (tokens[++j] == T_ARG)
 				arg_c++;
