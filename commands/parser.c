@@ -11,25 +11,33 @@ t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
 	int		cmd_c;
 	int		arg_c;
 	int		i;
+	int		j;
 
 	cmd_c = 0;
-	arg_c = 0;
 	i = -1;
 	while (tokens[++i] != T_INVALID)
 		if (tokens[i] == T_CMD)
 			cmd_c++;
 	cmd_args = (t_cmd *)ft_calloc(cmd_c + 1, sizeof(t_cmd));
 	cmd_args[cmd_c].cmd = NULL;
-	// append full path to command
-		// loop to first operator, record position
-		// go back until first identifier (before is operator/is first)
-		// set cmd path
-		// loop to operator, set args at the same time
-	(void)tokens;
-	(void)identifiers;
-	(void)envp;
-	(void)cmd_args;
-	return (NULL);
+	i = -1;
+	while (tokens[++i] != T_INVALID)
+	{
+		arg_c = 0;
+		if (tokens[i] == T_CMD)
+		{
+			cmd_args[i].cmd = parse_path(envp, identifiers[i]);
+			j = i;
+			while (tokens[++j] == T_ARG)
+				arg_c++;
+			cmd_args[i].args = (char **)ft_calloc(arg_c + 1, sizeof(char *));
+			cmd_args[i].args[arg_c] = NULL;
+			j = i;
+			while (tokens[++j] == T_ARG)
+				cmd_args[i].args[j - i - 1] = ft_strdup(identifiers[j]);
+		}
+	}
+	return (cmd_args);
 }
 
 // returns full path to command (allocated)
@@ -50,6 +58,7 @@ char	*parse_path(char *envp[], char *cmd)
 	return (path);
 }
 
+// search through path_list & return a copy of the first valid command
 char	*find_bin(char **path_list)
 {
 	int	i;
