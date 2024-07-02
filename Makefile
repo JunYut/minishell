@@ -1,6 +1,10 @@
 # CFlags
 CFLAGS = -Wall -Wextra -Werror -pedantic
 
+ifdef D
+	CFLAGS += -fsanitize=address -g3
+endif
+
 # Directories
 LIBFT_DIR = libft
 BUILTIN_DIR = builtins
