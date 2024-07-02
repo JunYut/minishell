@@ -46,6 +46,7 @@
 
 ## Summary
 1. First command string should be a `command`
+2. The sequence of `arguments` and `options` does not matter, so `options` will be treated as `arguments`
 2. After a `command`, the next string should be either `options`, `arguments` or `operator`
 3. After `options`, the next string should be either `arguments` or `operator`
 4. After `arguments`, the next string should be either `operator` or `options`
@@ -54,14 +55,6 @@
 ```
 	|- [command]
 	|	|- [arguments]
-	|	|	|- [options]
-	|	|	|- [operator]
-	|	|
-	|	|- [options]
-	|	|	|- [arguments]
-	|	|	|	|- [options]
-	|	|	|	|- [operator]
-	|	|	|
 	|	|	|- [operator]
 	|	|
 	|	|- [operator]
@@ -72,11 +65,7 @@
 		|- [command]
 		|- [operator]
 ```
-7. Syntax: `[command] [options/arguments] [operator] [command/argument] ...`
-
-# Options
-`-`: short options.\
-`--`: long options.\
+7. Syntax: `[command] [arguments] [operator] [command/argument] ...`
 
 # Arguments
 `$variable`: temporary variables & enviroment variables.\
