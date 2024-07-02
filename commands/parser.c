@@ -27,6 +27,7 @@ t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
 		arg_c = 0;
 		if (tokens[i] == T_CMD)
 		{
+			// printf("cmd: %s\n", identifiers[i]);	// DEBUG
 			cmd_args[i].cmd = parse_path(envp, identifiers[i]);
 			j = i;
 			while (tokens[++j] == T_ARG)
@@ -36,9 +37,17 @@ t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
 			cmd_args[i].args[arg_c] = NULL;
 			j = i;
 			while (tokens[++j] == T_ARG)
+			{
+				// printf("identifiers[%d]: %s\n", j, identifiers[j]);	// DEBUG
 				cmd_args[i].args[j - i - 1] = ft_strdup(identifiers[j]);
+			}
 		}
 	}
+	printf("cmd_args[0].cmd: %s\n", cmd_args[0].cmd);	// DEBUG
+	print_arr(cmd_args[0].args);	// DEBUG
+	printf("cmd_args[1].cmd: %s\n", cmd_args[1].cmd);	// DEBUG
+	print_arr(cmd_args[1].args);	// DEBUG
+	printf("\n");	// DEBUG
 	return (cmd_args);
 }
 
