@@ -19,10 +19,10 @@ t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
 	i = -1;
 	while (tokens[++i] != T_INVALID)
 	{
-		while (tokens[i] != T_INVALID && !is_operator(tokens[i]))
-		{
+		// while (tokens[i] != T_INVALID && !is_operator(tokens[i]))
+		// {
 			
-		}
+		// }
 	}
 	// append full path to command
 		// loop to first operator, record position

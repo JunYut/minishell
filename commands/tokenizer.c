@@ -1,7 +1,8 @@
 # include "tokenizer.h"
+# include "parser.h"
 
 // only works if command line is split by spaces
-t_token	*tokenize(char **identifiers)
+t_token	*tokenize(char **identifiers, char *envp[])
 {
 	t_token	*tokens;
 	int				count;
@@ -33,7 +34,18 @@ t_token	*tokenize(char **identifiers)
 		else if (ft_strncmp(identifiers[count], "\\n", 1) == 0)
 			tokens[count] = T_NEWLINE;
 		else
-			tokens[count] = T_IDEN;
+			tokens[count] = iden_type(identifiers[count], envp);
 	}
 	return (tokens);
+}
+
+t_token	iden_type(char *str, char *envp[])
+{
+	char	*path;
+
+	path = parse_path(envp, str);
+	if (!path)
+		return (T_ARG);
+	free(path);
+	return (T_CMD);
 }

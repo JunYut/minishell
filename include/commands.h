@@ -21,4 +21,3 @@ typedef struct s_cmd_line
 }	t_cmd_line;
 
 t_cmd_line	*init_cmd(const char *raw, char *envp[]);
-t_token		*tokenize(char **identifiers);

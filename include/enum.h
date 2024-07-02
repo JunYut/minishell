@@ -2,8 +2,8 @@
 
 typedef enum e_token
 {
-	T_IDEN,
 	T_CMD,
+	T_ARG,
 	T_REDIRECT_IN,
 	T_REDIRECT_OUT,
 	T_HERE_DOC,
