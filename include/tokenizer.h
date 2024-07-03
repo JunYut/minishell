@@ -1,5 +1,6 @@
 # pragma once
 
+# include <stdbool.h>
 # include "libft.h"
 
 typedef enum e_token

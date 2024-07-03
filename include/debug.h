@@ -4,6 +4,7 @@
 # 	define DEBUG 1
 # endif
 
+# include <stdbool.h>
 # include <stdio.h>
 
 typedef struct s_cmd_line	t_cmd_line;

@@ -54,4 +54,5 @@ dkms.conf
 # Local files
 .vscode/
 shell
+minishell
 *.txt

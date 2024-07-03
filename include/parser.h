@@ -3,6 +3,7 @@
 # include "tokenizer.h"
 # include <get_next_line.h>
 # include <libft.h>
+# include <stdbool.h>
 
 typedef struct s_cmd	t_cmd;
 

@@ -3,6 +3,7 @@
 # include "tokenizer.h"
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <stdio.h>
 
 int		is_cmd(const char *iden);
