@@ -8,15 +8,19 @@ endif
 # Directories
 LIBFT_DIR = libft
 BUILTIN_DIR = builtins
-CMD_DIR = commands
+TOKEN_DIR = tokenizer
 PARSE_DIR = parser
+CMD_DIR = commands
+EXEC_DIR = executor
 OBJ_DIR = obj
 INCL_DIR = -Iinclude -Ilibft/include
 
 # Files
 SRC = $(wildcard $(BUILTIN_DIR)/*.c) \
+	  $(wildcard $(TOKEN_DIR)/*.c) \
+	  $(wildcard $(PARSE_DIR)/*.c) \
 	  $(wildcard $(CMD_DIR)/*.c) \
-	  $(wildcard $(PARSE_DIR)/*.c)
+	  $(wildcard $(EXEC_DIR)/*.c)
 OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
 HEADER = $(wildcard $(INCL_DIR)/*.h)
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -36,11 +40,19 @@ $(OBJ_DIR)/%.o: $(BUILTIN_DIR)/%.c $(HEADER)
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCL_DIR) -c -o $@ $<
 
-$(OBJ_DIR)/%.o: $(CMD_DIR)/%.c $(HEADER)
+$(OBJ_DIR)/%.o: $(TOKEN_DIR)/%.c $(HEADER)
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCL_DIR) -c -o $@ $<
 
 $(OBJ_DIR)/%.o: $(PARSE_DIR)/%.c $(HEADER)
+	mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCL_DIR) -c -o $@ $<
+
+$(OBJ_DIR)/%.o: $(CMD_DIR)/%.c $(HEADER)
+	mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCL_DIR) -c -o $@ $<
+
+$(OBJ_DIR)/%.o: $(EXEC_DIR)/%.c $(HEADER)
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCL_DIR) -c -o $@ $<
 
