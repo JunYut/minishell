@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:11 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/01 12:15:53 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:19:28 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef enum e_io_type
 {
 	IO_IN,
 	IO_OUT,
-	IO_HEREDOC,
+	IO_HERE_DOC,
 	IO_APPEND,
 }	t_io_type;
 

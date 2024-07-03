@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:59:15 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/01 12:14:58 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/02 12:44:22 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ char	*ft_strjoin_delim(char *s1, char *s2, char *delim)
 	while (s2[++j])
 		new_str[i++] = s2[j];
 	new_str[i] = '\0';
+	free(s1);
 	return (new_str);
 }
