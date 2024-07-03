@@ -1,11 +1,14 @@
 # pragma once
 
 # include "tokenizer.h"
-# include <get_next_line.h>
-# include <libft.h>
+# include "get_next_line.h"
+# include "libft.h"
 # include <stdbool.h>
 
+typedef struct s_pipe	t_pipe;
 typedef struct s_cmd	t_cmd;
+
+t_pipe	*parse_pipe(t_token *tokens, t_cmd *cmds);
 
 t_cmd	*parse_cmd(t_token *tokens, char **identifiers, char *envp[]);
 char	*parse_path(char *envp[], char *cmd);

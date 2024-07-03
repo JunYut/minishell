@@ -29,8 +29,10 @@ typedef struct s_append
 }	t_append;
 
 // [cmd] | [cmd]
+// assign address only
 typedef struct s_pipe
 {
+	int		pipe[2];
 	t_cmd	*left;
 	t_cmd	*right;
 }	t_pipe;
@@ -47,6 +49,7 @@ typedef struct s_logical
 typedef struct s_cmd_line
 {
 	// TODO: execution list
+	t_pipe	*pipes;
 	t_cmd	*cmds;
 	t_token	*tokens;
 	char	**identifiers;
