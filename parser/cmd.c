@@ -5,7 +5,7 @@
 # include "debug.h"
 
 // will not handle '*', quotes and subshells
-t_cmd	*parse(t_token *tokens, char **identifiers, char *envp[])
+t_cmd	*parse_cmd(t_token *tokens, char **identifiers, char *envp[])
 {
 	t_cmd	*cmds;
 	int		cmd_c;

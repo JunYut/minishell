@@ -12,6 +12,7 @@ t_cmd_line	*init_cmd(const char *raw, char *envp[])
 	cmd = (t_cmd_line *)ft_calloc(1, sizeof(t_cmd_line));
 	cmd->identifiers = ft_split(raw, ' ');	// Not legit
 	cmd->tokens = tokenize(cmd->identifiers, envp);
-	cmd->cmds = parse(cmd->tokens, cmd->identifiers, envp);
+	cmd->cmds = parse_cmd(cmd->tokens, cmd->identifiers, envp);
+	// parse operators
 	return (cmd);
 }
