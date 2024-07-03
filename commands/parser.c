@@ -56,7 +56,7 @@ char	*parse_path(char *envp[], char *cmd)
 	path = NULL;
 	i = -1;
 	while (path_list[++i] && !path)
-		if (access(path_list[i], X_OK) == 0)
+		if (access(path_list[i], X_OK) == 0)	// not considering directories
 			path = ft_strdup(path_list[i]);
 	free_2d((void **)path_list);
 	return (path);

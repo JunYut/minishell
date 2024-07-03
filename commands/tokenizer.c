@@ -5,7 +5,7 @@
 t_token	*tokenize(char **identifiers, char *envp[])
 {
 	t_token	*tokens;
-	int				count;
+	int		count;
 
 	count = -1;
 	while (identifiers[++count]);

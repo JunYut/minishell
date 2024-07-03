@@ -23,6 +23,7 @@ int main(int argc, char *argv[], char *envp[])
 		print_cmd(cmds->content);
 	}
 	free(cmd);
+	printf("access: %d\n", access("commands/", X_OK));
 
 	// TODO: Executing multiple command lines
 }
