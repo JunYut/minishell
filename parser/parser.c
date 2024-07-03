@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/02 15:03:38 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/03 13:22:36 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,17 @@ t_node	*build_ast(int min_prec)
 	t_token_type	op;
 
 	left = get_term();
+	if (!left)
+		return (NULL);
+	while (is_and_or_pipe(g_minishell.curr_token->type) && token_precedence(g_minishell.curr_token->type) >= min_prec)
+	{
+		op = g_minishell.curr_token->type;
+		g_minishell.curr_token = g_minishell.curr_token->next;
+		if (!g_minishell.curr_token)
+			return (set_parse_err_type(E_SYNTAX), left);
+		n_prec = token_precendence(op + 1);
+		right = build_ast(n_prec);
+	}
 }
 
 t_node	*get_term(void)
@@ -59,13 +70,22 @@ t_node	*get_simple_cmd(void)
 	t_node	*node;
 
 	node = init_new_node(N_CMD);
+	if (!node)
+		return (set_parse_err_type(E_MEM), NULL);
 	while (g_minishell.curr_token->type == T_WORD || is_redirection(g_minishell.curr_token->type))
 	{
 		if (g_minishell.curr_token->type == T_WORD)
 		{
-			if (!)
+			if (!join_args(&(node->args)))
+				return (set_parse_err_type(E_MEM), NULL);
+		}
+		else if (is_redirection(g_minishell.curr_token->type))
+		{
+			if (!get_io_list(&(node->io_list)))
+				return (free(node->args), free(node), NULL);
 		}
 	}
+	return (node);
 }
 
 int	join_args(char	**args)
@@ -76,20 +96,14 @@ int	join_args(char	**args)
 		*args = ft_strdup("");
 	if (!*args)
 		return (0);
-	// while (g_minishell.curr_token && (g_minishell.curr_token->type == T_WORD || is_redirection(g_minishell.curr_token->type)))
-	// {
-	// 	if (g_minishell.curr_token->type == T_WORD)
-	// 	{
-	// 		*args = ft_strjoin_delim(*args, g_minishell.curr_token->value, " ");
-	// 		if (!args)
-	// 			return (FAIL);
-	// 	}
-	// 	else if (is_redirection(g_minishell.curr_token->type))
-	// 	{
-	// 		if (!get_io_list)
-	// 			return (FAIL);
-	// 	}
-	// }
+	while (g_minishell.curr_token && g_minishell.curr_token->type == T_WORD)
+	{
+		*args = ft_strjoin_delim(*args, g_minishell.curr_token->value, " ");
+		if (!args)
+			return (free(*args), FAIL);
+		g_minishell.curr_token = g_minishell.curr_token->next;
+	}
+	return (SUCCESS);
 }
 
 bool	get_io_list(t_io_node **io_list)
@@ -138,11 +152,25 @@ t_io_type	get_io_type(t_token_type type)
 		return (IO_APPEND);
 }
 
+bool	is_and_or_pipe(t_token_type type)
+{
+	if (type == T_PIPE || type == T_AND || type == T_OR)
+		return (true);
+	return (false);
+}
+
 bool	is_redirection(t_token_type type)
 {
 	if (type == T_REDIRECT_IN || type == T_REDIRECT_OUT || type == T_HERE_DOC || type == T_APPEND)
 		return (true);
 	return (false);
+}
+
+int	token_precedence(t_token_type type)
+{
+	if (type == T_AND || type == T_OR)
+		return (0);
+	return (1);
 }
 
 t_node	*init_new_node(t_node_type type)
@@ -174,13 +202,13 @@ void ft_append_io_node(t_io_node **list, t_io_node *new_node)
 {
 	t_io_node	*curr_node;
 
-	if (!*lst)
+	if (!*list)
 	{
-		lst = new_node;
+		*list = new_node;
 		return ;
 	}
-	curr_node = *lst;
+	curr_node = *list;
 	while (curr_node && curr_node->next)
 		curr_node = curr_node->next;
-	curr_node->next = new;
+	curr_node->next = new_node;
 }
