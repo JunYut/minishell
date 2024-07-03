@@ -22,6 +22,13 @@ typedef struct s_redirect
 	char	**options;
 }	t_redirect;
 
+// [cmd] | [cmd]
+typedef struct s_pipe
+{
+	t_cmd	*left;
+	t_cmd	*right;
+}	t_pipe;
+
 // This will be linked list's content
 typedef struct s_cmd_line
 {
