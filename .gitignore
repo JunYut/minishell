@@ -53,3 +53,5 @@ dkms.conf
 
 # Local files
 .vscode/
+shell
+*.txt
