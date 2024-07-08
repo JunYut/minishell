@@ -7,6 +7,7 @@ int main (int ac, char **av, char *envp[])
 {
 	(void)ac;
 	(void)av;
+	(void)envp;
 
 	char *cmds[] =
 	{
@@ -18,17 +19,18 @@ int main (int ac, char **av, char *envp[])
 		"/usr/bin/sort",
 		"/usr/bin/head"
 	};
-	char *args[][CMD_COUNT] =
+	char **args[] =
 	{
-		{"cat", NULL, NULL},
-		{"tr", "\'[:upper:]\'", "\'[:lower:]\'", NULL},
-		{"tr", "-c", "\'[:alnum:]\'", "\'\\n\'", NULL},
-		{"sort", NULL, NULL},
-		{"uniq", "-c", NULL},
-		{"sort", "-nr", NULL},
-		{"head", "-10", NULL}
+		(char *[]){"cat", NULL, NULL},
+		(char *[]){"tr", "\'[:upper:]\'", "\'[:lower:]\'", NULL},
+		(char *[]){"tr", "-c", "\'[:alnum:]\'", "\'\\n\'", NULL},
+		(char *[]){"sort", NULL, NULL},
+		(char *[]){"uniq", "-c", NULL},
+		(char *[]){"sort", "-nr", NULL},
+		(char *[]){"head", "-10", NULL},
+		NULL
 	};
-	int fd[PIPE_COUNT][2];
+	int *fd[] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL};
 
 	for (int i = 0; i < PIPE_COUNT; i++)
 		pipe(fd[i]);
