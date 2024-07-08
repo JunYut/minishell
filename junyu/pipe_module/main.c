@@ -17,7 +17,8 @@ int main (int ac, char **av, char *envp[])
 		"/usr/bin/sort",
 		"/usr/bin/uniq",
 		"/usr/bin/sort",
-		"/usr/bin/head"
+		"/usr/bin/head",
+		NULL
 	};
 	char **args[] =
 	{
@@ -34,6 +35,9 @@ int main (int ac, char **av, char *envp[])
 
 	for (int i = 0; i < PIPE_COUNT; i++)
 		pipe(fd[i]);
+
+	for (int i = 0; fd[i]; i++)
+		printf("fd[%d]: %d %d\n", i, fd[i][0], fd[i][1]);
 
 	pipex(cmds, args, fd, PIPE_COUNT);
 }
