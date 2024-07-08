@@ -12,6 +12,7 @@ int main (int ac, char **av, char *envp[])
 {
 	(void)ac;
 	(void)av;
+	(void)envp;
 
 	// Single pipe
 	# if PROGRAM == 0
@@ -24,18 +25,18 @@ int main (int ac, char **av, char *envp[])
 		{
 			close(fd[0]); // close read end
 			dup2(fd[1], 1); // stdout -> fd[1]
-			execve("/usr/bin/echo", (char *[]){"echo", "Hello world", NULL}, NULL);
+			execve("/usr/bin/ls", (char *[]){"ls", NULL, NULL}, NULL);
 		}
 		else
 		{
 			close(fd[1]); // close write end
 			dup2(fd[0], 0); // stdout -> fd[0]
-			char *args[] = {"cat", NULL, NULL};
-			execve("/usr/bin/cat", args, envp);
+			char *args[] = {"grep", ".c", NULL};
+			execve("/usr/bin/grep", args, envp);
 		}
 	# endif
 
-	// Multiple pipe
+	// 2 pipes
 	# if PROGRAM == 1
 		char *cmds[] =
 		{
@@ -49,37 +50,41 @@ int main (int ac, char **av, char *envp[])
 			{"grep", ".c", NULL},
 			{"wc", "-l", NULL}
 		};
-		int fd[PIPE_COUNT][2];
+		int fd[2][2];
 		pid_t pid;
 
-		for (int i = 0; i < PIPE_COUNT; ++i)
-			pipe(fd[i]);
+		pipe(fd[0]);
+		pipe(fd[1]);
+
 		pid = fork();
 		if (pid == 0)
+		{
+			close(fd[0][0]); // not used
+			close(fd[1][0]); // not used
+			close(fd[1][1]); // not used
+			dup2(fd[0][1], 1); // stdout -> fd[1]
+			execve(cmds[0], args[0], NULL);
+		}
+		else
 		{
 			pid = fork();
 			if (pid == 0)
 			{
-				close(fd[0][0]);
-				dup2(fd[0][1], STDOUT_FILENO);
-				close(fd[0][1]);
-				execve(cmds[2], args[2], envp);
+				close(fd[0][1]); // not used
+				close(fd[1][0]); // not used
+				dup2(fd[0][0], 0); // stdin -> fd[0]
+				dup2(fd[1][1], 1); // stdout -> fd[1]
+				execve(cmds[1], args[1], NULL);
 			}
 			else
 			{
-				dup2(fd[0][0], STDIN_FILENO);
-				close(fd[0][0]);
-				dup2(fd[1][1], STDOUT_FILENO);
-				close(fd[1][1]);
-				execve(cmds[1], args[1], envp);
+				close(fd[0][0]); // not used
+				close(fd[0][1]); // not used
+				close(fd[1][1]); // not used
+				dup2(fd[1][0], 0); 	// Causing infinite loop
+				execve(cmds[2], args[2], NULL);
 			}
 		}
-		else
-		{
-			close(fd[1][1]);
-			dup2(fd[1][0], STDIN_FILENO);
-			close(fd[1][0]);
-			execve(cmds[0], args[0], envp);
-		}
+
 	# endif
 }
