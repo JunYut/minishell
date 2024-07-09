@@ -25,7 +25,7 @@ int main (int ac, char **av, char *envp[])
 		(char *[]){"cat", "main.c", NULL},
 		(char *[]){"tr", "\'[:upper:]\'", "\'[:lower:]\'", NULL},
 		(char *[]){"tr", "-c", "\'[:alnum:]\'", "\'\\n\'", NULL},
-		(char *[]){"sort", NULL, NULL},
+		(char *[]){"sort", NULL},
 		(char *[]){"uniq", "-c", NULL},
 		(char *[]){"sort", "-nr", NULL},
 		(char *[]){"head", "-10", NULL},

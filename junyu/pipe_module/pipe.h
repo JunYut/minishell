@@ -3,6 +3,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <stdlib.h>
 # include <stdio.h>
 
 # define DEBUG 1
