@@ -12,6 +12,21 @@ int main (int ac, char **av, char *envp[])
 	(void)av;
 	(void)envp;
 
+	# if PIPE_COUNT == 1
+	char *cmds[] =
+	{
+		"/usr/bin/cat",
+		"/usr/bin/head",
+		NULL
+	};
+	char **args[] =
+	{
+		(char *[]){"cat", "main.c", NULL},
+		(char *[]){"head", "-10", NULL},
+		NULL
+	};
+	# endif
+	# if PIPE_COUNT == 6
 	char *cmds[] =
 	{
 		"/usr/bin/cat",
@@ -34,6 +49,8 @@ int main (int ac, char **av, char *envp[])
 		(char *[]){"head", "-10", NULL},
 		NULL
 	};
+	# endif
+
 	int fd[PIPE_COUNT][2] = {0};
 
 	for (int i = 0; i < PIPE_COUNT; i++)

@@ -4,7 +4,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-# define PROGRAM 2
+# define PROGRAM 3
 # define CMD_COUNT 3
 # define PIPE_COUNT CMD_COUNT - 1
 
@@ -157,5 +157,18 @@ int main (int ac, char **av, char *envp[])
 		execve(cmds[3], args[3], NULL);
 	}
 	wait(NULL);
+	# endif
+
+	// Error tests
+	# if PROGRAM == 3
+	char *cmd = "/usr/bin/head";
+	char *args[] = {"head", NULL};
+	int fd[2];
+
+	pipe(fd);
+	dup2(fd[1], 0); // head: Error reading stdin
+	// dup2(fd[0], 1);
+
+	execve(cmd, args, envp);
 	# endif
 }
