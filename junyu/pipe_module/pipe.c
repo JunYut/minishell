@@ -28,17 +28,30 @@ void	pipex(char *cmds[], char ***args, int fd[][2], int pipe_count)
 // not redirecting properly
 void	redirect(int fd[][2], int i, int pipe_count)
 {
-	printf("redirecting\n");
+	int	stdout_fd;
+	int	stdin_fd;
+
+	stdout_fd = dup(STDOUT_FILENO);
+	stdin_fd = dup(STDIN_FILENO);
+	if (i == pipe_count)
+		return ;
+	// printf("i: %d\n", i);
+	// printf("redirecting\n");
 	if (i == 0)
-		dup2(fd[i][1], STDOUT_FILENO);
+		dup2(fd[0][1], STDOUT_FILENO);
 	else if (i == pipe_count - 1)
-		dup2(fd[i - 1][0], STDIN_FILENO);
+		dup2(fd[pipe_count - 1][0], STDIN_FILENO);
 	else
 	{
+		// printf("redirecting both\n");
 		dup2(fd[i - 1][0], STDIN_FILENO);
 		dup2(fd[i][1], STDOUT_FILENO);
 	}
-	printf("redirected\n");
+	dup2(stdout_fd, STDOUT_FILENO);
+	dup2(stdin_fd, STDIN_FILENO);
+	close(stdout_fd);
+	close(stdin_fd);
+	// printf("redirected\n");
 }
 
 // i is the index of the current pipe
@@ -49,10 +62,10 @@ void	close_fds(int fd[][2], int i, int pipe_count)
 	// printf("i: %d\n", i);
 	// printf("closing fds\n");
 	if (i == 0)
-		close(fd[i][0]);
+		close(fd[0][0]);
 	// printf("closed fd[0][0]\n");
 	j = -1;
-	while (++j <= i)
+	while (++j < pipe_count)
 	{
 		if (i > 0 && j > 0)
 			close(fd[j - 1][1]);
@@ -60,6 +73,6 @@ void	close_fds(int fd[][2], int i, int pipe_count)
 	}
 	// printf("closed most fds\n");
 	if (i == pipe_count - 1)
-		close(fd[i][1]);
+		close(fd[pipe_count - 1][1]);
 	// printf("closed all fds\n");
 }
