@@ -22,7 +22,7 @@ int main (int ac, char **av, char *envp[])
 	};
 	char **args[] =
 	{
-		(char *[]){"cat", NULL, NULL},
+		(char *[]){"cat", "main.c", NULL},
 		(char *[]){"tr", "\'[:upper:]\'", "\'[:lower:]\'", NULL},
 		(char *[]){"tr", "-c", "\'[:alnum:]\'", "\'\\n\'", NULL},
 		(char *[]){"sort", NULL, NULL},

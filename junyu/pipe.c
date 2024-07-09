@@ -4,7 +4,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-# define PROGRAM 1
+# define PROGRAM 2
 # define CMD_COUNT 3
 # define PIPE_COUNT CMD_COUNT - 1
 
@@ -86,5 +86,76 @@ int main (int ac, char **av, char *envp[])
 			}
 		}
 
+	# endif
+
+	// 3 pipes
+	# if PROGRAM == 2
+	char *cmds[] =
+	{
+		"/bin/ls",
+		"/usr/bin/grep",
+		"/usr/bin/sort",
+		"/bin/cat",
+		NULL
+	};
+	char **args[] =
+	{
+		(char *[]){"ls", NULL},
+		(char *[]){"grep", "c", NULL},
+		(char *[]){"sort", "-r", NULL},
+		(char *[]){"cat", "-e", NULL},
+		NULL
+	};
+	int	fd[3][2];
+	pid_t pid;
+
+	for (int i = 0; i < 3; i++)
+		pipe(fd[i]);
+
+	pid = fork();
+	if (pid == 0)
+	{
+		close(fd[0][0]);
+		close(fd[1][0]);
+		close(fd[1][1]);
+		close(fd[2][0]);
+		close(fd[2][1]);
+		dup2(fd[0][1], STDOUT_FILENO);
+		execve(cmds[0], args[0], NULL);
+	}
+	pid = fork();
+	if (pid == 0)
+	{
+		close(fd[0][1]);
+		close(fd[1][0]);
+		close(fd[2][0]);
+		close(fd[2][1]);
+		dup2(fd[0][0], STDIN_FILENO);
+		dup2(fd[1][1], STDOUT_FILENO);
+		execve(cmds[1], args[1], NULL);
+	}
+	pid = fork();
+	if (pid == 0)
+	{
+		close(fd[0][0]);
+		close(fd[0][1]);
+		close(fd[1][1]);
+		close(fd[2][0]);
+		dup2(fd[1][0], STDIN_FILENO);
+		dup2(fd[2][1], STDOUT_FILENO);
+		execve(cmds[2], args[2], NULL);
+	}
+	pid = fork();
+	if (pid == 0)
+	{
+		close(fd[0][0]);
+		close(fd[0][1]);
+		close(fd[1][0]);
+		close(fd[1][1]);
+		close(fd[2][1]);
+		dup2(fd[2][0], STDIN_FILENO);
+		execve(cmds[3], args[3], NULL);
+	}
+	wait(NULL);
 	# endif
 }
