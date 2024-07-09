@@ -31,13 +31,10 @@ int main (int ac, char **av, char *envp[])
 		(char *[]){"head", "-10", NULL},
 		NULL
 	};
-	int *fd[] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL};
+	int fd[PIPE_COUNT][2] = {0};
 
 	for (int i = 0; i < PIPE_COUNT; i++)
 		pipe(fd[i]);
-
-	for (int i = 0; fd[i]; i++)
-		printf("fd[%d]: %d %d\n", i, fd[i][0], fd[i][1]);
 
 	pipex(cmds, args, fd, PIPE_COUNT);
 }

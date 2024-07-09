@@ -1,28 +1,24 @@
 # include "pipe.h"
 
-void	pipex(char *cmds[], char ***args, int **fd, int pipe_count)
+void	pipex(char *cmds[], char ***args, int fd[][2], int pipe_count)
 {
 	pid_t	pid;
 	int		i;
 
 	(void)cmds;
 	(void)args;
-	(void)fd;
-	(void)pipe_count;
-	(void)pid;
 	i = -1;
-	while (++i < pipe_count)
+	while (++i < pipe_count + 1)
 	{
 		pid = fork();
 		if (pid == 0)
 		{
 			close_fds(fd, i, pipe_count);
 			// redirect(fd, i, pipe_count);
-			for (int i = 0; fd[i]; i++)
-				printf("fd[%d]: %d %d\n", i, fd[i][0], fd[i][1]);
 			// execve(cmds[i], args[i], NULL);
 		}
 	}
+	wait(NULL);
 
 	// for (int j = 0; cmds[j]; j++)
 	// {
@@ -33,7 +29,7 @@ void	pipex(char *cmds[], char ***args, int **fd, int pipe_count)
 	// }
 }
 
-void	redirect(int **fd, int i, int pipe_count)
+void	redirect(int fd[][2], int i, int pipe_count)
 {
 	printf("redirecting\n");
 	if (i == 0)
@@ -50,7 +46,7 @@ void	redirect(int **fd, int i, int pipe_count)
 
 // i is the index of the current pipe
 // !!! stuck at while loop !!!
-void	close_fds(int **fd, int i, int pipe_count)
+void	close_fds(int fd[][2], int i, int pipe_count)
 {
 	int	j;
 
