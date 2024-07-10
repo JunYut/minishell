@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:53:06 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/10 12:56:52 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:24:51 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,22 @@ void	add_token_to_list(t_token **token_list, t_token *token)
 		current = current->next;
 	current->next = token;
 	token->prev = current;
+}
+
+void	clear_token_list(t_token **list)
+{
+	t_token	*curr_node;
+	t_token	*next;
+
+	curr_node = *list;
+	if (!curr_node)
+		return ;
+	while (curr_node)
+	{
+		free(curr_node->value);
+		next = curr_node->next;
+		free(curr_node);
+		curr_node = next;
+	}
+	*list = NULL;
 }

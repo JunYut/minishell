@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 09:32:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/10 13:24:16 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:53:20 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,15 @@ int	is_space(char c)
 
 void	skip_spaces(char **line)
 {
-	while(**line && is_space(**line))
+	while (**line && is_space(**line))
 		(*line)++;
 }
 
 int	is_seperator(char *s)
 {
-	if (is_space(*s) || !ft_strncmp(s, "&&", 2) || *s == '>' || *s == '<' || *s == '|' || *s == '(' || *s == ')')
+	if (is_space(*s) || !ft_strncmp(s, "&&", 2) || *s == '>' || *s == '<'
+		|| *s == '|' || *s == '(' || *s == ')')
 		return (1);
-	return (0);
-}
-
-int	is_in_set(char c, char *set)
-{
-	while (*set != '\0')
-	{
-		if (c == *set)
-			return (1);
-		set++;
-	}
 	return (0);
 }
 
