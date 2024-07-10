@@ -6,7 +6,7 @@ void	pipex(char *cmds[], char ***args, int fd[][2], int cmd_count)
 	int		i;
 
 	i = -1;
-	while (++i < cmd_count + 1)
+	while (++i < cmd_count)
 	{
 		pid = fork();
 		if (pid == 0)
@@ -40,12 +40,12 @@ void	redirect(int fd[][2], int i, int pipe_count)
 */
 void	close_fds(int fd[][2], int pipe_count)
 {
-	int	j;
+	int	i;
 
-	j = -1;
-	while (++j < pipe_count)
+	i = -1;
+	while (++i < pipe_count)
 	{
-		close(fd[j][0]);
-		close(fd[j][1]);
+		close(fd[i][0]);
+		close(fd[i][1]);
 	}
 }

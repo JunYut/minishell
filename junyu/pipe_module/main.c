@@ -3,7 +3,7 @@
 # ifndef DEBUG
 	# define DEBUG 1
 # endif
-# define PIPE_COUNT 6
+# define PIPE_COUNT 2
 
 int main (int ac, char **av, char *envp[])
 {
@@ -28,15 +28,15 @@ int main (int ac, char **av, char *envp[])
 	# if PIPE_COUNT == 2
 	char *cmds[] =
 	{
-		"/bin/cat",
+		"/bin/ls",
 		"/usr/bin/grep",
 		"/usr/bin/wc",
 		NULL
 	};
 	char **args[] =
 	{
-		(char *[]){"cat", "main.c", NULL},
-		(char *[]){"grep", "#", NULL},
+		(char *[]){"ls", "-l", NULL},
+		(char *[]){"grep", "c", NULL},
 		(char *[]){"wc", "-l", NULL},
 		NULL
 	};
@@ -98,6 +98,7 @@ int main (int ac, char **av, char *envp[])
 	# if DEBUG == 1
 	printf("PID: %d\n", getpid());
 	printf("PIPE_COUNT: %d\n", PIPE_COUNT);
+	printf("\n");
 	# endif
 
 	pipex(cmds, args, fd, PIPE_COUNT + 1);
