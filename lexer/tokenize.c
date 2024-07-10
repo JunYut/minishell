@@ -1,42 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/01 09:08:41 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:22:19 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
-t_minishell g_minishell;
-
-int	main(void)
-{
-	g_minishell.token_list = NULL;
-	g_minishell.line = NULL;
-	while (1)
-	{
-		g_minishell.line = readline("minishell> ");
-		if (g_minishell.line == NULL)
-			break ;
-		if (*g_minishell.line != '\0')
-			add_history(g_minishell.line);
-		tokenize(g_minishell.line);
-		if (g_minishell.token_list == NULL)
-			continue ;
-		while (g_minishell.token_list != NULL)
-		{
-			printf("value: %s\n", g_minishell.token_list->value);
-			printf("type: %d\n", g_minishell.token_list->type);
-			printf("-------------------------------------\n");
-			g_minishell.token_list = g_minishell.token_list->next;
-		}
-	}
-	return (0);
-}
+#include "minishell.h"
 
 void	tokenize(char *line)
 {
@@ -56,26 +30,25 @@ void	tokenize(char *line)
 
 void	handle_operator_token(char **line, t_token **token_list)
 {
-		if (!ft_strncmp(*line, "<<", 2))
-			append_operator_token(T_HERE_DOC, line, token_list);
-		else if (!ft_strncmp(*line, ">>", 2))
-			append_operator_token(T_APPEND, line, token_list);
-		else if (!ft_strncmp(*line, "<", 1))
-			append_operator_token(T_REDIRECT_IN, line, token_list);
-		else if (!ft_strncmp(*line, ">", 1))
-			append_operator_token(T_REDIRECT_OUT, line, token_list);
-		else if (!ft_strncmp(*line, "||", 2))
-			append_operator_token(T_OR, line, token_list);
-		else if (!ft_strncmp(*line, "|", 1))
-			append_operator_token(T_PIPE, line, token_list);
-		else if (!ft_strncmp(*line, "&&", 1))
-			append_operator_token(T_AND, line, token_list);
-		else if (!ft_strncmp(*line, "(", 1))
-			append_operator_token(T_L_BRACKET, line, token_list);
-		else
-			append_operator_token(T_R_BRACKET, line, token_list);
+	if (!ft_strncmp(*line, "<<", 2))
+		append_operator_token(T_HERE_DOC, line, token_list);
+	else if (!ft_strncmp(*line, ">>", 2))
+		append_operator_token(T_APPEND, line, token_list);
+	else if (!ft_strncmp(*line, "<", 1))
+		append_operator_token(T_REDIRECT_IN, line, token_list);
+	else if (!ft_strncmp(*line, ">", 1))
+		append_operator_token(T_REDIRECT_OUT, line, token_list);
+	else if (!ft_strncmp(*line, "||", 2))
+		append_operator_token(T_OR, line, token_list);
+	else if (!ft_strncmp(*line, "|", 1))
+		append_operator_token(T_PIPE, line, token_list);
+	else if (!ft_strncmp(*line, "&&", 1))
+		append_operator_token(T_AND, line, token_list);
+	else if (!ft_strncmp(*line, "(", 1))
+		append_operator_token(T_L_BRACKET, line, token_list);
+	else
+		append_operator_token(T_R_BRACKET, line, token_list);
 }
-
 
 void	append_operator_token(t_token_type type, char **line, t_token **token_list)
 {
@@ -119,36 +92,6 @@ void	append_word_token(char **line, t_token **token_list)
 		exit(1); //TODO: Handle this error appropriately
 	*line += char_count;
 	add_token_to_list(token_list, token);
-}
-
-t_token	*init_new_token(t_token_type type, char *value)
-{
-	t_token *token;
-
-	token = ft_calloc(1, sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->value = value;
-	token->type = type;
-	token->next = NULL;
-	token->prev = NULL;
-	return (token);
-}
-
-void	add_token_to_list(t_token **token_list, t_token *token)
-{
-	t_token	*current;
-
-	if (*token_list == NULL)
-	{
-		*token_list = token;
-		return	;
-	}
-	current = *token_list;
-	while (current != NULL && current->next != NULL)
-		current = current->next;
-	current->next = token;
-	token->prev = current;
 }
 
 //TODO: Finish functions for appending tokens to list

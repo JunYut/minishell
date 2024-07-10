@@ -6,7 +6,7 @@
 #    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/06 14:33:10 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/07/02 12:23:05 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/07/10 13:23:33 by kkhai-ki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,14 @@ CFLAGS = -Wall -Wextra -Werror $(INCLUDE) # -fsanitize=address -g3
 
 INCLUDE = -Iinclude -I$(LIBFT_DIR) -I$(LIBFT_DIR)/include
 
-TOKENIZER = tokenizer/main.c	\
-			tokenizer/utils.c
+LEXER = lexer/tokenize.c	\
+			lexer/utils.c
 
 PARSER = parser/parser.c
 
-SRC =	$(TOKENIZER) $(PARSER)
+SRC =	$(LEXER) $(PARSER)
+
+MAIN = main.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:%.c=%.o)

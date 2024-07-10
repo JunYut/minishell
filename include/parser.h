@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:11 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/10 12:50:14 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:27:38 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ typedef struct s_parse_err
 	t_parse_err_type	type;
 	char				*str;
 }	t_parse_err;
+
+
 
 #endif
