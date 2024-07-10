@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define PROGRAM 0
-#define PIPE_COUNT 6
+#define PROGRAM 1
+#define PIPE_COUNT 5
 
 # if PROGRAM == 1
 int main() {
@@ -55,6 +55,45 @@ int main() {
 		(char *[]){"sort", "-r", NULL},
 		(char *[]){"cat", "-e", NULL},
 		NULL
+	};
+	# endif
+	# if PIPE_COUNT == 4
+	char *cmds[] =
+	{
+		"/bin/echo",
+		"/usr/bin/tr",
+		"/usr/bin/tr",
+		"/usr/bin/sort",
+		"/usr/bin/uniq",
+	};
+	char **args[] =
+	{
+		(char *[]){"echo", "Hello, World!", NULL},
+		(char *[]){"tr", "\' \'", "\'-\'", NULL},
+		(char *[]){"tr", "\'e\'", "\'E\'", NULL},
+		(char *[]){"sort", NULL},
+		(char *[]){"uniq", NULL},
+	};
+	# endif
+	# if PIPE_COUNT == 5
+	char *cmds[] =
+	{
+		"/bin/echo",
+		"/usr/bin/tr",
+		"/usr/bin/sort",
+		"/usr/bin/uniq",
+		"/usr/bin/tr",
+		"/usr/bin/awk",
+		NULL
+	};
+	char **args[] =
+	{
+		(char *[]){"echo", "Sample text for pipe demonstration", NULL},
+		(char *[]){"tr", "\' \'", "\'\\n\'", NULL},
+		(char *[]){"sort", NULL},
+		(char *[]){"uniq", NULL},
+		(char *[]){"tr", "\'a-z\'", "\'A-Z\'", NULL},
+		(char *[]){"awk", "{print $0 \"-PIPE\"}", NULL},
 	};
 	# endif
 	# if PIPE_COUNT == 6
