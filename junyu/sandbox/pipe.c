@@ -4,7 +4,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-# define PROGRAM 3
+# define PROGRAM 2
 # define CMD_COUNT 3
 # define PIPE_COUNT CMD_COUNT - 1
 
@@ -109,6 +109,8 @@ int main (int ac, char **av, char *envp[])
 	int	fd[3][2];
 	pid_t pid;
 
+	printf("PID: %d\n", getpid());
+
 	for (int i = 0; i < 3; i++)
 		pipe(fd[i]);
 
@@ -157,18 +159,27 @@ int main (int ac, char **av, char *envp[])
 		execve(cmds[3], args[3], NULL);
 	}
 	wait(NULL);
+	while (1);
 	# endif
 
 	// Error tests
 	# if PROGRAM == 3
-	char *cmd = "/usr/bin/head";
-	char *args[] = {"head", NULL};
+	char *cmds[] =
+	{
+		"/usr/bin/head",
+		"/usr/bin/tr"
+	};
+	char *args[][4] =
+	{
+		{"head", NULL},
+		{"tr", "-c", "\'[:alnum:]\'", NULL}
+	};
 	int fd[2];
 
 	pipe(fd);
 	dup2(fd[1], 0); // head: Error reading stdin
 	// dup2(fd[0], 1);
 
-	execve(cmd, args, envp);
+	execve(cmds[1], args[1], envp);
 	# endif
 }

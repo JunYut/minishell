@@ -1,10 +1,9 @@
 # include "pipe.h"
 
 # ifndef DEBUG
-	# define DEBUG 0
+	# define DEBUG 1
 # endif
-# define CMD_COUNT 7
-# define PIPE_COUNT CMD_COUNT - 1
+# define PIPE_COUNT 6
 
 int main (int ac, char **av, char *envp[])
 {
@@ -15,21 +14,55 @@ int main (int ac, char **av, char *envp[])
 	# if PIPE_COUNT == 1
 	char *cmds[] =
 	{
-		"/usr/bin/cat",
-		"/usr/bin/head",
+		"/bin/cat",
+		"/usr/bin/grep",
 		NULL
 	};
 	char **args[] =
 	{
 		(char *[]){"cat", "main.c", NULL},
-		(char *[]){"head", "-10", NULL},
+		(char *[]){"grep", "#", NULL},
+		NULL
+	};
+	# endif
+	# if PIPE_COUNT == 2
+	char *cmds[] =
+	{
+		"/bin/cat",
+		"/usr/bin/grep",
+		"/usr/bin/wc",
+		NULL
+	};
+	char **args[] =
+	{
+		(char *[]){"cat", "main.c", NULL},
+		(char *[]){"grep", "#", NULL},
+		(char *[]){"wc", "-l", NULL},
+		NULL
+	};
+	# endif
+	# if PIPE_COUNT == 3
+	char *cmds[] =
+	{
+		"/bin/ls",
+		"/usr/bin/grep",
+		"/usr/bin/sort",
+		"/bin/cat",
+		NULL
+	};
+	char **args[] =
+	{
+		(char *[]){"ls", NULL},
+		(char *[]){"grep", "c", NULL},
+		(char *[]){"sort", "-r", NULL},
+		(char *[]){"cat", "-e", NULL},
 		NULL
 	};
 	# endif
 	# if PIPE_COUNT == 6
 	char *cmds[] =
 	{
-		"/usr/bin/cat",
+		"/bin/cat",
 		"/usr/bin/tr",
 		"/usr/bin/tr",
 		"/usr/bin/sort",
@@ -54,16 +87,22 @@ int main (int ac, char **av, char *envp[])
 	int fd[PIPE_COUNT][2] = {0};
 
 	for (int i = 0; i < PIPE_COUNT; i++)
-		pipe(fd[i]);
+	{
+		if (pipe(fd[i]) == -1)
+		{
+			perror("pipe");
+			exit(EXIT_FAILURE);
+		}
+	}
 
 	# if DEBUG == 1
+	printf("PID: %d\n", getpid());
 	printf("PIPE_COUNT: %d\n", PIPE_COUNT);
-	for (int i = 0; i < PIPE_COUNT; i++)
-	{
-		printf("fd[%d][0]: %d\n", i, fd[i][0]);
-		printf("fd[%d][1]: %d\n", i, fd[i][1]);
-	}
 	# endif
 
-	pipex(cmds, args, fd, PIPE_COUNT);
+	pipex(cmds, args, fd, PIPE_COUNT + 1);
+
+	# if DEBUG == 0
+	while (1);
+	# endif
 }
