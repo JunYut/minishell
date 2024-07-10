@@ -6,18 +6,12 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:11 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/01 12:15:38 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:58:55 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
-
-# include "../libft/include/libft.h"
-# include "parser.h"
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 
 # define OPERATORS_SET "|><()"
 
@@ -43,16 +37,6 @@ typedef struct s_token
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
-
-typedef struct s_minishell
-{
-	t_token	*token_list;
-	t_token	*curr_token;
-	t_parse_err	parse_err;
-	char	*line;
-}	t_minishell;
-
-extern t_minishell	g_minishell;
 
 void	tokenize(char *line);
 void	append_operator_token(t_token_type type, char **line, t_token **token_list);
