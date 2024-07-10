@@ -4,10 +4,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define PROGRAM 1
-#define PIPE_COUNT 2
+#define PROGRAM 0
+#define PIPE_COUNT 6
 
-# if PROGRAM == 0
+# if PROGRAM == 1
 int main() {
 	# if PIPE_COUNT == 1
 	char *cmds[] =

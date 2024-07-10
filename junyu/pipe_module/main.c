@@ -3,7 +3,7 @@
 # ifndef DEBUG
 	# define DEBUG 1
 # endif
-# define PIPE_COUNT 2
+# define PIPE_COUNT 6
 
 int main (int ac, char **av, char *envp[])
 {

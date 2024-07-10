@@ -11,7 +11,7 @@ void	pipex(char *cmds[], char ***args, int fd[][2], int cmd_count)
 		pid = fork();
 		if (pid == 0)
 		{
-			redirect(fd, i, cmd_count);
+			redirect(fd, i, cmd_count - 1);
 			close_fds(fd, cmd_count - 1);
 			execve(cmds[i], args[i], NULL);
 			perror("execve");
