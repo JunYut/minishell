@@ -5,3 +5,8 @@
 - [ ] heredoc module
 - [ ] or module
 - [ ] and module
+- [ ] garbage collector module
+
+# Notes
+- garbage collector module:
+use signals to handle malloc failure
