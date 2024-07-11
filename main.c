@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/11 14:43:04 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:34:53 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(void)
 			break ;
 		if (*vars.line != '\0')
 			add_history(vars.line);
-		vars.token_list = tokenize(vars.line);
+		tokenize(vars.line, &vars);
 		if (vars.token_list == NULL)
 			continue ;
 		while (vars.token_list != NULL)

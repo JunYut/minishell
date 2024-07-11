@@ -6,22 +6,22 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/11 14:42:02 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:34:20 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*tokenize(char *line)
+void	tokenize(char *line, t_minishell *vars)
 {
 	t_token	*token_list;
-	int		token_err;
+	bool	token_err;
 
 	token_list = NULL;
-	token_err = 0;
+	token_err = false;
 	while (*line != '\0')
 	{
-		if (token_err != 0)
+		if (token_err == true)
 		{
 			clear_token_list(&token_list);
 			break	;
@@ -30,12 +30,12 @@ t_token	*tokenize(char *line)
 		if (!ft_strncmp(line, "&&", 2) || is_in_set(*line, OPERATORS_SET))
 			token_err = handle_operator_token(&line, &token_list);
 		else
-			token_err = append_word_token(&line, &token_list);
+			token_err = append_word_token(&line, &token_list, vars);
 	}
-	return(token_list);
+	vars->token_list = token_list;
 }
 
-int	handle_operator_token(char **line, t_token **token_list)
+bool	handle_operator_token(char **line, t_token **token_list)
 {
 	if (!ft_strncmp(*line, "<<", 2))
 		return (append_operator_token(T_HERE_DOC, line, token_list));
@@ -57,7 +57,7 @@ int	handle_operator_token(char **line, t_token **token_list)
 		return (append_operator_token(T_R_BRACKET, line, token_list));
 }
 
-int	append_operator_token(t_token_type type, char **line, t_token **token_list)
+bool	append_operator_token(t_token_type type, char **line, t_token **token_list)
 {
 	t_token	*token;
 	char	*value;
@@ -68,16 +68,16 @@ int	append_operator_token(t_token_type type, char **line, t_token **token_list)
 		char_count++;
 	value = ft_substr(*line, 0, char_count);
 	if (!value)
-		return (1);
+		return (true);
 	token = init_new_token(type, value);
 	if (!token)
-		return (1);
+		return (true);
 	add_token_to_list(token_list, token);
 	*line += char_count;
-	return (0);
+	return (false);
 }
 
-int	append_word_token(char **line, t_token **token_list)
+bool	append_word_token(char **line, t_token **token_list, t_minishell *vars)
 {
 	t_token	*token;
 	char	*value;
@@ -91,20 +91,20 @@ int	append_word_token(char **line, t_token **token_list)
 		if (is_quote(buffer[char_count]))
 		{
 			if (!is_quote_closed(buffer, &char_count))
-				return (handle_quote_err(buffer[char_count]));
+				return (handle_quote_err(buffer[char_count], vars), true);
 		}
 		else
 			char_count++;
 	}
 	value = ft_substr(buffer, 0, char_count);
 	if (!value)
-		return (1);
+		return (true);
 	token = init_new_token(T_WORD, value);
 	if (!token)
-		return (free(value), 1);
+		return (free(value), true);
 	*line += char_count;
 	add_token_to_list(token_list, token);
-	return (0);
+	return (false);
 }
 
 //NOTES: When encountering multiple syntax errors, Bash will report the first one

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:06:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/11 14:42:21 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:31:49 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,10 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "define.h"
 # include "lexer.h"
 # include "parser.h"
 # include "../libft/include/libft.h"
-
-typedef struct s_minishell
-{
-	t_token		*token_list;
-	t_token		*curr_token;
-	t_node		*ast;
-	t_parse_err	parse_err;
-	bool		token_err;
-	int			exit_status;
-	char		*line;
-}	t_minishell;
 
 void	init_vars(t_minishell *vars);
 
