@@ -1,18 +1,24 @@
 # include "redin.h"
 
-void	redin(char *cmd, char *file, char *argv[])
+void	redin(char *file, char *cmd, char *argv[])
 {
-	(void)cmd;
-	(void)file;
-	(void)argv;
-	int pipefd[2];
+	char	*content;
+	pid_t	pid;
+	int 	pipefd[2];
 
+	content = read_file(file);
 	pipe(pipefd);
-	dup2(pipefd[0], 0);
-	dup2(pipefd[1], 1);
-
-	close(pipefd[0]);
+	write(pipefd[1], content, ft_strlen(content));
 	close(pipefd[1]);
+	pid = fork();
+	if (pid == 0)
+	{
+		dup2(pipefd[0], STDIN_FILENO);
+		execve(cmd, argv, NULL);
+	}
+	close(pipefd[0]);
+	wait(NULL);
+	free(content);
 }
 
 // returns NULL on error

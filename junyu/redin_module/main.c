@@ -2,22 +2,20 @@
 # include <string.h>
 # include <stdio.h>
 
+# define DEBUG 1
 # define TEST 1
 
 int main(void)
 {
 	# if TEST == 1
-	// char *cmd = "/bin/ls";
+	char *cmd = "/bin/cat";
 	char *file = "run.sh";
-	// char *argv[] = {"ls", "-l", NULL};
+	char *argv[] = {"cat", "-e", NULL};
 	# endif
 
-	char *content = read_file(file);
-	printf("content:\n[%s]\n", content);
-	free(content);
+	redin(file, cmd, argv);
 
-	// char *str1 = strdup("hello");
-	// append(&str1, " world");
-	// printf("str1: [%s]\n", str1);
-	// free(str1);
+	# if DEBUG == 0
+	while (1);
+	# endif
 }
