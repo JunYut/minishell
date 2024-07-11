@@ -6,5 +6,9 @@
 int main(void)
 {
 	# if TEST == 1
+	char *cmd = "/bin/ls";
+	char *file = "run.sh";
+	char *argv[] = {"ls", "-l", NULL};
 	# endif
+
 }

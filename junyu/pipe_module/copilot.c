@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define PROGRAM 1
-#define PIPE_COUNT 5
+#define PROGRAM 0
+#define PIPE_COUNT 4
 
 # if PROGRAM == 1
 int main() {

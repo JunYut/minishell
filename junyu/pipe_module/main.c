@@ -3,14 +3,10 @@
 # ifndef DEBUG
 	# define DEBUG 1
 # endif
-# define PIPE_COUNT 5
+# define PIPE_COUNT 7
 
-int main (int ac, char **av, char *envp[])
+int main (void)
 {
-	(void)ac;
-	(void)av;
-	(void)envp;
-
 	# if PIPE_COUNT == 1
 	char *cmds[] =
 	{
@@ -67,14 +63,16 @@ int main (int ac, char **av, char *envp[])
 		"/usr/bin/tr",
 		"/usr/bin/sort",
 		"/usr/bin/uniq",
+		NULL
 	};
 	char **args[] =
 	{
 		(char *[]){"echo", "Hello, World!", NULL},
-		(char *[]){"tr", "\' \'", "\'-\'", NULL},
-		(char *[]){"tr", "\'e\'", "\'E\'", NULL},
+		(char *[]){"tr", " ", "-", NULL},
+		(char *[]){"tr", "e", "E", NULL},
 		(char *[]){"sort", NULL},
 		(char *[]){"uniq", NULL},
+		NULL
 	};
 	# endif
 	# if PIPE_COUNT == 5
@@ -122,10 +120,30 @@ int main (int ac, char **av, char *envp[])
 		NULL
 	};
 	# endif
+	# if PIPE_COUNT == 7
+	char *cmds[] =
+	{
+		"/bin/sleep",
+		"/bin/sleep",
+		"/bin/sleep",
+		"/bin/echo",
+		NULL
+	};
+	char **args[] =
+	{
+		(char *[]){"sleep", "2", NULL},
+		(char *[]){"sleep", "5", NULL},
+		(char *[]){"sleep", "2", NULL},
+		(char *[]){"echo", "Hello", NULL},
+		NULL
+	};
+	# endif
 
-	int fd[PIPE_COUNT][2] = {0};
+	int cmds_count = sizeof(cmds) / sizeof(cmds[0]) - 1;
+	int pipe_count = cmds_count - 1;
+	int fd[pipe_count][2];
 
-	for (int i = 0; i < PIPE_COUNT; i++)
+	for (int i = 0; i < pipe_count; i++)
 	{
 		if (pipe(fd[i]) == -1)
 		{
@@ -140,7 +158,9 @@ int main (int ac, char **av, char *envp[])
 	printf("\n");
 	# endif
 
-	pipex(cmds, args, fd, PIPE_COUNT + 1);
+	print_pipe(args);
+
+	pipex(cmds, args, fd, pipe_count + 1);
 
 	# if DEBUG == 0
 	while (1);

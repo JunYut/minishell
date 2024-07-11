@@ -49,3 +49,17 @@ void	close_fds(int fd[][2], int pipe_count)
 		close(fd[i][1]);
 	}
 }
+
+void	print_pipe(char **args[])
+{
+    for (int i = 0; args[i] != NULL; i++) {
+        for (int j = 0; args[i][j] != NULL; j++) {
+            printf("%s", args[i][j]);
+			if (args[i])
+				printf(" ");
+        }
+		if (args[i + 1])
+			printf("| ");
+    }
+	printf("\n\n");
+}
