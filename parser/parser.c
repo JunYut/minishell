@@ -6,11 +6,11 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/03 13:22:36 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/11 12:56:35 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 
 void	set_parse_err_type(t_parse_err_type type)
 {

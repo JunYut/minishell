@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:06:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/10 14:31:43 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/11 13:26:23 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ typedef struct s_minishell
 	char		*line;
 }	t_minishell;
 
-void	init_g_minishell(void);
-
-extern t_minishell	g_minishell;
+void	init_vars(t_minishell *vars);
+void	tokenize(char *line, t_minishell *vars);
+void	handle_quote_err(char quote, t_minishell *vars);
+bool	append_word_token(char **line, t_token **token_list, t_minishell *vars);
 
 #endif

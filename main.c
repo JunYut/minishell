@@ -6,44 +6,44 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/10 14:46:55 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/11 13:23:04 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_minishell g_minishell;
-
-void	init_g_minishell(void)
+void	init_vars(t_minishell *vars)
 {
-	g_minishell.token_list = NULL;
-	g_minishell.curr_token = NULL;
-	g_minishell.ast = NULL;
-	g_minishell.parse_err.type = 0;
-	g_minishell.parse_err.str = NULL;
-	g_minishell.token_err = false;
-	g_minishell.line = NULL;
+	vars->token_list = NULL;
+	vars->curr_token = NULL;
+	vars->ast = NULL;
+	vars->parse_err.type = 0;
+	vars->parse_err.str = NULL;
+	vars->token_err = false;
+	vars->line = NULL;
 }
 
 int	main(void)
 {
+	t_minishell	vars;
+
 	while (1)
 	{
-		init_g_minishell();
-		g_minishell.line = readline("minishell> ");
-		if (g_minishell.line == NULL)
+		init_vars(&vars);
+		vars.line = readline("minishell> ");
+		if (vars.line == NULL)
 			break ;
-		if (*g_minishell.line != '\0')
-			add_history(g_minishell.line);
-		tokenize(g_minishell.line);
-		if (g_minishell.token_list == NULL)
+		if (*vars.line != '\0')
+			add_history(vars.line);
+		tokenize(vars.line, &vars);
+		if (vars.token_list == NULL)
 			continue ;
-		// while (g_minishell.token_list != NULL)
+		// while (vars.token_list != NULL)
 		// {
-		// 	printf("value: %s\n", g_minishell.token_list->value);
-		// 	printf("type: %d\n", g_minishell.token_list->type);
+		// 	printf("value: %s\n", vars.token_list->value);
+		// 	printf("type: %d\n", vars.token_list->type);
 		// 	printf("-------------------------------------\n");
-		// 	g_minishell.token_list = g_minishell.token_list->next;
+		// 	vars.token_list = vars.token_list->next;
 		// }
 	}
 	return (0);

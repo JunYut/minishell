@@ -6,31 +6,33 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/10 15:24:17 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/11 13:26:04 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	tokenize(char *line)
+void	tokenize(char *line, t_minishell *vars)
 {
 	t_token	*token_list;
+	bool	token_err;
 
 	token_list = NULL;
+	token_err = false;
 	while (*line != '\0')
 	{
-		if (g_minishell.token_err == true)
+		if (token_err == true)
 		{
 			clear_token_list(&token_list);
 			break	;
 		}
 		skip_spaces(&line);
 		if (!ft_strncmp(line, "&&", 2) || is_in_set(*line, OPERATORS_SET))
-			g_minishell.token_err = handle_operator_token(&line, &token_list);
+			token_err = handle_operator_token(&line, &token_list);
 		else
-			g_minishell.token_err = append_word_token(&line, &token_list);
+			token_err = append_word_token(&line, &token_list, vars);
 	}
-	g_minishell.token_list = token_list;
+	vars->token_list = token_list;
 }
 
 bool	handle_operator_token(char **line, t_token **token_list)
@@ -75,7 +77,7 @@ bool	append_operator_token(t_token_type type, char **line, t_token **token_list)
 	return (false);
 }
 
-bool	append_word_token(char **line, t_token **token_list)
+bool	append_word_token(char **line, t_token **token_list, t_minishell *vars)
 {
 	t_token	*token;
 	char	*value;
@@ -89,7 +91,7 @@ bool	append_word_token(char **line, t_token **token_list)
 		if (is_quote(buffer[char_count]))
 		{
 			if (!is_quote_closed(buffer, &char_count))
-				return (handle_quote_err(buffer[char_count]), true);
+				return (handle_quote_err(buffer[char_count], vars), true);
 		}
 		else
 			char_count++;
