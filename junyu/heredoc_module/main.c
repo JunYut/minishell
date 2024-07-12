@@ -4,7 +4,7 @@
 
 int main(void)
 {
-	# if TEST == 0
+	# if TEST == 1
 	char	*cmd = NULL;
 	char	*args[] = {NULL};
 	# endif
@@ -13,6 +13,6 @@ int main(void)
 	char	*args[] = {"cat", "-e", NULL};
 	# endif
 
-	// heredoc(cmd, args, "eof");
+	heredoc("eof", cmd, args);
 	// printf("[%s]\n", readline("> "));
 }

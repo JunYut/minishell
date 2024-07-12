@@ -2,7 +2,7 @@
 - [x] redin module
 - [x] redout module
 - [x] append module
-- [ ] heredoc module
+- [x] heredoc module
 - [ ] or module
 - [ ] and module
 - [x] garbage collector module

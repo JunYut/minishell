@@ -7,7 +7,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-void	heredoc(char *cmd, char *args[], char *delimiter);
+void	heredoc(char *delimiter, char *cmd, char *args[]);
+char	*read_doc(char *delimiter);
 void	append_s(char **str1, char *str2);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_strlen(char *str);

@@ -1,9 +1,31 @@
 # include "heredoc.h"
 
-void	heredoc(char *cmd, char *args[], char *delimiter)
+void	heredoc(char *delimiter, char *cmd, char *args[])
 {
-	(void)cmd;
-	(void)args;
+	char	*doc;
+	pid_t	pid;
+	int		fd[2];
+
+	doc = read_doc(delimiter);
+	if (cmd)
+	{
+		pipe(fd);
+		write(fd[1], doc, ft_strlen(doc));
+		close(fd[1]);
+		pid = fork();
+		if (pid == 0)
+		{
+			dup2(fd[0], STDIN_FILENO);
+			execve(cmd, args, NULL);
+		}
+		close(fd[0]);
+		wait(NULL);
+	}
+	free(doc);
+}
+
+char	*read_doc(char *delimiter)
+{
 	char	*doc;
 	char	*line;
 
@@ -21,6 +43,7 @@ void	heredoc(char *cmd, char *args[], char *delimiter)
 		append_s(&doc, "\n");
 		free(line);
 	}
+	return (doc);
 }
 
 void	append_s(char **str1, char *str2)
