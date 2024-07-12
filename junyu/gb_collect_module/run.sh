@@ -2,10 +2,10 @@
 
 OS=$(uname)
 CFLAGS="-Wall -Wextra -Werror -Wpedantic"
-LIBS="-lreadline -ltermcap -lcurses"
+LIBS=""
 
 # Compile
-if [ $# -eq 0 ]; then
+if [ $# -eq 0 ] || [ "$1" = "-l" ]; then
 	clang $CFLAGS *.c $LIBS
 elif [ "$1" = "-f" ]; then
 	clang $CFLAGS -fsanitize=address -g3 *.c $LIBS
@@ -15,7 +15,7 @@ fi
 
 # Run
 if [ "$1" = "-l" ]; then
-	if [ "$OS" == "Darwin" ]; then
+	if [ "$OS" = "Darwin" ]; then
 		leaks -atExit -- ./a.out
 	else
 		valgrind --leak-check=full ./a.out
