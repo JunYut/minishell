@@ -1,4 +1,4 @@
-# include "redout.h"
+# include "append.h"
 
 void	append(char *file, char *cmd, char *args[])
 {
@@ -26,7 +26,7 @@ void	write_file(char *file, char *content)
 {
 	int	fd;
 
-	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(file, O_APPEND | O_WRONLY | O_CREAT, 0644);
 	write(fd, content, ft_strlen(content));
 	close(fd);
 }

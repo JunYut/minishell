@@ -1,4 +1,4 @@
-# include "redout.h"
+# include "append.h"
 
 # define TEST 1
 
@@ -14,10 +14,15 @@ int main(void)
 	char *cmd = "/usr/bin/echo";
 	char *args[] = { "echo", "Hello world !", NULL };
 	# endif
-	# if TEST == 1
+	# if TEST == 0
 	char *file = "output.txt";
 	char *cmd = "/usr/bin/ps";
 	char *args[] = { "ps", NULL };
+	# endif
+	# if TEST == 1
+	char *file = "output.txt";
+	char *cmd = "/usr/bin/date";
+	char *args[] = { "date", NULL };
 	# endif
 
 	append(file, cmd, args);

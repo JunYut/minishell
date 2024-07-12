@@ -1,11 +1,11 @@
 - [x] pipe module
 - [x] redin module
-- [ ] redout module
-- [ ] append module
+- [x] redout module
+- [x] append module
 - [ ] heredoc module
 - [ ] or module
 - [ ] and module
-- [ ] garbage collector module
+- [x] garbage collector module
 - [ ] environment module
 
 # Notes

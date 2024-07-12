@@ -38,14 +38,14 @@ char	*read_file(char *file)
 	{
 		bytes_read = read(fd, tmp, BUFFER_SIZE);
 		tmp[bytes_read] = '\0';
-		append(&buf, tmp);
+		append_s(&buf, tmp);
 	}
 	close(fd);
 	free(tmp);
 	return (buf);
 }
 
-void	append(char **str1, char *str2)
+void	append_s(char **str1, char *str2)
 {
 	int		i;
 	int		j;
