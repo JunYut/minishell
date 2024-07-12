@@ -2,6 +2,7 @@
 
 void	redout(char *file, char *cmd, char *args[])
 {
+	char	*content;
 	int		pipefd[2];
 	pid_t	pid;
 
@@ -15,7 +16,9 @@ void	redout(char *file, char *cmd, char *args[])
 	}
 	close(pipefd[1]);
 	wait(NULL);
-	write_file(file, read_pipe(pipefd[0]));
+	content = read_pipe(pipefd[0]);
+	write_file(file, content);
+	free(content);
 	close(pipefd[0]);
 }
 
