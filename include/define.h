@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:21:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/11 15:35:38 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/13 20:18:10 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ typedef enum e_io_type
 
 typedef enum e_parse_err_type
 {
-	E_MEM = 1,
+	E_NONE,
+	E_MEM,
 	E_SYNTAX,
 }	t_parse_err_type;
 

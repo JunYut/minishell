@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:11 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/11 15:33:20 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/13 20:08:39 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,3 @@ void	handle_quote_err(char quote, t_minishell *vars);
 bool	append_word_token(char **line, t_token **token_list, t_minishell *vars);
 
 #endif
-
-// TODO: Split header into their respective files
