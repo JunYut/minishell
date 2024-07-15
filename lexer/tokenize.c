@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/11 15:34:20 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:44:41 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,3 +110,6 @@ bool	append_word_token(char **line, t_token **token_list, t_minishell *vars)
 //NOTES: When encountering multiple syntax errors, Bash will report the first one
 //NOTES: We can tokenize first then validate or validate sequentially
 //NOTES: Multiple string literals without any seperators that are not in quotes in-between are considered 1 token only e.g. "ls""-l" is treated as ls-l
+
+//TODO: move error handling for quotes to parser
+//TODO: handle open quotes or brackets
