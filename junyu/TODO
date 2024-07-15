@@ -11,3 +11,5 @@
 # Notes
 - garbage collector module:
 use signals to handle malloc failure
+- env module:
+create copy function
