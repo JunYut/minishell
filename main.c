@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/13 19:36:26 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/15 09:06:38 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ int	main(void)
 		// 	printf("-------------------------------------\n");
 		// 	vars.token_list = vars.token_list->next;
 		// }
-		parse(&vars);
+		vars.ast = parse(&vars);
+		if (vars.parse_err.type != E_NONE)
+			handle_parse_error(&vars);
 	}
 	return (0);
 }

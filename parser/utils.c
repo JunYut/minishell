@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 14:02:19 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/14 14:10:41 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/15 08:57:18 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,28 @@ bool	is_logic_op_or_pipe(t_token *token)
 	return (false);
 }
 
-int	token_precedence(t_token_type *type)
+int	token_precedence(t_token_type type)
 {
 	if (type == T_AND || type == T_OR)
 		return (0);
 	return (1);
 }
 
-void	get_next_token(t_token **list)
+bool	is_redirection(t_token_type type)
 {
-	*list = (*list)->next;
+	if (type == T_REDIRECT_IN || type == T_REDIRECT_OUT || type == T_HERE_DOC || type == T_APPEND)
+		return (true);
+	return (false);
+}
+
+t_io_type	get_io_type(t_token_type type)
+{
+	if (type == T_REDIRECT_IN)
+		return (IO_IN);
+	else if (type == T_REDIRECT_OUT)
+		return (IO_OUT);
+	else if (type == T_HERE_DOC)
+		return (IO_HERE_DOC);
+	else
+		return (IO_APPEND);
 }

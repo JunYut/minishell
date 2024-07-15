@@ -6,7 +6,7 @@
 #    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/06 14:33:10 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/07/10 14:41:46 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/07/15 10:36:10 by kkhai-ki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,20 +19,23 @@ RESET = \033[0m
 ORANGE = \033[0;38;5;166m
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror $(INCLUDE) # -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -fsanitize=address -g3
 
 INCLUDE = -Iinclude -I$(LIBFT_DIR) -I$(LIBFT_DIR)/include
 
-LEXER = lexer/tokenize.c	\
+LEXER =	lexer/tokenize.c	\
 		lexer/token_utils.c	\
 		lexer/error.c		\
 		lexer/utils.c
 
-PARSER = parser/parser.c
+PARSER =	parser/parser.c	\
+			parser/error.c	\
+			parser/node.c	\
+			parser/utils.c
 
 MAIN = main.c
 
-SRC =	$(MAIN) $(LEXER) #$(PARSER)
+SRC =	$(MAIN) $(LEXER) $(PARSER)
 
 OBJ_DIR = obj
 OBJ = $(SRC:%.c=%.o)
