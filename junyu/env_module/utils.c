@@ -1,6 +1,6 @@
 # include "env.h"
 
-char **ft_split(char *str, t_gbc *gbc)
+char **split_env(char *str, t_gbc *gbc)
 {
 	char	**split;
 	int		len_key;
@@ -8,7 +8,7 @@ char **ft_split(char *str, t_gbc *gbc)
 
 	len_key = ft_strlen(str, '=');
 	len_value = ft_strlen(str + len_key + 1, '\0');
-	split = gb_malloc(gbc, sizeof(char *) * 3);
+	split = gb_malloc(gbc, sizeof(char *) * 2);
 	split[0] = gb_malloc(gbc, len_key + 1);
 	split[1] = gb_malloc(gbc, len_value + 1);
 	ft_strncpy(split[0], str, len_key);

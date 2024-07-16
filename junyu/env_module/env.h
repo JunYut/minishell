@@ -5,6 +5,7 @@
 
 typedef struct s_env
 {
+	int				index;
 	char			*key;
 	char			*value;
 	struct s_env	*next;
@@ -15,7 +16,7 @@ void	env(t_env *e);
 void	unset(char *key, t_env *e);
 void	export(char *str, t_env *e, t_gbc *gbc);
 
-char	**ft_split(char *str, t_gbc *gbc);
+char	**split_env(char *str, t_gbc *gbc);
 void	ft_strncpy(char *dst, char *src, int len);
 int		is_key(char c);
 int		ft_strlen(char *str, char c);
