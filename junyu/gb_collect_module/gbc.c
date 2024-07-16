@@ -1,11 +1,11 @@
 # include "gbc.h"
 
-void	gb_clear(t_gbc *collector)
+void	gb_clear()
 {
 	t_gbc	*current;
 	t_gbc	*next;
 
-	current = collector;
+	current = gb_collector();
 	while (current)
 	{
 		free(current->addr);
@@ -16,13 +16,13 @@ void	gb_clear(t_gbc *collector)
 	}
 }
 
-void	*gb_malloc(t_gbc *collector, size_t size)
+void	*gb_malloc(size_t size)
 {
 	void	*addr;
-	t_gbc *current;
+	t_gbc 	*current;
 
 	addr = malloc(size);
-	current = collector;
+	current = gb_collector();
 	while (current->next)
 		current = current->next;
 	current->addr = addr;
@@ -31,11 +31,11 @@ void	*gb_malloc(t_gbc *collector, size_t size)
 	return (addr);
 }
 
-void	gb_free(t_gbc *collector, void *addr)
+void	gb_free(void *addr)
 {
 	t_gbc	*current;
 
-	current = collector;
+	current = gb_collector();
 	while (current)
 	{
 		if (current->addr == addr)
@@ -46,6 +46,14 @@ void	gb_free(t_gbc *collector, void *addr)
 		}
 		current = current->next;
 	}
+}
+
+// ** mind_explode.gif *
+t_gbc	*gb_collector(void)
+{
+	static t_gbc	collector;
+
+	return (&collector);
 }
 
 void	gb_init(t_gbc *collector)

@@ -10,7 +10,6 @@
 - [ ] export command
 
 # Notes
-- garbage collector module:
-use signals to handle malloc failure
+- garbage collector module: use static list
 - env module:
 create copy function
