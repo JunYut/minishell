@@ -26,11 +26,27 @@ void ft_strncpy(char *dst, char *src, int len)
 	dst[i] = '\0';
 }
 
-int is_key(char c)
+bool ft_strcmp(char *s1, char *s2)
+{
+	if (!s1 || !s2)
+		return (false);
+	while (*s1 && *s2)
+	{
+		if (*s1 != *s2)
+			return (0);
+		s1++;
+		s2++;
+	}
+	if (*s1 || *s2)
+		return (false);
+	return (true);
+}
+
+bool	is_key(char c)
 {
 	if (c == '=')
-		return (1);
-	return (0);
+		return (true);
+	return (false);
 }
 
 int	ft_strlen(char *str, char c)

@@ -27,11 +27,34 @@ void	env(t_env *e)
 	}
 }
 
-void	unset(char *key, t_env *e);
+void	unset(char *key, t_env *e)
+{
+	t_env	*curr;
 
+	if (key == NULL)
+		return ;
+	curr = e;
+	while (curr->next)
+	{
+		if (ft_strcmp(curr->next->key, key))
+		{
+			curr->next = curr->next->next;
+			return ;
+		}
+		curr = curr->next;
+	}
+}
+
+// only adds a new node now
+// TODO:
+// - create export list
+// - display export list in sorted order when no 'str' is NULL
+// - replace value if key already exists
+// - add to 'env' when '=' is present
+// - add to 'export' when no '=' is present
 void	export(char *str, t_env *e, t_gbc *gbc)
 {
-	static int	index;
+	static int	id;
 	char		**split;
 	t_env		*curr;
 
@@ -39,7 +62,7 @@ void	export(char *str, t_env *e, t_gbc *gbc)
 	while (curr->next)
 		curr = curr->next;
 	split = split_env(str, gbc);
-	curr->index = index++;
+	curr->id = id++;
 	curr->key = split[0];
 	curr->value = split[1];
 	curr->next = gb_malloc(gbc, sizeof(t_env));
