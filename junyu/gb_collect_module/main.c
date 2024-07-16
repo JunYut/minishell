@@ -18,11 +18,12 @@ int main(void)
 	printf("test[0]: %d\n", test[0][0]);
 	printf("test[1]: %d\n", test[1][0]);
 	printf("test[2]: %d\n", test[2][0]);
+	gb_free(&collector, test[1]);
 
 	test2 = gb_malloc(&collector, sizeof(t_gbc) * 1);
 	test2->addr = gb_malloc(&collector, sizeof(int) * 1);
 	*(int *)test2->addr = 4;
 	printf("test2->addr: %d\n", *(int *)test2->addr);
 
-	gb_free(&collector);
+	gb_clear(&collector);
 }

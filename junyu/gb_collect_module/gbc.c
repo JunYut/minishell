@@ -1,5 +1,21 @@
 # include "gbc.h"
 
+void	gb_clear(t_gbc *collector)
+{
+	t_gbc	*current;
+	t_gbc	*next;
+
+	current = collector;
+	while (current)
+	{
+		free(current->addr);
+		next = current->next;
+		if (current->id != 0)
+			free(current);
+		current = next;
+	}
+}
+
 void	*gb_malloc(t_gbc *collector, size_t size)
 {
 	void	*addr;
@@ -15,27 +31,28 @@ void	*gb_malloc(t_gbc *collector, size_t size)
 	return (addr);
 }
 
-void	gb_free(t_gbc *collector)
+void	gb_free(t_gbc *collector, void *addr)
 {
 	t_gbc	*current;
-	t_gbc	*next;
 
 	current = collector;
 	while (current)
 	{
-		free(current->addr);
-		next = current->next;
-		if (current->index != 0)
-			free(current);
-		current = next;
+		if (current->addr == addr)
+		{
+			free(current->addr);
+			current->addr = NULL;
+			break ;
+		}
+		current = current->next;
 	}
 }
 
 void	gb_init(t_gbc *collector)
 {
-	static int	index;
+	static int	id;
 
-	collector->index = index++;
+	collector->id = id++;
 	collector->addr = NULL;
 	collector->next = NULL;
 }
