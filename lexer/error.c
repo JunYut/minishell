@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:39:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/16 17:18:31 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:32:22 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,18 @@
 // 	vars->exit_status = 2;
 // }
 
-void	handle_quote_err(char quote, t_minishell *vars)
+void	handle_quote_err(char **str, int *char_count, char quote)
 {
 	char	*buffer;
 	char	*appended_str;
 
-	(void)quote;
-	(void)vars;
 	buffer = NULL;
-	appended_str = ft_strdup("");
+	appended_str = ft_strdup(*str);
 	while (is_in_set(quote, buffer) == 0)
 	{
 		buffer = readline("> ");
 		appended_str = ft_strjoin_delim(appended_str, buffer, "\n");
 	}
-	printf("%s\n", appended_str);
+	(*char_count) = (ft_strlen(appended_str) + ft_strlen(*str));
+	*str = appended_str;
 }

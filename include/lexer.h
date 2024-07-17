@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:11 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/15 17:38:26 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:31:45 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ bool	is_quote_closed(char *line, int	*i);
 int	is_quote(char c);
 void	clear_token_list(t_token **token_list);
 void	tokenize(char *line, t_minishell *vars);
-void	handle_quote_err(char quote, t_minishell *vars);
+// void	handle_quote_err(char quote, t_minishell *vars);
+void	handle_quote_err(char **str, int *char_count, char quote);
 bool	append_word_token(char **line, t_token **token_list, t_minishell *vars);
 
 #endif
