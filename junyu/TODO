@@ -7,9 +7,9 @@
 - [ ] and module
 - [x] garbage collector module
 - [ ] environment module
-- [ ] export command
 
 # Notes
-- garbage collector module: use static list
 - env module:
-create copy function
+1. - [ ] $ expansion
+2. - [x] sort export list
+3. - [ ] export command
