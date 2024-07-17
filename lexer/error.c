@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:39:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/17 13:32:22 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:10:34 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,26 @@
 // 	vars->exit_status = 2;
 // }
 
-void	handle_quote_err(char **str, int *char_count, char quote)
+void	handle_open_quote(char **line, char **buffer, int *char_count, char quote)
 {
-	char	*buffer;
+	char	*read_line;
 	char	*appended_str;
+	char	*trimmed_str;
 
-	buffer = NULL;
-	appended_str = ft_strdup(*str);
-	while (is_in_set(quote, buffer) == 0)
+	read_line = NULL;
+	appended_str = ft_strdup(*line);
+	while (is_in_set(quote, read_line) == 0)
 	{
-		buffer = readline("> ");
-		appended_str = ft_strjoin_delim(appended_str, buffer, "\n");
+		read_line = readline("> ");
+		if (read_line == NULL)
+			break ;
+		appended_str = ft_strjoin_delim(appended_str, read_line, "\n");
 	}
-	(*char_count) = (ft_strlen(appended_str) + ft_strlen(*str));
-	*str = appended_str;
+	if (read_line != NULL)
+		trimmed_str = ft_trim_str(appended_str, quote);
+	else
+		trimmed_str = appended_str;
+	(*char_count) = ft_strlen(trimmed_str);
+	*line = appended_str;
+	*buffer = appended_str;
 }

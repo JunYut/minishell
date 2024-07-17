@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:52:57 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/01 12:14:32 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:10:14 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ long	ft_atol(const char *nptr);
 int		ft_atoi_base(char *str, char *base);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin_delim(char *s1, char *s2, char *delim);
+int		is_in_set(char c, char *set);
+char	*ft_trim_str(char *str, char delim);
 
 //Part 2
 char	*ft_substr(const char *s, unsigned int start, size_t len);
