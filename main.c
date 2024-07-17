@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/15 09:06:38 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:35:53 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ int	main(void)
 		tokenize(vars.line, &vars);
 		if (vars.token_list == NULL)
 			continue ;
-		// while (vars.token_list != NULL)
-		// {
-		// 	printf("value: %s\n", vars.token_list->value);
-		// 	printf("type: %d\n", vars.token_list->type);
-		// 	printf("-------------------------------------\n");
-		// 	vars.token_list = vars.token_list->next;
-		// }
+		while (vars.token_list != NULL)
+		{
+			printf("value: %s\n", vars.token_list->value);
+			printf("type: %d\n", vars.token_list->type);
+			printf("-------------------------------------\n");
+			vars.token_list = vars.token_list->next;
+		}
 		vars.ast = parse(&vars);
 		if (vars.parse_err.type != E_NONE)
 			handle_parse_error(&vars);

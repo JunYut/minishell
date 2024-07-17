@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 09:32:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/10 14:53:20 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:38:10 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	is_quote(char c)
 	return (0);
 }
 
-int	is_quote_closed(char *line, int	*i)
+bool	is_quote_closed(char *line, int	*i)
 {
 	char	quote_type;
 
@@ -51,7 +51,7 @@ int	is_quote_closed(char *line, int	*i)
 		while ((line[*i]) != quote_type)
 			(*i)++;
 		(*i)++;
-		return (1);
+		return (true);
 	}
-	return (0);
+	return (false);
 }
