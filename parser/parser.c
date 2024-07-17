@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/15 09:08:49 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:17:25 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ t_node	*get_simple_cmd(t_minishell *vars)
 
 bool	join_args(t_minishell *vars, char **args)
 {
+	char	quote;
+
 	if (vars->parse_err.type)
 		return (false);
 	if (*args == NULL)
@@ -81,6 +83,9 @@ bool	join_args(t_minishell *vars, char **args)
 		return (false);
 	while (vars->curr_token && vars->curr_token->type == T_WORD)
 	{
+		quote = get_quote_type(vars->curr_token->value);
+		if (is_quote_balance(vars->curr_token->value, quote))
+			return (handle_quote_err(quote, vars), false);
 		*args = ft_strjoin_delim(*args, vars->curr_token->value, " ");
 		if (*args == NULL)
 			return (free(*args), false);

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 14:02:19 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/15 08:57:18 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:09:32 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,15 @@ t_io_type	get_io_type(t_token_type type)
 		return (IO_HERE_DOC);
 	else
 		return (IO_APPEND);
+}
+
+char	get_quote_type(char *str)
+{
+	while (*str != '\0')
+	{
+		if (*str == '\'' || *str == '"')
+			return (*str);
+		str++;
+	}
+	return (0);
 }
