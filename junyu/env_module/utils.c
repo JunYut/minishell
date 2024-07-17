@@ -26,20 +26,16 @@ void ft_strncpy(char *dst, char *src, int len)
 	dst[i] = '\0';
 }
 
-bool ft_strcmp(char *s1, char *s2)
+int ft_strcmp(char *s1, char *s2)
 {
+	int	i;
+
 	if (!s1 || !s2)
 		return (false);
-	while (*s1 && *s2)
-	{
-		if (*s1 != *s2)
-			return (0);
-		s1++;
-		s2++;
-	}
-	if (*s1 || *s2)
-		return (false);
-	return (true);
+	i = -1;
+	while ((s1[++i] && s2[i]) && (s1[i] == s2[i]))
+		;
+	return (s1[i] - s2[i]);
 }
 
 bool	is_key(char c)

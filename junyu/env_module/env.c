@@ -1,25 +1,25 @@
 # include "env.h"
 
-t_env	*dup_env(char **env)
+t_var	*dup_env(char **envp)
 {
-	t_env	*e;
+	t_var	*v;
 	int		i;
 
-	e = gb_malloc(sizeof(t_env));
-	e->next = NULL;
+	v = gb_malloc(sizeof(t_var));
+	v->next = NULL;
 	i = -1;
-	while (env[++i])
+	while (envp[++i])
 	{
-		simple_export(env[i], e);
+		add_var(envp[i], v);
 	}
-	return (e);
+	return (v);
 }
 
-void	env(t_env *e)
+void	env(t_var *v)
 {
-	t_env	*curr;
+	t_var	*curr;
 
-	curr = e;
+	curr = v;
 	while (curr->next)
 	{
 		printf("%s=%s\n", curr->key, curr->value);
@@ -27,16 +27,16 @@ void	env(t_env *e)
 	}
 }
 
-void	unset(char *key, t_env *e)
+void	unset(char *key, t_var *v)
 {
-	t_env	*curr;
+	t_var	*curr;
 
 	if (key == NULL)
 		return ;
-	curr = e;
+	curr = v;
 	while (curr->next)
 	{
-		if (ft_strcmp(curr->next->key, key))
+		if (ft_strcmp(curr->next->key, key) == 0)
 		{
 			curr->next = curr->next->next;
 			return ;
@@ -45,26 +45,19 @@ void	unset(char *key, t_env *e)
 	}
 }
 
-// only adds a new node now
-// TODO:
-// - create export list
-// - display export list in sorted order when no 'str' is NULL
-// - replace value if key already exists
-// - add to 'env' when '=' is present
-// - add to 'export' when no '=' is present
-void	simple_export(char *str, t_env *e)
+void	add_var(char *str, t_var *v)
 {
 	static int	id;
 	char		**split;
-	t_env		*curr;
+	t_var		*curr;
 
-	curr = e;
+	curr = v;
 	while (curr->next)
 		curr = curr->next;
 	split = split_env(str);
 	curr->id = id++;
 	curr->key = split[0];
 	curr->value = split[1];
-	curr->next = gb_malloc(sizeof(t_env));
+	curr->next = gb_malloc(sizeof(t_var));
 	curr->next->next = NULL;
 }

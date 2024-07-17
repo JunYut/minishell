@@ -4,21 +4,31 @@
 # include <stdbool.h>
 # include <stdio.h>
 
-typedef struct s_env
+typedef struct s_var
 {
 	int				id;
 	char			*key;
 	char			*value;
-	struct s_env	*next;
+	struct s_var	*next;
+}	t_var;
+
+typedef struct s_env
+{
+	t_var	*var;
+	t_var	*exp;
 }	t_env;
 
-t_env	*dup_env(char **env);
-void	env(t_env *e);
-void	unset(char *key, t_env *e);
-void	simple_export(char *str, t_env *e);
+t_var	*dup_env(char **envp);
+void	env(t_var *e);
+void	unset(char *key, t_var *e);
+void	add_var(char *str, t_var *e);
+
+void	export(char *str, t_env *e);
+t_var	*init_export(char **envp);
+void	sort_export(t_var *exp);
 
 char	**split_env(char *str);
 void	ft_strncpy(char *dst, char *src, int len);
-bool	ft_strcmp(char *s1, char *s2);
+int		ft_strcmp(char *s1, char *s2);
 bool	is_key(char c);
 int		ft_strlen(char *str, char c);
