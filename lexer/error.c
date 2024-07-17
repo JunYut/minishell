@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:39:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/17 19:10:34 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:59:43 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	handle_open_quote(char **line, char **buffer, int *char_count, char quote)
 
 	read_line = NULL;
 	appended_str = ft_strdup(*line);
-	while (is_in_set(quote, read_line) == 0)
+	while (is_quote_balance(appended_str, quote) == false)
 	{
 		read_line = readline("> ");
 		if (read_line == NULL)
@@ -42,4 +42,21 @@ void	handle_open_quote(char **line, char **buffer, int *char_count, char quote)
 	(*char_count) = ft_strlen(trimmed_str);
 	*line = appended_str;
 	*buffer = appended_str;
+}
+
+bool	is_quote_balance(char *str, char quote)
+{
+	int	count;
+
+	count = 0;
+	while (*str != '\0')
+	{
+		if (*str == quote)
+			count++;
+		str++;
+	}
+	if (count != 0 && count % 2 == 0)
+		return (true);
+	else
+		return (false);
 }
