@@ -10,8 +10,7 @@ void	gb_clear()
 	{
 		free(current->addr);
 		next = current->next;
-		if (current->id != 0)
-			free(current);
+		free(current);
 		current = next;
 	}
 }
@@ -48,14 +47,6 @@ void	gb_free(void *addr)
 	}
 }
 
-// ** mind_explode.gif *
-t_gbc	*gb_collector(void)
-{
-	static t_gbc	collector;
-
-	return (&collector);
-}
-
 void	gb_init(t_gbc *collector)
 {
 	static int	id;
@@ -63,4 +54,17 @@ void	gb_init(t_gbc *collector)
 	collector->id = id++;
 	collector->addr = NULL;
 	collector->next = NULL;
+}
+
+// ** mind_explode.gif *
+t_gbc	*gb_collector(void)
+{
+	static t_gbc	*collector;
+
+	if (!collector)
+	{
+		collector = malloc(sizeof(t_gbc));
+		gb_init(collector);
+	}
+	return (collector);
 }
