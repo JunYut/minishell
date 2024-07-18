@@ -18,14 +18,9 @@ void	export(char *str, t_env *e)
 	split = split_var(str);
 	key = find_key(split[0], e->exp);
 	if (split[1] == NULL)
-	{
 		add_var(str, e->exp, EXPORT);
-	}
 	else if (key)
-	{
-		printf("replace\n");
 		replace_val(e, split[0], split[1]);
-	}
 	else
 	{
 		add_var(str, e->exp, EXPORT);
@@ -57,7 +52,7 @@ void	replace_val(t_env *e, char *key, char *val)
 		if (ft_strcmp(curr->key, key) == 0)
 		{
 			curr->value = val;
-			return ;
+			break;
 		}
 		curr = curr->next;
 	}

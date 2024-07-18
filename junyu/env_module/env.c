@@ -9,9 +9,7 @@ t_var	*dup_env(char **envp, char lst)
 	v->next = NULL;
 	i = -1;
 	while (envp[++i])
-	{
 		add_var(envp[i], v, lst);
-	}
 	return (v);
 }
 

@@ -12,7 +12,10 @@ int main(int ac, char **av, char **envp)
 	e.var = dup_env(envp, VAR);
 	e.exp = init_export(envp);
 	export("a=1", &e);
-	env(&e, EXPORT);
+	env(&e, VAR);
+	printf("\n");
+	export("a=2", &e);
+	env(&e, VAR);
 	printf("\n");
 
 	gb_clear();
