@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/17 20:17:25 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/18 00:02:07 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ bool	join_args(t_minishell *vars, char **args)
 	while (vars->curr_token && vars->curr_token->type == T_WORD)
 	{
 		quote = get_quote_type(vars->curr_token->value);
-		if (is_quote_balance(vars->curr_token->value, quote))
+		if (is_quote_balance(vars->curr_token->value, quote) == false)
 			return (handle_quote_err(quote, vars), false);
 		*args = ft_strjoin_delim(*args, vars->curr_token->value, " ");
 		if (*args == NULL)
