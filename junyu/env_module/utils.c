@@ -1,19 +1,33 @@
 # include "env.h"
 
-char **split_env(char *str)
+// a=1
+// a=
+// a
+char **split_var(char *str)
 {
 	char	**split;
 	int		len_key;
 	int		len_value;
 
+	split = gb_malloc(sizeof(char *) * 2);
+	split[0] = ft_strdup(str, '=');
 	len_key = ft_strlen(str, '=');
 	len_value = ft_strlen(str + len_key + 1, '\0');
-	split = gb_malloc(sizeof(char *) * 2);
-	split[0] = gb_malloc(len_key + 1);
-	split[1] = gb_malloc(len_value + 1);
-	ft_strncpy(split[0], str, len_key);
-	ft_strncpy(split[1], str + len_key + 1, len_value);
+	split[1] = ft_strdup(str + len_key + 1, '\0');
 	return (split);
+}
+
+char	*ft_strdup(char *str, char delim)
+{
+	char	*dup;
+	int		len;
+
+	len = ft_strlen(str, delim);
+	if (len == -1)
+		return (NULL);
+	dup = gb_malloc(len + 1);
+	ft_strncpy(dup, str, len);
+	return (dup);
 }
 
 void ft_strncpy(char *dst, char *src, int len)
@@ -38,19 +52,21 @@ int ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-bool	is_key(char c)
+bool	is_delim(char c)
 {
 	if (c == '=')
 		return (true);
 	return (false);
 }
 
-int	ft_strlen(char *str, char c)
+int	ft_strlen(char *str, char delim)
 {
 	int i;
 
 	i = -1;
-	while (str[++i] && str[i] != c)
+	while (str[++i] && str[i] != delim)
 		;
+	if (str[i] != delim)
+		return (-1);
 	return (i);
 }

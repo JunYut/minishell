@@ -15,25 +15,38 @@ t_var	*dup_env(char **envp)
 	return (v);
 }
 
-void	env(t_var *v)
+// set 'c' to 'x' for 'export'
+void	env(t_var *v, char c)
 {
 	t_var	*curr;
 
 	curr = v;
 	while (curr->next)
 	{
+		if (c == 'x')
+			printf("declare -x ");
 		printf("%s=%s\n", curr->key, curr->value);
 		curr = curr->next;
 	}
 }
 
-void	unset(char *key, t_var *v)
+void	unset(char *key, t_env *v)
 {
 	t_var	*curr;
 
 	if (key == NULL)
 		return ;
-	curr = v;
+	curr = v->var;
+	while (curr->next)
+	{
+		if (ft_strcmp(curr->next->key, key) == 0)
+		{
+			curr->next = curr->next->next;
+			return ;
+		}
+		curr = curr->next;
+	}
+	curr = v->exp;
 	while (curr->next)
 	{
 		if (ft_strcmp(curr->next->key, key) == 0)
@@ -54,7 +67,7 @@ void	add_var(char *str, t_var *v)
 	curr = v;
 	while (curr->next)
 		curr = curr->next;
-	split = split_env(str);
+	split = split_var(str);
 	curr->id = id++;
 	curr->key = split[0];
 	curr->value = split[1];

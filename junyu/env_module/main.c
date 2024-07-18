@@ -7,10 +7,10 @@ int main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-	t_var	*e;
+	t_env	e;
 
-	e = init_export(envp);
-	env(e);
+	e.exp = init_export(envp);
+	export(NULL, &e);
 
 	gb_clear();
 	return 0;
