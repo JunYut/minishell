@@ -11,6 +11,10 @@ int main(int ac, char **av, char **envp)
 
 	e.exp = init_export(envp);
 	export(NULL, &e);
+	printf("\n");
+	export("a", &e);
+	export(NULL, &e);
+	printf("\n");
 
 	gb_clear();
 	return 0;

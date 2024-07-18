@@ -15,17 +15,22 @@ t_var	*dup_env(char **envp)
 	return (v);
 }
 
-// set 'c' to 'x' for 'export'
-void	env(t_var *v, char c)
+void	env(t_var *v, char lst)
 {
 	t_var	*curr;
 
 	curr = v;
 	while (curr->next)
 	{
-		if (c == 'x')
+		if (lst == EXPORT)
 			printf("declare -x ");
-		printf("%s=%s\n", curr->key, curr->value);
+		printf("%s=", curr->key);
+		if (lst == EXPORT && curr->value)
+			printf("\"%s\"\n", curr->value);
+		else if (lst == VAR)
+			printf("%s\n", curr->value);
+		else
+			;
 		curr = curr->next;
 	}
 }

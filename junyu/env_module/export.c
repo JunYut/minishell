@@ -2,11 +2,9 @@
 
 // only adds a new node now
 // TODO:
-// - create export list
-// - display export list in sorted order when no 'str' is NULL
-// - replace value if key already exists
-// - add to 'env' when '=' is present
-// - add to 'export' when no '=' is present
+// a=1 : export: a="1"; var: a=1
+// a= : export: a=""; var: a=
+// a : export: a; var: [nothing]
 void	export(char *str, t_env *e)
 {
 	char	**split;
@@ -14,7 +12,7 @@ void	export(char *str, t_env *e)
 
 	if (str == NULL)
 	{
-		env(e->exp, 'x');
+		env(e->exp, EXPORT);
 		return ;
 	}
 	split = split_var(str);

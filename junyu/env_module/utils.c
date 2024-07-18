@@ -1,19 +1,23 @@
 # include "env.h"
 
-// a=1
-// a=
-// a
+// a=1 : export: a="1"; var: a=1
+// a= : export: a=""; var: a=
+// a : export: a; var: [nothing]
 char **split_var(char *str)
 {
 	char	**split;
-	int		len_key;
-	int		len_value;
 
+	if (str == NULL)
+		return (NULL);
 	split = gb_malloc(sizeof(char *) * 2);
 	split[0] = ft_strdup(str, '=');
-	len_key = ft_strlen(str, '=');
-	len_value = ft_strlen(str + len_key + 1, '\0');
-	split[1] = ft_strdup(str + len_key + 1, '\0');
+	if (split[0] == NULL)
+	{
+		split[0] = ft_strdup(str, '\0');
+		split[1] = NULL;
+		return (split);
+	}
+	split[1] = ft_strdup(str + ft_strlen(str, '=') + 1, '\0');
 	return (split);
 }
 

@@ -4,6 +4,9 @@
 # include <stdbool.h>
 # include <stdio.h>
 
+# define EXPORT 1
+# define VAR 2
+
 typedef struct s_var
 {
 	int				id;
@@ -19,7 +22,7 @@ typedef struct s_env
 }	t_env;
 
 t_var	*dup_env(char **envp);
-void	env(t_var *e, char c);
+void	env(t_var *e, char lst);
 void	unset(char *key, t_env *e);
 void	add_var(char *str, t_var *e);
 
