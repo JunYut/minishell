@@ -1,6 +1,7 @@
 # include "env.h"
 
-// TODO:
+// if str is NULL, print the export list
+// if a key is found in the export list, replace the value, else:
 // a=1 : export: a="1"; var: a=1
 // a= : export: a=""; var: a=
 // a : export: a; var: [nothing]
@@ -9,12 +10,11 @@ void	export(char *str, t_env *e)
 	char	**split;
 	char	*key;
 
-	if (str == NULL)
+	if (str == NULL || str[0] == '\0')
 	{
 		env(e, EXPORT);
 		return ;
 	}
-
 	split = split_var(str);
 	key = find_key(split[0], e->exp);
 	if (split[1] == NULL)
