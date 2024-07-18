@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:52:57 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/17 19:10:14 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:31:35 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <limits.h>
 # include "ft_printf.h"
 # include "get_next_line.h"
+# include "gbc.h"
 
 typedef struct s_list
 {
