@@ -73,6 +73,8 @@ t_var	*init_export(char **envp)
 	t_var	*export;
 
 	export = dup_env(envp, EXPORT);
+	if (find_key("OLDPWD", export) == NULL)
+		add_var("OLDPWD", export, EXPORT);
 	sort_export(export);
 	return (export);
 }

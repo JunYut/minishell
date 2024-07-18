@@ -12,4 +12,5 @@
 - env module:
 1. - [ ] $ expansion
 2. - [x] sort export list
-3. - [ ] export command
+3. - [x] export command
+4. - [ ] cd command

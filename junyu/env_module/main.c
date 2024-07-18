@@ -9,14 +9,12 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 	t_env	e;
 
-	e.var = dup_env(envp, VAR);
+	e.var = init_var(envp);
 	e.exp = init_export(envp);
+
 	export("", &e);
-	// env(&e, VAR);
-	// printf("\n");
-	// export("", &e);
-	// env(&e, VAR);
-	// printf("\n");
+	printf("\n");
+	env(&e, VAR);
 
 	gb_clear();
 	return 0;

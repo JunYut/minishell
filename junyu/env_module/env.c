@@ -1,16 +1,26 @@
 # include "env.h"
 
-t_var	*dup_env(char **envp, char lst)
+t_var	*init_var(char **envp)
 {
 	t_var	*v;
+
+	v = dup_env(envp, VAR);
+	if (find_key("OLDPWD", v) == NULL)
+		add_var("OLDPWD=", v, VAR);
+	return (v);
+}
+
+t_var	*dup_env(char **envp, char lst)
+{
+	t_var	*var;
 	int		i;
 
-	v = gb_malloc(sizeof(t_var));
-	v->next = NULL;
+	var = gb_malloc(sizeof(t_var));
+	var->next = NULL;
 	i = -1;
 	while (envp[++i])
-		add_var(envp[i], v, lst);
-	return (v);
+		add_var(envp[i], var, lst);
+	return (var);
 }
 
 void	env(t_env *e, char lst)

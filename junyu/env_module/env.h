@@ -21,6 +21,7 @@ typedef struct s_env
 	t_var	*exp;
 }	t_env;
 
+t_var	*init_var(char **envp);
 t_var	*dup_env(char **envp, char lst);
 void	env(t_env *e, char lst);
 void	unset(char *key, t_env *e);
