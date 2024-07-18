@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 20:06:34 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/17 20:15:11 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/18 10:13:08 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	handle_parse_error(t_minishell *vars)
 				token_type = T_NEWLINE;
 			else
 				token_type = vars->curr_token->type;
-			ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
+			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 			ft_putstr_fd(types[token_type], 2);
 			ft_putstr_fd("'\n", 2);
 			vars->exit_status = 2;

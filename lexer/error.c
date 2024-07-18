@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:39:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/17 23:43:08 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/18 13:24:15 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	handle_quote_err(char quote, t_minishell *vars)
 	ft_putstr_fd("minishell: unexpected EOF while looking for matching `", 2);
 	ft_putchar_fd(quote, 2);
 	ft_putstr_fd("'\n", 2);
+	ft_putendl_fd("minishell: syntax error: unexpected end of file", 2);
 	set_parse_err_type(vars, E_EOF);
 	vars->exit_status = 2;
 }

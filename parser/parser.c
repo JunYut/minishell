@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/18 00:02:07 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/18 13:24:17 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_node	*parse(t_minishell *vars)
 
 	vars->curr_token = vars->token_list;
 	ast = get_expression(vars, 0); // Looks for an expression and returns it's root node
-	if (vars->curr_token != NULL)
+	if (vars->curr_token != NULL && vars->parse_err.type == E_NONE)
 		return (set_parse_err_type(vars, E_SYNTAX), ast);
 	return (ast);
 }
@@ -60,7 +60,8 @@ t_node	*get_simple_cmd(t_minishell *vars)
 		if (vars->curr_token->type == T_WORD)
 		{
 			if (join_args(vars, &(node->args)) == false)
-				return (clear_cmd_node(node), set_parse_err_type(vars, E_MEM), NULL);
+				// return (clear_cmd_node(node), set_parse_err_type(vars, E_MEM), NULL);
+				return (clear_cmd_node(node), NULL);
 		}
 		else if (is_redirection(vars->curr_token->type))
 		{
@@ -84,7 +85,7 @@ bool	join_args(t_minishell *vars, char **args)
 	while (vars->curr_token && vars->curr_token->type == T_WORD)
 	{
 		quote = get_quote_type(vars->curr_token->value);
-		if (is_quote_balance(vars->curr_token->value, quote) == false)
+		if (quote != 0 && is_quote_balance(vars->curr_token->value, quote) == false)
 			return (handle_quote_err(quote, vars), false);
 		*args = ft_strjoin_delim(*args, vars->curr_token->value, " ");
 		if (*args == NULL)
