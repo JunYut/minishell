@@ -1,5 +1,11 @@
 # include "env.h"
 
+void	init_env(t_env *e, char **envp)
+{
+	e->var = init_var(envp);
+	e->exp = init_export(envp);
+}
+
 t_var	*init_var(char **envp)
 {
 	t_var	*v;

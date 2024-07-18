@@ -123,35 +123,57 @@ int main(void)
 	char cwd[1024];
 
 	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
-	if (chdir("../") == -1)
-		perror("chdir");
+	if (chdir("..") == -1)
+		perror("..");
 	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	if (chdir("~") == -1)
+		perror("~");
+	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	if (chdir("~we") == -1)
+		perror("~we");
+	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	if (chdir(".") == -1)
+		perror(".");
+	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	if (chdir("-") == -1)
+		perror("-");
+	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	if (chdir("") == -1)
+		perror("");
+	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	if (chdir("") == -1) // must be a non-NULL string
+		printf("must be a non-NULL string\n");
+	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	if (chdir("env_module") == -1) // must be a non-NULL string
+		perror("env_module");
+	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+
 	printf("\n");
 
-	// isatty()
-	if (isatty(STDIN_FILENO))
-		printf("stdin is a terminal\n");
-	if (isatty(STDOUT_FILENO))
-		printf("stdout is a terminal\n");
-	if (isatty(STDERR_FILENO))
-		printf("stderr is a terminal\n");
-	printf("\n");
+	// // isatty()
+	// if (isatty(STDIN_FILENO))
+	// 	printf("stdin is a terminal\n");
+	// if (isatty(STDOUT_FILENO))
+	// 	printf("stdout is a terminal\n");
+	// if (isatty(STDERR_FILENO))
+	// 	printf("stderr is a terminal\n");
+	// printf("\n");
 
-	// ttyname()
-	printf("stdin: %s\n", ttyname(STDIN_FILENO));
-	printf("stdout: %s\n", ttyname(STDOUT_FILENO));
-	printf("stderr: %s\n", ttyname(STDERR_FILENO));
-	// will get same file cuz connected to the same terminal device file
-	printf("\n");
+	// // ttyname()
+	// printf("stdin: %s\n", ttyname(STDIN_FILENO));
+	// printf("stdout: %s\n", ttyname(STDOUT_FILENO));
+	// printf("stderr: %s\n", ttyname(STDERR_FILENO));
+	// // will get same file cuz connected to the same terminal device file
+	// printf("\n");
 
-	// getenv()
-	printf("PATH: %s\n", getenv("PATH"));
-	printf("HOME: %s\n", getenv("HOME"));
-	printf("USER: %s\n", getenv("USER"));
-	printf("SHELL: %s\n", getenv("SHELL"));
-	printf("PWD: %s\n", getenv("PWD"));
-	printf("\n");
+	// // getenv()
+	// printf("PATH: %s\n", getenv("PATH"));
+	// printf("HOME: %s\n", getenv("HOME"));
+	// printf("USER: %s\n", getenv("USER"));
+	// printf("SHELL: %s\n", getenv("SHELL"));
+	// printf("PWD: %s\n", getenv("PWD"));
+	// printf("\n");
 
-	// ttyslot()
-	printf("Terminal number: %d\n", ttyslot());
+	// // ttyslot()
+	// printf("Terminal number: %d\n", ttyslot());
 }
