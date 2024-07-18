@@ -1,6 +1,6 @@
 # include "env.h"
 
-t_var	*dup_env(char **envp)
+t_var	*dup_env(char **envp, char lst)
 {
 	t_var	*v;
 	int		i;
@@ -10,16 +10,19 @@ t_var	*dup_env(char **envp)
 	i = -1;
 	while (envp[++i])
 	{
-		add_var(envp[i], v);
+		add_var(envp[i], v, lst);
 	}
 	return (v);
 }
 
-void	env(t_var *v, char lst)
+void	env(t_env *e, char lst)
 {
 	t_var	*curr;
 
-	curr = v;
+	if (lst == VAR)
+		curr = e->var;
+	else
+		curr = e->exp;
 	while (curr->next)
 	{
 		if (lst == EXPORT)
@@ -27,7 +30,7 @@ void	env(t_var *v, char lst)
 		printf("%s=", curr->key);
 		if (lst == EXPORT && curr->value)
 			printf("\"%s\"\n", curr->value);
-		else if (lst == VAR)
+		else if (lst == VAR && curr->value)
 			printf("%s\n", curr->value);
 		else
 			;
@@ -63,7 +66,7 @@ void	unset(char *key, t_env *v)
 	}
 }
 
-void	add_var(char *str, t_var *v)
+void	add_var(char *str, t_var *v, char lst)
 {
 	static int	id;
 	char		**split;
@@ -73,6 +76,8 @@ void	add_var(char *str, t_var *v)
 	while (curr->next)
 		curr = curr->next;
 	split = split_var(str);
+	if (lst == VAR && split[1] == NULL)
+		return ;
 	curr->id = id++;
 	curr->key = split[0];
 	curr->value = split[1];

@@ -21,14 +21,14 @@ typedef struct s_env
 	t_var	*exp;
 }	t_env;
 
-t_var	*dup_env(char **envp);
-void	env(t_var *e, char lst);
+t_var	*dup_env(char **envp, char lst);
+void	env(t_env *e, char lst);
 void	unset(char *key, t_env *e);
-void	add_var(char *str, t_var *e);
+void	add_var(char *str, t_var *v, char lst);
 
 void	export(char *str, t_env *e);
-void	replace_val(char *val, t_var *pos);
-t_var	*find_key(char *key, t_var *v);
+void	replace_val(t_env *e, char *key, char *val);
+char	*find_key(char *key, t_var *v);
 t_var	*init_export(char **envp);
 void	sort_export(t_var *exp);
 

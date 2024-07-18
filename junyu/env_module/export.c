@@ -1,6 +1,5 @@
 # include "env.h"
 
-// only adds a new node now
 // TODO:
 // a=1 : export: a="1"; var: a=1
 // a= : export: a=""; var: a=
@@ -8,30 +7,33 @@
 void	export(char *str, t_env *e)
 {
 	char	**split;
-	t_var	*pos;
+	char	*key;
 
 	if (str == NULL)
 	{
-		env(e->exp, EXPORT);
+		env(e, EXPORT);
 		return ;
 	}
+
 	split = split_var(str);
-	if (split == NULL)
+	key = find_key(split[0], e->exp);
+	if (split[1] == NULL)
 	{
-		add_var(str, e->var);
-		add_var(str, e->exp);
-		return ;
+		add_var(str, e->exp, EXPORT);
 	}
-	pos = find_key(split[0], e->exp);
-	if (pos)
+	else if (key)
 	{
-		replace_val(split[1], pos);
+		printf("replace\n");
+		replace_val(e, split[0], split[1]);
 	}
 	else
-		add_var(str, e->exp);
+	{
+		add_var(str, e->exp, EXPORT);
+		add_var(str, e->var, VAR);
+	}
 }
 
-t_var	*find_key(char *key, t_var *v)
+char	*find_key(char *key, t_var *v)
 {
 	t_var	*curr;
 
@@ -39,22 +41,30 @@ t_var	*find_key(char *key, t_var *v)
 	while (curr->next)
 	{
 		if (ft_strcmp(curr->key, key) == 0)
-			return (curr);
+			return (curr->key);
 		curr = curr->next;
 	}
 	return (NULL);
 }
 
-void	replace_val(char *val, t_var *pos)
+void	replace_val(t_env *e, char *key, char *val)
 {
 	t_var	*curr;
 
-	if (pos == NULL)
-		return ;
-	curr = pos;
+	curr = e->exp;
 	while (curr->next)
 	{
-		if (ft_strcmp(curr->key, pos->key) == 0)
+		if (ft_strcmp(curr->key, key) == 0)
+		{
+			curr->value = val;
+			return ;
+		}
+		curr = curr->next;
+	}
+	curr = e->var;
+	while (curr->next)
+	{
+		if (ft_strcmp(curr->key, key) == 0)
 		{
 			curr->value = val;
 			return ;
@@ -67,7 +77,7 @@ t_var	*init_export(char **envp)
 {
 	t_var	*export;
 
-	export = dup_env(envp);
+	export = dup_env(envp, EXPORT);
 	sort_export(export);
 	return (export);
 }
