@@ -15,17 +15,16 @@ void	cd(char *path, t_env *e)
 		path = fetch_val("OLDPWD", e->var);
 	else if (ft_strcmp("..", path) == 0)
 		path = parent_dir(fetch_val("PWD", e->var));
-	printf("path: %s\n", path);
+	set_val(e, "OLDPWD", fetch_val("PWD", e->var));
+	set_val(e, "PWD", path);
 	chdir(path);
-	char	buf[1024];
-	printf("cwd: %s\n", getcwd(buf, sizeof(buf)));
+	// printf("path:%s\n", path);
 }
 
 char	*parent_dir(char *pwd)
 {
 	int	i;
 
-	printf("pwd: %s\n", pwd);
 	i = ft_strlen(pwd, '\0');
 	while (--i > 0 && pwd[i] != '/')
 		;

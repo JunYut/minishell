@@ -5,6 +5,7 @@
 # include <stdbool.h>
 # include <stdio.h>
 
+# define DPRINTF printf
 # define EXPORT 1
 # define VAR 2
 

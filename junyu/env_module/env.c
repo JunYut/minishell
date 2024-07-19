@@ -4,6 +4,7 @@ void	init_env(t_env *e, char **envp)
 {
 	e->var = init_var(envp);
 	e->exp = init_export(envp);
+	unset("OLDPWD", e);
 }
 
 t_var	*init_var(char **envp)

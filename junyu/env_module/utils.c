@@ -17,7 +17,6 @@ char **split_var(char *str)
 		split[1] = NULL;
 		return (split);
 	}
-	printf("split[0]: %s\n", split[0]);
 	split[1] = ft_strdup(str + ft_strlen(str, '=') + 1, ft_strlen(str, '\0'));
 	return (split);
 }
