@@ -122,31 +122,31 @@ int main(void)
 	// getcwd() & chdir()
 	char cwd[1024];
 
-	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	printf("Original: %s\n", getcwd(cwd, sizeof(cwd)));
 	if (chdir("..") == -1)
 		perror("..");
-	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	printf("..: %s\n", getcwd(cwd, sizeof(cwd)));
 	if (chdir("~") == -1)
 		perror("~");
-	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	printf("~: %s\n", getcwd(cwd, sizeof(cwd)));
 	if (chdir("~we") == -1)
 		perror("~we");
-	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	printf("~we: %s\n", getcwd(cwd, sizeof(cwd)));
 	if (chdir(".") == -1)
 		perror(".");
-	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	printf(".: %s\n", getcwd(cwd, sizeof(cwd)));
 	if (chdir("-") == -1)
 		perror("-");
-	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	printf("-: %s\n", getcwd(cwd, sizeof(cwd)));
 	if (chdir("") == -1)
 		perror("");
-	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	printf("\"\": %s\n", getcwd(cwd, sizeof(cwd)));
 	if (chdir("") == -1) // must be a non-NULL string
 		printf("must be a non-NULL string\n");
-	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	printf("NULL: %s\n", getcwd(cwd, sizeof(cwd)));
 	if (chdir("env_module") == -1) // must be a non-NULL string
 		perror("env_module");
-	printf("Current working directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	printf("env_module: %s\n", getcwd(cwd, sizeof(cwd)));
 
 	printf("\n");
 

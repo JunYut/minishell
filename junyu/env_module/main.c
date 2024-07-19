@@ -7,13 +7,16 @@ int main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
+	(void)envp;
 	t_env	e;
 
 	init_env(&e, envp);
 
-	env(&e, EXPORT);
+	// export("LMAO=lol", &e);
+	// export("LMAO=kek", &e);
+	// env(&e, VAR);
 
-	cd(NULL, &e);
+	cd("..", &e);
 
 	gb_clear();
 	return 0;

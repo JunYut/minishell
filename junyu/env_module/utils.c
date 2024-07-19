@@ -10,27 +10,26 @@ char **split_var(char *str)
 	if (str == NULL)
 		return (NULL);
 	split = gb_malloc(sizeof(char *) * 2);
-	split[0] = ft_strdup(str, '=');
+	split[0] = ft_strdup(str, ft_strlen(str, '='));
 	if (split[0] == NULL)
 	{
-		split[0] = ft_strdup(str, '\0');
+		split[0] = ft_strdup(str, ft_strlen(str, '='));
 		split[1] = NULL;
 		return (split);
 	}
-	split[1] = ft_strdup(str + ft_strlen(str, '=') + 1, '\0');
+	printf("split[0]: %s\n", split[0]);
+	split[1] = ft_strdup(str + ft_strlen(str, '=') + 1, ft_strlen(str, '\0'));
 	return (split);
 }
 
-char	*ft_strdup(char *str, char delim)
+// copies until pos - 1
+// "hello world", 5 -> "hello"
+char	*ft_strdup(char *str, int pos)
 {
 	char	*dup;
-	int		len;
 
-	len = ft_strlen(str, delim);
-	if (len == -1)
-		return (NULL);
-	dup = gb_malloc(len + 1);
-	ft_strncpy(dup, str, len);
+	dup = gb_malloc(pos + 1);
+	ft_strncpy(dup, str, pos);
 	return (dup);
 }
 
@@ -39,7 +38,7 @@ void ft_strncpy(char *dst, char *src, int len)
 	int i;
 
 	i = -1;
-	while (++i < len)
+	while (++i < len && src[i])
 		dst[i] = src[i];
 	dst[i] = '\0';
 }
@@ -56,13 +55,10 @@ int ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-bool	is_delim(char c)
-{
-	if (c == '=')
-		return (true);
-	return (false);
-}
 
+// "hello", '\0' -> 5
+// "hello", 'o' -> 4
+// "hello", 'z' -> -1
 int	ft_strlen(char *str, char delim)
 {
 	int i;

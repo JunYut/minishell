@@ -8,7 +8,7 @@
 void	export(char *str, t_env *e)
 {
 	char	**split;
-	char	*key;
+	char	*value;
 
 	if (str == NULL || str[0] == '\0')
 	{
@@ -16,11 +16,11 @@ void	export(char *str, t_env *e)
 		return ;
 	}
 	split = split_var(str);
-	key = find_key(split[0], e->exp);
+	value = fetch_val(split[0], e->exp);
 	if (split[1] == NULL)
 		add_var(str, e->exp, EXPORT);
-	else if (key)
-		replace_val(e, split[0], split[1]);
+	else if (value)
+		set_val(e, split[0], split[1]);
 	else
 	{
 		add_var(str, e->exp, EXPORT);
@@ -28,7 +28,8 @@ void	export(char *str, t_env *e)
 	}
 }
 
-char	*find_key(char *key, t_var *v)
+// if key is not found, return NULL
+char	*fetch_val(char *key, t_var *v)
 {
 	t_var	*curr;
 
@@ -36,13 +37,13 @@ char	*find_key(char *key, t_var *v)
 	while (curr->next)
 	{
 		if (ft_strcmp(curr->key, key) == 0)
-			return (curr->key);
+			return (curr->value);
 		curr = curr->next;
 	}
 	return (NULL);
 }
 
-void	replace_val(t_env *e, char *key, char *val)
+void	set_val(t_env *e, char *key, char *val)
 {
 	t_var	*curr;
 
@@ -73,8 +74,8 @@ t_var	*init_export(char **envp)
 	t_var	*export;
 
 	export = dup_env(envp, EXPORT);
-	if (find_key("OLDPWD", export) == NULL)
-		add_var("OLDPWD", export, EXPORT);
+	if (fetch_val("OLDPWD", export) == NULL)
+		add_var("OLDPWD=", export, EXPORT);
 	sort_export(export);
 	return (export);
 }
@@ -85,7 +86,7 @@ void sort_export(t_var *exp)
 	char	*tmp;
 
 	curr = exp;
-	while (curr->next)
+	while (curr->next && curr->next->next)
 	{
 		if (ft_strcmp(curr->key, curr->next->key) > 0)
 		{
