@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/18 10:09:56 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:15:32 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ int	main(void)
 		if (vars.parse_err.type != E_NONE)
 			handle_parse_error(&vars);
 	}
+	free(vars.ast);
 	return (0);
 }

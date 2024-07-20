@@ -6,7 +6,7 @@
 #    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/02 17:12:39 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/07/18 14:28:31 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/07/20 13:58:42 by kkhai-ki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,8 +86,7 @@ SRC_FILES =	ft_isalpha			\
 			ft_atoi_base		\
 			ft_strjoin_delim	\
 			is_in_set			\
-			ft_trim_str			\
-			gbc
+			ft_trim_str
 
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
 

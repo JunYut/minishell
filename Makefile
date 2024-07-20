@@ -6,7 +6,7 @@
 #    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/06 14:33:10 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/07/18 14:32:32 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/07/20 14:13:39 by kkhai-ki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ RESET = \033[0m
 ORANGE = \033[0;38;5;166m
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror $(INCLUDE) #-fsanitize=address -g3
 
 INCLUDE = -Iinclude -I$(LIBFT_DIR) -I$(LIBFT_DIR)/include
 
@@ -33,9 +33,11 @@ PARSER =	parser/parser.c	\
 			parser/node.c	\
 			parser/utils.c
 
+GBC = gbc/gbc.c
+
 MAIN = main.c
 
-SRC =	$(MAIN) $(LEXER) $(PARSER)
+SRC =	$(MAIN) $(LEXER) $(PARSER) $(GBC)
 
 OBJ_DIR = obj
 OBJ = $(SRC:%.c=%.o)
