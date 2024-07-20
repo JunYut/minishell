@@ -15,7 +15,14 @@ void	cd(char *path, t_env *e)
 		path = fetch_val("OLDPWD", e->var);
 	else if (ft_strcmp("..", path) == 0)
 		path = parent_dir(fetch_val("PWD", e->var));
+	if (ft_strcmp(path, "-") == 0)
+	{
+		printf("cd: OLDPWD not set\n");
+		return ;
+	}
+	DPRINTF("updating OLDPWD\n");
 	set_val(e, "OLDPWD", fetch_val("PWD", e->var));
+	DPRINTF("updating PWD\n");
 	set_val(e, "PWD", path);
 	chdir(path);
 	// printf("path:%s\n", path);

@@ -12,8 +12,6 @@ t_var	*init_var(char **envp)
 	t_var	*v;
 
 	v = dup_env(envp, VAR);
-	if (fetch_val("OLDPWD", v) == NULL)
-		add_var("OLDPWD=", v, VAR);
 	return (v);
 }
 

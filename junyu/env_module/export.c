@@ -50,23 +50,29 @@ void	set_val(t_env *e, char *key, char *val)
 	curr = e->exp;
 	while (curr->next)
 	{
+		DPRINTF("key: %s\n", curr->key);
 		if (ft_strcmp(curr->key, key) == 0)
 		{
 			curr->value = val;
+			DPRINTF("var: %s=%s\n", curr->key, curr->value);
 			break;
 		}
 		curr = curr->next;
 	}
+	DPRINTF("\n");
 	curr = e->var;
 	while (curr->next)
 	{
+		DPRINTF("key: %s\n", curr->key);
 		if (ft_strcmp(curr->key, key) == 0)
 		{
 			curr->value = val;
+			DPRINTF("var: %s=%s\n", curr->key, curr->value);
 			return ;
 		}
 		curr = curr->next;
 	}
+	DPRINTF("\n");
 }
 
 t_var	*init_export(char **envp)
@@ -74,8 +80,6 @@ t_var	*init_export(char **envp)
 	t_var	*export;
 
 	export = dup_env(envp, EXPORT);
-	if (fetch_val("OLDPWD", export) == NULL)
-		add_var("OLDPWD=", export, EXPORT);
 	sort_export(export);
 	return (export);
 }

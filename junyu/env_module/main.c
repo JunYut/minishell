@@ -13,14 +13,15 @@ int main(int ac, char **av, char **envp)
 
 	init_env(&e, envp);
 
-	// env(&e, VAR);
+	env(&e, VAR);
+	printf("\n");
+
 	printf("PWD: %s\n", fetch_val("PWD", e.var));
 	printf("OLDPWD: %s\n", fetch_val("OLDPWD", e.var));
 	printf("\n");
 
-	// printf("getcwd(): %s\n", getcwd(buf, sizeof(buf)));
-	cd("-", &e);
-	// printf("getcwd(): %s\n", getcwd(buf, sizeof(buf)));
+	cd("~", &e);
+	printf("\n");
 
 	printf("PWD: %s\n", fetch_val("PWD", e.var));
 	printf("OLDPWD: %s\n", fetch_val("OLDPWD", e.var));
