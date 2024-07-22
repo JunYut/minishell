@@ -1,31 +1,24 @@
 # include "env.h"
 
-void	init_env(t_env *e, char **envp)
+t_env	*dup_env(char **envp)
 {
-	e->var = init_var(envp);
-	e->exp = init_export(envp);
-	unset("OLDPWD", e);
-}
-
-t_var	*init_var(char **envp)
-{
-	t_var	*v;
-
-	v = dup_env(envp, VAR);
-	return (v);
-}
-
-t_var	*dup_env(char **envp, char lst)
-{
-	t_var	*var;
+	t_env	*e;
+	char	**split;
 	int		i;
 
-	var = gb_malloc(sizeof(t_var));
-	var->next = NULL;
+	e = gb_malloc(sizeof(t_env));
+	e->exp = gb_malloc(sizeof(t_var));
+	e->var = gb_malloc(sizeof(t_var));
+	e->exp->next = NULL;
+	e->var->next = NULL;
 	i = -1;
 	while (envp[++i])
-		add_var(envp[i], var, lst);
-	return (var);
+	{
+		split = split_var(envp[i]);
+		add_var(e, split[0], split[1]);
+	}
+	unset("OLDPWD", e);
+	return (e);
 }
 
 void	env(t_env *e, char lst)
@@ -79,21 +72,30 @@ void	unset(char *key, t_env *v)
 	}
 }
 
-void	add_var(char *str, t_var *v, char lst)
+// a=1 : export: a="1"; var: a=1
+// a= : export: a=""; var: a=
+// a : export: a; var: [nothing]
+void	add_var(t_env *e, char *key, char *val)
 {
 	static int	id;
-	char		**split;
 	t_var		*curr;
 
-	curr = v;
+	curr = e->exp;
 	while (curr->next)
 		curr = curr->next;
-	split = split_var(str);
-	if (lst == VAR && split[1] == NULL)
-		return ;
 	curr->id = id++;
-	curr->key = split[0];
-	curr->value = split[1];
+	curr->key = key;
+	curr->value = val;
+	curr->next = gb_malloc(sizeof(t_var));
+	curr->next->next = NULL;
+	if (val == NULL)
+		return ;
+	curr = e->var;
+	while (curr->next)
+		curr = curr->next;
+	curr->id = id;
+	curr->key = key;
+	curr->value = val;
 	curr->next = gb_malloc(sizeof(t_var));
 	curr->next->next = NULL;
 }

@@ -8,23 +8,23 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	(void)envp;
-	t_env	e;
+	t_env	*e;
 	// char	buf[1024];
 
-	init_env(&e, envp);
+	e = dup_env(envp);
 
-	env(&e, VAR);
+	env(e, VAR);
 	printf("\n");
 
-	printf("PWD: %s\n", fetch_val("PWD", e.var));
-	printf("OLDPWD: %s\n", fetch_val("OLDPWD", e.var));
+	printf("PWD: %s\n", fetch_val("PWD", e->var));
+	printf("OLDPWD: %s\n", fetch_val("OLDPWD", e->var));
 	printf("\n");
 
-	cd("~", &e);
+	cd("~", e);
 	printf("\n");
 
-	printf("PWD: %s\n", fetch_val("PWD", e.var));
-	printf("OLDPWD: %s\n", fetch_val("OLDPWD", e.var));
+	printf("PWD: %s\n", fetch_val("PWD", e->var));
+	printf("OLDPWD: %s\n", fetch_val("OLDPWD", e->var));
 	printf("\n");
 
 	gb_clear();

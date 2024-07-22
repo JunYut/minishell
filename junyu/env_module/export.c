@@ -17,15 +17,10 @@ void	export(char *str, t_env *e)
 	}
 	split = split_var(str);
 	value = fetch_val(split[0], e->exp);
-	if (split[1] == NULL)
-		add_var(str, e->exp, EXPORT);
-	else if (value)
+	if (value)
 		set_val(e, split[0], split[1]);
 	else
-	{
-		add_var(str, e->exp, EXPORT);
-		add_var(str, e->var, VAR);
-	}
+		add_var(e, split[0], split[1]);
 }
 
 // if key is not found, return NULL
@@ -73,15 +68,6 @@ void	set_val(t_env *e, char *key, char *val)
 		curr = curr->next;
 	}
 	DPRINTF("\n");
-}
-
-t_var	*init_export(char **envp)
-{
-	t_var	*export;
-
-	export = dup_env(envp, EXPORT);
-	sort_export(export);
-	return (export);
 }
 
 void sort_export(t_var *exp)
