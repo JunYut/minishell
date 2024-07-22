@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:21:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/20 14:06:17 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:49:44 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct s_minishell
 	bool		token_err;
 	int			exit_status;
 	char		*line;
+	t_gbc		*gbc;
 }	t_minishell;
 
 #endif

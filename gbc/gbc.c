@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 13:54:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/18 15:20:41 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/22 12:26:45 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	gb_clear(void)
 	{
 		free(current->addr);
 		next = current->next;
-		if (current->id != 0)
-			free(current);
+		free(current);
 		current = next;
 	}
+	free(current);
 }
 
 void	*gb_malloc(size_t size)
@@ -62,15 +62,23 @@ void	gb_free(void *addr)
 
 t_gbc	*gb_collector(void)
 {
-	static t_gbc	collector;
+	static t_gbc	*collector;
 
-	return (&collector);
+	if (collector == NULL)
+	{
+		collector = malloc(sizeof(t_gbc));
+		gb_init(collector);
+	}
+	return (collector);
 }
 
 void	gb_init(t_gbc *collector)
 {
-	collector->addr = NULL;
-	collector->next = NULL;
+	if (collector != NULL)
+	{
+		collector->addr = NULL;
+		collector->next = NULL;
+	}
 }
 
 void	*gb_add(void *addr)

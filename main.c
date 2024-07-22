@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/20 14:15:32 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/22 12:33:41 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ int	main(void)
 {
 	t_minishell	vars;
 
+	// vars.gbc = gb_collector();
+	// vars.gbc->addr = NULL;
+	// vars.gbc->next = NULL;
+	// gb_init(vars.gbc);
 	while (1)
 	{
 		init_vars(&vars);
@@ -48,7 +52,31 @@ int	main(void)
 		vars.ast = parse(&vars);
 		if (vars.parse_err.type != E_NONE)
 			handle_parse_error(&vars);
+		free(vars.line);
+		// clear_ast(&vars.token_list, &vars.ast);
+		clear_ast(NULL, &vars.ast);
 	}
-	free(vars.ast);
+	gb_clear();
+	// clear_history();
 	return (0);
 }
+
+// int	main(void)
+// {
+// 	char	*value;
+// 	// char	*value2;
+// 	// int	i;
+
+// 	value = gb_add(ft_substr("testing", 0, ft_strlen("testing")));
+// 	// value = gb_malloc(sizeof(char) * 10);
+// 	// for (i = 0; i < 9; i++)
+// 	// 	value[i] = 'h';
+// 	// value[i] = 0;
+// 	printf("%s\n", value);
+// 	// value2 = gb_malloc(sizeof(char) * 10);
+// 	// for (i = 0; i < 9; i++)
+// 	// 	value2[i] = 'f';
+// 	// value2[i] = 0;
+// 	// printf("%s\n", value2);
+// 	gb_clear();
+// }

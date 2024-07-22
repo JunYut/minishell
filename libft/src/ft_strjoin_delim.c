@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:59:15 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/16 17:26:57 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:55:58 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strjoin_delim(char *s1, char *s2, char *delim)
 	if (!s1 || !s2)
 		return (NULL);
 	if (!delim || !*delim || *s1 == '\0')
-		return (ft_strjoin(s1, s2));
+		return (gnl_strjoin(s1, s2));
 	total_length = ft_strlen(s1) + ft_strlen(s2) + ft_strlen(delim) + 1;
 	new_str = ft_calloc(total_length, 1);
 	if (!new_str)

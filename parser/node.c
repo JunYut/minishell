@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 14:18:06 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/15 09:01:22 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:09:54 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	clear_ast(t_token **token_list, t_node **ast)
 {
 	recursive_clear_ast(*ast);
 	*ast = NULL;
-	clear_token_list(token_list);
+	if (token_list != NULL)
+		clear_token_list(token_list);
 }
 
 void	clear_io_list(t_io_node **list)
