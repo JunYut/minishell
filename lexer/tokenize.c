@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/20 14:27:41 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:42:30 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ bool	append_operator_token(t_token_type type, char **line, t_token **token_list)
 	char_count = 1;
 	if (type == T_HERE_DOC || type == T_APPEND || type == T_OR || type == T_AND)
 		char_count++;
-	value = gb_add(ft_substr(*line, 0, char_count));
+	value = ft_substr(*line, 0, char_count);
 	if (!value)
 		return (true);
-	token = gb_add(init_new_token(type, value));
+	token = init_new_token(type, value);
 	if (!token)
-		return (true);
+		return (free(value), true);
 	add_token_to_list(token_list, token);
 	*line += char_count;
 	return (false);
@@ -102,13 +102,12 @@ bool	append_word_token(char **line, t_token **token_list, t_minishell *vars)
 		else
 			char_count++;
 	}
-	value = gb_add(ft_substr(buffer, 0, char_count));
+	value = ft_substr(buffer, 0, char_count);
 	if (!value)
 		return (true);
-	token = gb_add(init_new_token(T_WORD, value));
+	token = init_new_token(T_WORD, value);
 	if (!token)
-		// return (free(value), true);
-		return (true);
+		return (free(value), true);
 	*line += char_count;
 	add_token_to_list(token_list, token);
 	return (false);

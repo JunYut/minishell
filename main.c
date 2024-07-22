@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/22 12:33:41 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:55:48 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,13 @@ int	main(void)
 {
 	t_minishell	vars;
 
-	// vars.gbc = gb_collector();
-	// vars.gbc->addr = NULL;
-	// vars.gbc->next = NULL;
-	// gb_init(vars.gbc);
 	while (1)
 	{
 		init_vars(&vars);
 		vars.line = readline("minishell> ");
 		if (vars.line == NULL)
 			break ;
-		if (*vars.line != '\0')
+		// if (*vars.line != '\0')
 			add_history(vars.line);
 		tokenize(vars.line, &vars);
 		if (vars.token_list == NULL)
@@ -53,10 +49,10 @@ int	main(void)
 		if (vars.parse_err.type != E_NONE)
 			handle_parse_error(&vars);
 		free(vars.line);
-		// clear_ast(&vars.token_list, &vars.ast);
-		clear_ast(NULL, &vars.ast);
+		clear_ast(&vars.token_list, &vars.ast);
+		// clear_ast(NULL, &vars.ast);
 	}
-	gb_clear();
+	// gb_clear();
 	// clear_history();
 	return (0);
 }
