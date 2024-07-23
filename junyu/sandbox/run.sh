@@ -15,7 +15,7 @@ if [ ! -f $1 ]; then
 fi
 
 # Compile
-if [ $# -eq 1 ]; then
+if [ $# -eq 1 ] || [ $2 = "-l" ]; then
 	clang $CFLAGS $1 $LIBS
 elif [ $2 = "-f" ]; then
 	clang $CFLAGS -fsanitize=address -g3 $1 $LIBS
@@ -26,10 +26,10 @@ fi
 # Run
 if [ $# -eq 1 ]; then
 	./a.out
-elif [ $2 == '-l' ]; then
-	if [ $OS == "Darwin" ]; then
+elif [ $2 = '-l' ]; then
+	if [ $OS = "Darwin" ]; then
 		leaks -atExit -- ./a.out
 	else
-		valgrind --leak-check=full ./a.out
+		valgrind --leak-check=full --show-leak-kinds=all ./a.out
 	fi
 fi

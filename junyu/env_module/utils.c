@@ -21,6 +21,23 @@ char **split_var(char *str)
 	return (split);
 }
 
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*join;
+	int		i;
+	int		j;
+
+	join = gb_malloc(ft_strlen(s1, 0) + ft_strlen(s2, 0) + 1);
+	i = -1;
+	while (s1[++i])
+		join[i] = s1[i];
+	j = -1;
+	while (s2[++j])
+		join[i + j] = s2[j];
+	join[i + j] = '\0';
+	return (join);
+}
+
 // copies until pos - 1
 // "hello world", 5 -> "hello"
 char	*ft_strdup(char *str, int pos)

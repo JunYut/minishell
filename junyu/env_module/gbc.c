@@ -30,21 +30,17 @@ void	*gb_malloc(size_t size)
 	return (addr);
 }
 
-void	gb_free(void *addr)
+void    *gb_add(void *addr)
 {
-	t_gbc	*current;
+    t_gbc    *current;
 
-	current = gb_collector();
-	while (current)
-	{
-		if (current->addr == addr)
-		{
-			free(current->addr);
-			current->addr = NULL;
-			break ;
-		}
-		current = current->next;
-	}
+    current = gb_collector();
+    while (current->next)
+        current = current->next;
+    current->addr = addr;
+    current->next = malloc(sizeof(t_gbc));
+    gb_init(current->next);
+    return (addr);
 }
 
 void	gb_init(t_gbc *collector)

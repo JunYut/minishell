@@ -122,33 +122,35 @@ int main(void)
 	// getcwd() & chdir()
 	char cwd[1024];
 
-	printf("Original: %s\n", getcwd(cwd, sizeof(cwd)));
+	printf("chdir: %s\n", getcwd(cwd, sizeof(cwd)));
+	if (chdir("/home/we/Programming/42kl") == -1)
+		perror("ERROR: /home/we/Programming/42kl");
+	printf("chdir: %s\n", getcwd(cwd, sizeof(cwd)));
+	if (chdir("../C") == -1)
+		perror("ERROR: ../C");
+	printf("chdir: %s\n", getcwd(cwd, sizeof(cwd)));
 	if (chdir("..") == -1)
-		perror("..");
-	printf("..: %s\n", getcwd(cwd, sizeof(cwd)));
-	if (chdir("~") == -1)
-		perror("~");
-	printf("~: %s\n", getcwd(cwd, sizeof(cwd)));
-	if (chdir("~we") == -1)
-		perror("~we");
-	printf("~we: %s\n", getcwd(cwd, sizeof(cwd)));
+		perror("ERROR: ..");
+	printf("chdir: %s\n", getcwd(cwd, sizeof(cwd)));
 	if (chdir(".") == -1)
-		perror(".");
-	printf(".: %s\n", getcwd(cwd, sizeof(cwd)));
+		perror("ERROR: .");
+	printf("chdir: %s\n", getcwd(cwd, sizeof(cwd)));
+	if (chdir("home/we/Programming/") == -1)
+		perror("ERROR: home/we/Programming/");
+	printf("chdir: %s\n", getcwd(cwd, sizeof(cwd)));
+	if (chdir("~") == -1)
+		perror("ERROR: ~");
+	printf("chdir: %s\n", getcwd(cwd, sizeof(cwd)));
+	if (chdir("~we") == -1)
+		perror("ERROR: ~we");
+	printf("chdir: %s\n", getcwd(cwd, sizeof(cwd)));
 	if (chdir("-") == -1)
-		perror("-");
-	printf("-: %s\n", getcwd(cwd, sizeof(cwd)));
-	if (chdir("") == -1)
-		perror("");
-	printf("\"\": %s\n", getcwd(cwd, sizeof(cwd)));
+		perror("ERROR: -");
+	printf("chdir: %s\n", getcwd(cwd, sizeof(cwd)));
 	if (chdir("") == -1) // must be a non-NULL string
-		printf("must be a non-NULL string\n");
-	printf("NULL: %s\n", getcwd(cwd, sizeof(cwd)));
-	if (chdir("env_module") == -1) // must be a non-NULL string
-		perror("env_module");
-	printf("env_module: %s\n", getcwd(cwd, sizeof(cwd)));
-
-	printf("\n");
+		perror("ERROR: \"\"");
+	printf("chdir: %s\n", getcwd(cwd, sizeof(cwd)));
+	// printf("\n");
 
 	// // isatty()
 	// if (isatty(STDIN_FILENO))

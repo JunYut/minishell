@@ -5,7 +5,7 @@
 # include <stdbool.h>
 # include <stdio.h>
 
-# define DEBUG 1
+# define DEBUG 0
 # if DEBUG
 	# define DPRINTF printf
 # else
@@ -39,9 +39,8 @@ char	*fetch_val(char *key, t_env *e);
 t_env	*dup_env(char **envp);
 void	sort_export(t_var *exp);
 
-char	*parent_dir(char *pwd);
-
 char	**split_var(char *str);
+char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup(char *str, int pos);
 void	ft_strncpy(char *dst, char *src, int len);
 int		ft_strcmp(char *s1, char *s2);

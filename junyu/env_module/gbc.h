@@ -12,6 +12,6 @@ typedef struct s_gbc
 
 void	gb_clear(void);
 void	*gb_malloc(size_t size);
-void	gb_free(void *addr);
+void	*gb_add(void *addr);
 void	gb_init(t_gbc *collector);
 t_gbc	*gb_collector(void);

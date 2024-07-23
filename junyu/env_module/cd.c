@@ -1,38 +1,35 @@
 # include "env.h"
 
 // Expected input:
-// absolute path
-// relative path
-// NULL ; ~
+// absolute path [x]
+// relative path [x]
+// NULL ; ~		 [x]
 // ~username
-// . ; ..
-// -
+// . ; ..		 [x]
+// -			 [x]
 void	cd(char *path, t_env *e)
 {
+	char	*target;
+
+	target = path;
 	if (!path || *path == '\0' || *path == '~')
-		path = fetch_val("HOME", e);
+		target = fetch_val("HOME", e);
 	else if (ft_strcmp(path, "-") == 0)
-		path = fetch_val("OLDPWD", e);
-	else if (ft_strcmp("..", path) == 0)
-		path = parent_dir(fetch_val("PWD", e));
-	if (ft_strcmp(path, "-") == 0)
+		target = fetch_val("OLDPWD", e);
+	if (ft_strcmp(path, "-") == 0 && !target)
 	{
 		printf("cd: OLDPWD not set\n");
 		return ;
 	}
+	else if (ft_strcmp(path, "-") == 0 && target)
+		printf("%s\n", target);
+	if (path && *path == '~' && *(path + 1) != '\0')
+		target = ft_strjoin("/home/", path + 1);
 	if (!fetch_val("OLDPWD", e))
 		add_var(e, "OLDPWD", fetch_val("PWD", e));
-	set_val(e, "OLDPWD", fetch_val("PWD", e));
-	set_val(e, "PWD", path);
-	chdir(path);
-}
-
-char	*parent_dir(char *pwd)
-{
-	int	i;
-
-	i = ft_strlen(pwd, '\0');
-	while (--i > 0 && pwd[i] != '/')
-		;
-	return (ft_strdup(pwd, i));
+	if (chdir(target) == -1)
+		printf("cd: %s: No such file or directory\n", target);
+	else
+		set_val(e, "OLDPWD", fetch_val("PWD", e));
+	set_val(e, "PWD", gb_add(getcwd(NULL, 0)));
 }
