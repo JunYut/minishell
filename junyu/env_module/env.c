@@ -18,6 +18,7 @@ t_env	*dup_env(char **envp)
 		add_var(e, split[0], split[1]);
 	}
 	unset("OLDPWD", e);
+	add_var(e, "?", "");
 	return (e);
 }
 

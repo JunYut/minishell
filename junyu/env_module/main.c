@@ -3,7 +3,7 @@
 # include <string.h>
 # include <stdio.h>
 
-# define TEST 1
+# define TEST 0
 
 int main(int ac, char **av, char **envp)
 {
@@ -13,7 +13,7 @@ int main(int ac, char **av, char **envp)
 
 	e = dup_env(envp);
 
-	// env(e, VAR);
+	env(e, VAR);
 	// printf("\n");
 	# if TEST == 1
 	printf("cwd: %s\n", gb_add(getcwd(NULL, 0)));

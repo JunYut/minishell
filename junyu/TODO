@@ -3,14 +3,17 @@
 - [x] redout module
 - [x] append module
 - [x] heredoc module
-- [ ] or module
-- [ ] and module
 - [x] garbage collector module
 - [ ] environment module
+- [ ] or module
+- [ ] and module
+- [ ] signal module
+- [ ] exit command
 
 # Notes
 - env module:
-1. - [ ] $ expansion
-2. - [x] sort export list
-3. - [x] export command
-4. - [ ] cd command
+1. - [x] sort export list
+2. - [x] export command
+3. - [x] cd command
+4. - [ ] pwd command
+5. - [ ] echo command
