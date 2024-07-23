@@ -5,7 +5,12 @@
 # include <stdbool.h>
 # include <stdio.h>
 
-# define DPRINTF printf
+# define DEBUG 1
+# if DEBUG
+	# define DPRINTF printf
+# else
+	# define DPRINTF(...) do {} while (0)
+# endif
 # define EXPORT 1
 # define VAR 2
 
@@ -30,7 +35,7 @@ void	cd(char *path, t_env *e);
 
 void	add_var(t_env *e, char *key, char *val);
 void	set_val(t_env *e, char *key, char *val);
-char	*fetch_val(char *key, t_var *v);
+char	*fetch_val(char *key, t_env *e);
 t_env	*dup_env(char **envp);
 void	sort_export(t_var *exp);
 

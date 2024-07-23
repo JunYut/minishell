@@ -16,7 +16,7 @@ void	export(char *str, t_env *e)
 		return ;
 	}
 	split = split_var(str);
-	value = fetch_val(split[0], e->exp);
+	value = fetch_val(split[0], e);
 	if (value)
 		set_val(e, split[0], split[1]);
 	else
@@ -24,11 +24,11 @@ void	export(char *str, t_env *e)
 }
 
 // if key is not found, return NULL
-char	*fetch_val(char *key, t_var *v)
+char	*fetch_val(char *key, t_env *e)
 {
 	t_var	*curr;
 
-	curr = v;
+	curr = e->var;
 	while (curr->next)
 	{
 		if (ft_strcmp(curr->key, key) == 0)
@@ -45,29 +45,23 @@ void	set_val(t_env *e, char *key, char *val)
 	curr = e->exp;
 	while (curr->next)
 	{
-		DPRINTF("key: %s\n", curr->key);
 		if (ft_strcmp(curr->key, key) == 0)
 		{
 			curr->value = val;
-			DPRINTF("var: %s=%s\n", curr->key, curr->value);
 			break;
 		}
 		curr = curr->next;
 	}
-	DPRINTF("\n");
 	curr = e->var;
 	while (curr->next)
 	{
-		DPRINTF("key: %s\n", curr->key);
 		if (ft_strcmp(curr->key, key) == 0)
 		{
 			curr->value = val;
-			DPRINTF("var: %s=%s\n", curr->key, curr->value);
 			return ;
 		}
 		curr = curr->next;
 	}
-	DPRINTF("\n");
 }
 
 void sort_export(t_var *exp)
