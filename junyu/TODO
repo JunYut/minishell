@@ -15,5 +15,5 @@
 1. - [x] sort export list
 2. - [x] export command
 3. - [x] cd command
-4. - [ ] pwd command
-5. - [ ] echo command
+4. - [x] pwd command
+5. - [x] echo command

@@ -32,6 +32,8 @@ void	env(t_env *e, char lst);
 void	export(char *str, t_env *e);
 void	unset(char *key, t_env *e);
 void	cd(char *path, t_env *e);
+void	pwd(t_env *e);
+void	echo(char **av);
 
 void	add_var(t_env *e, char *key, char *val);
 void	set_val(t_env *e, char *key, char *val);
