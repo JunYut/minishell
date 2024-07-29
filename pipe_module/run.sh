@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 OS=$(uname)
 CFLAGS="-Wall -Wextra -Werror -Wpedantic"
