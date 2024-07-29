@@ -2,7 +2,7 @@
 
 OS=$(uname)
 CFLAGS="-Wall -Wextra -Werror -Wpedantic"
-LIBS=""
+LIBS="-lreadline"
 
 # Compile
 if [ $# -eq 0 ] || [ "$1" = "-l" ]; then
@@ -18,7 +18,7 @@ if [ "$1" = "-l" ]; then
 	if [ "$OS" = "Darwin" ]; then
 		leaks -atExit -- ./a.out
 	else
-		valgrind --leak-check=full ./a.out
+		valgrind --leak-check=full --show-leak-kinds=all ./a.out
 	fi
 else
 	./a.out
