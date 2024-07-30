@@ -3,7 +3,7 @@
 # include <string.h>
 # include <stdio.h>
 
-# define TEST 0
+# define TEST 4
 
 int main(int ac, char **av, char **envp)
 {
@@ -110,8 +110,14 @@ int main(int ac, char **av, char **envp)
 	pwd(e);
 	#endif
 
+	# if TEST == 3
 	char *strs[] = {"Hello", "World", NULL};
 	echo(strs);
+	#endif
+
+	# if TEST == 4
+	env(e, VAR);
+	# endif
 
 	gb_clear();
 	return 0;

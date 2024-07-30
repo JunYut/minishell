@@ -2,7 +2,7 @@
 #include <readline/readline.h>
 #include <stdio.h>
 
-#define MODE 1
+#define MODE 2
 
 void handle_sigint(int sig) {
 	(void)sig;
@@ -21,16 +21,16 @@ int main() {
 	printf ("SIGQUIT: %d\n", SIGQUIT);
 
 	// Non-interactive mode
-	#if MODE == 0
-		signal(SIGINT, handle_sigint);
-		signal(SIGQUIT, handle_sigquit);
+	#if MODE == 1
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 
 		while (1)
 			pause();
 	#endif
 
 	// Interactive mode
-	#if MODE == 1
+	#if MODE == 2
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 
