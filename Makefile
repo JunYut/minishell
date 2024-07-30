@@ -6,7 +6,7 @@
 #    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/06 14:33:10 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/07/22 12:05:48 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/07/30 13:24:34 by kkhai-ki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,9 +35,11 @@ PARSER =	parser/parser.c	\
 
 GBC = gbc/gbc.c
 
+EXPANDER = expander/expand.c
+
 MAIN = main.c
 
-SRC =	$(MAIN) $(LEXER) $(PARSER) $(GBC)
+SRC =	$(MAIN) $(LEXER) $(PARSER) $(GBC) $(EXPANDER)
 
 OBJ_DIR = obj
 OBJ = $(SRC:%.c=%.o)

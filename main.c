@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/22 15:55:48 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/30 15:38:12 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,32 @@ int	main(void)
 			break ;
 		// if (*vars.line != '\0')
 			add_history(vars.line);
-		tokenize(vars.line, &vars);
-		if (vars.token_list == NULL)
-			continue ;
-		// while (vars.token_list != NULL)
-		// {
-		// 	printf("value: %s\n", vars.token_list->value);
-		// 	printf("type: %d\n", vars.token_list->type);
-		// 	printf("-------------------------------------\n");
-		// 	vars.token_list = vars.token_list->next;
-		// }
-		vars.ast = parse(&vars);
-		if (vars.parse_err.type != E_NONE)
-			handle_parse_error(&vars);
-		free(vars.line);
-		clear_ast(&vars.token_list, &vars.ast);
+		// tokenize(vars.line, &vars);
+		// if (vars.token_list == NULL)
+		// 	continue ;
+		// // while (vars.token_list != NULL)
+		// // {
+		// // 	printf("value: %s\n", vars.token_list->value);
+		// // 	printf("type: %d\n", vars.token_list->type);
+		// // 	printf("-------------------------------------\n");
+		// // 	vars.token_list = vars.token_list->next;
+		// // }
+		// vars.ast = parse(&vars);
+		// if (vars.parse_err.type != E_NONE)
+		// 	handle_parse_error(&vars);
+		// expand_tree(vars.ast);
+		// free(vars.line);
+		// clear_ast(&vars.token_list, &vars.ast);
 		// clear_ast(NULL, &vars.ast);
+		pid_t pid = fork();
+		if (pid == 0)
+		{
+			printf("read\n");
+			if (execve("/bin/bash", (char *[]){"bash", "-c", "echo", "string", NULL}, NULL) == -1)
+				printf("die\n");
+			printf("yo\n");
+		}
+		wait(NULL);
 	}
 	// gb_clear();
 	// clear_history();
