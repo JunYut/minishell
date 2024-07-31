@@ -4,11 +4,13 @@
 - [x] append module
 - [x] heredoc module
 - [x] garbage collector module
-- [ ] environment module
-- [ ] or module
-- [ ] and module
-- [ ] signal module
-- [ ] exit command
+- [x] environment module
+- [ ] exec
+- [ ] system integration
+	- [ ] or module
+	- [ ] and module
+	- [ ] signal module
+	- [ ] exit command
 
 # Notes
 - env module:
