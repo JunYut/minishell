@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:39:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/18 13:24:15 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/07/31 18:05:03 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	handle_open_quote(char **line, char **buffer, int *char_count, char quote)
 	char	*appended_str;
 	char	*trimmed_str;
 
+	// printf("quote type: %c\n", quote);
 	read_line = NULL;
 	appended_str = ft_strdup(*line);
 	while (is_quote_balance(appended_str, quote) == false)
@@ -37,19 +38,23 @@ void	handle_open_quote(char **line, char **buffer, int *char_count, char quote)
 			break ;
 		appended_str = ft_strjoin_delim(appended_str, read_line, "\n");
 	}
-	if (read_line != NULL)
+	// if (read_line != NULL)
 		trimmed_str = ft_trim_str(appended_str, quote);
-	else
-		trimmed_str = appended_str;
-	(*char_count) = ft_strlen(trimmed_str);
+	// else
+	// 	trimmed_str = appended_str;
+	// printf("trimmed: %s\n", trimmed_str);
+	*char_count = ft_strlen(trimmed_str);
 	*line = appended_str;
 	*buffer = appended_str;
+	// printf("char_count: %d\n", *char_count);
 }
 
 bool	is_quote_balance(char *str, char quote)
 {
 	int	count;
 
+	// printf("string: %s\n\n", str);
+	// printf("quote type: %c\n\n", quote);
 	count = 0;
 	while (*str != '\0')
 	{
