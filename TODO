@@ -5,6 +5,12 @@
 - [x] heredoc module
 - [x] garbage collector module
 - [x] environment module
+	- [x] sort export list
+	- [ ] export command
+		-  [ ] modify to take string array as input
+	- [x] cd command
+	- [x] pwd command
+	- [x] echo command
 - [ ] exec
 	- [ ] remove duplicate dependencies
 		- Duplicates
@@ -19,11 +25,3 @@
 	- [ ] and module
 	- [ ] signal module
 	- [ ] exit command
-
-# Notes
-- env module:
-1. - [x] sort export list
-2. - [x] export command
-3. - [x] cd command
-4. - [x] pwd command
-5. - [x] echo command
