@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/31 19:09:20 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:35:21 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ t_node	*get_term(t_minishell *vars)
 		vars->curr_token = vars->curr_token->next;
 		node = get_expression(vars, 0);
 		if (node == NULL)
-			return (set_parse_err_type(vars, E_MEM), NULL);
+			// return (set_parse_err_type(vars, E_MEM), NULL); Need to revisit this to see how to properly deal with this
+			return (NULL);
 		if (vars->curr_token == NULL || vars->curr_token->type != T_R_BRACKET)
 			return (set_parse_err_type(vars, E_SYNTAX), node);
 		vars->curr_token = vars->curr_token->next;
