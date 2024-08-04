@@ -6,13 +6,14 @@
 # include <stdio.h>
 
 # define DEBUG 0
+# define EXPORT 1
+# define VAR 2
+
 # if DEBUG
 	# define DPRINTF printf
 # else
-	# define DPRINTF(...) do {} while (0)
+		# define DPRINTF(...) do {} while (0)
 # endif
-# define EXPORT 1
-# define VAR 2
 
 typedef struct s_var
 {
