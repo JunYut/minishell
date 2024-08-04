@@ -43,7 +43,7 @@ void	sort_export(t_var *exp);
 
 char	**split_var(char *str);
 char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strdup(char *str, int pos);
+char	*dup_pos(char *str, int pos);
 void	ft_strncpy(char *dst, char *src, int len);
 int		ft_strcmp(char *s1, char *s2);
-int		ft_strlen(char *str, char delim);
+int		find_pos(char *str, char delim);

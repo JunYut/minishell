@@ -14,7 +14,7 @@ endif
 LIBFT_DIR = libft_module
 MODULE_DIRS = append_module env_module gb_collect_module heredoc_module pipe_module redin_module redout_module signal_module
 OBJ_DIR = obj
-INCL_DIRS = $(addprefix -I, $(MODULE_DIRS)) -I$(LIBFT_DIR)/include
+INCL_DIRS = $(addprefix -I, $(MODULE_DIRS)) -I$(LIBFT_DIR)/include -I.
 LINK_DIRS = -L$(LIBFT_DIR)
 
 vpath %.c $(MODULE_DIRS) # specify which directories the source files are located

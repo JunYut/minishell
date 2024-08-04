@@ -10,14 +10,14 @@ char **split_var(char *str)
 	if (str == NULL)
 		return (NULL);
 	split = gb_malloc(sizeof(char *) * 2);
-	split[0] = ft_strdup(str, ft_strlen(str, '='));
+	split[0] = dup_pos(str, find_pos(str, '='));
 	if (split[0] == NULL)
 	{
-		split[0] = ft_strdup(str, ft_strlen(str, '='));
+		split[0] = dup_pos(str, find_pos(str, '='));
 		split[1] = NULL;
 		return (split);
 	}
-	split[1] = ft_strdup(str + ft_strlen(str, '=') + 1, ft_strlen(str, '\0'));
+	split[1] = dup_pos(str + find_pos(str, '=') + 1, find_pos(str, '\0'));
 	return (split);
 }
 
@@ -27,7 +27,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		i;
 	int		j;
 
-	join = gb_malloc(ft_strlen(s1, 0) + ft_strlen(s2, 0) + 1);
+	join = gb_malloc(find_pos(s1, 0) + find_pos(s2, 0) + 1);
 	i = -1;
 	while (s1[++i])
 		join[i] = s1[i];
@@ -40,7 +40,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 // copies until pos - 1
 // "hello world", 5 -> "hello"
-char	*ft_strdup(char *str, int pos)
+char	*dup_pos(char *str, int pos)
 {
 	char	*dup;
 
@@ -75,7 +75,7 @@ int ft_strcmp(char *s1, char *s2)
 // "hello", '\0' -> 5
 // "hello", 'o' -> 4
 // "hello", 'z' -> -1
-int	ft_strlen(char *str, char delim)
+int	find_pos(char *str, char delim)
 {
 	int i;
 
