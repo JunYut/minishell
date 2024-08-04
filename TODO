@@ -14,12 +14,16 @@
 - [ ] exec
 	- [ ] remove duplicate dependencies
 		- Duplicates
-			- `append`: append, redout
-			- `write_file`: append, redout
-			- `read_pipe`: append, redout
-			- `append_s`: append, heredoc, redin, redout
-			- `ft_strlen`: append, env, heredoc, redin, redout
-			- `ft_strcmp`: env, heredoc
+			- [ ] `append`: append, redout
+			- [ ] `dup_pos`:
+			- [ ] `find_pos`:
+			- [ ] `split_var`:
+			- [ ] `write_file`: append, redout
+			- [ ] `read_pipe`: append, redout
+			- [ ] `append_s`: append, heredoc, redin, redout
+			- [ ] `ft_strlen`: append, env, heredoc, redin, redout
+			- [x] `ft_strcmp`: env, heredoc
+			- [ ] `ft_strncpy`:
 - [ ] system integration
 	- [ ] or module
 	- [ ] and module
