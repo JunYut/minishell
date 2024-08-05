@@ -19,3 +19,4 @@ Interactive actions in minishell: prompt, <<heredoc, unclosed quotes
 
 # include <signal.h>
 # include <unistd.h>
+# include "define.h"

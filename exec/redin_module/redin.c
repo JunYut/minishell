@@ -31,12 +31,12 @@ char	*read_file(char *file)
 
 	fd = open(file, O_RDONLY);
 	buf = malloc(1);
-	tmp = malloc(BUFFER_SIZE + 1);
+	tmp = malloc(READ_SIZE + 1);
 	buf[0] = '\0';
 	bytes_read = 1;
 	while (bytes_read > 0)
 	{
-		bytes_read = read(fd, tmp, BUFFER_SIZE);
+		bytes_read = read(fd, tmp, READ_SIZE);
 		tmp[bytes_read] = '\0';
 		append_s(&buf, tmp);
 	}

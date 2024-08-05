@@ -4,8 +4,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <stdio.h>
-
-# define BUFFER_SIZE 1024
+# include "define.h"
 
 void	redin(char *file, char *cmd, char *argv[]);
 char	*read_file(char *file);

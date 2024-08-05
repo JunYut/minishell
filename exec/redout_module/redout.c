@@ -38,12 +38,12 @@ char	*read_pipe(int read_fd)
 	int		bytes_read;
 
 	content = malloc(1);
-	tmp = malloc(BUFFER_SIZE + 1);
+	tmp = malloc(READ_SIZE + 1);
 	content[0] = '\0';
 	bytes_read = 1;
 	while (bytes_read > 0)
 	{
-		bytes_read = read(read_fd, tmp, BUFFER_SIZE);
+		bytes_read = read(read_fd, tmp, READ_SIZE);
 		tmp[bytes_read] = '\0';
 		append_s(&content, tmp);
 	}

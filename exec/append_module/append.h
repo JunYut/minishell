@@ -5,8 +5,7 @@
 # include <sys/wait.h>
 # include <stdlib.h>
 # include <stdio.h>
-
-# define BUFFER_SIZE 1
+# include "define.h"
 
 void	append(char *file, char *cmd, char *args[]);
 void	write_file(char *file, char *content);

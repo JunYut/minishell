@@ -1,18 +1,10 @@
 # pragma once
 
-# include "gbc.h"
 # include <unistd.h>
 # include <stdbool.h>
 # include <stdio.h>
-
-# define DEBUG 0
-# if DEBUG
-	# define DPRINTF printf
-# else
-	# define DPRINTF(...) do {} while (0)
-# endif
-# define EXPORT 1
-# define VAR 2
+# include "gbc.h"
+# include "define.h"
 
 typedef struct s_var
 {
