@@ -45,36 +45,36 @@ char	*read_pipe(int read_fd)
 	{
 		bytes_read = read(read_fd, tmp, READ_SIZE);
 		tmp[bytes_read] = '\0';
-		append_s(&content, tmp);
+		content = gnl_strjoin(content, tmp);
 	}
 	free(tmp);
 	return (content);
 }
 
-void	append_s(char **str1, char *str2)
-{
-	int		i;
-	int		j;
-	char	*new;
+// void	append_str(char **str1, char *str2)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*new;
 
-	i = -1;
-	j = -1;
-	new = malloc(ft_strlen(*str1) + ft_strlen(str2) + 1);
-	while ((*str1)[++i])
-		new[i] = (*str1)[i];
-	while (str2[++j])
-		new[i + j] = str2[j];
-	new[i + j] = '\0';
-	free(*str1);
-	*str1 = new;
-}
+// 	i = -1;
+// 	j = -1;
+// 	new = malloc(ft_strlen(*str1) + ft_strlen(str2) + 1);
+// 	while ((*str1)[++i])
+// 		new[i] = (*str1)[i];
+// 	while (str2[++j])
+// 		new[i + j] = str2[j];
+// 	new[i + j] = '\0';
+// 	free(*str1);
+// 	*str1 = new;
+// }
 
-int	ft_strlen(char *str)
-{
-	int	i;
+// int	ft_strlen(char *str)
+// {
+// 	int	i;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (str[i])
+// 		i++;
+// 	return (i);
+// }

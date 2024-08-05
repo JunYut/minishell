@@ -45,13 +45,13 @@ char	*read_pipe(int read_fd)
 	{
 		bytes_read = read(read_fd, tmp, READ_SIZE);
 		tmp[bytes_read] = '\0';
-		append_s(&content, tmp);
+		append_str(&content, tmp);
 	}
 	free(tmp);
 	return (content);
 }
 
-void	append_s(char **str1, char *str2)
+void	append_str(char **str1, char *str2)
 {
 	int		i;
 	int		j;

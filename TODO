@@ -12,14 +12,13 @@
 	- [x] pwd command
 	- [x] echo command
 - [ ] exec
-	- [ ] remove duplicate dependencies
-		- Duplicates
-			- `append`: append, redout
-			- `write_file`: append, redout
-			- `read_pipe`: append, redout
-			- `append_s`: append, heredoc, redin, redout
-			- `ft_strlen`: append, env, heredoc, redin, redout
-			- `ft_strcmp`: env, heredoc
+	- [ ] solve duplicate dependencies
+		- [ ] `append`: append, redout
+		- [ ] `write_file`: append, redout
+		- [ ] `read_pipe`: append, redout
+		- [ ] `append_s`: append, heredoc, redin, redout
+		- [ ] `ft_strlen`: append, env, heredoc, redin, redout
+		- [ ] `ft_strcmp`: env, heredoc
 - [ ] system integration
 	- [ ] or module
 	- [ ] and module

@@ -39,14 +39,14 @@ char	*read_doc(char *delimiter)
 			free(line);
 			break ;
 		}
-		append_s(&doc, line);
-		append_s(&doc, "\n");
+		append_str(&doc, line);
+		append_str(&doc, "\n");
 		free(line);
 	}
 	return (doc);
 }
 
-void	append_s(char **str1, char *str2)
+void	append_str(char **str1, char *str2)
 {
 	int		i;
 	int		j;
