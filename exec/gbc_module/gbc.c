@@ -42,6 +42,23 @@ void    *gb_add(void *addr)
     return (addr);
 }
 
+void	gb_free(void *addr)
+{
+	t_gbc	*current;
+
+	current = gb_collector();
+	while (current)
+	{
+		if (current->addr == addr)
+		{
+			free(current->addr);
+			current->addr = NULL;
+			break ;
+		}
+		current = current->next;
+	}
+}
+
 void	gb_init(t_gbc *collector)
 {
 	static int	id;

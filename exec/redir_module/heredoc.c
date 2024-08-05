@@ -1,4 +1,4 @@
-# include "heredoc.h"
+# include "redir.h"
 
 void	heredoc(char *delimiter, char *cmd, char *args[])
 {
@@ -21,7 +21,6 @@ void	heredoc(char *delimiter, char *cmd, char *args[])
 		close(fd[0]);
 		wait(NULL);
 	}
-	free(doc);
 }
 
 char	*read_doc(char *delimiter)
@@ -29,37 +28,15 @@ char	*read_doc(char *delimiter)
 	char	*doc;
 	char	*line;
 
-	doc = malloc(1);
+	doc = gb_malloc(1);
 	doc[0] = '\0';
 	while (1)
 	{
-		line = readline("> ");
+		line = gb_add(readline("> "));
 		if (!line || !ft_strcmp(line, delimiter))
-		{
-			free(line);
 			break ;
-		}
-		append_s(&doc, line);
-		append_s(&doc, "\n");
-		free(line);
+		append_str(&doc, line);
+		append_str(&doc, "\n");
 	}
 	return (doc);
-}
-
-void	append_s(char **str1, char *str2)
-{
-	int		i;
-	int		j;
-	char	*new;
-
-	i = -1;
-	j = -1;
-	new = malloc(ft_strlen(*str1) + ft_strlen(str2) + 1);
-	while ((*str1)[++i])
-		new[i] = (*str1)[i];
-	while (str2[++j])
-		new[i + j] = str2[j];
-	new[i + j] = '\0';
-	free(*str1);
-	*str1 = new;
 }

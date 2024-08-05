@@ -1,21 +1,11 @@
 # pragma once
 
-# include "gbc.h"
-# include "defines.h"
-# include "libft.h"
 # include <unistd.h>
 # include <stdbool.h>
 # include <stdio.h>
-
-// # define DEBUG 0
-// # define EXPORT 1
-// # define VAR 2
-
-// # if DEBUG
-// 	# define DPRINTF printf
-// # else
-// 		# define DPRINTF(...) do {} while (0)
-// # endif
+# include "libft.h"
+# include "gbc.h"
+# include "define.h"
 
 typedef struct s_var
 {
@@ -45,8 +35,6 @@ t_env	*dup_env(char **envp);
 void	sort_export(t_var *exp);
 
 char	**split_var(char *str);
-// char	*ft_strjoin(char *s1, char *s2);
-char	*dup_pos(char *str, int pos);
+char	*ft_strndup(char *str, int pos);
 void	ft_strncpy(char *dst, char *src, int len);
-// int		ft_strcmp(char *s1, char *s2);
 int		find_pos(char *str, char delim);
