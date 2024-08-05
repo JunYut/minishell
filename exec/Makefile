@@ -12,7 +12,7 @@ endif
 
 # Directories
 LIBFT_DIR = libft_module
-MODULES_DIR = env_module gb_collect_module pipe_module redir_module signal_module
+MODULES_DIR = env_module gbc_module pipe_module redir_module signal_module
 OBJ_DIR = obj
 INCL_DIR = $(foreach module, $(MODULES_DIR), $(addprefix -I, $(module))) \
 		   -I$(LIBFT_DIR)/include -I.
@@ -44,9 +44,7 @@ $(OBJ_DIR)/%.o : %.c $(HEADER)
 run : $(EXEC)
 	./$(EXEC)
 
-memcheck : CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c99
-memcheck :
-	make all
+memcheck : $(EXEC)
 ifeq ($(OS), Linux)
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(EXEC)
 else
