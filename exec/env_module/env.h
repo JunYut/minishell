@@ -3,6 +3,7 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <stdio.h>
+# include "libft.h"
 # include "gbc.h"
 # include "define.h"
 
@@ -34,8 +35,8 @@ t_env	*dup_env(char **envp);
 void	sort_export(t_var *exp);
 
 char	**split_var(char *str);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strdup(char *str, int pos);
+// char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strndup(char *str, int pos);
 void	ft_strncpy(char *dst, char *src, int len);
-int		ft_strcmp(char *s1, char *s2);
-int		ft_strlen(char *str, char delim);
+// int		ft_strcmp(char *s1, char *s2);
+int		find_pos(char *str, char delim);

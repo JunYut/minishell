@@ -53,7 +53,7 @@ run : $(EXEC)
 	./$(EXEC)
 
 memcheck : CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c99
-memcheck : 
+memcheck :
 	make all
 ifeq ($(OS), Linux)
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(EXEC)
@@ -62,7 +62,7 @@ else
 endif
 
 clean :
-	rm $(OBJ)
+	rm -f $(OBJ)
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean : clean
