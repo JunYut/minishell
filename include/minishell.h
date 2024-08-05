@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:06:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/05 12:24:04 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/05 17:54:27 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,20 @@ char	*expand_params(char	*str);
 char	*handle_squote(char *str, int *i);
 char	*handle_dquote(char *str, int *i);
 char	*handle_reg_str(char *str, int *i);
+char	*handle_dollar(char *str, int *i);
+bool	is_valid_var_char(char c);
+
+t_env	*dup_env(char **envp);
+void	env(t_env *e, char lst);
+void	unset(char *key, t_env *v);
+void	add_var(t_env *e, char *key, char *val);
+int		find_pos(char *str, char delim);
+char	**split_var(char *str);
+char	*ft_strndup(char *str, int pos);
+void	set_val(t_env *e, char *key, char *val);
+// int		ft_strcmp(char *s1, char *s2);
+void ft_strncpy(char *dst, char *src, int len);
+char	*fetch_val(char *key, t_env *e);
 
 void	append(char *file, char *cmd, char *args[]);
 void	write_file(char *file, char *content);
