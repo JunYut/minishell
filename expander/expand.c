@@ -6,14 +6,17 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/30 13:31:52 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/05 13:58:22 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+extern char **environ;
 
 void	expand_tree(t_node *node)
 {
+	char **envp = environ;
+
 	if (node == NULL)
 		return ;
 	if (node->type ==  N_PIPE || node->type == N_AND || node->type == N_OR)
@@ -22,6 +25,15 @@ void	expand_tree(t_node *node)
 		expand_tree(node->right);
 	}
 	expand_node(node);
+	if (node->io_list != NULL && node->io_list->type == IO_OUT)
+		append(node->io_list->value, parse_path(envp, node->exp_args[0]), node->exp_args);
+	else
+	{
+		pid_t pid = fork();
+		if (pid == 0)
+			execve(parse_path(envp, node->exp_args[0]), node->exp_args, NULL);
+		wait(NULL);
+	}
 }
 
 void	expand_node(t_node *node)
@@ -33,6 +45,8 @@ void	expand_node(t_node *node)
 	io = node->io_list;
 	while (io != NULL)
 	{
+		// printf("redir_type: %d\n", io->type);
+		// printf("redir: %s\n", io->value);
 		io = io->next;
 	}
 }
@@ -48,7 +62,8 @@ char	**expand_args(char *args)
 
 	buffer = expand_params(args);
 	printf("expanded: %s\n", buffer);
-	return (NULL);
+	expanded = ft_split(buffer, ' ');
+	return (expanded);
 }
 
 char	*expand_params(char	*str)
