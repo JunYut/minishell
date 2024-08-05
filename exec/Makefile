@@ -12,8 +12,7 @@ endif
 
 # Directories
 LIBFT_DIR = libft_module
-MODULES_DIR = append_module env_module gb_collect_module heredoc_module \
-			  pipe_module redin_module redout_module signal_module
+MODULES_DIR = env_module gb_collect_module pipe_module redir_module signal_module
 OBJ_DIR = obj
 INCL_DIR = $(foreach module, $(MODULES_DIR), $(addprefix -I, $(module))) \
 		   -I$(LIBFT_DIR)/include -I.
@@ -31,13 +30,6 @@ EXEC = exec
 
 # Rules & Recipes
 all : $(EXEC)
-	# @echo $(INCL_DIR)
-	# @echo
-	# @echo $(SRC)
-	# @echo
-	# @echo $(OBJ)
-	# @echo
-	# @echo $(HEADER)
 
 $(EXEC) : $(OBJ) $(LIBFT) main.c
 	$(CC) $(CFLAGS) $(INCL_DIR) $(OBJ) main.c $(LIB) -o $@
