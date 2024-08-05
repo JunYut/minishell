@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/05 17:51:40 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:21:10 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ char	**expand_args(char *args)
 
 	buffer = expand_params(args);
 	printf("expanded: %s\n", buffer);
-	return (NULL);
+	expanded = ft_split(buffer, ' ');
+	return (expanded);
 }
 
 char	*expand_params(char	*str)
@@ -74,8 +75,6 @@ char	*expand_params(char	*str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == ' ')
-			i++;
 		if (str[i] == '\'')
 			expanded_str = gnl_strjoin(expanded_str, handle_squote(str, &i));
 		else if (str[i] == '"')
