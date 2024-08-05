@@ -6,11 +6,13 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/30 13:31:52 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/05 17:45:03 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern char **environ;
 
 void	expand_tree(t_node *node)
 {
@@ -43,12 +45,13 @@ char	**expand_args(char *args)
 	char	*buffer;
 	int		i;
 
-	(void)expanded;
 	(void)i;
 
 	buffer = expand_params(args);
 	printf("expanded: %s\n", buffer);
-	return (NULL);
+	expanded = ft_split(buffer, ' ');
+	free(buffer);
+	return (expanded);
 }
 
 char	*expand_params(char	*str)
@@ -60,10 +63,14 @@ char	*expand_params(char	*str)
 	i = 0;
 	while (str[i] != '\0')
 	{
+		if (str[i] == ' ')
+			i++;
 		if (str[i] == '\'')
 			expanded_str = gnl_strjoin(expanded_str, handle_squote(str, &i));
 		else if (str[i] == '"')
 			expanded_str = gnl_strjoin(expanded_str, handle_dquote(str, &i));
+		else if (str[i] == '$')
+			expanded_str = gnl_strjoin(expanded_str, handle_dollar(str, &i));
 		else
 			expanded_str = gnl_strjoin(expanded_str, handle_reg_str(str, &i));
 	}
@@ -83,27 +90,69 @@ char	*handle_reg_str(char *str, int *i)
 char	*handle_squote(char *str, int *i)
 {
 	int		start;
-	char	*quote_str;
 
-	start = *i;
+	start = *i + 1;
 	(*i)++;
 	while (str[*i] != '\'')
 		(*i)++;
 	(*i)++;
-	quote_str = ft_substr(str, start, *i - start);
-	return (quote_str);
+	return (ft_substr(str, start, *i - start - 1));
+}
+
+char	*handle_dquote_str(char *str, int *i)
+{
+	int		start;
+
+	start = *i;
+	while (str[*i] != '"' && str[*i] != '$')
+		(*i)++;
+	return (ft_substr(str, start, *i - start));
 }
 
 char	*handle_dquote(char *str, int *i)
 {
-	int		start;
-	char	*quote_str;
+	char	*ret_str;
 
-	start = *i;
+	// ret_str = ft_strdup("\"");
+	ret_str = ft_strdup("");
 	(*i)++;
 	while (str[*i] != '"')
-		(*i)++;
+	{
+		if (str[*i] == '$')
+			ret_str = gnl_strjoin(ret_str, handle_dollar(str, i));
+		else
+			ret_str = gnl_strjoin(ret_str, handle_dquote_str(str, i));
+	}
 	(*i)++;
-	quote_str = ft_substr(str, start, *i - start);
-	return (quote_str);
+	// return (gnl_strjoin(ret_str, "\""));
+	return (ret_str);
+}
+
+char	*handle_dollar(char *str, int *i)
+{
+	int		start;
+	char	*val;
+	char	*env_val;
+
+	(*i)++;
+	if (is_valid_var_char(str[*i] == false))
+	{
+		(*i)++;
+		return (ft_strdup(""));
+	}
+	start = *i;
+	while (is_valid_var_char(str[*i]) == true)
+		(*i)++;
+	val = ft_substr(str, start, *i - start);
+	env_val = fetch_val(val, dup_env(environ));
+	if (env_val == NULL)
+		return (free(val), ft_strdup(""));
+	return (free(val), env_val);
+}
+
+bool	is_valid_var_char(char c)
+{
+	if (ft_isalnum(c) || c == '_')
+		return (true);
+	return (false);
 }

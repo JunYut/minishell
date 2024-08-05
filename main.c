@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/31 19:14:25 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:05:41 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(void)
 		vars.ast = parse(&vars);
 		if (vars.parse_err.type != E_NONE)
 			handle_parse_error(&vars);
-		// expand_tree(vars.ast);
+		expand_tree(vars.ast);
 		free(vars.line);
 		clear_ast(&vars.token_list, &vars.ast);
 	}

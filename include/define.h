@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:21:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/30 10:29:14 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:13:28 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef	struct s_io_node
 	t_io_type			type;
 	int					here_doc;
 	char				*value;
-	char				**exp_value;
 	struct s_io_node	*prev;
 	struct s_io_node	*next;
 }	t_io_node;
@@ -98,5 +97,22 @@ typedef struct s_minishell
 	char		*line;
 	t_gbc		*gbc;
 }	t_minishell;
+
+# define EXPORT 1
+# define VAR 2
+
+typedef struct s_var
+{
+	int				id;
+	char			*key;
+	char			*value;
+	struct s_var	*next;
+}	t_var;
+
+typedef struct s_env
+{
+	t_var	*var;
+	t_var	*exp;
+}	t_env;
 
 #endif

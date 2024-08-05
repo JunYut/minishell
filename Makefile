@@ -6,7 +6,7 @@
 #    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/06 14:33:10 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/07/30 13:24:34 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/08/05 14:20:15 by kkhai-ki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ PARSER =	parser/parser.c	\
 
 GBC = gbc/gbc.c
 
-EXPANDER = expander/expand.c
+EXPANDER = expander/expand.c	\
+			expander/env.c
 
 MAIN = main.c
 
