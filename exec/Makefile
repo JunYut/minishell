@@ -4,7 +4,7 @@ OS = $(shell uname)
 # Compile & Flags
 LEAKS = 0
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c89
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c99
 
 ifeq ($(LEAKS), 1)
 	CFLAGS += -fsanitize=address -g3
@@ -12,19 +12,63 @@ endif
 
 # Directories
 LIBFT_DIR = libft_module
-APPD_DIR = append_module
-ENV_DIR = env_module
-HDOC_DIR = heredoc_module
-PIPE_DIR = pipe_module
-REDIN_DIR = redin_module
-REDOUT_DIR = redout_module
-SIG_DIR = signal_module
+MODULES_DIR = append_module env_module gb_collect_module heredoc_module \
+			  pipe_module redin_module redout_module signal_module
 OBJ_DIR = obj
-INCL_DIR = $(LIBFT_DIR)/include -I$(APPD_DIR) -I$(ENV_DIR) -I$(HDOC_DIR) \
-		   -I$(PIPE_DIR) -I$(REDIN_DIR) -I$(REDOUT_DIR) -I$(SIG_DIR)
+INCL_DIR = $(foreach module, $(MODULES_DIR), $(addprefix -I, $(module))) \
+		   -I$(LIBFT_DIR)/include -I.
+
+vpath %.c $(MODULES_DIR)
 
 # Files
-SRC = $(wildcard *.c)
+SRC = $(foreach module, $(MODULES_DIR), $(wildcard $(module)/*.c))
+OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
+HEADER = $(foreach module, $(MODULES_DIR), $(wildcard $(module)/*.h)) \
+		 $(wildcard $(LIBFT_DIR)/include/*.h) *.h
+LIBFT = $(LIBFT_DIR)/libft.a
+LIB = -L$(LIBFT_DIR) -lft -lreadline
+EXEC = exec
 
 # Rules & Recipes
-all : 
+all : $(EXEC)
+	# @echo $(INCL_DIR)
+	# @echo
+	# @echo $(SRC)
+	# @echo
+	# @echo $(OBJ)
+	# @echo
+	# @echo $(HEADER)
+
+$(EXEC) : $(OBJ) $(LIBFT) main.c
+	$(CC) $(CFLAGS) $(INCL_DIR) $(OBJ) main.c $(LIB) -o $@
+
+$(LIBFT) :
+	$(MAKE) -C $(LIBFT_DIR)
+
+$(OBJ_DIR)/%.o : %.c $(HEADER)
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCL_DIR) -c $< -o $@
+
+run : $(EXEC)
+	./$(EXEC)
+
+memcheck : CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c99
+memcheck : 
+	make all
+ifeq ($(OS), Linux)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(EXEC)
+else
+	leaks --atExit -- ./$(EXEC)
+endif
+
+clean :
+	rm $(OBJ)
+	$(MAKE) -C $(LIBFT_DIR) clean
+
+fclean : clean
+	rm -rf $(EXEC)
+	$(MAKE) -C $(LIBFT_DIR) fclean
+
+re : fclean all
+
+.PHONY : all run memcheck clean fclean re
