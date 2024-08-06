@@ -19,6 +19,8 @@ typedef struct s_env
 {
 	t_var	*var;
 	t_var	*exp;
+	int		last_var_id;
+	int		last_exp_id;
 }	t_env;
 
 void	env(t_env *e, char lst);
