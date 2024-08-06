@@ -57,38 +57,37 @@ void	unset(char **keys, t_env *e)
 
 	if (keys == NULL || keys[0] == NULL)
 		return ;
-	DPRINTF("last_var_id: %d\n", e->last_var_id);
-	DPRINTF("last_exp_id: %d\n", e->last_exp_id);
 	i = -1;
 	while (keys[++i])
 	{
 		curr = e->var;
 		while (curr->next)
 		{
-			DPRINTF("var key[%d]: %s\n", curr->id, curr->key);
-			// DPRINTF("start key: %s\n", curr->key);
-			// DPRINTF("curr[%p]: ", (void *)curr->next);
-			// DPRINTF("[%s]\n", curr->next->key);
-			// DPRINTF("next[%p]: ", (void *)curr->next->next);
-			// DPRINTF("[%s]\n", curr->next->next->key);
-			// if (curr->next->key && ft_strcmp(curr->next->key, keys[i]) == 0)
-			// {
-			// 	// DPRINTF("var s1: %s, s2: %s\n", curr->next->key, keys[i]);
-			// 	curr->next = curr->next->next;
-			// 	break;
-			// }
+			if (ft_strcmp(curr->next->key, keys[i]) == 0)
+			{
+				if (curr->next->id == e->last_var_id)
+				{
+					curr->next = NULL;
+				}
+				else
+					curr->next = curr->next->next;
+				break;
+			}
 			curr = curr->next;
-			// DPRINTF("end key: %s\n", curr->key);
 		}
 		curr = e->exp;
 		while (curr->next)
 		{
-			DPRINTF("exp key[%d]: %s\n", curr->id, curr->key);
-		// 	if (curr->next->key && ft_strcmp(curr->next->key, keys[i]) == 0)
-		// 	{
-		// 		curr->next = curr->next->next;
-		// 		break;
-		// 	}
+			if (ft_strcmp(curr->next->key, keys[i]) == 0)
+			{
+				if (curr->next->id == e->last_exp_id)
+				{
+					curr->next = NULL;
+				}
+				else
+					curr->next = curr->next->next;
+				break;
+			}
 			curr = curr->next;
 		}
 	}
