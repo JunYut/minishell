@@ -2,13 +2,8 @@
 OS = $(shell uname)
 
 # Compile & Flags
-LEAKS = 0
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c99
-
-ifeq ($(LEAKS), 1)
-	CFLAGS += -fsanitize=address -g3
-endif
 
 # Directories
 LIBFT_DIR = libft_module
@@ -44,12 +39,16 @@ $(OBJ_DIR)/%.o : %.c $(HEADER)
 run : $(EXEC)
 	./$(EXEC)
 
-memcheck : $(EXEC)
+memcheck :
+	$(MAKE) re
 ifeq ($(OS), Linux)
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(EXEC)
 else
 	leaks --atExit -- ./$(EXEC)
 endif
+
+fsan :
+	$(MAKE) CFLAGS="$(CFLAGS) -fsanitize=address -g3" run
 
 clean :
 	rm -f $(OBJ)

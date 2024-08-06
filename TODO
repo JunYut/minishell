@@ -19,7 +19,7 @@
 		- [x] `append_s`: append, heredoc, redin, redout
 		- [x] `ft_strlen`: append, env, heredoc, redin, redout
 		- [x] `ft_strcmp`: env, heredoc
-	- [ ] redir_module: open() at the outside
+	- [x] redir_module: open() at the outside
 		- change file param to fd
 - [ ] system integration
 	- [ ] or module

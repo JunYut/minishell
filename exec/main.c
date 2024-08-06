@@ -1,11 +1,18 @@
 # include "redir.h"
+# include "env.h"
 # include "libft.h"
 # include "gbc.h"
 
-# define TEST 2
+# define TEST 5
 
-int main(void)
+int main(int ac, char **av, char **envp)
 {
+
+	(void)ac;
+	(void)av;
+
+	t_env	*e = dup_env(envp);
+
 	// redin
 	# if TEST == 1
 	char	*cmd = "/bin/cat";
@@ -14,7 +21,6 @@ int main(void)
 
 	redin(fd, cmd, args);
 	# endif
-
 	// redout
 	# if TEST == 2
 	char	*cmd = "/bin/echo";
@@ -23,7 +29,6 @@ int main(void)
 
 	redout(fd, cmd, args);
 	# endif
-
 	// append
 	# if TEST == 3
 	char	*cmd = "/bin/echo";
@@ -32,13 +37,21 @@ int main(void)
 
 	redout(fd, cmd, args);
 	# endif
-
 	// heredoc
 	# if TEST == 4
 	char	*cmd = "/bin/cat";
 	char	*args[] = {"cat", "-e", NULL};
 
 	heredoc("eof", cmd, args);
+	# endif
+	// export
+	# if TEST == 5
+	export(NULL, e);
+	export("a=1", e);
+	export("b=", e);
+	export("c", e);
+	export("a=2", e);
+	
 	# endif
 
 	gb_clear();
