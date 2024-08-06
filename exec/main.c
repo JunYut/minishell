@@ -52,6 +52,7 @@ int main(int ac, char **av, char **envp)
 	export("c", e);
 	export("d", e);
 	export(NULL, e);
+	env(e, VAR);
 	// export("a=2", e);
 	# endif
 

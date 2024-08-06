@@ -35,13 +35,14 @@ void	env(t_env *e, char lst)
 	{
 		if (lst == EXPORT)
 			printf("declare -x ");
-		printf("%s=", curr->key);
+		printf("%s", curr->key);
 		if (lst == EXPORT && curr->value)
-			printf("\"%s\"\n", curr->value);
+			printf("=\"%s\"", curr->value);
 		else if (lst == VAR && curr->value)
-			printf("%s\n", curr->value);
+			printf("=%s", curr->value);
 		else
 			;
+		printf("\n");
 		curr = curr->next;
 	}
 }

@@ -11,6 +11,8 @@
 	- [x] cd command
 	- [x] pwd command
 	- [x] echo command
+	- [x] env command
+		- [x] prints new line and no "=" when value is NULL (export list)
 - [ ] execution
 	- [x] solve duplicate dependencies
 		- [x] `append`: append, redout
