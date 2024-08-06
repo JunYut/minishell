@@ -6,8 +6,10 @@
 - [x] garbage collector module
 - [x] environment module
 	- [x] sort export list
-	- [ ] export command
-		-  [ ] modify to take string array as input
+	- [x] export command
+		-  [x] modify to take string array as input
+	- [ ] unset command
+    	- [ ] modify to take string array as input
 	- [x] cd command
 	- [x] pwd command
 	- [x] echo command

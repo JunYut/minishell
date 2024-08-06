@@ -5,22 +5,27 @@
 // a=1 : export: a="1"; var: a=1
 // a= : export: a=""; var: a=
 // a : export: a; var: [nothing]
-void	export(char *str, t_env *e)
+void	export(char **vars, t_env *e)
 {
 	char	**split;
 	char	*value;
+	int		i;
 
-	if (str == NULL || str[0] == '\0')
+	if (vars == NULL || vars[0] == NULL || vars[0][0] == '\0')
 	{
 		env(e, EXPORT);
 		return ;
 	}
-	split = split_var(str);
-	value = fetch_val(split[0], e);
-	if (value)
-		set_val(e, split[0], split[1]);
-	else
-		add_var(e, split[0], split[1]);
+	i = -1;
+	while (vars[++i])
+	{
+		split = split_var(vars[i]);
+		value = fetch_val(split[0], e);
+		if (value)
+			set_val(e, split[0], split[1]);
+		else
+			add_var(e, split[0], split[1]);
+	}
 }
 
 // if key is not found, return NULL

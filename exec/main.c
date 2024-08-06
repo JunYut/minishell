@@ -45,15 +45,13 @@ int main(int ac, char **av, char **envp)
 	heredoc("eof", cmd, args);
 	# endif
 	// export
+	char	*vars[] = {"a=1", "b=", "c", "d", NULL};
 	# if TEST == 5
-	export(NULL, e);
-	export("a=1", e);
-	export("b=", e);
-	export("c", e);
-	export("d", e);
-	export(NULL, e);
-	env(e, VAR);
-	// export("a=2", e);
+	export(NULL, e);	printf("\n");
+	export(vars, e);
+	export(NULL, e);	printf("\n");
+	export((char *[]){"a=2", NULL}, e);
+	export(NULL, e);	printf("\n");
 	# endif
 
 	gb_clear();
