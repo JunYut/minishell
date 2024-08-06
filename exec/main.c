@@ -47,11 +47,15 @@ int main(int ac, char **av, char **envp)
 	// export
 	char	*vars[] = {"a=1", "b=", "c", "d", NULL};
 	# if TEST == 5
-	export(NULL, e);	printf("\n");
+	// export(NULL, e);	printf("\n");
 	export(vars, e);
-	export(NULL, e);	printf("\n");
+	// export(NULL, e);	printf("\n");
+	env(e, VAR);	printf("\n");
 	export((char *[]){"a=2", NULL}, e);
-	export(NULL, e);	printf("\n");
+	// export(NULL, e);	printf("\n");
+	unset((char *[]){"a", "b", "c", NULL}, e);
+	// export(NULL, e);	printf("\n");
+	// env(e, VAR);	printf("\n");
 	# endif
 
 	gb_clear();

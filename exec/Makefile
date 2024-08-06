@@ -48,7 +48,8 @@ else
 endif
 
 fsan :
-	$(MAKE) CFLAGS="$(CFLAGS) -fsanitize=address -g3" run
+	$(MAKE) CFLAGS="$(CFLAGS) -fsanitize=address -g3" re
+	$(MAKE) run
 
 clean :
 	rm -f $(OBJ)

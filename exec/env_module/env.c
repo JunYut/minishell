@@ -17,7 +17,7 @@ t_env	*dup_env(char **envp)
 		split = split_var(envp[i]);
 		add_var(e, split[0], split[1]);
 	}
-	unset("OLDPWD", e);
+	unset((char *[]){"OLDPWD", NULL}, e);
 	add_var(e, "?", "1");
 	set_val(e, "SHLVL", "1");
 	return (e);
@@ -47,31 +47,38 @@ void	env(t_env *e, char lst)
 	}
 }
 
-void	unset(char *key, t_env *v)
+// keys should be NULL terminated
+void	unset(char **keys, t_env *v)
 {
 	t_var	*curr;
+	int		i;
 
-	if (key == NULL)
+	if (keys == NULL || keys[0] == NULL)
 		return ;
-	curr = v->var;
-	while (curr->next)
+	i = -1;
+	while (keys[++i])
 	{
-		if (ft_strcmp(curr->next->key, key) == 0)
+		curr = v->var;
+		while (curr->next)
 		{
-			curr->next = curr->next->next;
-			return ;
+			if (curr->next->key && ft_strcmp(curr->next->key, keys[i]) == 0)
+			{
+				DPRINTF("var s1: %s, s2: %s\n", curr->next->key, keys[i]);
+				curr->next = curr->next->next;
+				break;
+			}
+			curr = curr->next;
 		}
-		curr = curr->next;
-	}
-	curr = v->exp;
-	while (curr->next)
-	{
-		if (ft_strcmp(curr->next->key, key) == 0)
-		{
-			curr->next = curr->next->next;
-			return ;
-		}
-		curr = curr->next;
+		// curr = v->exp;
+		// while (curr->next)
+		// {
+		// 	if (curr->next->key && ft_strcmp(curr->next->key, keys[i]) == 0)
+		// 	{
+		// 		curr->next = curr->next->next;
+		// 		break;
+		// 	}
+		// 	curr = curr->next;
+		// }
 	}
 }
 

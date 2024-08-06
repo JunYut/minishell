@@ -1,5 +1,6 @@
 # include "env.h"
 
+// vars should be NULL terminated
 // if str is NULL, print the export list
 // if a key is found in the export list, replace the value, else:
 // a=1 : export: a="1"; var: a=1

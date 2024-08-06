@@ -10,6 +10,7 @@
 		-  [x] modify to take string array as input
 	- [ ] unset command
     	- [ ] modify to take string array as input
+    	- [ ] print error message when "=" is present
 	- [x] cd command
 	- [x] pwd command
 	- [x] echo command
