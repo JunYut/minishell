@@ -3,7 +3,7 @@ OS = $(shell uname)
 
 # Compile & Flags
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c99
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c99 -g
 
 # Directories
 LIBFT_DIR = libft_module

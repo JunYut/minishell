@@ -50,8 +50,9 @@ int main(int ac, char **av, char **envp)
 	export("a=1", e);
 	export("b=", e);
 	export("c", e);
-	export("a=2", e);
-	
+	export("d", e);
+	export(NULL, e);
+	// export("a=2", e);
 	# endif
 
 	gb_clear();

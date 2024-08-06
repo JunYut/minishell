@@ -13,7 +13,7 @@ char **split_var(char *str)
 	split[0] = ft_strndup(str, find_pos(str, '='));
 	if (split[0] == NULL)
 	{
-		split[0] = ft_strndup(str, find_pos(str, '='));
+		split[0] = ft_strndup(str, find_pos(str, '\0'));
 		split[1] = NULL;
 		return (split);
 	}
@@ -27,6 +27,8 @@ char	*ft_strndup(char *str, int pos)
 {
 	char	*dup;
 
+	if (pos == -1)
+		return (NULL);
 	dup = gb_malloc(pos + 1);
 	ft_strncpy(dup, str, pos);
 	return (dup);
