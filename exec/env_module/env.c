@@ -67,7 +67,8 @@ void	unset(char **keys, t_env *e)
 			{
 				if (curr->next->id == e->last_var_id)
 				{
-					curr->next = NULL;
+					e->last_var_id = curr->id;
+					curr->next->next = NULL;
 				}
 				else
 					curr->next = curr->next->next;
@@ -82,7 +83,8 @@ void	unset(char **keys, t_env *e)
 			{
 				if (curr->next->id == e->last_exp_id)
 				{
-					curr->next = NULL;
+					e->last_exp_id = curr->id;
+					curr->next->next = NULL;
 				}
 				else
 					curr->next = curr->next->next;

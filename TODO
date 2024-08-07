@@ -9,8 +9,9 @@
 	- [x] export command
 		-  [x] modify to take string array as input
 	- [ ] unset command
-    	- [ ] modify to take string array as input
-    	- [ ] print error message when "=" is present
+    	- [x] modify to take string array as input
+    	- [ ] print error message when identifier does not start with alphabet
+			  or contain non-alphanumeric characters
 	- [x] cd command
 	- [x] pwd command
 	- [x] echo command

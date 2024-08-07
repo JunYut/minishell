@@ -51,8 +51,8 @@ int main(int ac, char **av, char **envp)
 	export(vars, e);
 	// export(NULL, e);	printf("\n");
 	export((char *[]){"a=2", NULL}, e);
-	env(e, VAR);	printf("\n");
 	// export(NULL, e);	printf("\n");
+	env(e, VAR);	printf("\n");
 	unset((char *[]){"a", "b", "c", "d", NULL}, e);
 	export(NULL, e);	printf("\n");
 	env(e, VAR);	printf("\n");
