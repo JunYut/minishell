@@ -98,6 +98,7 @@ void	unset(char **keys, t_env *e)
 // a=1 : export: a="1"; var: a=1
 // a= : export: a=""; var: a=
 // a : export: a; var: [nothing]
+// will create an empty entry after key and val is set
 void	add_ent(t_env *e, char *key, char *val)
 {
 	t_var		*curr;
