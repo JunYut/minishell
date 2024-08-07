@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:06:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/05 17:54:27 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/07 21:18:06 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,14 @@ void	append_str(char **str1, char *str2);
 char	*parse_path(char *envp[], char *cmd);
 void	trim_path(char *cmd, char *path);
 void	prepend_cmd(char **path_list, char *cmd);
+
+char	*remove_quotes(char *str);
+int	unquoted_strlen(char *str, char quotes);
+
+char	**split_args(char *str);
+int		count_words(char *str);
+void	skip_word(char *str, int *i);
+
+// char	*clean_empty_strs(char *str);
 
 #endif

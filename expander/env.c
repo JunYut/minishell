@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/05 14:40:47 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/06 09:33:08 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	env(t_env *e, char lst)
 			printf("\"%s\"\n", curr->value);
 		else if (lst == VAR && curr->value)
 			printf("%s\n", curr->value);
-		else
-			;
+		// else
+		// 	;
 		curr = curr->next;
 	}
 }

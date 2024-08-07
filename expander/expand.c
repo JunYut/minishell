@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/05 18:21:10 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/07 21:17:50 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,20 @@ char	**expand_args(char *args)
 {
 	char	**expanded;
 	char	*buffer;
-	int		i;
+	// int		i;
 
-	(void)i;
+	// i = -1;
 
 	buffer = expand_params(args);
-	printf("expanded: %s\n", buffer);
-	expanded = ft_split(buffer, ' ');
+	// buffer = clean_empty_str(args);
+	// printf("expanded: %s\n", buffer);
+	// expanded = ft_split(buffer, ' ');
+	// while (expanded[++i])
+	// {
+	// 	expanded[i] = remove_quotes(expanded[i]);
+	// 	printf("expanded: %s\n", expanded[i]);
+	// }
+	expanded = split_args(buffer);
 	return (expanded);
 }
 
@@ -89,11 +96,12 @@ char	*expand_params(char	*str)
 
 char	*handle_reg_str(char *str, int *i)
 {
-	int	start;
+	int		start;
 
 	start = *i;
 	while (str[*i] != '\0' && str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
 		(*i)++;
+	(*i)++;
 	return (ft_substr(str, start, *i - start));
 }
 
@@ -101,12 +109,12 @@ char	*handle_squote(char *str, int *i)
 {
 	int		start;
 
-	start = *i + 1;
+	start = *i;
 	(*i)++;
 	while (str[*i] != '\'')
 		(*i)++;
 	(*i)++;
-	return (ft_substr(str, start, *i - start - 1));
+	return (ft_substr(str, start, *i - start));
 }
 
 char	*handle_dquote_str(char *str, int *i)
@@ -123,8 +131,8 @@ char	*handle_dquote(char *str, int *i)
 {
 	char	*ret_str;
 
-	// ret_str = ft_strdup("\"");
-	ret_str = ft_strdup("");
+	ret_str = ft_strdup("\"");
+	// ret_str = ft_strdup("");
 	(*i)++;
 	while (str[*i] != '"')
 	{
@@ -134,8 +142,8 @@ char	*handle_dquote(char *str, int *i)
 			ret_str = gnl_strjoin(ret_str, handle_dquote_str(str, i));
 	}
 	(*i)++;
-	// return (gnl_strjoin(ret_str, "\""));
-	return (ret_str);
+	return (gnl_strjoin(ret_str, "\""));
+	// return (ret_str);
 }
 
 char	*handle_dollar(char *str, int *i)
@@ -165,4 +173,46 @@ bool	is_valid_var_char(char c)
 	if (ft_isalnum(c) || c == '_')
 		return (true);
 	return (false);
+}
+
+char	*remove_quotes(char *str)
+{
+	char	*ret;
+	int		i;
+	int		j;
+	char	quotes;
+
+	if (!is_in_set('\'', str) && !is_in_set('"', str))
+		return (str);
+	i = 0;
+	j = 0;
+	quotes = *str;
+	ret = ft_calloc(1 + unquoted_strlen(str, quotes), sizeof(char));
+	if (ret == NULL)
+		return (NULL);
+	while (str[i] != '\0')
+	{
+		if (str[i] == quotes)
+			i++;
+		else
+			ret[j++] = str[i++];
+	}
+	ret[j] = '\0';
+	return (free(str), ret);
+}
+
+int	unquoted_strlen(char *str, char quotes)
+{
+	int		i;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == quotes)
+			count++;
+		i++;
+	}
+	return (ft_strlen(str) - count);
 }

@@ -6,7 +6,7 @@
 #    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/06 14:33:10 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/08/05 17:52:41 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/08/07 19:47:29 by kkhai-ki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,8 @@ GBC = gbc/gbc.c
 
 EXPANDER = expander/expand.c \
 			expander/env.c \
-			expander/temp.c
+			expander/temp.c	\
+			expander/split_args.c
 
 MAIN = main.c
 
