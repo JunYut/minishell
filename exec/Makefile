@@ -7,7 +7,7 @@ CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c99 -g
 
 # Directories
 LIBFT_DIR = libft_module
-MODULES_DIR = env_module gbc_module pipe_module redir_module signal_module
+MODULES_DIR = env_module gbc_module pipe_module signal_module
 OBJ_DIR = obj
 INCL_DIR = $(foreach module, $(MODULES_DIR), $(addprefix -I, $(module))) \
 		   -I$(LIBFT_DIR)/include -I.
