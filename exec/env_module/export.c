@@ -20,12 +20,12 @@ void	export(char **vars, t_env *e)
 	i = -1;
 	while (vars[++i])
 	{
-		split = split_var(vars[i]);
+		split = split_ent(vars[i]);
 		value = fetch_val(split[0], e);
 		if (value)
 			set_val(e, split[0], split[1]);
 		else
-			add_var(e, split[0], split[1]);
+			add_ent(e, split[0], split[1]);
 	}
 }
 

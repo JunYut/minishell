@@ -16,11 +16,11 @@ t_env	*dup_env(char **envp)
 	i = -1;
 	while (envp[++i])
 	{
-		split = split_var(envp[i]);
-		add_var(e, split[0], split[1]);
+		split = split_ent(envp[i]);
+		add_ent(e, split[0], split[1]);
 	}
 	unset((char *[]){"OLDPWD", NULL}, e);
-	add_var(e, "?", "1");
+	add_ent(e, "?", "1");
 	set_val(e, "SHLVL", "1");
 	return (e);
 }
@@ -98,7 +98,7 @@ void	unset(char **keys, t_env *e)
 // a=1 : export: a="1"; var: a=1
 // a= : export: a=""; var: a=
 // a : export: a; var: [nothing]
-void	add_var(t_env *e, char *key, char *val)
+void	add_ent(t_env *e, char *key, char *val)
 {
 	t_var		*curr;
 

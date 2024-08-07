@@ -3,7 +3,7 @@
 // a=1 : export: a="1"; var: a=1
 // a= : export: a=""; var: a=
 // a : export: a; var: [nothing]
-char **split_var(char *str)
+char **split_ent(char *str)
 {
 	char	**split;
 

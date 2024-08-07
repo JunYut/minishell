@@ -35,13 +35,13 @@ void	cd(char *path, t_env *e);
 void	pwd(t_env *e);
 void	echo(char **av);
 
-void	add_var(t_env *e, char *key, char *val);
+void	add_ent(t_env *e, char *key, char *val);
 void	set_val(t_env *e, char *key, char *val);
 char	*fetch_val(char *key, t_env *e);
 t_env	*dup_env(char **envp);
 void	sort_export(t_var *exp);
 
-char	**split_var(char *str);
+char	**split_ent(char *str);
 char	*ft_strjoin(char *s1, char *s2);
 char	*dup_pos(char *str, int pos);
 void	ft_strncpy(char *dst, char *src, int len);

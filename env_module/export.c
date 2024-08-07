@@ -15,12 +15,12 @@ void	export(char *str, t_env *e)
 		env(e, EXPORT);
 		return ;
 	}
-	split = split_var(str);
+	split = split_ent(str);
 	value = fetch_val(split[0], e);
 	if (value)
 		set_val(e, split[0], split[1]);
 	else
-		add_var(e, split[0], split[1]);
+		add_ent(e, split[0], split[1]);
 }
 
 // if key is not found, return NULL

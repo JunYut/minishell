@@ -26,7 +26,7 @@ void	cd(char *path, t_env *e)
 	if (path && *path == '~' && *(path + 1) != '\0')
 		target = ft_strjoin("/home/", path + 1);
 	if (!fetch_val("OLDPWD", e))
-		add_var(e, "OLDPWD", fetch_val("PWD", e));
+		add_ent(e, "OLDPWD", fetch_val("PWD", e));
 	if (chdir(target) == -1)
 		printf("cd: %s: No such file or directory\n", target);
 	else
