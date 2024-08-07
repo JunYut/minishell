@@ -1,6 +1,6 @@
 # include "redir.h"
 
-void	heredoc(char *delimiter, char *cmd, char *args[])
+void	heredoc(char *delimiter, char *cmd, char *argv[])
 {
 	char	*doc;
 	pid_t	pid;
@@ -16,7 +16,7 @@ void	heredoc(char *delimiter, char *cmd, char *args[])
 		if (pid == 0)
 		{
 			dup2(fd[0], STDIN_FILENO);
-			execve(cmd, args, NULL);
+			execve(cmd, argv, NULL);
 		}
 		close(fd[0]);
 		wait(NULL);

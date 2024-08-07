@@ -27,8 +27,8 @@
 		- [x] `ft_strcmp`: env, heredoc
 	- [x] redir_module: open() at the outside
 		- change file param to fd
-- [ ] system integration
-	- [ ] or module
-	- [ ] and module
-	- [ ] signal module
-	- [ ] exit command
+	- [ ] system integration
+		- [ ] or module
+		- [ ] and module
+		- [ ] signal module
+		- [ ] exit command

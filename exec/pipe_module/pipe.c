@@ -1,6 +1,8 @@
 # include "pipe.h"
 
-void	pipex(char *cmds[], char ***args, int fd[][2], int cmd_count)
+// cmds: array of full path to commands, NULL terminated
+// argv: array of arguments for each command, NULL terminated
+void	pipex(char *cmds[], char ***argv, int fd[][2], int cmd_count)
 {
 	pid_t	pid;
 	int		i;
@@ -13,7 +15,7 @@ void	pipex(char *cmds[], char ***args, int fd[][2], int cmd_count)
 		{
 			redirect(fd, i, cmd_count - 1);
 			close_fds(fd, cmd_count - 1);
-			execve(cmds[i], args[i], NULL);
+			execve(cmds[i], argv[i], NULL);
 			perror("execve");
 			exit(0);
 		}
@@ -24,7 +26,6 @@ void	pipex(char *cmds[], char ***args, int fd[][2], int cmd_count)
 		wait(NULL);
 }
 
-// not redirecting properly
 void	redirect(int fd[][2], int i, int pipe_count)
 {
 	if (i > 0)
@@ -33,11 +34,6 @@ void	redirect(int fd[][2], int i, int pipe_count)
 		dup2(fd[i][1], STDOUT_FILENO);
 }
 
-/*
-	First child			: close all fds except fd[0][1] (write end)
-	Intermediate childs	: close all fds except fd[i - 1][0] (read end) fd[i][1] (write end)
-	Last child			: close all fds except fd[last][0] (read end)
-*/
 void	close_fds(int fd[][2], int pipe_count)
 {
 	int	i;
@@ -50,16 +46,23 @@ void	close_fds(int fd[][2], int pipe_count)
 	}
 }
 
-void	print_pipe(char **args[])
+void	print_pipe(char **argv[])
 {
-    for (int i = 0; args[i] != NULL; i++) {
-        for (int j = 0; args[i][j] != NULL; j++) {
-            printf("%s", args[i][j]);
-			if (args[i])
+	int	i;
+	int	j;
+
+	i = -1;
+	while (argv[++i])
+	{
+		j = -1;
+		while (argv[i][++j])
+		{
+			printf("%s", argv[i][j]);
+			if (argv[i])
 				printf(" ");
-        }
-		if (args[i + 1])
+		}
+		if (argv[i + 1])
 			printf("| ");
-    }
+	}
 	printf("\n\n");
 }
