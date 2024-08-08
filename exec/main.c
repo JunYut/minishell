@@ -13,34 +13,34 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 
 	t_env	*e = dup_env(envp);
-	t_exec	exec;
+	t_cmd_line	cmd;
 
-	exec.seq = gb_malloc(6 * sizeof(t_token));
-	exec.seq[0] = T_HERE_DOC;
-	exec.seq[1] = T_PIPE;
-	exec.seq[2] = T_REDOUT;
-	exec.seq[3] = T_CMD;
-	exec.seq[4] = T_CMD;
+	cmd.redirs = gb_malloc(4 * sizeof(t_redir));
+	cmd.redirs[0].type = T_HERE_DOC;
+	cmd.redirs[0].file = "EOF";
+	cmd.redirs[1].type = T_PIPE;
+	cmd.redirs[1].file = NULL;
+	cmd.redirs[2].type = T_REDOUT;
+	cmd.redirs[2].file = "out.txt";
+	cmd.redirs[3].type = T_END;
+	cmd.redirs[3].file = NULL;
 
-	exec.redirs = gb_malloc(3 * sizeof(t_redir));
-	exec.redirs[0].type = T_HERE_DOC;
-	exec.redirs[0].file = "EOF";
-	exec.redirs[1].type = T_PIPE;
-	exec.redirs[1].file = NULL;
-	exec.redirs[2].type = T_REDOUT;
-	exec.redirs[2].file = "out.txt";
+	cmd.cmds = gb_malloc(3 * sizeof(t_cmd));
+	cmd.cmds[0].cmd = "/usr/bin/cat";
+	cmd.cmds[0].argv = gb_malloc(3 * sizeof(char *));
+	cmd.cmds[0].argv[0] = "cat";
+	cmd.cmds[0].argv[1] = "-e";
+	cmd.cmds[0].argv[2] = NULL;
+	cmd.cmds[1].cmd = "/usr/bin/grep";
+	cmd.cmds[1].argv = gb_malloc(4 * sizeof(char *));
+	cmd.cmds[1].argv[0] = "grep";
+	cmd.cmds[1].argv[1] = "lol";
+	cmd.cmds[1].argv[2] = "-v";
+	cmd.cmds[1].argv[3] = NULL;
+	cmd.cmds[2].cmd = NULL;
+	cmd.cmds[2].argv = NULL;
 
-	exec.cmds = gb_malloc(2 * sizeof(t_cmd));
-	exec.cmds[0].cmd = "cat";
-	exec.cmds[0].argv = gb_malloc(3 * sizeof(char *));
-	exec.cmds[0].argv[0] = "cat";
-	exec.cmds[0].argv[1] = "-e";
-	exec.cmds[0].argv[2] = NULL;
-	exec.cmds[1].cmd = "grep";
-	exec.cmds[1].argv = gb_malloc(4 * sizeof(char *));
-	exec.cmds[1].argv[0] = "grep";
-	exec.cmds[1].argv[1] = "lol";
-	exec.cmds[1].argv[2] = "-v";
+	cmd_exec(&cmd, e);
 
 	gb_clear();
 }

@@ -4,6 +4,7 @@
 - [x] append module
 - [x] heredoc module
 - [x] garbage collector module
+- [ ] wildcard expansion
 - [x] environment module
 	- [x] sort export list
 	- [x] export command
