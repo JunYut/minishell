@@ -1,7 +1,9 @@
 # pragma once
 
 # include "pipe.h"
-#include "env.h"
+# include "redir.h"
+# include "env.h"
+# include "libft.h"
 
 typedef enum e_token
 {
@@ -17,8 +19,14 @@ typedef enum e_token
 	T_INVALID = -1
 }	t_token;
 
+// for regular command, set field logical to T_CMD
+// for && command, set field logical to T_AND
+// for || command, set field logical to T_OR
+// field cmd should be the full path of the command
+// field argv should be NULL terminated
 typedef struct s_cmd
 {
+	t_token	logical;
 	char	*cmd;
 	char	**argv;
 }	t_cmd;
@@ -30,14 +38,7 @@ typedef struct s_redir
 	char		*file;
 }	t_redir;
 
-typedef struct s_logical
-{
-	t_token		type;
-	t_cmd		*cmd;
-}	t_logical;
-
-// field redirs should be terminated by type: T_END
-// field cmds should be terminated by cmd: NULL
+// both fields should be terminated by type: T_END
 typedef struct s_cmd_line
 {
 	t_redir	*redirs;
@@ -45,3 +46,5 @@ typedef struct s_cmd_line
 }	t_cmd_line;
 
 int	cmd_exec(t_cmd_line *cmd, t_env *env);
+int	redirect(t_redir *redirs);
+int	execute(t_cmd *cmds, t_env *env);

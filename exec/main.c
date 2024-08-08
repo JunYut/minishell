@@ -1,9 +1,5 @@
 # include "exec.h"
-# include "pipe.h"
-# include "redir.h"
-# include "env.h"
 # include "signal.h"
-# include "libft.h"
 # include "gbc.h"
 # include "define.h"
 
@@ -26,21 +22,25 @@ int main(int ac, char **av, char **envp)
 	cmd.redirs[3].file = NULL;
 
 	cmd.cmds = gb_malloc(3 * sizeof(t_cmd));
-	cmd.cmds[0].cmd = "/usr/bin/cat";
-	cmd.cmds[0].argv = gb_malloc(3 * sizeof(char *));
-	cmd.cmds[0].argv[0] = "cat";
-	cmd.cmds[0].argv[1] = "-e";
-	cmd.cmds[0].argv[2] = NULL;
-	cmd.cmds[1].cmd = "/usr/bin/grep";
-	cmd.cmds[1].argv = gb_malloc(4 * sizeof(char *));
-	cmd.cmds[1].argv[0] = "grep";
-	cmd.cmds[1].argv[1] = "lol";
-	cmd.cmds[1].argv[2] = "-v";
-	cmd.cmds[1].argv[3] = NULL;
-	cmd.cmds[2].cmd = NULL;
-	cmd.cmds[2].argv = NULL;
+		cmd.cmds[0].logical = T_CMD;
+		cmd.cmds[0].cmd = "/usr/bin/cat";
+		cmd.cmds[0].argv = gb_malloc(3 * sizeof(char *));
+			cmd.cmds[0].argv[0] = "cat";
+			cmd.cmds[0].argv[1] = "-e";
+			cmd.cmds[0].argv[2] = NULL;
+		cmd.cmds[1].logical = T_CMD;
+		cmd.cmds[1].cmd = "/usr/bin/grep";
+		cmd.cmds[1].argv = gb_malloc(4 * sizeof(char *));
+			cmd.cmds[1].argv[0] = "grep";
+			cmd.cmds[1].argv[1] = "lol";
+			cmd.cmds[1].argv[2] = "-v";
+			cmd.cmds[1].argv[3] = NULL;
+		cmd.cmds[2].logical = T_END;
+		cmd.cmds[2].cmd = NULL;
+		cmd.cmds[2].argv = NULL;
 
-	cmd_exec(&cmd, e);
+	execute(cmd.cmds, e);
+	// cmd_exec(&cmd, e);
 
 	gb_clear();
 }
