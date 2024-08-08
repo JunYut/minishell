@@ -7,7 +7,7 @@ CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c99 -g
 
 # Directories
 LIBFT_DIR = libft_module
-MODULES_DIR = env_module exec_module gbc_module pipe_module signal_module utils
+MODULES_DIR = utils env_module exec_module gbc_module pipe_module signal_module
 OBJ_DIR = obj
 INCL_DIR = $(foreach module, $(MODULES_DIR), $(addprefix -I, $(module))) \
 		   -I$(LIBFT_DIR)/include -I.
@@ -24,10 +24,10 @@ LIB = -L$(LIBFT_DIR) -lft -lreadline
 EXEC = exec
 
 # Debug
-$(info SRC: $(SRC))
-$(info OBJ: $(OBJ))
-$(info HEADER: $(HEADER))
-$(info INCL_DIR: $(INCL_DIR))
+# $(info SRC: $(SRC))
+# $(info OBJ: $(OBJ))
+# $(info HEADER: $(HEADER))
+# $(info INCL_DIR: $(INCL_DIR))
 
 # Rules & Recipes
 all : $(EXEC)

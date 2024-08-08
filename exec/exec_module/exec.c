@@ -1,5 +1,5 @@
 # include "exec.h"
-# include "utils.h"
+# include "debug.h"
 
 int	cmd_exec(t_cmd_line *cmd, t_env *env)
 {
@@ -32,8 +32,7 @@ int	execute(t_cmd *cmds, t_env *env)
 		pid = fork();
 		if (pid == 0)
 		{
-			DPRINTF("executing %s ", cmds[i].cmd);
-			print_arr(cmds[i].argv);
+			DPRINT_ARR(cmds[i].argv);
 			execve(cmds[i].cmd, cmds[i].argv, NULL);
 			exit(0);
 		}

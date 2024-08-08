@@ -1,4 +1,4 @@
-# include "utils.h"
+# include "debug.h"
 
 int	print_arr(char **arr)
 {
