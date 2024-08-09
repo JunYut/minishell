@@ -32,4 +32,16 @@
 		- [x] or module
 		- [x] and module
 		- [ ] signal module
+			- [ ] ctrl-c (SIGINT)
+				- [ ] normal: stop the running command
+				- [ ] interactive: interrupt the command and terminate it
+			- [ ] ctrl-d (EOF)
+				- [ ] normal: exits minishell
+				- [ ] interactive: signal the end of input
+			- [ ] ctrl-\ (SIGQUIT)
+				- [ ] normal: stop the command, terminat it and generate a
+					  core dump file for debugging
+				- [ ] interactive: interrupt the program, terminate it and
+					  generate a core dump
+
 		- [ ] exit command

@@ -12,7 +12,7 @@
 # include "gbc.h"
 
 void	heredoc(char *delimiter);
-void	redout(int fd, char *cmd, char *argv[]);
+void	redout(char *file, t_token type, char *cmd, char *argv[]);
 void	redin(char *file);
 
 char	*read_pipe(int read_fd);

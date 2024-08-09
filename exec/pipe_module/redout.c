@@ -1,14 +1,18 @@
 # include "redir.h"
 
-// Append: O_APPEND | O_WRONLY | O_CREAT, 0644
-// Redout: O_WRONLY | O_CREAT | O_TRUNC, 0644
-// Will close fd
-void	redout(int fd, char *cmd, char *argv[])
+void	redout(char *file, t_token type, char *cmd, char *argv[])
 {
 	char	*content;
 	int		pipefd[2];
 	pid_t	pid;
+	int		fd;
 
+	if (type == T_REDOUT)
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (type == T_APPEND)
+		fd = open(file, O_APPEND | O_WRONLY | O_CREAT, 0644);
+	else
+		return ;
 	pipe(pipefd);
 	pid = fork();
 	if (pid == 0)
