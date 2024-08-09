@@ -1,14 +1,14 @@
 # include "redir.h"
 
-// Open file with O_RDONLY
-// Will close fd
-void	redin(int fd, char *cmd, char *argv[])
+void	redin(char *file, char *cmd, char *argv[])
 {
 	char	*content;
 	pid_t	pid;
 	int 	pipefd[2];
 
-	content = read_file(fd);
+	content = read_file(file);
+	if (!content)
+		return ;
 	pipe(pipefd);
 	write(pipefd[1], content, ft_strlen(content));
 	close(pipefd[1]);
@@ -23,12 +23,19 @@ void	redin(int fd, char *cmd, char *argv[])
 }
 
 // returns NULL on error
-char	*read_file(int fd)
+char	*read_file(char *file)
 {
+	int		fd;
 	char	*buf;
 	char	*tmp;
 	int		bytes_read;
 
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		printf("minishell: %s: %s\n", file, strerror(errno));
+		return (NULL);
+	}
 	buf = gb_malloc(1);
 	tmp = gb_malloc(READ_SIZE + 1);
 	buf[0] = '\0';

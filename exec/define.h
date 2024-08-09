@@ -5,6 +5,20 @@
 # define VAR 2
 # define READ_SIZE 42
 
+typedef enum e_token
+{
+	T_CMD,
+	T_REDIN,
+	T_REDOUT,
+	T_HERE_DOC,
+	T_APPEND,
+	T_PIPE,
+	T_OR,
+	T_AND,
+	T_END,
+	T_INVALID = -1
+}	t_token;
+
 # if DEBUG == 1
 	# define DPRINTF printf
 	# define DPRINT_ARR(arr) print_arr(arr)

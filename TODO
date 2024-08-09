@@ -1,8 +1,8 @@
-- [x] pipe module
-- [x] redin module
-- [x] redout module
-- [x] append module
-- [x] heredoc module
+- [x] pipe module: replace int fd with char *file, remove param char *cmd and char *argv[]
+	- [ ] redin
+	- [ ] redout
+	- [ ] heredoc
+	- [ ] pipe
 - [x] garbage collector module
 - [ ] wildcard expansion
 - [x] environment module
@@ -27,9 +27,9 @@
 		- [x] `ft_strlen`: append, env, heredoc, redin, redout
 		- [x] `ft_strcmp`: env, heredoc
 	- [x] redir_module: open() at the outside
-		- change file param to fd
+		- [x] change file param to fd
 	- [ ] system integration
-		- [ ] or module
-		- [ ] and module
+		- [x] or module
+		- [x] and module
 		- [ ] signal module
 		- [ ] exit command
