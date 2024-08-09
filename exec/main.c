@@ -44,11 +44,11 @@ int main(int ac, char **av, char **envp)
 		cmd.cmds[2].argv = NULL;
 	# endif
 	# if TEST == 2
-	// ls not-exist && echo hello world || cat define.h
+	// ls || echo hello world && cat define.h
 	cmd.redirs = gb_malloc(3 * sizeof(t_redir));
-		cmd.redirs[0].type = T_AND;
+		cmd.redirs[0].type = T_OR;
 		cmd.redirs[0].file = NULL;
-		cmd.redirs[1].type = T_OR;
+		cmd.redirs[1].type = T_AND;
 		cmd.redirs[1].file = NULL;
 		cmd.redirs[2].type = T_END;
 		cmd.redirs[2].file = NULL;
@@ -57,15 +57,15 @@ int main(int ac, char **av, char **envp)
 		cmd.cmds[0].cmd = "/usr/bin/ls";
 		cmd.cmds[0].argv = gb_malloc(3 * sizeof(char *));
 			cmd.cmds[0].argv[0] = "ls";
-			cmd.cmds[0].argv[1] = "not-exist";
+			cmd.cmds[0].argv[1] = NULL;
 			cmd.cmds[0].argv[2] = NULL;
-		cmd.cmds[1].type = T_AND;
+		cmd.cmds[1].type = T_OR;
 		cmd.cmds[1].cmd = "/usr/bin/echo";
 		cmd.cmds[1].argv = gb_malloc(3 * sizeof(char *));
 			cmd.cmds[1].argv[0] = "echo";
 			cmd.cmds[1].argv[1] = "hello world";
 			cmd.cmds[1].argv[2] = NULL;
-		cmd.cmds[2].type = T_OR;
+		cmd.cmds[2].type = T_AND;
 		cmd.cmds[2].cmd = "/usr/bin/cat";
 		cmd.cmds[2].argv = gb_malloc(3 * sizeof(char *));
 			cmd.cmds[2].argv[0] = "cat";

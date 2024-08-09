@@ -16,12 +16,10 @@ int	execute(t_cmd *cmds, t_env *env)
 	i = -1;
 	while (cmds[++i].type != T_END)
 	{
-		if (i && cmds[i].type == T_AND)
-			if (wait_status(pid, env) != 0)
-				continue ;
-		if (i && cmds[i].type == T_OR)
-			if (wait_status(pid, env) == 0)
-				continue ;
+		if (i && cmds[i].type == T_AND && wait_status(pid, env) != 0)
+			continue ;
+		else if (i && cmds[i].type == T_OR && wait_status(pid, env) == 0)
+			continue ;
 		pid = fork();
 		if (pid == 0)
 		{
@@ -49,15 +47,14 @@ int	redirect(t_redir *redirs)
 	return (0);
 }
 
-// returns -1 on absense of pid
-// returns -2 on abnormal termination
+// returns -1 on abnormal termination
 // returns the exit status of the child process (0-255)
 int	wait_status(pid_t pid, t_env *env)
 {
 	int	status;
 
 	if (waitpid(pid, &status, 0) == -1)
-		return (-1);
+		return (0);
 	else if (WIFEXITED(status))
 	{
 		status = WEXITSTATUS(status);
@@ -65,7 +62,7 @@ int	wait_status(pid_t pid, t_env *env)
 	}
 	else
 	{
-		status = -2;
+		status = -1;
 		printf("PID %d: terminated abnormally\n", pid);
 	}
 	return (status);
