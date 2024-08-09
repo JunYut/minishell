@@ -11,7 +11,7 @@
 # include "define.h"
 # include "gbc.h"
 
-void	heredoc(char *delimiter, char *cmd, char *argv[]);
+void	heredoc(char *delimiter);
 void	redout(int fd, char *cmd, char *argv[]);
 void	redin(char *file);
 

@@ -13,7 +13,6 @@ void	redin(char *file)
 	close(pipefd[1]);
 	dup2(pipefd[0], STDIN_FILENO);
 	close(pipefd[0]);
-	wait(NULL);
 }
 
 // returns NULL on error

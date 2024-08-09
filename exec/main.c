@@ -19,14 +19,30 @@ int main(int ac, char **av, char **envp)
 		cmd.redirs[1].file = NULL;
 	cmd.cmds = gb_malloc(2 * sizeof(t_cmd));
 		cmd.cmds[0].type = T_CMD;
-		cmd.cmds[0].cmd = "/usr/bin/lol";
+		cmd.cmds[0].cmd = "/usr/bin/cat";
 		cmd.cmds[0].argv = gb_malloc(3 * sizeof(char *));
-			cmd.cmds[0].argv[0] = "lol";
+			cmd.cmds[0].argv[0] = "cat";
 			cmd.cmds[0].argv[1] = "-en";
 			cmd.cmds[0].argv[2] = NULL;
 		cmd.cmds[1].type = T_END;
 	# endif
 	# if TEST == 2
+	// cat -en << EOF
+	cmd.redirs = gb_malloc(2 * sizeof(t_redir));
+		cmd.redirs[0].type = T_HERE_DOC;
+		cmd.redirs[0].file = "EOF";
+		cmd.redirs[1].type = T_END;
+		cmd.redirs[1].file = NULL;
+	cmd.cmds = gb_malloc(2 * sizeof(t_cmd));
+		cmd.cmds[0].type = T_CMD;
+		cmd.cmds[0].cmd = "/usr/bin/cat";
+		cmd.cmds[0].argv = gb_malloc(3 * sizeof(char *));
+			cmd.cmds[0].argv[0] = "cat";
+			cmd.cmds[0].argv[1] = "-en";
+			cmd.cmds[0].argv[2] = NULL;
+		cmd.cmds[1].type = T_END;
+	# endif
+	# if TEST == 0
 	// cat -e << EOF | grep lol -v > out.txt
 	cmd.redirs = gb_malloc(4 * sizeof(t_redir));
 	cmd.redirs[0].type = T_HERE_DOC;
@@ -56,7 +72,7 @@ int main(int ac, char **av, char **envp)
 		cmd.cmds[2].cmd = NULL;
 		cmd.cmds[2].argv = NULL;
 	# endif
-	# if TEST == 3
+	# if TEST == 0
 	// ls || echo hello world && cat define.h
 	cmd.redirs = gb_malloc(3 * sizeof(t_redir));
 		cmd.redirs[0].type = T_OR;
@@ -89,6 +105,7 @@ int main(int ac, char **av, char **envp)
 		cmd.cmds[3].argv = NULL;
 	# endif
 
+	// heredoc("EOF");
 	cmd_exec(&cmd, e);
 
 	gb_clear();

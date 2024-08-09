@@ -50,8 +50,8 @@ int	redirect(t_redir *redirs)
 		// 	redout(redirs[i].file);
 		// else if (redirs[i].type == T_PIPE)
 		// 	pipex(redirs[i].file);
-		// else if (redirs[i].type == T_HERE_DOC)
-		// 	heredoc(redirs[i].file);
+		else if (redirs[i].type == T_HERE_DOC)
+			heredoc(redirs[i].file);
 	}
 	return (0);
 }

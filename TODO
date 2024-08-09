@@ -1,7 +1,7 @@
 - [x] pipe module: replace int fd with char *file, remove param char *cmd and char *argv[]
 	- [x] redin
 	- [ ] redout
-	- [ ] heredoc
+	- [x] heredoc
 	- [ ] pipe
 - [x] garbage collector module
 - [ ] wildcard expansion
