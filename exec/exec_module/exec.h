@@ -33,7 +33,7 @@ typedef struct s_cmd_line
 	t_cmd	*cmds;
 }	t_cmd_line;
 
-int	cmd_exec(t_cmd_line *cmd, t_env *env);
+int	cmd_exec(t_cmd_line *cmd, t_env *env, char *envp[]);
 int	redirect(t_redir *redirs);
-int	execute(t_cmd *cmds, t_env *env);
+int	execute(t_cmd *cmds, t_env *env, char *envp[]);
 int	wait_status(pid_t pid, t_env *env);

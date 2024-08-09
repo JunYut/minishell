@@ -3,13 +3,28 @@
 # include "gbc.h"
 # include "define.h"
 
-# define TEST 3
+# define TEST 0
 
 int main(int ac, char **av, char **envp)
 {
 	t_env	*e = dup_env(envp);
 	t_cmd_line	cmd;
 
+	# if TEST == 0
+	// clear
+	cmd.redirs = gb_malloc(1 * sizeof(t_redir));
+		cmd.redirs[0].type = T_END;
+		cmd.redirs[0].file = NULL;
+	cmd.cmds = gb_malloc(2 * sizeof(t_cmd));
+		cmd.cmds[0].type = T_CMD;
+		cmd.cmds[0].cmd = "/usr/bin/clear";
+		cmd.cmds[0].argv = gb_malloc(2 * sizeof(char *));
+			cmd.cmds[0].argv[0] = "clear";
+			cmd.cmds[0].argv[1] = NULL;
+		cmd.cmds[1].type = T_END;
+		cmd.cmds[1].cmd = NULL;
+		cmd.cmds[1].argv = NULL;
+	# endif
 	# if TEST == 1
 	// cat -en < in.txt
 	cmd.redirs = gb_malloc(2 * sizeof(t_redir));
@@ -58,7 +73,7 @@ int main(int ac, char **av, char **envp)
 			cmd.cmds[0].argv[2] = NULL;
 		cmd.cmds[1].type = T_END;
 	# endif
-	# if TEST == 0
+	# if TEST == -1
 	// cat -e << EOF | grep lol -v > out.txt
 	cmd.redirs = gb_malloc(4 * sizeof(t_redir));
 	cmd.redirs[0].type = T_HERE_DOC;
@@ -88,7 +103,7 @@ int main(int ac, char **av, char **envp)
 		cmd.cmds[2].cmd = NULL;
 		cmd.cmds[2].argv = NULL;
 	# endif
-	# if TEST == 0
+	# if TEST == -1
 	// ls || echo hello world && cat define.h
 	cmd.redirs = gb_malloc(3 * sizeof(t_redir));
 		cmd.redirs[0].type = T_OR;
@@ -121,8 +136,8 @@ int main(int ac, char **av, char **envp)
 		cmd.cmds[3].argv = NULL;
 	# endif
 
-	redout("out.txt", T_REDOUT, cmd.cmds[0].cmd, cmd.cmds[0].argv);
-	// cmd_exec(&cmd, e);
+	// redout("out.txt", T_REDOUT, cmd.cmds[0].cmd, cmd.cmds[0].argv);
+	cmd_exec(&cmd, e, envp);
 
 	gb_clear();
 

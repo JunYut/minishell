@@ -1,14 +1,14 @@
 # include "exec.h"
 # include "debug.h"
 
-int	cmd_exec(t_cmd_line *cmd, t_env *env)
+int	cmd_exec(t_cmd_line *cmd, t_env *env, char *envp[])
 {
 	redirect(cmd->redirs);
-	execute(cmd->cmds, env);
+	execute(cmd->cmds, env, envp);
 	return (0);
 }
 
-int	execute(t_cmd *cmds, t_env *env)
+int	execute(t_cmd *cmds, t_env *env, char *envp[])
 {
 	pid_t	pid;
 	int		i;
@@ -23,7 +23,7 @@ int	execute(t_cmd *cmds, t_env *env)
 		pid = fork();
 		if (pid == 0)
 		{
-			execve(cmds[i].cmd, cmds[i].argv, NULL);
+			execve(cmds[i].cmd, cmds[i].argv, envp);
 			printf("%s: command not found\n", cmds[i].argv[0]);
 			exit(EXIT_FAILURE);
 		}
