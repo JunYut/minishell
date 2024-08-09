@@ -20,7 +20,7 @@ t_env	*dup_env(char **envp)
 		add_ent(e, split[0], split[1]);
 	}
 	unset((char *[]){"OLDPWD", NULL}, e);
-	add_ent(e, "?", "1");
+	add_ent(e, "?", "0");
 	set_val(e, "SHLVL", "1");
 	return (e);
 }
