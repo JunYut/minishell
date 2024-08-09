@@ -1,5 +1,5 @@
 - [x] pipe module: replace int fd with char *file, remove param char *cmd and char *argv[]
-	- [ ] redin
+	- [x] redin
 	- [ ] redout
 	- [ ] heredoc
 	- [ ] pipe

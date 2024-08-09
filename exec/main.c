@@ -11,7 +11,7 @@ int main(int ac, char **av, char **envp)
 	t_cmd_line	cmd;
 
 	# if TEST == 1
-	// cat -e < out.txt
+	// cat -en < in.txt
 	cmd.redirs = gb_malloc(2 * sizeof(t_redir));
 		cmd.redirs[0].type = T_REDIN;
 		cmd.redirs[0].file = "in.txt";
@@ -19,9 +19,9 @@ int main(int ac, char **av, char **envp)
 		cmd.redirs[1].file = NULL;
 	cmd.cmds = gb_malloc(2 * sizeof(t_cmd));
 		cmd.cmds[0].type = T_CMD;
-		cmd.cmds[0].cmd = "/usr/bin/cat";
+		cmd.cmds[0].cmd = "/usr/bin/lol";
 		cmd.cmds[0].argv = gb_malloc(3 * sizeof(char *));
-			cmd.cmds[0].argv[0] = "cat";
+			cmd.cmds[0].argv[0] = "lol";
 			cmd.cmds[0].argv[1] = "-en";
 			cmd.cmds[0].argv[2] = NULL;
 		cmd.cmds[1].type = T_END;

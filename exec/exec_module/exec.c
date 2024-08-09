@@ -24,7 +24,7 @@ int	execute(t_cmd *cmds, t_env *env)
 		if (pid == 0)
 		{
 			execve(cmds[i].cmd, cmds[i].argv, NULL);
-			perror("execve");
+			printf("%s: command not found\n", cmds[i].argv[0]);
 			exit(EXIT_FAILURE);
 		}
 	}
