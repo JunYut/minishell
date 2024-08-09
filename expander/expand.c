@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/07 21:17:50 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/09 14:03:59 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,10 @@ char	**expand_args(char *args)
 {
 	char	**expanded;
 	char	*buffer;
-	// int		i;
+	int		i;
 
-	// i = -1;
-
+	i = -1;
 	buffer = expand_params(args);
-	// buffer = clean_empty_str(args);
 	// printf("expanded: %s\n", buffer);
 	// expanded = ft_split(buffer, ' ');
 	// while (expanded[++i])
@@ -70,6 +68,11 @@ char	**expand_args(char *args)
 	// 	printf("expanded: %s\n", expanded[i]);
 	// }
 	expanded = split_args(buffer);
+	while (expanded[++i])
+	{
+		expanded[i] = remove_quotes(expanded[i]);
+		// printf("Final string: %s\n", expanded[i]);
+	}
 	return (expanded);
 }
 
@@ -101,7 +104,6 @@ char	*handle_reg_str(char *str, int *i)
 	start = *i;
 	while (str[*i] != '\0' && str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
 		(*i)++;
-	(*i)++;
 	return (ft_substr(str, start, *i - start));
 }
 
@@ -177,42 +179,29 @@ bool	is_valid_var_char(char c)
 
 char	*remove_quotes(char *str)
 {
-	char	*ret;
 	int		i;
 	int		j;
-	char	quotes;
+	char	*new_str;
+	char	quote;
 
-	if (!is_in_set('\'', str) && !is_in_set('"', str))
-		return (str);
-	i = 0;
+	i = -1;
 	j = 0;
-	quotes = *str;
-	ret = ft_calloc(1 + unquoted_strlen(str, quotes), sizeof(char));
-	if (ret == NULL)
-		return (NULL);
-	while (str[i] != '\0')
+	quote = 0;
+	while (str[++i])
 	{
-		if (str[i] == quotes)
-			i++;
-		else
-			ret[j++] = str[i++];
+		if (quote == 0 && (str[i] == '"' || str[i] == '\''))
+			quote = str[i];
+		if (str[i] == quote)
+			j++;
 	}
-	ret[j] = '\0';
-	return (free(str), ret);
-}
-
-int	unquoted_strlen(char *str, char quotes)
-{
-	int		i;
-	int		count;
-
-	i = 0;
-	count = 0;
-	while (str[i])
+	new_str = ft_calloc(ft_strlen(str) - j + 1, sizeof(char));
+	i = -1;
+	j = 0;
+	while (str[++i])
 	{
-		if (str[i] == quotes)
-			count++;
-		i++;
+		if (str[i] != quote)
+			new_str[j++] = str[i];
 	}
-	return (ft_strlen(str) - count);
+	free(str);
+	return (new_str);
 }

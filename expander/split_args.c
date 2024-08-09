@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:18:21 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/07 21:17:31 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/09 14:05:41 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 char	**split_args(char *str)
 {
-	char	**result;
-	// char	*str2;
-	int		count;
-	// int		i;
+	char	**args;
+	int		word_count;
 
 	if (!str)
 		return (NULL);
-	count = count_words(str);
-	result = ft_calloc(count + 1, sizeof(char *));
-	if (!result)
+	word_count = count_words(str);
+	if (!word_count)
+			return (free(str), NULL);
+	args = ft_calloc(word_count + 1, sizeof(char *));
+	if (!args)
 		return (free(str), NULL);
-	// i = -1;
-	// while (++i < count)
-	// 	result[i] = ft_calloc(quoted_len() + 1, sizeof(char));
+	args = allocate_args(str, args);
+	if (!args)
+		return (ft_free_s_arr(args), NULL);
 	// printf("String: %s\n", str);
-	printf("Count: %d\n", count);
-	return (NULL);
+	// printf("Count: %d\n", count);
+	return (fill_args(str, args));
 }
 
 void	skip_word(char *str, int *i)
@@ -72,26 +72,68 @@ int	count_words(char *str)
 	return (count);
 }
 
-// char	*fill_word(char *str)
-// {
-// 	int	i;
+char	**allocate_args(char *str, char **args)
+{
+	int	start;
+	int	i;
+	int	j;
 
-// 	i = 0;
-// 	while (str[i] && str[i] != ' ')
-// 	{
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+		{
+			start = i;
+			skip_word(str, &i);
+			args[j] = ft_calloc(i - start + 1, sizeof(char));
+			if (!args[j])
+				return (NULL);
+			j++;
+		}
+		while (str[i] && str[i] == ' ')
+			i++;
+	}
+	return (args);
+}
 
-// 	}
+char	**fill_args(char *str, char **args)
+{
+	int	i;
+	int	j;
 
-// }
+	i = 0;
+	j = 0;
+	while (str[i] && str[i] != ' ')
+	{
+		if (str[i] != ' ')
+		{
+			fill_word(str, args, &i, j);
+			j++;
+		}
+		while (str[i] && str[i] == ' ')
+			i++;
+	}
+	return (args);
+}
 
-// char	*quoted_len(char *str)
-// {
-// 	char	quote;
-// 	int		i;
+void	fill_word(char *str, char **args, int *i, int j)
+{
+	char	quote;
+	int		k;
 
-// 	quote = *str;
-// 	i = 1;
-// 	while (str[i] && str[i] != quote)
-// 		i++;
-// 	return (i - 1);
-// }
+	k = 0;
+	while (str[*i] && str[*i] != ' ')
+	{
+		if (str[*i] != '\'' && str[*i] !='"')
+			args[j][k++] = str[(*i)++];
+		else
+		{
+			quote = str[(*i)++];
+			args[j][k++] = quote;
+			while (str[*i] != quote)
+				args[j][k++] = str[(*i)++];
+			args[j][k++] = str[(*i)++];
+		}
+	}
+}
