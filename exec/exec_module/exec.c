@@ -17,19 +17,11 @@ int	execute(t_cmd *cmds, t_env *env)
 	while (cmds[++i].type != T_END)
 	{
 		if (i && cmds[i].type == T_AND)
-		{
-			DPRINTF("AND[%d]: ", i);
-			exit_status(pid, env);
-			if (ft_atoi(fetch_val("?", env)) != 0)
+			if (wait_status(pid, env) != 0)
 				continue ;
-		}
 		if (i && cmds[i].type == T_OR)
-		{
-			DPRINTF("OR[%d]: ", i);
-			exit_status(pid, env);
-			if (ft_atoi(fetch_val("?", env)) == 0)
+			if (wait_status(pid, env) == 0)
 				continue ;
-		}
 		pid = fork();
 		if (pid == 0)
 		{
@@ -37,16 +29,11 @@ int	execute(t_cmd *cmds, t_env *env)
 			perror("execve");
 			exit(EXIT_FAILURE);
 		}
-		DPRINTF("> [%d]executing: ", pid);
-		DPRINT_ARR(cmds[i].argv);
 	}
 	i = -1;
 	while (cmds[++i].type != T_END)
-	{
-		if (cmds[i].type == T_AND || cmds[i].type == T_OR)
-			continue;
-		exit_status(pid, env);
-	}
+		if (cmds[i].type == T_CMD)
+			wait_status(pid, env);
 	return (0);
 }
 
@@ -62,13 +49,24 @@ int	redirect(t_redir *redirs)
 	return (0);
 }
 
-int	exit_status(pid_t pid, t_env *env)
+// returns -1 on absense of pid
+// returns -2 on abnormal termination
+// returns the exit status of the child process (0-255)
+int	wait_status(pid_t pid, t_env *env)
 {
-	int	exit_status;
+	int	status;
 
-	waitpid(pid, &exit_status, 0);
-	exit_status = WEXITSTATUS(exit_status);
-	set_val(env, "?", (char *)gb_add(ft_itoa(exit_status)));
-	DPRINTF("PID %d: %s\n", pid, fetch_val("?", env));
-	return (exit_status);
+	if (waitpid(pid, &status, 0) == -1)
+		return (-1);
+	else if (WIFEXITED(status))
+	{
+		status = WEXITSTATUS(status);
+		set_val(env, "?", (char *)gb_add(ft_itoa(status)));
+	}
+	else
+	{
+		status = -2;
+		printf("PID %d: terminated abnormally\n", pid);
+	}
+	return (status);
 }

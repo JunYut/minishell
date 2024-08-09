@@ -48,4 +48,4 @@ typedef struct s_cmd_line
 int	cmd_exec(t_cmd_line *cmd, t_env *env);
 int	redirect(t_redir *redirs);
 int	execute(t_cmd *cmds, t_env *env);
-int	exit_status(pid_t pid, t_env *env);
+int	wait_status(pid_t pid, t_env *env);
