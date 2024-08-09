@@ -1,23 +1,17 @@
 # include "redir.h"
 
-void	redin(char *file, char *cmd, char *argv[])
+void	redin(char *file)
 {
 	char	*content;
-	pid_t	pid;
 	int 	pipefd[2];
 
 	content = read_file(file);
 	if (!content)
-		return ;
+		content = "";
 	pipe(pipefd);
 	write(pipefd[1], content, ft_strlen(content));
 	close(pipefd[1]);
-	pid = fork();
-	if (pid == 0)
-	{
-		dup2(pipefd[0], STDIN_FILENO);
-		execve(cmd, argv, NULL);
-	}
+	dup2(pipefd[0], STDIN_FILENO);
 	close(pipefd[0]);
 	wait(NULL);
 }

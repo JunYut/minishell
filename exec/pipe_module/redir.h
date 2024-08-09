@@ -13,7 +13,7 @@
 
 void	heredoc(char *delimiter, char *cmd, char *argv[]);
 void	redout(int fd, char *cmd, char *argv[]);
-void	redin(char *file, char *cmd, char *argv[]);
+void	redin(char *file);
 
 char	*read_pipe(int read_fd);
 char	*read_doc(char *delimiter);

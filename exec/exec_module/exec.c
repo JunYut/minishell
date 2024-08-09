@@ -42,10 +42,10 @@ int	redirect(t_redir *redirs)
 	i = -1;
 	while (redirs[++i].type != T_END)
 	{
-		// if (redirs[i].type == T_AND || redirs[i].type == T_OR)
-		// 	continue ;
-		// if (redirs[i].type == T_REDIN)
-		// 	redin(redirs[i].file);
+		if (redirs[i].type == T_AND || redirs[i].type == T_OR)
+			continue ;
+		if (redirs[i].type == T_REDIN)
+			redin(redirs[i].file);
 		// else if (redirs[i].type == T_REDOUT || redirs[i].type == T_APPEND)
 		// 	redout(redirs[i].file);
 		// else if (redirs[i].type == T_PIPE)

@@ -21,8 +21,8 @@ int main(int ac, char **av, char **envp)
 		cmd.cmds[0].type = T_CMD;
 		cmd.cmds[0].cmd = "/usr/bin/cat";
 		cmd.cmds[0].argv = gb_malloc(3 * sizeof(char *));
-			cmd.cmds[0].argv[0] = "-e";
-			cmd.cmds[0].argv[1] = NULL;
+			cmd.cmds[0].argv[0] = "cat";
+			cmd.cmds[0].argv[1] = "-en";
 			cmd.cmds[0].argv[2] = NULL;
 		cmd.cmds[1].type = T_END;
 	# endif
@@ -89,8 +89,7 @@ int main(int ac, char **av, char **envp)
 		cmd.cmds[3].argv = NULL;
 	# endif
 
-	// execute(cmd.cmds, e);
-	redin(cmd.redirs[0].file, cmd.cmds[0].cmd, cmd.cmds[0].argv);
+	cmd_exec(&cmd, e);
 
 	gb_clear();
 
