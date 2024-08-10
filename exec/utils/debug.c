@@ -8,7 +8,7 @@ int	print_arr(char **arr)
 		return (-1);
 	i = -1;
 	while (arr[++i] != NULL)
-		printf("%s ", arr[i]);
+		printf("[%s] ", arr[i]);
 	printf("\n");
 	return (0);
 }

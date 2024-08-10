@@ -2,31 +2,67 @@
 
 void	redout(char *file, t_token type, char *cmd, char *argv[])
 {
-	char	*content;
-	int		pipefd[2];
 	pid_t	pid;
+	int		*openfds;
+
+	openfds = redout_o(file, type);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(openfds[1]);
+		execve(cmd, argv, NULL);
+		printf("%s: command not found\n", cmd);
+		exit(EXIT_FAILURE);
+	}
+	waitpid(pid, NULL, 0);
+	redout_c(openfds[3], openfds[0], (int[2]){openfds[1], openfds[2]});
+}
+
+// only opens the file and redirect stdout to the file
+// returns an array of 3 unclosed file descriptors and the original stdout fd
+// openfds[0]: file fd
+// openfds[1]: pipefd[0]
+// openfds[2]: pipefd[1]
+// openfds[3]: original stdout fd
+int	*redout_o(char *file, t_token type)
+{
+	int		*openfds;
+	int		pipefd[2];
 	int		fd;
 
+	openfds = gb_malloc(sizeof(int) * 4);
 	if (type == T_REDOUT)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == T_APPEND)
 		fd = open(file, O_APPEND | O_WRONLY | O_CREAT, 0644);
 	else
-		return ;
-	pipe(pipefd);
-	pid = fork();
-	if (pid == 0)
+		return (NULL);
+	if (fd == -1)
 	{
-		close(pipefd[0]);
-		dup2(pipefd[1], 1);
-		execve(cmd, argv, NULL);
+		printf("minishell: %s: %s\n", file, strerror(errno));
+		return (NULL);
 	}
+	pipe(pipefd);
+	openfds[3] = dup(STDOUT_FILENO);
+	dup2(pipefd[1], STDOUT_FILENO);
+	openfds[0] = fd;
+	openfds[1] = pipefd[0];
+	openfds[2] = pipefd[1];
+	return (openfds);
+}
+
+// should be called after command finish execution
+void	redout_c(int stdout_fd, int fd, int pipefd[2])
+{
+	char	*content;
+
 	close(pipefd[1]);
-	wait(NULL);
+	dup2(stdout_fd, STDOUT_FILENO);
+	close(stdout_fd);
 	content = read_pipe(pipefd[0]);
+	close(pipefd[0]);
 	write(fd, content, ft_strlen(content));
 	close(fd);
-	close(pipefd[0]);
 }
 
 char	*read_pipe(int read_fd)

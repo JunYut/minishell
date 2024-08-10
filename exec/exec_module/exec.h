@@ -6,20 +6,21 @@
 # include "libft.h"
 # include "define.h"
 
-// for regular command, set field type to T_CMD
-// for && command, set field type to T_AND
-// for || command, set field type to T_OR
-// field cmd should be the full path of the command
-// field argv should be NULL terminated
+// for regular commands, set field `type` to:
+//		T_CMD, T_REDIN, T_REDOUT, T_APPEND, T_PIPE or T_HERE_DOC
+// for && and || commands, set to field `logical`
+// field `cmd` should be the full path of the command
+// field `argv` should be NULL terminated
 typedef struct s_cmd
 {
+	t_token	logical;
 	t_token	type;
 	char	*cmd;
 	char	**argv;
 }	t_cmd;
 
-// for T_HERE_DOC, set field file to the delimiter
-// for T_PIPE, set field file to NULL
+// for T_HERE_DOC, set field `file` to the delimiter
+// for T_PIPE, set field `file` to NULL
 typedef struct s_redir
 {
 	t_token		type;
@@ -31,6 +32,7 @@ typedef struct s_cmd_line
 {
 	t_redir	*redirs;
 	t_cmd	*cmds;
+	t_list	*fds;
 }	t_cmd_line;
 
 int	cmd_exec(t_cmd_line *cmd, t_env *env, char *envp[]);

@@ -3,7 +3,7 @@
 # include "gbc.h"
 # include "define.h"
 
-# define TEST 0
+# define TEST 3
 
 int main(int ac, char **av, char **envp)
 {
@@ -67,10 +67,11 @@ int main(int ac, char **av, char **envp)
 	cmd.cmds = gb_malloc(2 * sizeof(t_cmd));
 		cmd.cmds[0].type = T_CMD;
 		cmd.cmds[0].cmd = "/usr/bin/cat";
-		cmd.cmds[0].argv = gb_malloc(3 * sizeof(char *));
+		cmd.cmds[0].argv = gb_malloc(4 * sizeof(char *));
 			cmd.cmds[0].argv[0] = "cat";
 			cmd.cmds[0].argv[1] = "-en";
-			cmd.cmds[0].argv[2] = NULL;
+			cmd.cmds[0].argv[2] = "in.txt";
+			cmd.cmds[0].argv[3] = NULL;
 		cmd.cmds[1].type = T_END;
 	# endif
 	# if TEST == -1
@@ -92,7 +93,7 @@ int main(int ac, char **av, char **envp)
 			cmd.cmds[0].argv[0] = "cat";
 			cmd.cmds[0].argv[1] = "-e";
 			cmd.cmds[0].argv[2] = NULL;
-		cmd.cmds[1].type = T_CMD;
+		cmd.cmds[1].type = T_PIPE;
 		cmd.cmds[1].cmd = "/usr/bin/grep";
 		cmd.cmds[1].argv = gb_malloc(4 * sizeof(char *));
 			cmd.cmds[1].argv[0] = "grep";
@@ -136,8 +137,8 @@ int main(int ac, char **av, char **envp)
 		cmd.cmds[3].argv = NULL;
 	# endif
 
-	// redout("out.txt", T_REDOUT, cmd.cmds[0].cmd, cmd.cmds[0].argv);
-	cmd_exec(&cmd, e, envp);
+	redout("out.txt", T_REDOUT, cmd.cmds[0].cmd, cmd.cmds[0].argv);
+	// cmd_exec(&cmd, e, envp);
 
 	gb_clear();
 

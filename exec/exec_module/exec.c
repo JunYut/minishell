@@ -16,9 +16,9 @@ int	execute(t_cmd *cmds, t_env *env, char *envp[])
 	i = -1;
 	while (cmds[++i].type != T_END)
 	{
-		if (i && cmds[i].type == T_AND && wait_status(pid, env) != 0)
+		if (i && cmds[i].logical == T_AND && wait_status(pid, env) != 0)
 			continue ;
-		else if (i && cmds[i].type == T_OR && wait_status(pid, env) == 0)
+		else if (i && cmds[i].logical == T_OR && wait_status(pid, env) == 0)
 			continue ;
 		pid = fork();
 		if (pid == 0)
@@ -27,6 +27,8 @@ int	execute(t_cmd *cmds, t_env *env, char *envp[])
 			printf("%s: command not found\n", cmds[i].argv[0]);
 			exit(EXIT_FAILURE);
 		}
+		// if (cmds[i].type == T_REDOUT || cmds[i].type == T_APPEND)
+		// 	redout_c(fd, pipefd);
 	}
 	i = -1;
 	while (cmds[++i].type != T_END)
@@ -46,8 +48,8 @@ int	redirect(t_redir *redirs)
 			continue ;
 		if (redirs[i].type == T_REDIN)
 			redin(redirs[i].file);
-		// else if (redirs[i].type == T_REDOUT || redirs[i].type == T_APPEND)
-		// 	redout(redirs[i].file);
+		else if (redirs[i].type == T_REDOUT || redirs[i].type == T_APPEND)
+			redout_o(redirs[i].file, redirs[i].type);
 		// else if (redirs[i].type == T_PIPE)
 		// 	pipex(redirs[i].file);
 		else if (redirs[i].type == T_HERE_DOC)
