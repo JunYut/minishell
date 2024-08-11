@@ -67,7 +67,7 @@ int main(int ac, char **av, char **envp)
 		cmd.redirs[1].type = T_END;
 		cmd.redirs[1].file = NULL;
 	cmd.cmds = gb_malloc(2 * sizeof(t_cmd));
-		cmd.cmds[0].type = T_CMD;
+		cmd.cmds[0].type = T_REDOUT;
 		cmd.cmds[0].cmd = "/usr/bin/cat";
 		cmd.cmds[0].argv = gb_malloc(4 * sizeof(char *));
 			cmd.cmds[0].argv[0] = "cat";
@@ -155,7 +155,7 @@ int main(int ac, char **av, char **envp)
 	# endif
 
 	// redout("out.txt", T_REDOUT, cmd.cmds[0].cmd, cmd.cmds[0].argv);
-	cmd_exec(&cmd, e, envp);
+	cmd_exec(&cmd, e);
 
 	gb_clear();
 

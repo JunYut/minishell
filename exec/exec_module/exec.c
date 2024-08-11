@@ -3,12 +3,13 @@
 
 int	cmd_exec(t_cmd_line *cmd, t_env *env)
 {
-	redirect(cmd->redirs);
-	execute(cmd->cmds, env);
+	cmd->fds = NULL;
+	redirect(cmd->redirs, &cmd->fds);
+	execute(cmd->cmds, env, cmd->fds);
 	return (0);
 }
 
-int	execute(t_cmd *cmds, t_env *env)
+int	execute(t_cmd *cmds, t_env *env, t_list *fds)
 {
 	pid_t	pid;
 	int		i;
@@ -27,7 +28,7 @@ int	execute(t_cmd *cmds, t_env *env)
 			printf("%s: command not found\n", cmds[i].argv[0]);
 			exit(EXIT_FAILURE);
 		}
-		close_fds(env, cmds[i].type, pid, );
+		close_fd(env, cmds[i].type, pid, fds);
 	}
 	i = -1;
 	while (cmds[++i].type != T_END)
@@ -36,7 +37,7 @@ int	execute(t_cmd *cmds, t_env *env)
 	return (0);
 }
 
-int	redirect(t_redir *redirs)
+int	redirect(t_redir *redirs, t_list **fds)
 {
 	int	i;
 
@@ -48,7 +49,7 @@ int	redirect(t_redir *redirs)
 		if (redirs[i].type == T_REDIN)
 			redin(redirs[i].file);
 		else if (redirs[i].type == T_REDOUT || redirs[i].type == T_APPEND)
-			redout_o(redirs[i].file, redirs[i].type);
+			ft_lstadd_back(fds, gb_add(ft_lstnew(redout_o(redirs[i].file, redirs[i].type))));
 		// else if (redirs[i].type == T_PIPE)
 		// 	pipex(redirs[i].file);
 		else if (redirs[i].type == T_HERE_DOC)
@@ -57,16 +58,20 @@ int	redirect(t_redir *redirs)
 	return (0);
 }
 
-int	close_fds(t_env *env, t_token type, pid_t pid, int *fds)
+int	close_fd(t_env *env, t_token type, pid_t pid, t_list *fds)
 {
+	int	*fd;
+
 	if (type == T_REDOUT || type == T_APPEND || type == T_PIPE)
 		wait_status(pid, env);
 	else
 		return (0);
+	fd = fds->content;
 	if (type == T_REDOUT || type == T_APPEND)
-		redout_c(fds[3], fds[0], (int[2]){fds[1], fds[2]});
+		redout_c(fd[3], fd[0], (int[2]){fd[1], fd[2]});
 	else
 		;
+	fds = fds->next;
 	return (0);
 }
 
