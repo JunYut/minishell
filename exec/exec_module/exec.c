@@ -1,14 +1,14 @@
 # include "exec.h"
 # include "debug.h"
 
-int	cmd_exec(t_cmd_line *cmd, t_env *env, char *envp[])
+int	cmd_exec(t_cmd_line *cmd, t_env *env)
 {
 	redirect(cmd->redirs);
-	execute(cmd->cmds, env, envp);
+	execute(cmd->cmds, env);
 	return (0);
 }
 
-int	execute(t_cmd *cmds, t_env *env, char *envp[])
+int	execute(t_cmd *cmds, t_env *env)
 {
 	pid_t	pid;
 	int		i;
@@ -23,12 +23,11 @@ int	execute(t_cmd *cmds, t_env *env, char *envp[])
 		pid = fork();
 		if (pid == 0)
 		{
-			execve(cmds[i].cmd, cmds[i].argv, envp);
+			execve(cmds[i].cmd, cmds[i].argv, env->envp);
 			printf("%s: command not found\n", cmds[i].argv[0]);
 			exit(EXIT_FAILURE);
 		}
-		// if (cmds[i].type == T_REDOUT || cmds[i].type == T_APPEND)
-		// 	redout_c(fd, pipefd);
+		close_fds(env, cmds[i].type, pid, );
 	}
 	i = -1;
 	while (cmds[++i].type != T_END)
@@ -55,6 +54,19 @@ int	redirect(t_redir *redirs)
 		else if (redirs[i].type == T_HERE_DOC)
 			heredoc(redirs[i].file);
 	}
+	return (0);
+}
+
+int	close_fds(t_env *env, t_token type, pid_t pid, int *fds)
+{
+	if (type == T_REDOUT || type == T_APPEND || type == T_PIPE)
+		wait_status(pid, env);
+	else
+		return (0);
+	if (type == T_REDOUT || type == T_APPEND)
+		redout_c(fds[3], fds[0], (int[2]){fds[1], fds[2]});
+	else
+		;
 	return (0);
 }
 

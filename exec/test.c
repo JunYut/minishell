@@ -1,9 +1,18 @@
 # include "redir.h"
 # include "env.h"
 # include "libft.h"
+# include "define.h"
+# include "debug.h"
 # include "gbc.h"
 
-# define TEST 5
+# define TEST 6
+
+void	print_int(void *data)
+{
+	int	*ptr = (int *)data;
+
+	printf("%d %d %d %d\n", ptr[0], ptr[1], ptr[2], ptr[3]);
+}
 
 int main(int ac, char **av, char **envp)
 {
@@ -45,8 +54,8 @@ int main(int ac, char **av, char **envp)
 	heredoc("eof", cmd, args);
 	# endif
 	// export
-	char	*vars[] = {"a=1", "b=", "c", "d", NULL};
 	# if TEST == 5
+	char	*vars[] = {"a=1", "b=", "c", "d", NULL};
 	// export(NULL, e);	printf("\n");
 	export(vars, e);
 	// export(NULL, e);	printf("\n");
@@ -56,6 +65,21 @@ int main(int ac, char **av, char **envp)
 	unset((char *[]){"a", "b", "c", "d", NULL}, e);
 	export(NULL, e);	printf("\n");
 	env(e, VAR);	printf("\n");
+	# endif
+	// t_list
+	# if TEST == 6
+	t_list	*lst = NULL;
+	int		*data;
+
+	data = gb_malloc(sizeof(int) * 4);
+	data[0] = 1; 	data[1] = 2;	data[2] = 3;	data[3] = 4;
+	ft_lstadd_back(&lst, ft_lstnew(data));
+	data = gb_malloc(sizeof(int) * 4);
+	data[0] = 5; 	data[1] = 6;	data[2] = 7;	data[3] = 8;
+	ft_lstadd_back(&lst, ft_lstnew(data));
+
+	ft_lstiter(lst, print_int);
+
 	# endif
 
 	gb_clear();

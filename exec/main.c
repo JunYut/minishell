@@ -3,6 +3,8 @@
 # include "gbc.h"
 # include "define.h"
 
+void	print_int(void *data);
+
 # define TEST 3
 
 int main(int ac, char **av, char **envp)
@@ -10,8 +12,8 @@ int main(int ac, char **av, char **envp)
 	t_env	*e = dup_env(envp);
 	t_cmd_line	cmd;
 
-	# if TEST == 0
 	// clear
+	# if TEST == 0
 	cmd.redirs = gb_malloc(1 * sizeof(t_redir));
 		cmd.redirs[0].type = T_END;
 		cmd.redirs[0].file = NULL;
@@ -25,8 +27,8 @@ int main(int ac, char **av, char **envp)
 		cmd.cmds[1].cmd = NULL;
 		cmd.cmds[1].argv = NULL;
 	# endif
-	# if TEST == 1
 	// cat -en < in.txt
+	# if TEST == 1
 	cmd.redirs = gb_malloc(2 * sizeof(t_redir));
 		cmd.redirs[0].type = T_REDIN;
 		cmd.redirs[0].file = "in.txt";
@@ -41,8 +43,8 @@ int main(int ac, char **av, char **envp)
 			cmd.cmds[0].argv[2] = NULL;
 		cmd.cmds[1].type = T_END;
 	# endif
-	# if TEST == 2
 	// cat -en << EOF
+	# if TEST == 2
 	cmd.redirs = gb_malloc(2 * sizeof(t_redir));
 		cmd.redirs[0].type = T_HERE_DOC;
 		cmd.redirs[0].file = "EOF";
@@ -57,8 +59,8 @@ int main(int ac, char **av, char **envp)
 			cmd.cmds[0].argv[2] = NULL;
 		cmd.cmds[1].type = T_END;
 	# endif
-	# if TEST == 3
 	// cat -en in.txt > out.txt
+	# if TEST == 3
 	cmd.redirs = gb_malloc(2 * sizeof(t_redir));
 		cmd.redirs[0].type = T_REDOUT;
 		cmd.redirs[0].file = "out.txt";
@@ -74,8 +76,23 @@ int main(int ac, char **av, char **envp)
 			cmd.cmds[0].argv[3] = NULL;
 		cmd.cmds[1].type = T_END;
 	# endif
-	# if TEST == -1
+	// t_list
+	# if TEST == 10
+	(void)e;	(void)cmd; (void)envp;
+	t_list	*lst = NULL;
+	int		*data;
+
+	data = gb_malloc(sizeof(int) * 4);
+	data[0] = 1; 	data[1] = 2;	data[2] = 3;	data[3] = 4;
+	ft_lstadd_back(&lst, ft_lstnew(data));
+	data = gb_malloc(sizeof(int) * 4);
+	data[0] = 5; 	data[1] = 6;	data[2] = 7;	data[3] = 8;
+	ft_lstadd_back(&lst, ft_lstnew(data));
+
+	ft_lstiter(lst, print_int);
+	# endif
 	// cat -e << EOF | grep lol -v > out.txt
+	# if TEST == -1
 	cmd.redirs = gb_malloc(4 * sizeof(t_redir));
 	cmd.redirs[0].type = T_HERE_DOC;
 	cmd.redirs[0].file = "EOF";
@@ -104,8 +121,8 @@ int main(int ac, char **av, char **envp)
 		cmd.cmds[2].cmd = NULL;
 		cmd.cmds[2].argv = NULL;
 	# endif
-	# if TEST == -1
 	// ls || echo hello world && cat define.h
+	# if TEST == -1
 	cmd.redirs = gb_malloc(3 * sizeof(t_redir));
 		cmd.redirs[0].type = T_OR;
 		cmd.redirs[0].file = NULL;
@@ -137,8 +154,8 @@ int main(int ac, char **av, char **envp)
 		cmd.cmds[3].argv = NULL;
 	# endif
 
-	redout("out.txt", T_REDOUT, cmd.cmds[0].cmd, cmd.cmds[0].argv);
-	// cmd_exec(&cmd, e, envp);
+	// redout("out.txt", T_REDOUT, cmd.cmds[0].cmd, cmd.cmds[0].argv);
+	cmd_exec(&cmd, e, envp);
 
 	gb_clear();
 
@@ -147,4 +164,12 @@ int main(int ac, char **av, char **envp)
 	(void)e;
 
 	return (0);
+}
+
+void	print_int(void *data)
+{
+	int	*ptr;
+
+	ptr = (int *)data;
+	printf("%d %d %d %d\n", ptr[0], ptr[1], ptr[2], ptr[3]);
 }

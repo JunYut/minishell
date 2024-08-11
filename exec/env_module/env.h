@@ -17,6 +17,7 @@ typedef struct s_var
 
 typedef struct s_env
 {
+	char	**envp;
 	t_var	*var;
 	t_var	*exp;
 	int		last_var_id;
@@ -33,7 +34,7 @@ void	echo(char **av);
 void	add_ent(t_env *e, char *key, char *val);
 void	set_val(t_env *e, char *key, char *val);
 char	*fetch_val(char *key, t_env *e);
-t_env	*dup_env(char **envp);
+t_env	*dup_env(char *envp[]);
 void	sort_export(t_var *exp);
 
 char	**split_ent(char *str);

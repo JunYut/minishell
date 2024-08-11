@@ -1,12 +1,13 @@
 # include "env.h"
 
-t_env	*dup_env(char **envp)
+t_env	*dup_env(char *envp[])
 {
 	t_env	*e;
 	char	**split;
 	int		i;
 
 	e = gb_malloc(sizeof(t_env));
+	e->envp = envp;
 	e->exp = gb_malloc(sizeof(t_var));
 	e->var = gb_malloc(sizeof(t_var));
 	e->exp->next = NULL;
