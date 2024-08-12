@@ -68,7 +68,7 @@ int	close_fd(t_env *env, t_token type, pid_t pid, t_list *fds)
 		return (0);
 	fd = fds->content;
 	if (type == T_REDOUT || type == T_APPEND)
-		redout_c(fd[3], fd[0], (int[2]){fd[1], fd[2]});
+		redout_c((int[2]){fd[0], fd[1]}, fd[2], fd[3]);
 	else
 		;
 	fds = fds->next;

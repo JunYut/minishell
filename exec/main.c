@@ -76,6 +76,27 @@ int main(int ac, char **av, char **envp)
 			cmd.cmds[0].argv[3] = NULL;
 		cmd.cmds[1].type = T_END;
 	# endif
+	// env | grep PWD
+	# if TEST == 4
+	cmd.redirs = gb_malloc(2 * sizeof(t_redir));
+		cmd.redirs[0].type = T_PIPE;
+		cmd.redirs[0].file = NULL;
+		cmd.redirs[1].type = T_END;
+		cmd.redirs[1].file = NULL;
+	cmd.cmds = gb_malloc(3 * sizeof(t_cmd));
+		cmd.cmds[0].type = T_PIPE;
+		cmd.cmds[0].cmd = "/usr/bin/env";
+		cmd.cmds[0].argv = gb_malloc(2 * sizeof(char *));
+			cmd.cmds[0].argv[0] = "env";
+			cmd.cmds[0].argv[1] = NULL;
+		cmd.cmds[1].type = T_CMD;
+		cmd.cmds[1].cmd = "/usr/bin/grep";
+		cmd.cmds[1].argv = gb_malloc(3 * sizeof(char *));
+			cmd.cmds[1].argv[0] = "grep";
+			cmd.cmds[1].argv[1] = "PWD";
+			cmd.cmds[1].argv[2] = NULL;
+		cmd.cmds[2].type = T_END;
+	# endif
 	// t_list
 	# if TEST == 10
 	(void)e;	(void)cmd; (void)envp;
@@ -154,7 +175,6 @@ int main(int ac, char **av, char **envp)
 		cmd.cmds[3].argv = NULL;
 	# endif
 
-	// redout("out.txt", T_REDOUT, cmd.cmds[0].cmd, cmd.cmds[0].argv);
 	cmd_exec(&cmd, e);
 
 	gb_clear();

@@ -6,11 +6,13 @@
 # include "libft.h"
 # include "define.h"
 
-// for regular commands (cmd operator), set field `type` to:
-//		T_CMD, T_REDIN, T_REDOUT, T_APPEND, T_PIPE or T_HERE_DOC
-// for && and || commands (logical command), set to field `logical`
-// field `cmd` should be the full path of the command
-// field `argv` should be NULL terminated
+/*
+ regular commands (cmd operator), set field `type` to:
+		T_CMD, T_REDOUT, T_APPEND, T_PIPE
+ for && and || commands (logical command), set to field `logical`
+ field `cmd` should be the full path of the command
+ field `argv` should be NULL terminated
+*/
 typedef struct s_cmd
 {
 	t_token	logical;

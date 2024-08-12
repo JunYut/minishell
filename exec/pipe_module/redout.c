@@ -15,14 +15,14 @@ void	redout(char *file, t_token type, char *cmd, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	waitpid(pid, NULL, 0);
-	redout_c(openfds[3], openfds[0], (int[2]){openfds[1], openfds[2]});
+	redout_c((int []){openfds[0], openfds[1]}, openfds[2], openfds[3]);
 }
 
 // only opens the file and redirect stdout to the file
 // returns an array of 3 unclosed file descriptors and the original stdout fd
-// openfds[0]: file fd
-// openfds[1]: pipefd[0]
-// openfds[2]: pipefd[1]
+// openfds[0]: pipefd[0]
+// openfds[1]: pipefd[1]
+// openfds[2]: file fd
 // openfds[3]: original stdout fd
 int	*redout_o(char *file, t_token type)
 {
@@ -30,7 +30,6 @@ int	*redout_o(char *file, t_token type)
 	int		pipefd[2];
 	int		fd;
 
-	openfds = gb_malloc(sizeof(int) * 4);
 	if (type == T_REDOUT)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == T_APPEND)
@@ -42,17 +41,18 @@ int	*redout_o(char *file, t_token type)
 		printf("minishell: %s: %s\n", file, strerror(errno));
 		return (NULL);
 	}
+	openfds = gb_malloc(sizeof(int) * 4);
 	pipe(pipefd);
 	openfds[3] = dup(STDOUT_FILENO);
 	dup2(pipefd[1], STDOUT_FILENO);
-	openfds[0] = fd;
-	openfds[1] = pipefd[0];
-	openfds[2] = pipefd[1];
+	openfds[0] = pipefd[0];
+	openfds[1] = pipefd[1];
+	openfds[2] = fd;
 	return (openfds);
 }
 
 // should be called after command finish execution
-void	redout_c(int stdout_fd, int fd, int pipefd[2])
+void	redout_c(int pipefd[2], int fd, int stdout_fd)
 {
 	char	*content;
 

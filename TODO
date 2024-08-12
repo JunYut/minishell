@@ -1,6 +1,6 @@
 - [x] pipe module: replace int fd with char *file, remove param char *cmd and char *argv[]
 	- [x] redin
-	- [ ] redout: should close pipe[1] after the command has finish execution
+	- [x] redout: should close pipe[1] after the command has finish execution
 	- [x] heredoc
 	- [ ] pipe: should close pipe[1] after the command has finish execution
 - [x] garbage collector module

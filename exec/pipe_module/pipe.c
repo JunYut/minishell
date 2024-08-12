@@ -26,6 +26,19 @@ void	pipex(char *cmds[], char ***argv, int fd[][2], int cmd_count)
 		wait(NULL);
 }
 
+int	*pipe_o(void)
+{
+	int	*fd;
+
+	fd = malloc(2 * sizeof(int));
+	if (pipe(fd) == -1)
+	{
+		perror("pipe");
+		exit(0);
+	}
+	return (fd);
+}
+
 void	redir_io(int fd[][2], int i, int pipe_count)
 {
 	if (i > 0)
