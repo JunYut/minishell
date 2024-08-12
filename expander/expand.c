@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/09 14:03:59 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:27:22 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	expand_tree(t_node *node)
 	{
 		pid_t pid = fork();
 		if (pid == 0)
-			execve(parse_path(envp, node->exp_args[0]), node->exp_args, NULL);
+			execve(parse_path(envp, node->exp_args[0]), node->exp_args, environ);
 		wait(NULL);
 	}
 }
