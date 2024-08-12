@@ -27,7 +27,6 @@ void	redout(char *file, t_token type, char *cmd, char *argv[])
 int	*redout_o(char *file, t_token type)
 {
 	int		*openfds;
-	int		pipefd[2];
 	int		fd;
 
 	if (type == T_REDOUT)
@@ -42,11 +41,9 @@ int	*redout_o(char *file, t_token type)
 		return (NULL);
 	}
 	openfds = gb_malloc(sizeof(int) * 4);
-	pipe(pipefd);
+	pipe(openfds);
 	openfds[3] = dup(STDOUT_FILENO);
-	dup2(pipefd[1], STDOUT_FILENO);
-	openfds[0] = pipefd[0];
-	openfds[1] = pipefd[1];
+	dup2(openfds[1], STDOUT_FILENO);
 	openfds[2] = fd;
 	return (openfds);
 }
