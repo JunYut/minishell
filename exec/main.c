@@ -5,7 +5,7 @@
 
 void	print_int(void *data);
 
-# define TEST 3
+# define TEST 4
 
 int main(int ac, char **av, char **envp)
 {
@@ -175,7 +175,21 @@ int main(int ac, char **av, char **envp)
 		cmd.cmds[3].argv = NULL;
 	# endif
 
-	cmd_exec(&cmd, e);
+	DPRINTF("cmd: %s ", cmd.cmds[0].cmd);
+	DPRINT_ARR(cmd.cmds[0].argv);
+	DPRINTF("cmd: %s ", cmd.cmds[1].cmd);
+	DPRINT_ARR(cmd.cmds[1].argv);
+	int		*fds;
+	fds = pipe_o();
+	if (fork() == 0)
+		execve(cmd.cmds[0].cmd, cmd.cmds[0].argv, envp);
+	if (fork() == 0)
+		execve(cmd.cmds[1].cmd, cmd.cmds[1].argv, NULL);
+	wait(NULL);
+	pipe_c((int[2]){fds[0], fds[1]}, (int[2]){fds[2], fds[3]});
+	DPRINTF("done\n");
+
+	// cmd_exec(&cmd, e);
 
 	gb_clear();
 

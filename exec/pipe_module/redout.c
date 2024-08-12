@@ -41,10 +41,10 @@ int	*redout_o(char *file, t_token type)
 		return (NULL);
 	}
 	openfds = gb_malloc(sizeof(int) * 4);
-	pipe(openfds);
 	openfds[3] = dup(STDOUT_FILENO);
-	dup2(openfds[1], STDOUT_FILENO);
 	openfds[2] = fd;
+	pipe(openfds);
+	dup2(openfds[1], STDOUT_FILENO);
 	return (openfds);
 }
 

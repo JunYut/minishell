@@ -12,9 +12,9 @@ int main (int ac, char **av, char *envp[])
 {
 	(void)ac;
 	(void)av;
-	(void)envp;
 
 	// Single pipe
+	// env | grep PWD
 	# if PROGRAM == 0
 		int fd[2];
 		pid_t pid;
@@ -25,17 +25,13 @@ int main (int ac, char **av, char *envp[])
 		{
 			close(fd[0]); // close read end
 			dup2(fd[1], 1); // stdout -> fd[1]
-			execve("/usr/bin/ls", (char *[]){"ls", NULL, NULL}, NULL);
+			execve("/usr/bin/env", (char *[]){"env", NULL, NULL}, envp);
 		}
-		else
-		{
-			close(fd[1]); // close write end
-			dup2(fd[0], 0); // stdout -> fd[0]
-			char *args[] = {"grep", ".c", NULL};
-			execve("/usr/bin/grep", args, envp);
-		}
+		close(fd[1]); // close write end
+		dup2(fd[0], 0); // stdout -> fd[0]
+		char *args[] = {"grep", "PWD", NULL};
+		execve("/usr/bin/grep", args, envp);
 	# endif
-
 	// 2 pipes
 	# if PROGRAM == 1
 		char *cmds[] =
@@ -87,7 +83,6 @@ int main (int ac, char **av, char *envp[])
 		}
 
 	# endif
-
 	// 3 pipes
 	# if PROGRAM == 2
 	char *cmds[] =
@@ -123,7 +118,7 @@ int main (int ac, char **av, char *envp[])
 		close(fd[2][0]);
 		close(fd[2][1]);
 		dup2(fd[0][1], STDOUT_FILENO);
-		execve(cmds[0], args[0], NULL);
+		execve(cmds[0], args[0], envp);
 	}
 	pid = fork();
 	if (pid == 0)
@@ -134,7 +129,7 @@ int main (int ac, char **av, char *envp[])
 		close(fd[2][1]);
 		dup2(fd[0][0], STDIN_FILENO);
 		dup2(fd[1][1], STDOUT_FILENO);
-		execve(cmds[1], args[1], NULL);
+		execve(cmds[1], args[1], envp);
 	}
 	pid = fork();
 	if (pid == 0)
@@ -145,7 +140,7 @@ int main (int ac, char **av, char *envp[])
 		close(fd[2][0]);
 		dup2(fd[1][0], STDIN_FILENO);
 		dup2(fd[2][1], STDOUT_FILENO);
-		execve(cmds[2], args[2], NULL);
+		execve(cmds[2], args[2], envp);
 	}
 	pid = fork();
 	if (pid == 0)
@@ -156,10 +151,9 @@ int main (int ac, char **av, char *envp[])
 		close(fd[1][1]);
 		close(fd[2][1]);
 		dup2(fd[2][0], STDIN_FILENO);
-		execve(cmds[3], args[3], NULL);
+		execve(cmds[3], args[3], envp);
 	}
 	wait(NULL);
-	while (1);
 	# endif
 
 	// Error tests

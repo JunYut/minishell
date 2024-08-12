@@ -28,15 +28,30 @@ void	pipex(char *cmds[], char ***argv, int fd[][2], int cmd_count)
 
 int	*pipe_o(void)
 {
-	int	*fd;
+	int	*fds;
 
-	fd = malloc(2 * sizeof(int));
-	if (pipe(fd) == -1)
+	fds = malloc(4 * sizeof(int));
+	fds[3] = dup(STDOUT_FILENO);
+	fds[2] = dup(STDIN_FILENO);
+	if (pipe(fds) == -1)
 	{
 		perror("pipe");
 		exit(0);
 	}
-	return (fd);
+	dup2(fds[1], STDOUT_FILENO);
+	dup2(fds[0], STDIN_FILENO);
+	return (fds);
+}
+
+int	pipe_c(int pipefd[2], int stdio_fd[2])
+{
+	close(pipefd[1]);
+	dup2(stdio_fd[1], STDOUT_FILENO);
+	close(stdio_fd[1]);
+	close(pipefd[0]);
+	dup2(stdio_fd[0], STDIN_FILENO);
+	close(stdio_fd[0]);
+	return (0);
 }
 
 void	redir_io(int fd[][2], int i, int pipe_count)
