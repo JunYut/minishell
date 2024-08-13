@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:21:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/05 17:53:21 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:39:07 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_minishell
 	int			exit_status;
 	char		*line;
 	t_gbc		*gbc;
+	char		**envp;
 }	t_minishell;
 
 # define EXPORT 1

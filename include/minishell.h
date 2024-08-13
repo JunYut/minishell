@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:06:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/09 13:33:52 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:38:45 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include "parser.h"
 # include "../libft/include/libft.h"
 
-void	init_vars(t_minishell *vars);
+void	init_vars(t_minishell *vars, char **envp);
 
 void	expand_tree(t_node *node);
 void	expand_node(t_node *node);

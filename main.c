@@ -6,13 +6,13 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/05 17:50:26 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:40:39 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_vars(t_minishell *vars)
+void	init_vars(t_minishell *vars, char **envp)
 {
 	vars->token_list = NULL;
 	vars->curr_token = NULL;
@@ -21,15 +21,17 @@ void	init_vars(t_minishell *vars)
 	vars->parse_err.str = NULL;
 	vars->token_err = false;
 	vars->line = NULL;
+	vars->envp = envp;
 }
 
-int	main(void)
+int	main(int ac, char **av, char **envp)
 {
 	t_minishell	vars;
 
+	((void)ac, (void)av);
 	while (1)
 	{
-		init_vars(&vars);
+		init_vars(&vars, envp);
 		vars.line = readline("minishell> ");
 		if (vars.line == NULL)
 			break ;
