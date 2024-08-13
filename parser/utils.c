@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 14:02:19 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/17 20:09:32 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:47:27 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	token_precedence(t_token_type type)
 
 bool	is_redirection(t_token_type type)
 {
-	if (type == T_REDIRECT_IN || type == T_REDIRECT_OUT || type == T_HERE_DOC || type == T_APPEND)
+	if (type == T_REDIRECT_IN || type == T_REDIRECT_OUT || type == T_HEREDOC || type == T_APPEND)
 		return (true);
 	return (false);
 }
@@ -44,8 +44,8 @@ t_io_type	get_io_type(t_token_type type)
 		return (IO_IN);
 	else if (type == T_REDIRECT_OUT)
 		return (IO_OUT);
-	else if (type == T_HERE_DOC)
-		return (IO_HERE_DOC);
+	else if (type == T_HEREDOC)
+		return (IO_HEREDOC);
 	else
 		return (IO_APPEND);
 }

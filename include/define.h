@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:21:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/13 12:39:07 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:46:42 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef enum e_token_type
 	T_WORD,
 	T_REDIRECT_IN,
 	T_REDIRECT_OUT,
-	T_HERE_DOC,
+	T_HEREDOC,
 	T_APPEND,
 	T_PIPE,
 	T_L_BRACKET,
@@ -50,7 +50,7 @@ typedef enum e_io_type
 {
 	IO_IN,
 	IO_OUT,
-	IO_HERE_DOC,
+	IO_HEREDOC,
 	IO_APPEND,
 }	t_io_type;
 
@@ -65,7 +65,7 @@ typedef enum e_parse_err_type
 typedef	struct s_io_node
 {
 	t_io_type			type;
-	int					here_doc;
+	int					heredoc;
 	char				*value;
 	struct s_io_node	*prev;
 	struct s_io_node	*next;

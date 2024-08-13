@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:06:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/13 12:38:45 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:43:24 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,8 @@ void	skip_word(char *str, int *i);
 char	**allocate_args(char *str, char **args);
 char	**fill_args(char *str, char **args);
 void	fill_word(char *str, char **args, int *i, int j);
+
+void	append_str(char **str1, char *str2);
+
 
 #endif

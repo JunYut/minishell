@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/07 21:03:35 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:47:11 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	tokenize(char *line, t_minishell *vars)
 bool	handle_operator_token(char **line, t_token **token_list)
 {
 	if (!ft_strncmp(*line, "<<", 2))
-		return (append_operator_token(T_HERE_DOC, line, token_list));
+		return (append_operator_token(T_HEREDOC, line, token_list));
 	else if (!ft_strncmp(*line, ">>", 2))
 		return (append_operator_token(T_APPEND, line, token_list));
 	else if (!ft_strncmp(*line, "<", 1))
@@ -65,7 +65,7 @@ bool	append_operator_token(t_token_type type, char **line, t_token **token_list)
 	int		char_count;
 
 	char_count = 1;
-	if (type == T_HERE_DOC || type == T_APPEND || type == T_OR || type == T_AND)
+	if (type == T_HEREDOC || type == T_APPEND || type == T_OR || type == T_AND)
 		char_count++;
 	value = ft_substr(*line, 0, char_count);
 	if (!value)

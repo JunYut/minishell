@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/12 17:27:22 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:46:22 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	expand_node(t_node *node)
 	io = node->io_list;
 	while (io != NULL)
 	{
+		if (io->type == IO_HEREDOC)
 		// printf("redir_type: %d\n", io->type);
 		// printf("redir: %s\n", io->value);
 		io = io->next;
