@@ -253,6 +253,7 @@ int main (int ac, char **av, char *envp[])
 			dup2(fd, STDOUT_FILENO);
 			execve(cmds[3], argv[3], envp);
 		}
+		return (0);
 	}
 	pid[4] = fork();
 	printf("PID[4]: %d\n", pid[4]);
@@ -268,14 +269,15 @@ int main (int ac, char **av, char *envp[])
 			dup2(fd, STDOUT_FILENO);
 			execve(cmds[4], argv[4], envp);
 		}
+		return (0);
 	}
 	for (int i = 0; i < 5; i++)
 	{
-		exit = waitpid(pid[i], NULL, 0);
+		waitpid(pid[i], &exit, 0);
 		if (WIFEXITED(exit))
-			printf("Success exit[%d]: %d\n", i, WEXITSTATUS(exit));
+			printf("Success exit[%d][%d]: %d\n", i, pid[i], WEXITSTATUS(exit));
 		else
-			printf("Fail exit[%d]: %d\n", i, exit);
+			printf("Fail exit[%d][%d]: %d\n", i, pid[i], exit);
 	}
 	# endif
 }
