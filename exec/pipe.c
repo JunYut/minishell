@@ -2,6 +2,7 @@
 # include <readline/readline.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <errno.h>
 # include <stdlib.h>
 # include <string.h>
 # include <stdio.h>
@@ -23,7 +24,7 @@ int main (int ac, char **av, char *envp[])
 	// env | grep PWD
 	# if PROGRAM == 0
 		int fd[2];
-		pid_t pid;
+		pid_t pid[];
 
 		pipe(fd);	// write: fd[1], read: fd[0]
 		pid = fork();
@@ -181,30 +182,34 @@ int main (int ac, char **av, char *envp[])
 
 	execve(cmds[1], args[1], envp);
 	# endif
-	// cat < ../TODO | grep command | wc -l && echo "Done" > ../out.txt
+	// cat < ../TODO | grep command | wc -l || echo "You fucked" >> ../out.txt && echo "You successed !" >> out.txt
 	# if PROGRAM == 4
 	char	*cmds[] =
 	{
 		"/bin/cat",
 		"/usr/bin/grep",
 		"/usr/bin/wc",
+		"/bin/echo",
 		"/bin/echo"
 	};
-	char	*argv[][4] =
+	char	*argv[][5] =
 	{
 		{"cat", NULL},
 		{"grep", "command", NULL},
 		{"wc", "-l", NULL},
-		{"echo", "Done", NULL}
+		{"echo", "You fucked", NULL},
+		{"echo", "You successed !", NULL}
 	};
-	pid_t pid;
+	pid_t pid[5];
 	int	fd;
 	int pipefd[2][2];
+	int	exit = 0;
 
 	for (int i = 0; i < 2; i++)
 		pipe(pipefd[i]);
-	pid = fork();
-	if (pid == 0)
+	pid[0] = fork();
+	printf("PID[0]: %d\n", pid[0]);
+	if (pid[0] == 0)
 	{
 		close(pipefd[0][0]);
 		close(pipefd[1][0]);
@@ -214,8 +219,9 @@ int main (int ac, char **av, char *envp[])
 		dup2(pipefd[0][1], STDOUT_FILENO);
 		execve(cmds[0], argv[0], envp);
 	}
-	pid = fork();
-	if (pid == 0)
+	pid[1] = fork();
+	printf("PID[1]: %d\n", pid[1]);
+	if (pid[1] == 0)
 	{
 		close(pipefd[0][1]);
 		close(pipefd[1][0]);
@@ -223,8 +229,9 @@ int main (int ac, char **av, char *envp[])
 		dup2(pipefd[1][1], STDOUT_FILENO);
 		execve(cmds[1], argv[1], envp);
 	}
-	pid = fork();
-	if (pid == 0)
+	pid[2] = fork();
+	printf("PID[2]: %d\n", pid[2]);
+	if (pid[2] == 0)
 	{
 		close(pipefd[0][0]);
 		close(pipefd[0][1]);
@@ -232,16 +239,43 @@ int main (int ac, char **av, char *envp[])
 		dup2(pipefd[1][0], STDIN_FILENO);
 		execve(cmds[2], argv[2], envp);
 	}
-	pid = fork();
-	if (pid == 0)
+	pid[3] = fork();
+	printf("PID[3]: %d\n", pid[3]);
+	if (pid[3] == 0)
 	{
-		close(pipefd[0][0]);
-		close(pipefd[0][1]);
-		close(pipefd[1][0]);
-		close(pipefd[1][1]);
-		fd = open("../out.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		dup2(fd, STDOUT_FILENO);
-		execve(cmds[3], argv[3], envp);
+		if (exit == -1)
+		{
+			close(pipefd[0][0]);
+			close(pipefd[0][1]);
+			close(pipefd[1][0]);
+			close(pipefd[1][1]);
+			fd = open("out.txt", O_APPEND | O_WRONLY | O_CREAT, 0644);
+			dup2(fd, STDOUT_FILENO);
+			execve(cmds[3], argv[3], envp);
+		}
+	}
+	pid[4] = fork();
+	printf("PID[4]: %d\n", pid[4]);
+	if (pid[4] == 0)
+	{
+		if (exit > 0)
+		{
+			close(pipefd[0][0]);
+			close(pipefd[0][1]);
+			close(pipefd[1][0]);
+			close(pipefd[1][1]);
+			fd = open("out.txt", O_APPEND | O_WRONLY | O_CREAT, 0644);
+			dup2(fd, STDOUT_FILENO);
+			execve(cmds[4], argv[4], envp);
+		}
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		exit = waitpid(pid[i], NULL, 0);
+		if (WIFEXITED(exit))
+			printf("Success exit[%d]: %d\n", i, WEXITSTATUS(exit));
+		else
+			printf("Fail exit[%d]: %d\n", i, exit);
 	}
 	# endif
 }

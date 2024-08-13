@@ -1,86 +1,33 @@
-# include "redir.h"
-# include "env.h"
-# include "libft.h"
-# include "define.h"
-# include "debug.h"
-# include "gbc.h"
+# include <unistd.h>
+# include <sys/wait.h>
+# include <stdio.h>
 
-# define TEST 6
-
-void	print_int(void *data)
+int main(void)
 {
-	int	*ptr = (int *)data;
+	char *cmds[] =
+	{
+		"/usr/bin/ls",
+		"/usr/bin/grep",
+	};
+	char *args[][3] =
+	{
+		{"ls", NULL, NULL},
+		{"grep", ".c", NULL},
+	};
+	int	fd[2];
+	pid_t	pid;
+	int exit_status;
 
-	printf("%d %d %d %d\n", ptr[0], ptr[1], ptr[2], ptr[3]);
-}
-
-int main(int ac, char **av, char **envp)
-{
-
-	(void)ac;
-	(void)av;
-
-	t_env	*e = dup_env(envp);
-
-	// redin
-	# if TEST == 1
-	char	*cmd = "/bin/cat";
-	char	*args[] = {"cat", "-e", NULL};
-	int		fd = open("input.txt", O_RDONLY);
-
-	redin(fd, cmd, args);
-	# endif
-	// redout
-	# if TEST == 2
-	char	*cmd = "/bin/echo";
-	char	*args[] = {"echo", "Writing", "to", "output.txt...", NULL};
-	int		fd = open("output.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-
-	redout(fd, cmd, args);
-	# endif
-	// append
-	# if TEST == 3
-	char	*cmd = "/bin/echo";
-	char	*args[] = {"echo", "Appending", "to", "output.txt...", NULL};
-	int		fd = open("output.txt", O_APPEND | O_WRONLY | O_CREAT, 0644);
-
-	redout(fd, cmd, args);
-	# endif
-	// heredoc
-	# if TEST == 4
-	char	*cmd = "/bin/cat";
-	char	*args[] = {"cat", "-e", NULL};
-
-	heredoc("eof", cmd, args);
-	# endif
-	// export
-	# if TEST == 5
-	char	*vars[] = {"a=1", "b=", "c", "d", NULL};
-	// export(NULL, e);	printf("\n");
-	export(vars, e);
-	// export(NULL, e);	printf("\n");
-	export((char *[]){"a=2", NULL}, e);
-	// export(NULL, e);	printf("\n");
-	env(e, VAR);	printf("\n");
-	unset((char *[]){"a", "b", "c", "d", NULL}, e);
-	export(NULL, e);	printf("\n");
-	env(e, VAR);	printf("\n");
-	# endif
-	// t_list
-	# if TEST == 6
-	t_list	*lst = NULL;
-	int		*data;
-
-	data = gb_malloc(sizeof(int) * 4);
-	data[0] = 1; 	data[1] = 2;	data[2] = 3;	data[3] = 4;
-	ft_lstadd_back(&lst, ft_lstnew(data));
-	data = gb_malloc(sizeof(int) * 4);
-	data[0] = 5; 	data[1] = 6;	data[2] = 7;	data[3] = 8;
-	ft_lstadd_back(&lst, ft_lstnew(data));
-
-	ft_lstiter(lst, print_int);
-
-	# endif
-
-	gb_clear();
+	pipe(fd);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(fd[0]);
+		dup2(fd[1], 1);
+		execve(cmds[0], args[0], NULL);
+	}
+	exit_status = waitpid(pid, NULL, 0);
+	exit_status = WEXITSTATUS(exit_status);
+	printf("exit: %d\n", exit_status);
+	return (0);
 }
