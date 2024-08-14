@@ -29,7 +29,7 @@ int main(int argc, char **argv, char **envp)
 	pid_t pid[5];
 	int pipefd[2][2];
 	int fd;
-	int exit_status;
+	int exit_status[5];
 
 	pipe(pipefd[0]);
 	pipe(pipefd[1]);
@@ -56,7 +56,7 @@ int main(int argc, char **argv, char **envp)
 		dup2(pipefd[0][0], STDIN_FILENO);
 		dup2(pipefd[1][1], STDOUT_FILENO);
 		close(pipefd[0][0]);
-		close(pipefd[0][1]);
+		close(pipefd[1][1]);
 		execve(cmd[1], args[1], envp);
 		perror("grep");
 		exit(EXIT_FAILURE);
@@ -73,15 +73,28 @@ int main(int argc, char **argv, char **envp)
 		perror("wc");
 		exit(EXIT_FAILURE);
 	}
-	pid[3] = fork();
-	if (pid[3] == 0)	// || echo "You fucked" >> out.txt
+
+	close(pipefd[0][0]);
+	close(pipefd[0][1]);
+	close(pipefd[0][0]);
+	close(pipefd[1][1]);
+
+	for (int i = 0; i < 3; ++i)
 	{
-		waitpid(pid[2], &exit_status, 0);
-		if (!WIFEXITED(exit_status))
-			exit(2);
-		exit_status = WEXITSTATUS(exit_status);
-		printf("exit_status[2]: %d\n", exit_status);
-		if (exit_status == -1)
+		waitpid(pid[i], &exit_status[i], 0);
+		if (WIFEXITED(exit_status[i]))
+		{
+			exit_status[i] = WEXITSTATUS(exit_status[i]);
+			printf("Success exit[%d]: %d\n", pid[i], exit_status[i]);
+		}
+		else
+			printf("Fail exit[%d]: %d\n", pid[i], exit_status[i]);
+	}
+
+	if (exit_status[2] == -1)
+	{
+		pid[3] = fork();
+		if (pid[3] == 0)	// || echo "You fucked" >> out.txt
 		{
 			fd = open("out.txt", O_APPEND | O_WRONLY | O_CREAT, 0644);
 			dup2(fd, STDOUT_FILENO);
@@ -89,17 +102,21 @@ int main(int argc, char **argv, char **envp)
 			execve(cmd[3], args[3], envp);
 			exit(EXIT_FAILURE);
 		}
-		exit(0);
 	}
-	pid[4] = fork();
-	if (pid[4] == 0)	// && echo "You successed !" >> out.txt
+
+	waitpid(pid[3], &exit_status[3], 0);
+	if (WIFEXITED(exit_status[3]))
 	{
-		waitpid(pid[3], &exit_status, 0);
-		// if (!WIFEXITED(exit_status))
-		// 	exit(2);
-		exit_status = WEXITSTATUS(exit_status);
-		printf("exit_status[3]: %d\n", exit_status);
-		if (exit_status == 0)
+		exit_status[3] = WEXITSTATUS(exit_status[3]);
+		printf("Success exit[%d]: %d\n", pid[3], exit_status[3]);
+	}
+	else
+		printf("Fail exit[%d]: %d\n", pid[3], exit_status[3]);
+
+	if (exit_status[3] == 0)
+	{
+		pid[4] = fork();
+		if (pid[4] == 0)	// && echo "You successed !" >> out.txt
 		{
 			fd = open("out.txt", O_APPEND | O_WRONLY | O_CREAT, 0644);
 			dup2(fd, STDOUT_FILENO);
@@ -107,25 +124,16 @@ int main(int argc, char **argv, char **envp)
 			execve(cmd[4], args[4], envp);
 			exit(EXIT_FAILURE);
 		}
-		exit(0);
 	}
 
-	close(pipefd[0][0]);
-	close(pipefd[0][1]);
-	close(pipefd[0][0]);
-	close(pipefd[1][1]);
-
-	for (int i = 0; i < 5; ++i)
+	waitpid(pid[4], &exit_status[4], 0);
+	if (WIFEXITED(exit_status[4]))
 	{
-		waitpid(pid[i], &exit_status, 0);
-		if (WIFEXITED(exit_status))
-		{
-			exit_status = WEXITSTATUS(exit_status);
-			printf("Success exit[%d]: %d\n", pid[i], exit_status);
-		}
-		else
-			printf("Fail exit[%d]: %d\n", pid[i], exit_status);
+		exit_status[4] = WEXITSTATUS(exit_status[4]);
+		printf("Success exit[%d]: %d\n", pid[4], exit_status[4]);
 	}
+	else
+		printf("Fail exit[%d]: %d\n", pid[4], exit_status[4]);
 
 	return (0);
 }
