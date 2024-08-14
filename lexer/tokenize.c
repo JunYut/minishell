@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/13 12:47:11 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:22:31 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ bool	append_word_token(char **line, t_token **token_list, t_minishell *vars)
 			if (is_quote_balance(buffer + char_count, buffer[char_count]) == true)
 			{
 				skip_quote_string(buffer, &char_count);
-				//break ;
+				break ;
 			}
 			else
 			{

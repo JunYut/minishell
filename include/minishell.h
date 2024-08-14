@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:06:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/13 12:43:24 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/14 13:37:19 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 void	init_vars(t_minishell *vars, char **envp);
 
-void	expand_tree(t_node *node);
+void	expand_tree(t_node *node, int depth, char *branch);
 void	expand_node(t_node *node);
 char	**expand_args(char *args);
 char	*expand_params(char	*str);
@@ -69,7 +69,9 @@ char	**allocate_args(char *str, char **args);
 char	**fill_args(char *str, char **args);
 void	fill_word(char *str, char **args, int *i, int j);
 
-void	append_str(char **str1, char *str2);
+// void	append_str(char **str1, char *str2);
+void	heredoc(t_io_node *io, int *p_fd);
+char	*read_doc(char *delimiter);
 
 
 #endif

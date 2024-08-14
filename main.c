@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/13 12:40:39 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/14 11:24:09 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int ac, char **av, char **envp)
 		vars.ast = parse(&vars);
 		if (vars.parse_err.type != E_NONE)
 			handle_parse_error(&vars);
-		expand_tree(vars.ast);
+		expand_tree(vars.ast, 0, "root");
 		free(vars.line);
 		clear_ast(&vars.token_list, &vars.ast);
 	}

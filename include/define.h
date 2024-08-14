@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:21:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/13 12:46:42 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:30:43 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef	struct s_io_node
 	t_io_type			type;
 	int					heredoc;
 	char				*value;
+	char				**exp_value;
 	struct s_io_node	*prev;
 	struct s_io_node	*next;
 }	t_io_node;
