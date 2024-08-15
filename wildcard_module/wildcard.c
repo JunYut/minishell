@@ -3,28 +3,18 @@
 char	**wildcard(char *str, t_env *env)
 {
 	(void)str;
+	t_wildcard	*wc;
+	char		**arr;
 
-	DIR *dirp;
-	struct dirent *dp;
-
-	dirp = opendir(fetch_val("PWD", env));
-	dp = readdir(dirp);
-	while (dp != NULL)
-	{
-		printf("%s", dp->d_name);
-		dp = readdir(dirp);
-		if (dp != NULL)
-			printf(" ");
-	}
-	printf("\n");
-	closedir(dirp);
-	return (NULL);
+	wc = init_wc(fetch_val("PWD", env));
+	arr = NULL;
+	return (arr);
 }
 
 t_wildcard	*init_wc(char *cwd)
 {
-	t_wildcard	*wc;
-	DIR			*dirp;
+	t_wildcard		*wc;
+	DIR				*dirp;
 	struct dirent	*dp;
 
 	wc = gb_malloc(sizeof(t_wildcard));
@@ -36,10 +26,11 @@ t_wildcard	*init_wc(char *cwd)
 	while (dp != NULL)
 	{
 		if (dp->d_name[0] == '.')
-			ft_lstadd_back(&wc->dot_files, ft_lstnew(ft_strdup(dp->d_name)));
+			ft_lstadd_back(&wc->dot_files, gb_add(ft_lstnew(gb_add(ft_strdup(dp->d_name)))));
 		else
-			ft_lstadd_back(&wc->files, ft_lstnew(ft_strdup(dp->d_name)));
+			ft_lstadd_back(&wc->files, gb_add(ft_lstnew(gb_add(ft_strdup(dp->d_name)))));
 		dp = readdir(dirp);
 	}
+	closedir(dirp);
 	return (wc);
 }
