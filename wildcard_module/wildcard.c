@@ -18,7 +18,6 @@ t_wildcard	*init_wc(char *cwd)
 	struct dirent	*dp;
 
 	wc = gb_malloc(sizeof(t_wildcard));
-	wc->cwd = cwd;
 	wc->files = NULL;
 	wc->dot_files = NULL;
 	dirp = opendir(cwd);

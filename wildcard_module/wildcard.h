@@ -15,7 +15,6 @@
 
 typedef struct s_wildcard
 {
-	char	*cwd;
 	t_list	*files;
 	t_list	*dot_files;
 }	t_wildcard;
