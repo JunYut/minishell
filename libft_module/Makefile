@@ -6,7 +6,7 @@
 #    By: we <we@student.42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/02 17:12:39 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/08/15 14:47:05 by we               ###   ########.fr        #
+#    Updated: 2024/08/15 14:49:37 by we               ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ RESET = \033[0m
 ORANGE = \033[0;38;5;166m
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 INCLUDE = -Iinclude
 

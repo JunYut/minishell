@@ -21,7 +21,7 @@ HEADER = $(foreach module, $(MODULES_DIR), $(wildcard $(module)/*.h)) \
 		 $(wildcard $(LIBFT_DIR)/include/*.h)
 LIBFT = $(LIBFT_DIR)/libft.a
 LIB = -L$(LIBFT_DIR) -lft -lreadline
-EXEC = exec
+EXEC = wildcard
 
 # Debug
 # $(info SRC: $(SRC))

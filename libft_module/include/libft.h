@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:52:57 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/04/24 16:12:00 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/15 15:05:15 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <string.h>
 # include <stdint.h>
 # include <limits.h>
+# include <stdio.h>
 # include "ft_printf.h"
 # include "get_next_line.h"
 

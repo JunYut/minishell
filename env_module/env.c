@@ -62,7 +62,7 @@ void	unset(char **keys, t_env *e)
 	while (keys[++i])
 	{
 		curr = e->var;
-		while (curr->next)
+		while (curr->next && curr->id != e->last_var_id)
 		{
 			if (ft_strcmp(curr->next->key, keys[i]) == 0)
 			{
@@ -78,7 +78,7 @@ void	unset(char **keys, t_env *e)
 			curr = curr->next;
 		}
 		curr = e->exp;
-		while (curr->next)
+		while (curr->next && curr->id != e->last_exp_id)
 		{
 			if (ft_strcmp(curr->next->key, keys[i]) == 0)
 			{

@@ -7,13 +7,12 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 
-	t_env	*env = dup_env(envp);
+	t_env	*e = dup_env(envp);
 
-	# if TEST == 1
-	char	*regex = "*";
-	# endif
+	char	*regex1 = "*";
 
-	print_arr(wildcard(regex, env));
+
+	print_arr(wildcard(regex1, e));
 
 	gb_clear();
 }
