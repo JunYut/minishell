@@ -9,8 +9,29 @@ int main(int ac, char **av, char **envp)
 
 	t_env	*e = dup_env(envp);
 
-	char	*regex1 = "*";
+	# if TEST == 1
+	char	*regex = "*";
+	# endif
+	# if TEST == 2
+	char	*regex = ".*";
+	# endif
+	# if TEST == 3
+	char	*regex = ".*gi";
+	# endif
+	# if TEST == 4
+	char	*regex = "*_module";
+	# endif
+	# if TEST == 5
+	char	*regex = "e*";
+	# endif
+	# if TEST == 6
+	char	*regex = "e*e";
+	# endif
+	# if TEST == 7
+	char	*regex = "*e*e*";
+	# endif
 
-	print_arr(wildcard(regex1, e));	NEWLINE;
+	print_arr(wildcard(regex, e));	NEWLINE;
+
 	gb_clear();
 }
