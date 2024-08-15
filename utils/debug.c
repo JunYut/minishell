@@ -13,3 +13,15 @@ void	print_arr(char **arr)
 		i++;
 	}
 }
+
+void	print_lst(t_list *lst)
+{
+	t_list	*tmp;
+
+	tmp = lst;
+	while (tmp)
+	{
+		DPRINTF("%s\n", (char *)tmp->content);
+		tmp = tmp->next;
+	}
+}

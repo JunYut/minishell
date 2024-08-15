@@ -6,6 +6,7 @@
 # include <stdio.h>
 # include "env.h"
 # include "libft.h"
+# include "debug.h"
 # include "gbc.h"
 
 # ifndef DPRINTF
@@ -14,9 +15,10 @@
 
 typedef struct s_wildcard
 {
-	char	*str;
+	char	*cwd;
+	t_list	*files;
+	t_list	*dot_files;
 }	t_wildcard;
 
-char	**wildcard(char *str, t_env *env);
-
-void	print_arr(char **arr);
+char		**wildcard(char *str, t_env *env);
+t_wildcard	*init_wc(char *cwd);
