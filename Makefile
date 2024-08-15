@@ -24,10 +24,10 @@ LIB = -L$(LIBFT_DIR) -lft -lreadline
 EXEC = exec
 
 # Debug
-$(info SRC: $(SRC))
-$(info OBJ: $(OBJ))
-$(info HEADER: $(HEADER))
-$(info INCL_DIR: $(INCL_DIR))
+# $(info SRC: $(SRC))
+# $(info OBJ: $(OBJ))
+# $(info HEADER: $(HEADER))
+# $(info INCL_DIR: $(INCL_DIR))
 
 # Rules & Recipes
 all : $(EXEC)
