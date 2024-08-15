@@ -10,7 +10,7 @@ LIBFT_DIR = libft_module
 MODULES_DIR = gbc_module env_module wildcard_module utils
 OBJ_DIR = obj
 INCL_DIR = $(foreach module, $(MODULES_DIR), $(addprefix -I, $(module))) \
-		   -I$(LIBFT_DIR)/include -I.
+		   -I$(LIBFT_DIR)/include
 
 vpath %.c $(MODULES_DIR)
 

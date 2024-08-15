@@ -1,13 +1,13 @@
 # include "wildcard.h"
 
-char	**wildcard(char *str)
+char	**wildcard(char *str, t_env *env)
 {
 	(void)str;
 
 	DIR *dirp;
 	struct dirent *dp;
 
-	dirp = opendir(".");
+	dirp = opendir(fetch_val("PWD", env));
 	dp = readdir(dirp);
 	while (dp != NULL)
 	{
