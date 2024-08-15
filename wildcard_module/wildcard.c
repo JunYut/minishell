@@ -7,7 +7,25 @@ char	**wildcard(char *str, t_env *env)
 	char		**arr;
 
 	wc = init_wc(fetch_val("PWD", env));
-	arr = NULL;
+	arr = lst_to_arr(wc->files);
+	return (arr);
+}
+
+char	**lst_to_arr(t_list *lst)
+{
+	char	**arr;
+	t_list	*tmp;
+	int		i;
+
+	arr = gb_malloc(sizeof(char *) * (ft_lstsize(lst) + 1));
+	tmp = lst;
+	i = -1;
+	while (tmp)
+	{
+		arr[++i] = tmp->content;
+		tmp = tmp->next;
+	}
+	arr[++i] = NULL;
 	return (arr);
 }
 

@@ -20,4 +20,5 @@ typedef struct s_wildcard
 }	t_wildcard;
 
 char		**wildcard(char *str, t_env *env);
+char		**lst_to_arr(t_list *lst);
 t_wildcard	*init_wc(char *cwd);
