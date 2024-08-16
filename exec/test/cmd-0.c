@@ -41,8 +41,8 @@ int main(int argc, char **argv, char **envp)
 		close(pipefd[1][1]);
 		fd = open("../../TODO", O_RDONLY);
 		dup2(fd, STDIN_FILENO);
-		dup2(pipefd[0][1], STDOUT_FILENO);
 		close(fd);
+		dup2(pipefd[0][1], STDOUT_FILENO);
 		close(pipefd[0][1]);
 		execve(cmd[0], args[0], envp);
 		perror("cat");
