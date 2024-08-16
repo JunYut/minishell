@@ -13,6 +13,8 @@ typedef enum e_token
 	T_HERE_DOC,
 	T_APPEND,
 	T_PIPE,
+	T_PIPE_START,
+	T_PIPE_END,
 	T_OR,
 	T_AND,
 	T_END,
