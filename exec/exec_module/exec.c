@@ -28,6 +28,20 @@ int	exec(t_cmd_line *cmd, t_env *env)
 	return (0);
 }
 
+int	pipex(t_pipe *seq, t_env *env)
+{
+	int	i;
+
+	i = -1;
+	while (++i < seq->cmd_count)
+	{
+		file_io(seq->cmd[i].file, seq->cmd[i].file_count);
+		pipe_io(seq->type, seq->pipefd, seq->pipe_count);
+		exec_cmd(seq->cmd[i].cmd, seq->cmd[i].argv, env->envp);
+	}
+	return (0);
+}
+
 int	exec_cmd(char *path, char *argv[], char *envp[])
 {
 	execve(path, argv, envp);
@@ -42,10 +56,17 @@ int	pipe_io(t_token type, int pipefd[][2], int pipe_count)
 	i = -1;
 	while (++i < pipe_count)
 	{
+		// close unused pipe ends
 		if (type != T_PIPE_START)
+		{
 			dup2(pipefd[i][0], STDIN_FILENO);
+			close(pipefd[i][0]);
+		}
 		if (type != T_PIPE_END)
+		{
 			dup2(pipefd[i][1], STDOUT_FILENO);
+			close(pipefd[i][1]);
+		}
 	}
 	return (0);
 }
