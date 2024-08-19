@@ -36,12 +36,12 @@ int main(int argc, char **argv, char **envp)
 	pid[0] = fork();
 	if (pid[0] == 0)	// cat < ../../TODO
 	{
-		close(pipefd[0][0]);
-		close(pipefd[1][0]);
-		close(pipefd[1][1]);
 		fd = open("../../TODO", O_RDONLY);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
+		close(pipefd[0][0]);
+		close(pipefd[1][0]);
+		close(pipefd[1][1]);
 		dup2(pipefd[0][1], STDOUT_FILENO);
 		close(pipefd[0][1]);
 		execve(cmd[0], args[0], envp);

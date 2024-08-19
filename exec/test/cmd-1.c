@@ -34,13 +34,13 @@ int main(int ac, char **av, char **envp)
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{
-		close(pipefd[0]);
 		fd = open(files[0][0], O_RDONLY);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 		fd = open(files[0][1], O_RDONLY);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
+		close(pipefd[0]);
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
 		execve(cmd[0], args[0], envp);
@@ -50,7 +50,6 @@ int main(int ac, char **av, char **envp)
 	pid[1] = fork();
 	if (pid[1] == 0)
 	{
-		close(pipefd[1]);
 		fd = open(files[1][0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
@@ -60,6 +59,7 @@ int main(int ac, char **av, char **envp)
 		fd = open(files[1][2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
+		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
 		close(pipefd[0]);
 		execve(cmd[1], args[1], envp);
