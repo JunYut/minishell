@@ -1,7 +1,7 @@
 # include "exec.h"
 # include "debug.h"
 
-int	exec(t_cmd_line *cmd, t_env *env)
+int	exec(t_cmd_line *cmd, t_env *e)
 {
 	int	i;
 	int	j;
@@ -9,26 +9,26 @@ int	exec(t_cmd_line *cmd, t_env *env)
 	i = -1;
 	while (++i < cmd->seq_count)
 	{
-		if (cmd->seq->type == T_AND && ft_atoi(fetch_val(env, "?")) != 0)
+		if (cmd->seq->type == T_AND && ft_atoi(fetch_val("?", e)) != 0)
 			continue ;
-		if (cmd->seq->type == T_OR && fta_atoi(fetch_val(env, "?")) == 0)
+		if (cmd->seq->type == T_OR && ft_atoi(fetch_val("?", e)) == 0)
 			continue ;
 		cmd->pid[i] = fork();
 		if (cmd->pid[i] == 0)
 		{
-			j = -1;
 			open_pipes(cmd->seq[i].pipefd, cmd->seq[i].pipe_count);
+			j = -1;
 			while (++j < cmd->seq->cmd_count)
-				pipex();
+				pipex(&cmd->seq[i], e->envp);
 			close_pipes(cmd->seq[i].pipefd, cmd->seq[i].pipe_count);
-			wait_childs(cmd->pid, cmd->seq_count, env);
+			wait_childs(cmd->pid, cmd->seq_count, e);
 		}
-		wait_status(cmd->pid[i], env);
+		wait_status(cmd->pid[i], e);
 	}
 	return (0);
 }
 
-int	pipex(t_pipe *seq, t_env *env)
+int	pipex(t_pipe *seq, char *envp[])
 {
 	int	i;
 
@@ -36,8 +36,8 @@ int	pipex(t_pipe *seq, t_env *env)
 	while (++i < seq->cmd_count)
 	{
 		file_io(seq->cmd[i].file, seq->cmd[i].file_count);
-		pipe_io(seq->type, seq->pipefd, seq->pipe_count);
-		exec_cmd(seq->cmd[i].cmd, seq->cmd[i].argv, env->envp);
+		pipe_io(seq->pipefd, seq->pipe_count, seq->cmd_count);
+		exec_cmd(seq->cmd[i].cmd, seq->cmd[i].argv, envp);
 	}
 	return (0);
 }
@@ -49,24 +49,23 @@ int	exec_cmd(char *path, char *argv[], char *envp[])
 	exit(EXIT_FAILURE);
 }
 
-int	pipe_io(t_token type, int pipefd[][2], int pipe_count)
+int	pipe_io(int *pipefd[2], int pipe_count, int cmd_count)
 {
 	int	i;
 
 	i = -1;
+	while (++i < cmd_count)
+	{
+		if (i > 0)
+			dup2(pipefd[i - 1][0], STDIN_FILENO);
+		if (i < pipe_count)
+			dup2(pipefd[i][1], STDOUT_FILENO);
+	}
+	i = -1;
 	while (++i < pipe_count)
 	{
-		// close unused pipe ends
-		if (type != T_PIPE_START)
-		{
-			dup2(pipefd[i][0], STDIN_FILENO);
-			close(pipefd[i][0]);
-		}
-		if (type != T_PIPE_END)
-		{
-			dup2(pipefd[i][1], STDOUT_FILENO);
-			close(pipefd[i][1]);
-		}
+		close(pipefd[i][0]);
+		close(pipefd[i][1]);
 	}
 	return (0);
 }
@@ -89,14 +88,14 @@ int	file_io(t_file *file, int file_count)
 			return (-1);
 		if (file[i].type == T_REDIN)
 			dup2(fd, STDIN_FILENO);
-		else
+		else if (file[i].type == T_REDOUT || file[i].type == T_APPEND)
 			dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
 	return (0);
 }
 
-int	open_pipes(int pipefd[][2], int pipe_count)
+int	open_pipes(int *pipefd[2], int pipe_count)
 {
 	int	i;
 
@@ -107,7 +106,7 @@ int	open_pipes(int pipefd[][2], int pipe_count)
 	return (0);
 }
 
-int	close_pipes(int pipefd[][2], int pipe_count)
+int	close_pipes(int *pipefd[2], int pipe_count)
 {
 	int	i;
 
@@ -120,20 +119,20 @@ int	close_pipes(int pipefd[][2], int pipe_count)
 	return (0);
 }
 
-int	wait_childs(pid_t *pid, int count, t_env *env)
+int	wait_childs(pid_t *pid, int count, t_env *e)
 {
 	int	status;
 	int	i;
 
 	i = -1;
 	while (++i < count)
-		status = wait_status(pid[i], env);
+		status = wait_status(pid[i], e);
 	return (status);
 }
 
 // returns -1 on abnormal termination
 // returns the exit status of the child process (0-255)
-int	wait_status(pid_t pid, t_env *env)
+int	wait_status(pid_t pid, t_env *e)
 {
 	int	status;
 
@@ -142,7 +141,7 @@ int	wait_status(pid_t pid, t_env *env)
 	else if (WIFEXITED(status))
 	{
 		status = WEXITSTATUS(status);
-		set_val(env, "?", (char *)gb_add(ft_itoa(status)));
+		set_val(e, "?", (char *)gb_add(ft_itoa(status)));
 	}
 	else
 	{

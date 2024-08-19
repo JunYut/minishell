@@ -1,7 +1,8 @@
 # pragma once
 
-# include "pipe.h"
-# include "redir.h"
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 # include "env.h"
 # include "libft.h"
 # include "define.h"
@@ -42,12 +43,12 @@ typedef struct s_cmd_line
 	int		seq_count;
 }	t_cmd_line;
 
-int	exec(t_cmd_line *cmd, t_env *env);
-int pipex();
+int	exec(t_cmd_line *cmd, t_env *e);
+int pipex(t_pipe *seq, char *envp[]);
 int	exec_cmd(char *path, char *argv[], char *envp[]);
-int	pipe_io(t_token type, int pipefd[][2], int pipe_count);
+int	pipe_io(int *pipefd[2], int pipe_count, int cmd_count);
 int	file_io(t_file *file, int file_count);
-int	open_pipes(int pipefd[][2], int pipe_count);
-int	close_pipes(int pipefd[][2], int pipe_count);
-int	wait_childs(pid_t *pid, int count, t_env *env);
-int	wait_status(pid_t pid, t_env *env);
+int	open_pipes(int *pipefd[2], int pipe_count);
+int	close_pipes(int *pipefd[2], int pipe_count);
+int	wait_childs(pid_t *pid, int count, t_env *e);
+int	wait_status(pid_t pid, t_env *e);

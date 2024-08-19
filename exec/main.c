@@ -23,7 +23,7 @@ int main(int ac, char **av, char **envp)
 		cmd.seq[0].pipe_count = 0;
 		cmd.seq[0].cmd = gb_malloc(sizeof(t_cmd) * 2);
 			cmd.seq[0].cmd[0].cmd = "/usr/bin/cat";
-			cmd.seq[0].cmd[0].argv = (char *[]){"cat", "-e", NULL};
+			cmd.seq[0].cmd[0].argv = (char *[]){"cat", "-e", "define.h", NULL};
 			cmd.seq[0].cmd[0].file = NULL;
 	# endif
 	// cat -e define.h > out.txt
@@ -36,13 +36,17 @@ int main(int ac, char **av, char **envp)
 		cmd.seq[0].pipe_count = 0;
 		cmd.seq[0].cmd = gb_malloc(sizeof(t_cmd) * 2);
 			cmd.seq[0].cmd[0].cmd = "/usr/bin/cat";
-			cmd.seq[0].cmd[0].argv = (char *[]){"cat", "-e", NULL};
+			cmd.seq[0].cmd[0].argv = (char *[]){"cat", "-e", "define.h", NULL};
+			cmd.seq[0].cmd[0].file_count = 1;
 			cmd.seq[0].cmd[0].file = gb_malloc(sizeof(t_file) * 1);
 				cmd.seq[0].cmd[0].file[0].type = T_REDOUT;
 				cmd.seq[0].cmd[0].file[0].file = "out.txt";
 	# endif
+	// 
+	# if TEST == 3
+	# endif
 	// echo hello | cat -e | tr h H || echo goodbye | cat -e | tr o e && echo wait | cat -e | tr w t
-	# if TEST == 2
+	# if TEST == 10
 	cmd.seq_count = 3;
 	cmd.seq = gb_malloc(sizeof(t_pipe) * 4);
 	cmd.pid = gb_malloc(sizeof(pid_t) * 4);
