@@ -44,6 +44,7 @@ int main(int argc, char **argv, char **envp)
 		close(pipefd[1][1]);
 		dup2(pipefd[0][1], STDOUT_FILENO);
 		close(pipefd[0][1]);
+		printf("test1\n");
 		execve(cmd[0], args[0], envp);
 		perror("cat");
 		exit(EXIT_FAILURE);
@@ -57,6 +58,7 @@ int main(int argc, char **argv, char **envp)
 		dup2(pipefd[1][1], STDOUT_FILENO);
 		close(pipefd[0][0]);
 		close(pipefd[1][1]);
+		printf("test2\n");
 		execve(cmd[1], args[1], envp);
 		perror("grep");
 		exit(EXIT_FAILURE);
@@ -69,6 +71,7 @@ int main(int argc, char **argv, char **envp)
 		close(pipefd[1][1]);
 		dup2(pipefd[1][0], STDIN_FILENO);
 		close(pipefd[1][0]);
+		printf("test3\n");
 		execve(cmd[2], args[2], envp);
 		perror("wc");
 		exit(EXIT_FAILURE);

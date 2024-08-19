@@ -30,7 +30,7 @@ typedef struct s_pipe
 	t_token	type;
 	t_cmd	*cmd;
 	pid_t	*pid;
-	int		*pipefd[2];
+	int		**pipefd;
 	int		cmd_count;
 	int		pipe_count;
 }	t_pipe;
@@ -44,9 +44,9 @@ typedef struct s_cmd_line
 }	t_cmd_line;
 
 int	exec(t_cmd_line *cmd, t_env *e);
-int pipex(t_pipe *seq, char *envp[]);
+int pipex(t_pipe *seq, char *envp[], int i);
 int	exec_cmd(char *path, char *argv[], char *envp[]);
-int	pipe_io(int *pipefd[2], int pipe_count, int cmd_count);
+int	pipe_io(int *pipefd[2], int pipe_count, int i);
 int	file_io(t_file *file, int file_count);
 int	open_pipes(int *pipefd[2], int pipe_count);
 int	close_pipes(int *pipefd[2], int pipe_count);
