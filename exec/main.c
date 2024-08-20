@@ -384,6 +384,7 @@ int main(int ac, char **av, char **envp)
 				cmd.seq[0].cmd[2].file[0].type = T_REDOUT;
 				cmd.seq[0].cmd[2].file[0].file = "out.txt";
 	# endif
+
 	exec(&cmd, e);
 
 	exit_shell(0);
