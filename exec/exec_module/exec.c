@@ -41,9 +41,9 @@ int	pipex(t_pipe *seq, char *envp[])
 		}
 		if (seq->pid[i] == 0)
 		{
-			if (file_io(seq->cmd[i].file, seq->cmd[i].file_count))
-				continue;
 			if (pipe_io(seq->pipefd, seq->pipe_count, i))
+				continue;
+			if (file_io(seq->cmd[i].file, seq->cmd[i].file_count))
 				continue;
 			if (exec_cmd(seq->cmd[i].cmd, seq->cmd[i].argv, envp))
 				continue;
