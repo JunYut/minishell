@@ -44,7 +44,7 @@ typedef struct s_cmd_line
 }	t_cmd_line;
 
 int	exec(t_cmd_line *cmd, t_env *e);
-int pipex(t_pipe *seq, char *envp[], int i);
+int pipex(t_pipe *seq, char *envp[]);
 int	exec_cmd(char *path, char *argv[], char *envp[]);
 int	pipe_io(int *pipefd[2], int pipe_count, int i);
 int	file_io(t_file *file, int file_count);

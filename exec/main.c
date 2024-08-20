@@ -3,7 +3,7 @@
 # include "gbc.h"
 # include "define.h"
 
-# define TEST 3
+# define TEST 2
 
 int main(int ac, char **av, char **envp)
 {
@@ -16,14 +16,16 @@ int main(int ac, char **av, char **envp)
 	// cat -e define.h
 	# if TEST == 1
 	cmd.seq_count = 1;
-	cmd.seq = gb_malloc(sizeof(t_pipe) * 1);
 	cmd.pid = gb_malloc(sizeof(pid_t) * 1);
+	cmd.seq = gb_malloc(sizeof(t_pipe) * 1);
 	cmd.seq[0].type = T_PIPE;
 		cmd.seq[0].cmd_count = 1;
 		cmd.seq[0].pipe_count = 0;
-		cmd.seq[0].cmd = gb_malloc(sizeof(t_cmd) * 2);
+		cmd.seq[0].pid = gb_malloc(sizeof(pid_t) * 1);
+		cmd.seq[0].cmd = gb_malloc(sizeof(t_cmd) * 1);
 			cmd.seq[0].cmd[0].cmd = "/usr/bin/cat";
 			cmd.seq[0].cmd[0].argv = (char *[]){"cat", "-e", "define.h", NULL};
+			cmd.seq[0].cmd[0].file_count = 0;
 			cmd.seq[0].cmd[0].file = NULL;
 	# endif
 	// cat -e define.h > out.txt
@@ -34,6 +36,7 @@ int main(int ac, char **av, char **envp)
 	cmd.seq[0].type = T_PIPE;
 		cmd.seq[0].cmd_count = 1;
 		cmd.seq[0].pipe_count = 0;
+		cmd.seq[0].pid = gb_malloc(sizeof(pid_t) * 1);
 		cmd.seq[0].cmd = gb_malloc(sizeof(t_cmd) * 2);
 			cmd.seq[0].cmd[0].cmd = "/usr/bin/cat";
 			cmd.seq[0].cmd[0].argv = (char *[]){"cat", "-e", "define.h", NULL};
@@ -45,8 +48,8 @@ int main(int ac, char **av, char **envp)
 	// cat -e define.h | tail -n 7
 	# if TEST == 3
 	cmd.seq_count = 1;
-	cmd.seq = gb_malloc(sizeof(t_pipe) * 1);
 	cmd.pid = gb_malloc(sizeof(pid_t) * 1);
+	cmd.seq = gb_malloc(sizeof(t_pipe) * 1);
 	cmd.seq[0].type = T_PIPE;
 		cmd.seq[0].cmd_count = 2;
 		cmd.seq[0].pipe_count = 1;
@@ -62,6 +65,54 @@ int main(int ac, char **av, char **envp)
 			cmd.seq[0].cmd[1].argv = (char *[]){"tail", "-n", "8", NULL};
 			cmd.seq[0].cmd[1].file_count = 0;
 			cmd.seq[0].cmd[1].file = NULL;
+	# endif
+	// cat -e define.h && echo success
+	# if TEST == 4
+	cmd.seq_count = 2;
+	cmd.pid = gb_malloc(sizeof(pid_t) * 2);
+	cmd.seq = gb_malloc(sizeof(t_pipe) * 2);
+	cmd.seq[0].type = T_PIPE;
+		cmd.seq[0].cmd_count = 1;
+		cmd.seq[0].pipe_count = 0;
+		cmd.seq[0].pid = gb_malloc(sizeof(pid_t) * 1);
+		cmd.seq[0].cmd = gb_malloc(sizeof(t_cmd) * 1);
+			cmd.seq[0].cmd[0].cmd = "/usr/bin/cat";
+			cmd.seq[0].cmd[0].argv = (char *[]){"cat", "-e", "define.h", NULL};
+			cmd.seq[0].cmd[0].file_count = 0;
+			cmd.seq[0].cmd[0].file = NULL;
+	cmd.seq[1].type = T_AND;
+		cmd.seq[1].cmd_count = 1;
+		cmd.seq[1].pipe_count = 0;
+		cmd.seq[1].pid = gb_malloc(sizeof(pid_t) * 1);
+		cmd.seq[1].cmd = gb_malloc(sizeof(t_cmd) * 1);
+			cmd.seq[1].cmd[0].cmd = "/bin/echo";
+			cmd.seq[1].cmd[0].argv = (char *[]){"echo", "success", NULL};
+			cmd.seq[1].cmd[0].file_count = 0;
+			cmd.seq[1].cmd[0].file = NULL;
+	# endif
+	// cat -e define.h || echo fail
+	# if TEST == 5
+	cmd.seq_count = 2;
+	cmd.pid = gb_malloc(sizeof(pid_t) * 2);
+	cmd.seq = gb_malloc(sizeof(t_pipe) * 2);
+	cmd.seq[0].type = T_PIPE;
+		cmd.seq[0].cmd_count = 1;
+		cmd.seq[0].pipe_count = 0;
+		cmd.seq[0].pid = gb_malloc(sizeof(pid_t) * 1);
+		cmd.seq[0].cmd = gb_malloc(sizeof(t_cmd) * 1);
+			cmd.seq[0].cmd[0].cmd = "/usr/bin/cat";
+			cmd.seq[0].cmd[0].argv = (char *[]){"cat", "-e", "define.h", NULL};
+			cmd.seq[0].cmd[0].file_count = 0;
+			cmd.seq[0].cmd[0].file = NULL;
+	cmd.seq[1].type = T_OR;
+		cmd.seq[1].cmd_count = 1;
+		cmd.seq[1].pipe_count = 0;
+		cmd.seq[1].pid = gb_malloc(sizeof(pid_t) * 1);
+		cmd.seq[1].cmd = gb_malloc(sizeof(t_cmd) * 1);
+			cmd.seq[1].cmd[0].cmd = "/bin/echo";
+			cmd.seq[1].cmd[0].argv = (char *[]){"echo", "fail", NULL};
+			cmd.seq[1].cmd[0].file_count = 0;
+			cmd.seq[1].cmd[0].file = NULL;
 	# endif
 	// echo hello | cat -e | tr h H || echo goodbye | cat -e | tr o e && echo wait | cat -e | tr w t
 	# if TEST == 10

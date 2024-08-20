@@ -4,46 +4,50 @@
 int	exec(t_cmd_line *cmd, t_env *e)
 {
 	int	i;
-	int	j;
 
 	i = -1;
 	while (++i < cmd->seq_count)
 	{
-		if (cmd->seq->type == T_AND && ft_atoi(fetch_val("?", e)) != 0)
+		if (cmd->seq[i].type == T_AND && ft_atoi(fetch_val("?", e)) != 0)
 			continue ;
-		if (cmd->seq->type == T_OR && ft_atoi(fetch_val("?", e)) == 0)
+		if (cmd->seq[i].type == T_OR && ft_atoi(fetch_val("?", e)) == 0)
 			continue ;
 		cmd->pid[i] = fork();
 		if (cmd->pid[i] == 0)
 		{
 			open_pipes(cmd->seq[i].pipefd, cmd->seq[i].pipe_count);
-			j = -1;
-			while (++j < cmd->seq->cmd_count)
-				pipex(&cmd->seq[i], e->envp, j);
+			pipex(&cmd->seq[i], e->envp);
 			close_pipes(cmd->seq[i].pipefd, cmd->seq[i].pipe_count);
 			wait_childs(cmd->seq[i].pid, cmd->seq_count, e);
+			exit(EXIT_SUCCESS);
 		}
 		wait_status(cmd->pid[i], e);
 	}
 	return (0);
 }
 
-int	pipex(t_pipe *seq, char *envp[], int i)
+int	pipex(t_pipe *seq, char *envp[])
 {
-	seq->pid[i] = fork();
-	if (seq->pid[i] == -1)
+	int	i;
+
+	i = -1;
+	while (++i < seq->cmd_count)
 	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	if (seq->pid[i] == 0)
-	{
-		if (file_io(seq->cmd[i].file, seq->cmd[i].file_count))
-			printf("file_io error\n");
-		if (pipe_io(seq->pipefd, seq->pipe_count, i))
-			printf("pipe_io error\n");
-		if (exec_cmd(seq->cmd[i].cmd, seq->cmd[i].argv, envp))
-			printf("exec_cmd error\n");
+		seq->pid[i] = fork();
+		if (seq->pid[i] == -1)
+		{
+			perror("fork");
+			exit(EXIT_FAILURE);
+		}
+		if (seq->pid[i] == 0)
+		{
+			if (file_io(seq->cmd[i].file, seq->cmd[i].file_count))
+				printf("file_io error\n");
+			if (pipe_io(seq->pipefd, seq->pipe_count, i))
+				printf("pipe_io error\n");
+			if (exec_cmd(seq->cmd[i].cmd, seq->cmd[i].argv, envp))
+				printf("exec_cmd error\n");
+		}
 	}
 	return (0);
 }
