@@ -30,6 +30,7 @@ void	unset(char **keys, t_env *e); // TODO: input validation
 void	cd(char *path, t_env *e);
 void	pwd(t_env *e);
 void	echo(char **av);
+void	exit_shell(int status);
 
 void	add_ent(t_env *e, char *key, char *val);
 void	set_val(t_env *e, char *key, char *val);

@@ -42,11 +42,11 @@ int	pipex(t_pipe *seq, char *envp[])
 		if (seq->pid[i] == 0)
 		{
 			if (file_io(seq->cmd[i].file, seq->cmd[i].file_count))
-				printf("file_io error\n");
+				continue;
 			if (pipe_io(seq->pipefd, seq->pipe_count, i))
-				printf("pipe_io error\n");
+				continue;
 			if (exec_cmd(seq->cmd[i].cmd, seq->cmd[i].argv, envp))
-				printf("exec_cmd error\n");
+				continue;
 		}
 	}
 	return (0);
@@ -72,8 +72,11 @@ int	pipe_io(int *pipefd[2], int pipe_count, int i)
 int	file_io(t_file *file, int file_count)
 {
 	int	fd;
+	int	old_io[2];
 	int	i;
 
+	old_io[0] = dup(STDIN_FILENO);
+	old_io[1] = dup(STDOUT_FILENO);
 	i = -1;
 	while (++i < file_count)
 	{
@@ -84,7 +87,12 @@ int	file_io(t_file *file, int file_count)
 		else if (file[i].type == T_APPEND)
 			fd = open(file[i].file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
+		{
+			dup2(old_io[0], STDIN_FILENO);
+			dup2(old_io[1], STDOUT_FILENO);
+			printf("%s: %s\n", file[i].file, strerror(errno));
 			return (-1);
+		}
 		if (file[i].type == T_REDIN)
 			dup2(fd, STDIN_FILENO);
 		else if (file[i].type == T_REDOUT || file[i].type == T_APPEND)

@@ -96,6 +96,12 @@ void	unset(char **keys, t_env *e)
 	}
 }
 
+void	exit_shell(int status)
+{
+	gb_clear();
+	exit(status);
+}
+
 // a=1 : export: a="1"; var: a=1
 // a= : export: a=""; var: a=
 // a : export: a; var: [nothing]

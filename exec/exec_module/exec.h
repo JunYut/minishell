@@ -3,6 +3,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <errno.h>
 # include "env.h"
 # include "libft.h"
 # include "define.h"
