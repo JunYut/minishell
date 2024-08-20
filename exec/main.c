@@ -387,7 +387,7 @@ int main(int ac, char **av, char **envp)
 
 	exec(&cmd, e);
 
-	exit_shell(0);
+	exit_shell(ft_atoi(fetch_val("?", e)));
 
 	return (0);
 }
