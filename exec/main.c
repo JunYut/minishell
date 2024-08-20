@@ -3,7 +3,7 @@
 # include "gbc.h"
 # include "define.h"
 
-# define TEST 2
+# define TEST 7
 
 int main(int ac, char **av, char **envp)
 {
@@ -113,6 +113,58 @@ int main(int ac, char **av, char **envp)
 			cmd.seq[1].cmd[0].argv = (char *[]){"echo", "fail", NULL};
 			cmd.seq[1].cmd[0].file_count = 0;
 			cmd.seq[1].cmd[0].file = NULL;
+	# endif
+	// cat -e define.h > 1.txt > 2.txt > out.txt
+	# if TEST == 6
+	cmd.seq_count = 1;
+	cmd.pid = gb_malloc(sizeof(pid_t) * 1);
+	cmd.seq = gb_malloc(sizeof(t_pipe) * 1);
+		cmd.seq[0].type = T_PIPE;
+		cmd.seq[0].cmd_count = 1;
+		cmd.seq[0].pipe_count = 0;
+		cmd.seq[0].pid = gb_malloc(sizeof(pid_t) * 1);
+		cmd.seq[0].cmd = gb_malloc(sizeof(t_cmd) * 1);
+			cmd.seq[0].cmd[0].cmd = "/usr/bin/cat";
+			cmd.seq[0].cmd[0].argv = (char *[]){"cat", "-e", "define.h", NULL};
+			cmd.seq[0].cmd[0].file_count = 3;
+			cmd.seq[0].cmd[0].file = gb_malloc(sizeof(t_file) * 3);
+				cmd.seq[0].cmd[0].file[0].type = T_REDOUT;
+				cmd.seq[0].cmd[0].file[0].file = "1.txt";
+				cmd.seq[0].cmd[0].file[1].type = T_REDOUT;
+				cmd.seq[0].cmd[0].file[1].file = "2.txt";
+				cmd.seq[0].cmd[0].file[2].type = T_REDOUT;
+				cmd.seq[0].cmd[0].file[2].file = "out.txt";
+	# endif
+	// cat -e define.h | tail -n 8 | tr # @ | grep define
+	# if TEST == 7
+	cmd.seq_count = 1;
+	cmd.pid = gb_malloc(sizeof(pid_t) * 1);
+	cmd.seq = gb_malloc(sizeof(t_pipe) * 1);
+	cmd.seq[0].type = T_PIPE;
+		cmd.seq[0].cmd_count = 4;
+		cmd.seq[0].pipe_count = 3;
+		cmd.seq[0].pid = gb_malloc(sizeof(pid_t) * 4);
+		cmd.seq[0].pipefd = gb_malloc(sizeof(int *) * 3);
+			cmd.seq[0].pipefd[0] = gb_malloc(sizeof(int) * 2);
+			cmd.seq[0].pipefd[1] = gb_malloc(sizeof(int) * 2);
+			cmd.seq[0].pipefd[2] = gb_malloc(sizeof(int) * 2);
+		cmd.seq[0].cmd = gb_malloc(sizeof(t_cmd) * 4);
+			cmd.seq[0].cmd[0].cmd = "/usr/bin/cat";
+			cmd.seq[0].cmd[0].argv = (char *[]){"cat", "-e", "define.h", NULL};
+			cmd.seq[0].cmd[0].file_count = 0;
+			cmd.seq[0].cmd[0].file = NULL;
+			cmd.seq[0].cmd[1].cmd = "/usr/bin/tail";
+			cmd.seq[0].cmd[1].argv = (char *[]){"tail", "-n", "8", NULL};
+			cmd.seq[0].cmd[1].file_count = 0;
+			cmd.seq[0].cmd[1].file = NULL;
+			cmd.seq[0].cmd[2].cmd = "/usr/bin/tr";
+			cmd.seq[0].cmd[2].argv = (char *[]){"tr", "#", "@", NULL};
+			cmd.seq[0].cmd[2].file_count = 0;
+			cmd.seq[0].cmd[2].file = NULL;
+			cmd.seq[0].cmd[3].cmd = "/usr/bin/grep";
+			cmd.seq[0].cmd[3].argv = (char *[]){"grep", "define", NULL};
+			cmd.seq[0].cmd[3].file_count = 0;
+			cmd.seq[0].cmd[3].file = NULL;
 	# endif
 	// echo hello | cat -e | tr h H || echo goodbye | cat -e | tr o e && echo wait | cat -e | tr w t
 	# if TEST == 10
