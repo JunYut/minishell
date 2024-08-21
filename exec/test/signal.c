@@ -11,6 +11,8 @@ void	shell();
 void	do_stuff();
 void	int_sigint(int sig);
 
+int	g_wait = 0;
+
 int main(void)
 {
 	shell();
@@ -34,26 +36,39 @@ void	shell()
 			break ;
 		}
 		add_history(line);
+		if (strcmp(line, "do") == 0)
+			do_stuff();
 		free(line);
 	}
 }
 
 void	do_stuff()
 {
-	int		i;
+	pid_t	pid;
 
-	i = 0;
-	while (i < 1000000)
+	pid = fork();
+	if (pid == 0)
 	{
-		i++;
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		printf("do_stuff\n");
+		execve("/usr/bin/sleep", (char *[]){"sleep", "10", NULL}, NULL);
+		perror("sleep");
+		exit(EXIT_FAILURE);
 	}
+	g_wait = 1;
+	waitpid(pid, NULL, 0);
+	g_wait = 0;
 }
 
 void	int_sigint(int sig)
 {
 	(void)sig;
 	printf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	if (!g_wait)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
