@@ -19,6 +19,7 @@ typedef struct s_wildcard
 	t_list	*files;
 	t_list	*dot_files;
 	t_list	*token;
+	char	**pattern;
 }	t_wildcard;
 
 char		**wildcard(char *str, t_env *env);

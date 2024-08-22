@@ -1,7 +1,7 @@
 # include "wildcard.h"
 
 # ifndef TEST
-	# define TEST 7
+	# define TEST 13
 # endif
 
 int main(int ac, char **av, char **envp)
@@ -52,7 +52,8 @@ int main(int ac, char **av, char **envp)
 	# endif
 
 	wildcard(regex, e);
-	print_token(tokenize(regex));
+
+	print_token(tokenize(regex), ft_split(regex, '*'));
 
 	gb_clear();
 }
