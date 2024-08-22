@@ -4,11 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/env_module",
-                "${workspaceFolder}/utils",
-                "${workspaceFolder}/libft_module/include",
-                "${workspaceFolder}/gbc_module",
-                "${workspaceFolder}/wildcard_module"
+                "${workspaceFolder}/libft_module/**",
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

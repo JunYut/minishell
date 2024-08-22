@@ -1,7 +1,13 @@
-- [ ] [*]: Makefile TODO env_module exec gbc_module libft_module main.c modules output.txt path.txt sandbox utils wildcard_module
-- [ ] [*_module]: env_module gbc_module libft_module wildcard_module
-- [ ] [e*]: env_module exec
-- [ ] [e*e]: env_module
-- [ ] [*e*e*]: Makefile env_module exec
-- [ ] [.*]: . .. .git .gitignore .vscode
-- [ ] [.*gi]: .*g
+- [ ] [*]: `Makefile TODO env_module gbc_module libft_module main.c obj output.txt path.txt utils wildcard wildcard_module`
+- [ ] [*_module]: `env_module gbc_module libft_module wildcard_module`
+- [ ] [.*]: `. .. .git .gitignore .vscode`
+- [ ] [.*e]: `.gitignore .vscode`
+- [ ] [*.*t]: `output.txt path.txt`
+- [ ] [.*o*]: `.gitignore .vscode`
+- [ ] [*e*e*]: `Makefile env_module`
+- [ ] [fail*]: `fail*`
+- [ ] [*fail]: `*fail`
+- [ ] [fail*fail]: `fail*fail`
+- [ ] [*fail*fail]: `*fail*fail*`
+- [ ] [fail*fail*]: `fail*fail*`
+- [ ] [*fail*fail*]: `*fail*fail*fail*`

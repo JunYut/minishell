@@ -1,6 +1,8 @@
 # include "wildcard.h"
 
-# define TEST 1
+# ifndef TEST
+	# define TEST 1
+# endif
 
 int main(int ac, char **av, char **envp)
 {
@@ -13,22 +15,40 @@ int main(int ac, char **av, char **envp)
 	char	*regex = "*";
 	# endif
 	# if TEST == 2
-	char	*regex = ".*";
-	# endif
-	# if TEST == 3
-	char	*regex = ".*gi";
-	# endif
-	# if TEST == 4
 	char	*regex = "*_module";
 	# endif
+	# if TEST == 3
+	char	*regex = ".*";
+	# endif
+	# if TEST == 4
+	char	*regex = ".*e";
+	# endif
 	# if TEST == 5
-	char	*regex = "e*";
+	char	*regex = "*.*t";
 	# endif
 	# if TEST == 6
-	char	*regex = "e*e";
+	char	*regex = ".*o*";
 	# endif
 	# if TEST == 7
 	char	*regex = "*e*e*";
+	# endif
+	# if TEST == 8
+	char	*regex = "fail*";
+	# endif
+	# if TEST == 9
+	char	*regex = "*fail";
+	# endif
+	# if TEST == 10
+	char	*regex = "fail*fail";
+	# endif
+	# if TEST == 11
+	char	*regex = "*fail*fail";
+	# endif
+	# if TEST == 12
+	char	*regex = "fail*fail*";
+	# endif
+	# if TEST == 13
+	char	*regex = "*fail*fail*";
 	# endif
 
 	print_arr(wildcard(regex, e));	NEWLINE;
