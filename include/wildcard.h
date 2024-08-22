@@ -22,3 +22,5 @@ typedef struct s_wildcard
 char		**wildcard(char *str, t_env *env);
 char		**lst_to_arr(t_list *lst);
 t_wildcard	*init_wc(char *cwd);
+void		sort_lex(t_list *lst);
+void		lstswap(t_list *a, t_list *b);

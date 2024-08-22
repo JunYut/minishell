@@ -9,16 +9,14 @@ CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c99 -g
 LIBFT_DIR = libft_module
 MODULES_DIR = gbc_module env_module wildcard_module utils
 OBJ_DIR = obj
-INCL_DIR = $(foreach module, $(MODULES_DIR), $(addprefix -I, $(module))) \
-		   -I$(LIBFT_DIR)/include
+INCL_DIR = -Iinclude -I$(LIBFT_DIR)/include
 
 vpath %.c $(MODULES_DIR)
 
 # Files
 SRC = $(foreach module, $(MODULES_DIR), $(wildcard $(module)/*.c))
 OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
-HEADER = $(foreach module, $(MODULES_DIR), $(wildcard $(module)/*.h)) \
-		 $(wildcard $(LIBFT_DIR)/include/*.h)
+HEADER = include/*.h $(wildcard $(LIBFT_DIR)/include/*.h)
 LIBFT = $(LIBFT_DIR)/libft.a
 LIB = -L$(LIBFT_DIR) -lft -lreadline
 EXEC = wildcard

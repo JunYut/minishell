@@ -17,6 +17,7 @@ if [ ! -f "$1" ]; then
 fi
 
 # Compile
+make -C ..
 if [ "$#" -eq 1 ] || [ "$2" = "-l" ]; then
 	clang $CFLAGS $INCL $OBJS $1 $LIBS
 elif [ "$2" = "-f" ]; then
