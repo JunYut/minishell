@@ -2,6 +2,7 @@
 - [ ] [*_module]: `env_module gbc_module libft_module wildcard_module`
 - [ ] [.*]: `. .. .git .gitignore .vscode`
 - [ ] [.*e]: `.gitignore .vscode`
+- [ ] [*.*]: `main.c output.txt path.txt`
 - [ ] [*.*t]: `output.txt path.txt`
 - [ ] [.*o*]: `.gitignore .vscode`
 - [ ] [*e*e*]: `Makefile env_module`

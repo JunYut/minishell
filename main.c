@@ -24,30 +24,33 @@ int main(int ac, char **av, char **envp)
 	char	*regex = ".*e";
 	# endif
 	# if TEST == 5
-	char	*regex = "*.*t";
+	char	*regex = "*.*";
 	# endif
 	# if TEST == 6
-	char	*regex = ".*o*";
+	char	*regex = "*.*t";
 	# endif
 	# if TEST == 7
-	char	*regex = "*e*e*";
+	char	*regex = ".*o*";
 	# endif
 	# if TEST == 8
-	char	*regex = "fail*";
+	char	*regex = "*e*e*";
 	# endif
 	# if TEST == 9
-	char	*regex = "*fail";
+	char	*regex = "fail*";
 	# endif
 	# if TEST == 10
-	char	*regex = "fail*fail";
+	char	*regex = "*fail";
 	# endif
 	# if TEST == 11
-	char	*regex = "*fail*fail";
+	char	*regex = "fail*fail";
 	# endif
 	# if TEST == 12
-	char	*regex = "fail*fail*";
+	char	*regex = "*fail*fail";
 	# endif
 	# if TEST == 13
+	char	*regex = "fail*fail*";
+	# endif
+	# if TEST == 14
 	char	*regex = "*fail*fail*";
 	# endif
 

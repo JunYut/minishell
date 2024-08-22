@@ -12,7 +12,8 @@ t_list	*tokenize(char *str)
 		if (str[i] == '*')
 		{
 			ft_lstadd_back(&token, gb_lstnew(gb_newtoken(T_WILDCARD)));
-			continue ;
+			while (str[i + 1] && str[i + 1] == '*')
+				++i;
 		}
 		else
 		{
