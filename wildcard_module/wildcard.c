@@ -43,9 +43,9 @@ t_wildcard	*init_wc(char *cwd)
 	while (dp != NULL)
 	{
 		if (dp->d_name[0] == '.')
-			ft_lstadd_back(&wc->dot_files, gb_add(ft_lstnew(gb_add(ft_strdup(dp->d_name)))));
+			ft_lstadd_back(&wc->dot_files, gb_lstnew(gb_strdup(dp->d_name)));
 		else
-			ft_lstadd_back(&wc->files, gb_add(ft_lstnew(gb_add(ft_strdup(dp->d_name)))));
+			ft_lstadd_back(&wc->files, gb_lstnew(gb_strdup(dp->d_name)));
 		dp = readdir(dirp);
 	}
 	closedir(dirp);

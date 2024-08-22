@@ -1,5 +1,6 @@
 # pragma once
 
+# include "libft.h"
 # include <stdlib.h>
 # include <stdio.h>
 
@@ -13,6 +14,8 @@ typedef struct s_gbc
 void	gb_clear(void);
 void	*gb_malloc(size_t size);
 void    *gb_add(void *addr);
-void	gb_free(void *addr);
 t_gbc	*gb_collector(void);
 void	gb_init(t_gbc *collector);
+
+t_list	*gb_lstnew(void *content);
+char	*gb_strdup(const char *s1);
