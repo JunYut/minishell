@@ -1,5 +1,7 @@
 # pragma once
 
+# include <signal.h>
+
 # define DEBUG 1
 # define EXPORT 1
 # define VAR 2
@@ -21,10 +23,12 @@ typedef enum e_token
 	T_INVALID = -1
 }	t_token;
 
+volatile sig_atomic_t	g_wait;
+
 # if DEBUG == 1
 	# define DPRINTF printf
 	# define DPRINT_ARR(arr) print_arr(arr)
-	# define NEWLINE printf("\n")
+	# define NL printf("\n")
 # else
 	# define DPRINTF(...) do {} while (0)
 	# define DPRINT_ARR(...) do {} while (0)

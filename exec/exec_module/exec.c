@@ -77,6 +77,7 @@ int	wait_status(pid_t pid, t_env *e)
 {
 	int	status;
 
+	g_wait = 1;
 	if (waitpid(pid, &status, 0) == -1)
 		return (0);
 	else if (WIFEXITED(status))
@@ -89,5 +90,6 @@ int	wait_status(pid_t pid, t_env *e)
 		status = -1;
 		printf("PID %d: terminated abnormally\n", pid);
 	}
+	g_wait = 0;
 	return (status);
 }

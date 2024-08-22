@@ -18,5 +18,9 @@ Interactive actions in minishell: prompt, <<heredoc, unclosed quotes
 */
 
 # include <signal.h>
-# include <unistd.h>
+# include <readline/readline.h>
+# include <stdio.h>
 # include "define.h"
+
+void	int_sigint(int sig);
+void	int_sigquit(int sig);

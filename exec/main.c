@@ -1,5 +1,5 @@
 # include "exec.h"
-# include "signal.h"
+# include "signals.h"
 # include "gbc.h"
 # include "define.h"
 
@@ -12,6 +12,9 @@ int main(int ac, char **av, char **envp)
 
 	t_env	*e = dup_env(envp);
 	t_cmd_line	cmd;
+
+	signal(SIGINT, int_sigint);
+	signal(SIGQUIT, int_sigquit);
 
 	// cat -e define.h
 	# if TEST == 1
