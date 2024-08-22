@@ -31,7 +31,7 @@ int main(int ac, char **av, char **envp)
 	char	*regex = "*e*e*";
 	# endif
 
-	print_arr(wildcard(regex, e));	NEWLINE;
+	print_arr(wildcard(regex, e));	NL;
 
 	gb_clear();
 }
