@@ -10,6 +10,7 @@
 void	shell();
 void	do_stuff();
 void	int_sigint(int sig);
+void	int_sigquit(int sig);
 
 int	g_wait = 0;
 
@@ -24,12 +25,15 @@ void	shell()
 	char	*line;
 
 	signal(SIGINT, int_sigint);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, int_sigquit);
 	while (1)
 	{
 		line = readline("minishell$ ");
 		if (!line)
+		{
+			printf("\nexit\n");
 			break ;
+		}
 		if (strcmp(line, "exit") == 0)
 		{
 			free(line);
@@ -49,10 +53,8 @@ void	do_stuff()
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
 		printf("do_stuff\n");
-		execve("/usr/bin/sleep", (char *[]){"sleep", "10", NULL}, NULL);
+		execve("/usr/bin/sleep", (char *[]){"sleep", "5", NULL}, NULL);
 		perror("sleep");
 		exit(EXIT_FAILURE);
 	}
@@ -71,4 +73,11 @@ void	int_sigint(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
+}
+
+void	int_sigquit(int sig)
+{
+	(void)sig;
+	if (g_wait)
+		printf("Quit\n");
 }
