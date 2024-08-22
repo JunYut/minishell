@@ -1,4 +1,16 @@
-# include "wildcard.h"
+# include "debug.h"
+
+void	print_token(t_list *token)
+{
+	t_list	*curr;
+
+	curr = token;
+	while (curr)
+	{
+		DPRINTF("%d\n", *(t_token *)curr->content);
+		curr = curr->next;
+	}
+}
 
 void	print_arr(char **arr)
 {
@@ -6,22 +18,19 @@ void	print_arr(char **arr)
 
 	if (!arr)
 		return ;
-	i = 0;
-	while (arr[i])
-	{
+	i = -1;
+	while (arr[++i])
 		DPRINTF("%s\n", arr[i]);
-		i++;
-	}
 }
 
 void	print_lst(t_list *lst)
 {
-	t_list	*tmp;
+	t_list	*curr;
 
-	tmp = lst;
-	while (tmp)
+	curr = lst;
+	while (curr)
 	{
-		DPRINTF("%s\n", (char *)tmp->content);
-		tmp = tmp->next;
+		DPRINTF("%s\n", (char *)curr->content);
+		curr = curr->next;
 	}
 }

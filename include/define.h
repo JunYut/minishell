@@ -15,6 +15,8 @@ typedef enum e_token
 	T_PIPE,
 	T_OR,
 	T_AND,
+	T_WILDCARD,
+	T_PATTERN,
 	T_END,
 	T_INVALID = -1
 }	t_token;

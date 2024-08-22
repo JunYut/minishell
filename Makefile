@@ -19,7 +19,7 @@ OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
 HEADER = include/*.h $(wildcard $(LIBFT_DIR)/include/*.h)
 LIBFT = $(LIBFT_DIR)/libft.a
 LIB = -L$(LIBFT_DIR) -lft -lreadline
-EXEC = wildcard
+EXEC = wc
 
 # Debug
 # $(info SRC: $(SRC))

@@ -1,7 +1,7 @@
 # include "wildcard.h"
 
 # ifndef TEST
-	# define TEST 1
+	# define TEST 7
 # endif
 
 int main(int ac, char **av, char **envp)
@@ -51,7 +51,8 @@ int main(int ac, char **av, char **envp)
 	char	*regex = "*fail*fail*";
 	# endif
 
-	print_arr(wildcard(regex, e));	NEWLINE;
+	wildcard(regex, e);
+	print_token(tokenize(regex));
 
 	gb_clear();
 }

@@ -1,6 +1,7 @@
 # pragma once
 
 # include "libft.h"
+# include "define.h"
 # include <stdlib.h>
 # include <stdio.h>
 
@@ -17,5 +18,6 @@ void    *gb_add(void *addr);
 t_gbc	*gb_collector(void);
 void	gb_init(t_gbc *collector);
 
+t_token	*gb_newtoken(t_token token);
 t_list	*gb_lstnew(void *content);
 char	*gb_strdup(const char *s1);
