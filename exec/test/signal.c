@@ -29,14 +29,13 @@ void	shell()
 	while (1)
 	{
 		line = readline("minishell$ ");
-		if (!line)
+		if (!line || strcmp(line, "exit") == 0)
 		{
-			printf("\nexit\n");
-			break ;
-		}
-		if (strcmp(line, "exit") == 0)
-		{
-			free(line);
+			if (!line)
+				printf("\n");
+			printf("exit\n");
+			if (line)
+				free(line);
 			break ;
 		}
 		add_history(line);
