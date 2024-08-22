@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:21:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/14 10:30:43 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:47:25 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define DEFINE_H
 
 # define READ_SIZE 42
+# define ERRNO_SUCCESS 0
+# define ERRNO_FAIL 1
 
 typedef enum e_token_type
 {
@@ -62,6 +64,26 @@ typedef enum e_parse_err_type
 	E_EOF,
 }	t_parse_err_type;
 
+typedef enum e_err_msg
+{
+	ERR_MSG_CMD_NOT_FOUND,
+	ERR_MSG_NO_SUCH_FILE,
+	ERR_MSG_PERM_DENIED,
+	ERR_MSG_AMBIGUOUS,
+	ERR_MSG_TOO_MANY_ARGS,
+	ERR_MSG_NUMERIC_REQUI
+}	t_err_msg;
+
+typedef enum e_errno
+{
+	ERR_NO_SUCCESS,
+	ERR_NO_GENERAL,
+	ERR_NO_CANT_EXEC = 126,
+	ERR_NO_NOT_FOUND,
+	ERR_NO_EXEC_255 = 255
+}	t_errno;
+
+
 typedef	struct s_io_node
 {
 	t_io_type			type;
@@ -89,6 +111,19 @@ typedef struct s_parse_err
 	char				*str;
 }	t_parse_err;
 
+typedef struct s_err
+{
+	t_errno		errno;
+	t_err_msg	err_msg;
+	char	*cause;
+} t_err;
+
+typedef struct s_path
+{
+	t_err	err;
+	char	*path;
+} t_path;
+
 typedef struct s_minishell
 {
 	t_token		*token_list;
@@ -115,8 +150,11 @@ typedef struct s_var
 
 typedef struct s_env
 {
+	char	**envp;
 	t_var	*var;
 	t_var	*exp;
+	int		last_var_id;
+	int		last_exp_id;
 }	t_env;
 
 #endif

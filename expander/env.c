@@ -6,31 +6,34 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/06 09:33:08 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:34:04 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*dup_env(char **envp)
+t_env	*dup_env(char *envp[])
 {
 	t_env	*e;
 	char	**split;
 	int		i;
 
 	e = gb_malloc(sizeof(t_env));
+	e->envp = envp;
 	e->exp = gb_malloc(sizeof(t_var));
 	e->var = gb_malloc(sizeof(t_var));
 	e->exp->next = NULL;
 	e->var->next = NULL;
+	e->last_exp_id = 0;
+	e->last_var_id = 0;
 	i = -1;
 	while (envp[++i])
 	{
-		split = split_var(envp[i]);
-		add_var(e, split[0], split[1]);
+		split = split_ent(envp[i]);
+		add_ent(e, split[0], split[1]);
 	}
-	unset("OLDPWD", e);
-	add_var(e, "?", "1");
+	unset((char *[]){"OLDPWD", NULL}, e);
+	add_ent(e, "?", "0");
 	set_val(e, "SHLVL", "1");
 	return (e);
 }
@@ -47,57 +50,75 @@ void	env(t_env *e, char lst)
 	{
 		if (lst == EXPORT)
 			printf("declare -x ");
-		printf("%s=", curr->key);
+		printf("%s", curr->key);
 		if (lst == EXPORT && curr->value)
-			printf("\"%s\"\n", curr->value);
+			printf("=\"%s\"", curr->value);
 		else if (lst == VAR && curr->value)
-			printf("%s\n", curr->value);
+			printf("=%s", curr->value);
 		// else
 		// 	;
+		printf("\n");
 		curr = curr->next;
 	}
 }
 
-void	unset(char *key, t_env *v)
+void	unset(char **keys, t_env *e)
 {
 	t_var	*curr;
+	int		i;
 
-	if (key == NULL)
+	if (keys == NULL || keys[0] == NULL)
 		return ;
-	curr = v->var;
-	while (curr->next)
+	i = -1;
+	while (keys[++i])
 	{
-		if (ft_strcmp(curr->next->key, key) == 0)
+		curr = e->var;
+		while (curr->next)
 		{
-			curr->next = curr->next->next;
-			return ;
+			if (ft_strcmp(curr->next->key, keys[i]) == 0)
+			{
+				if (curr->next->id == e->last_var_id)
+				{
+					e->last_var_id = curr->id;
+					curr->next->next = NULL;
+				}
+				else
+					curr->next = curr->next->next;
+				break;
+			}
+			curr = curr->next;
 		}
-		curr = curr->next;
-	}
-	curr = v->exp;
-	while (curr->next)
-	{
-		if (ft_strcmp(curr->next->key, key) == 0)
+		curr = e->exp;
+		while (curr->next)
 		{
-			curr->next = curr->next->next;
-			return ;
+			if (ft_strcmp(curr->next->key, keys[i]) == 0)
+			{
+				if (curr->next->id == e->last_exp_id)
+				{
+					e->last_exp_id = curr->id;
+					curr->next->next = NULL;
+				}
+				else
+					curr->next = curr->next->next;
+				break;
+			}
+			curr = curr->next;
 		}
-		curr = curr->next;
 	}
 }
 
 // a=1 : export: a="1"; var: a=1
 // a= : export: a=""; var: a=
 // a : export: a; var: [nothing]
-void	add_var(t_env *e, char *key, char *val)
+void	add_ent(t_env *e, char *key, char *val)
 {
-	static int	id;
 	t_var		*curr;
 
 	curr = e->exp;
 	while (curr->next)
 		curr = curr->next;
-	curr->id = id++;
+	e->last_exp_id += 1;
+	curr->id = e->last_exp_id;
 	curr->key = key;
 	curr->value = val;
 	curr->next = gb_malloc(sizeof(t_var));
@@ -107,14 +128,15 @@ void	add_var(t_env *e, char *key, char *val)
 	curr = e->var;
 	while (curr->next)
 		curr = curr->next;
-	curr->id = id;
+	e->last_var_id += 1;
+	curr->id = e->last_var_id;
 	curr->key = key;
 	curr->value = val;
 	curr->next = gb_malloc(sizeof(t_var));
 	curr->next->next = NULL;
 }
 
-char **split_var(char *str)
+char **split_ent(char *str)
 {
 	char	**split;
 
@@ -124,7 +146,7 @@ char **split_var(char *str)
 	split[0] = ft_strndup(str, find_pos(str, '='));
 	if (split[0] == NULL)
 	{
-		split[0] = ft_strndup(str, find_pos(str, '='));
+		split[0] = ft_strndup(str, find_pos(str, '\0'));
 		split[1] = NULL;
 		return (split);
 	}

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:06:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/14 13:37:19 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:14:23 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ bool	is_valid_var_char(char c);
 
 t_env	*dup_env(char **envp);
 void	env(t_env *e, char lst);
-void	unset(char *key, t_env *v);
-void	add_var(t_env *e, char *key, char *val);
+void	unset(char **keys, t_env *v);
+void	add_ent(t_env *e, char *key, char *val);
 int		find_pos(char *str, char delim);
-char	**split_var(char *str);
+char	**split_ent(char *str);
 char	*ft_strndup(char *str, int pos);
 void	set_val(t_env *e, char *key, char *val);
 // int		ft_strcmp(char *s1, char *s2);
-void ft_strncpy(char *dst, char *src, int len);
+void	ft_strncpy(char *dst, char *src, int len);
 char	*fetch_val(char *key, t_env *e);
 
 void	append(char *file, char *cmd, char *args[]);
@@ -72,6 +72,8 @@ void	fill_word(char *str, char **args, int *i, int j);
 // void	append_str(char **str1, char *str2);
 void	heredoc(t_io_node *io, int *p_fd);
 char	*read_doc(char *delimiter);
+
+// int	exec_node(t_node *node, bool piped, t_minishell *vars);
 
 
 #endif

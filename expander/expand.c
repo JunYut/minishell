@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/14 17:04:39 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:04:19 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_tree(t_node *node, int depth, char *branch)
 
 void	expand_tree(t_node *node, int depth, char *branch)
 {
-	char **envp = environ;
+	// char **envp = environ;
 	(void)branch;
 	if (node == NULL)
 		return ;
@@ -49,59 +49,58 @@ void	expand_tree(t_node *node, int depth, char *branch)
 		expand_tree(node->right, depth + 1, "right");
 	}
 	expand_node(node);
-	if (node->io_list != NULL && node->io_list->type == IO_OUT)
-		append(node->io_list->value, parse_path(envp, node->exp_args[0]), node->exp_args);
-	else if (node->io_list != NULL && node->io_list->type == IO_HEREDOC)
-	{
-		pid_t pid = fork();
-		if (pid == 0)
-		{
-			while (node->io_list->next != NULL)
-				node->io_list = node->io_list->next;
-			dup2(node->io_list->heredoc, STDIN_FILENO);
-			close(node->io_list->heredoc);
-			execve(parse_path(envp, node->exp_args[0]), node->exp_args, environ);
-		}
-		wait(NULL);
-	}
-	else
-	{
-		pid_t pid = fork();
-		if (pid == 0)
-			if (execve(parse_path(envp, node->exp_args[0]), node->exp_args, environ) == -1)
-				exit(1);
-		wait(NULL);
-	}
+	// if (node->io_list != NULL && node->io_list->type == IO_OUT)
+	// 	append(node->io_list->value, parse_path(envp, node->exp_args[0]), node->exp_args);
+	// else if (node->io_list != NULL && node->io_list->type == IO_HEREDOC)
+	// {
+	// 	pid_t pid = fork();
+	// 	if (pid == 0)
+	// 	{
+	// 		while (node->io_list->next != NULL)
+	// 			node->io_list = node->io_list->next;
+	// 		dup2(node->io_list->heredoc, STDIN_FILENO);
+	// 		close(node->io_list->heredoc);
+	// 		execve(parse_path(envp, node->exp_args[0]), node->exp_args, environ);
+	// 	}
+	// 	wait(NULL);
+	// }
+	// else
+	// {
+	// 	pid_t pid = fork();
+	// 	if (pid == 0)
+	// 		if (execve(parse_path(envp, node->exp_args[0]), node->exp_args, environ) == -1)
+	// 			exit(1);
+	// 	wait(NULL);
+	// }
 }
 
 void	expand_node(t_node *node)
 {
 	t_io_node	*io;
-	// int			p_fd[2];
-	// pid_t		pid;
+	int			p_fd[2];
+	pid_t		pid;
 
 	if (node->args)
 		node->exp_args = expand_args(node->args);
 	io = node->io_list;
 	while (io != NULL)
 	{
-		// if (io->type == IO_HEREDOC)
-		// {
-		// 	pipe(p_fd);
-		// 	io->exp_value = expand_args(io->value);
-		// 	pid = fork();
-		// 	if (!pid)
-		// 	heredoc(io, p_fd);
-		// 	// close(p_fd[1]);
-		// 	// close(p_fd[0]);
-		// 	waitpid(pid, &pid, 0);
-		// 	// wait(NULL);
-		// 	io->heredoc = p_fd[0];
-		// }
+		if (io->type == IO_HEREDOC)
+		{
+			pipe(p_fd);
+			io->exp_value = expand_args(io->value);
+			pid = fork();
+			if (!pid)
+			heredoc(io, p_fd);
+			waitpid(pid, &pid, 0);
+			io->heredoc = p_fd[0];
+		}
 		// printf("redir_type: %d\n", io->type);
 		// printf("redir: %s\n", io->value);
-		// else
-		// 	io->exp_value = expand_args(io->value);
+		else
+			io->exp_value = expand_args(io->value);
+		printf("redir_type: %d\n", io->type);
+		printf("redir: %s\n", io->value);
 		io = io->next;
 	}
 	// printf("exp_args: %s\n", node->args);
@@ -120,7 +119,7 @@ char	**expand_args(char *args)
 	// while (expanded[++i])
 	// {
 	// 	expanded[i] = remove_quotes(expanded[i]);
-	// 	printf("expanded: %s\n", expanded[i]);
+		// printf("expanded: %s\n", expanded[i]);
 	// }
 	expanded = split_args(buffer);
 	while (expanded[++i])
