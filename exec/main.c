@@ -3,7 +3,7 @@
 # include "gbc.h"
 # include "define.h"
 
-# define TEST 13
+# define TEST 0
 
 int main(int ac, char **av, char **envp)
 {
@@ -388,7 +388,11 @@ int main(int ac, char **av, char **envp)
 				cmd.seq[0].cmd[2].file[0].file = "out.txt";
 	# endif
 
-	exec(&cmd, e);
+	// exec(&cmd, e);
+	(void)cmd;
+	printf("PWD: %s\n", fetch_val("PWD", e));
+	cd("main.c", e);
+	printf("PWD: %s\n", fetch_val("PWD", e));
 
 	exit_shell(ft_atoi(fetch_val("?", e)));
 

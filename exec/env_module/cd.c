@@ -28,7 +28,7 @@ void	cd(char *path, t_env *e)
 	if (!fetch_val("OLDPWD", e))
 		add_ent(e, "OLDPWD", fetch_val("PWD", e));
 	if (chdir(target) == -1)
-		printf("cd: %s: No such file or directory\n", target);
+		perror("minishell: cd");
 	else
 		set_val(e, "OLDPWD", fetch_val("PWD", e));
 	set_val(e, "PWD", gb_add(getcwd(NULL, 0)));
