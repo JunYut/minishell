@@ -21,7 +21,7 @@ make -C ..
 if [ "$#" -eq 1 ] || [ "$2" = "-l" ]; then
 	clang $CFLAGS $INCL $OBJS $1 $LIBS
 elif [ "$2" = "-f" ]; then
-	clang $CFLAGS-fsanitize=address $INCL  -g3 $OBJS $1 $LIBS
+	clang $CFLAGS -fsanitize=address $INCL  -g3 $OBJS $1 $LIBS
 elif [ "$2" = "-g" ]; then
 	clang $CFLAGS -g $INCL $OBJS $1 $LIBS
 fi

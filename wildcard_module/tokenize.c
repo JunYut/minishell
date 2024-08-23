@@ -1,26 +1,49 @@
 # include "wildcard.h"
 
-t_list	*tokenize(char *str)
+// Returns an array of tokens terminated by T_END
+t_token	*tokenize(char *str)
 {
-	t_list	*token;
+	t_token	*token;
 	int		i;
+	int		j;
 
-	token = NULL;
+	token = gb_malloc(sizeof(t_token) * (count_token(str) + 1));
+	j = 0;
 	i = -1;
 	while (str[++i])
 	{
 		if (str[i] == '*')
 		{
-			ft_lstadd_back(&token, gb_lstnew(gb_newtoken(T_WILDCARD)));
+			token[j++] = T_WILDCARD;
 			while (str[i + 1] && str[i + 1] == '*')
 				++i;
 		}
 		else
 		{
-			ft_lstadd_back(&token, gb_lstnew(gb_newtoken(T_PATTERN)));
+			token[j++] = T_PATTERN;
 			while (str[i + 1] && str[i + 1] != '*')
 				++i;
 		}
 	}
+	token[j] = T_END;
 	return (token);
+}
+
+int	count_token(char *str)
+{
+	int	count;
+	int	i;
+	count = 0;
+	i = -1;
+	while (str[++i])
+	{
+		++count;
+		if (str[i] == '*')
+			while (str[i + 1] && str[i + 1] == '*')
+				++i;
+		else
+			while (str[i + 1] && str[i + 1] != '*')
+				++i;
+	}
+	return (count);
 }

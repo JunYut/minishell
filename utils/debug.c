@@ -1,21 +1,20 @@
 # include "debug.h"
 
-void	print_token(t_list *token, char **pattern)
+void	print_token(t_token *token, char **pattern)
 {
-	t_list	*curr;
 	int		i;
+	int		j;
 
-	i = 0;
-	curr = token;
-	while (curr)
+	j = 0;
+	i = -1;
+	while (token[++i] != T_END)
 	{
-		if (*(t_token *)curr->content == T_WILDCARD)
+		if (token[i] == T_WILDCARD)
 			DPRINTF("*");
 		else
-			DPRINTF("%s", pattern[i++]);
-		if (curr->next)
+			DPRINTF("%s", pattern[j++]);
+		if (token[i + 1] != T_END)
 			DPRINTF(" ");
-		curr = curr->next;
 	}
 	DPRINTF("\n");
 }
