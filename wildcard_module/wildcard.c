@@ -2,13 +2,14 @@
 
 char	**wildcard(char *regex, t_env *env)
 {
-	(void)regex;
 	t_wildcard	*wc;
 	char		**arr;
 
-	wc = init_dirent(fetch_val("PWD", env));
+	wc = gb_malloc(sizeof(t_wildcard));
+	wc->dirent = init_dirent(fetch_val("PWD", env));
 	wc->token = tokenize(regex);
-	arr = lst_to_arr(wc->files);
+	wc->pattern = ft_split(regex, '*');
+	arr = lst_to_arr(wc->dirent->files);
 	return (arr);
 }
 
@@ -30,27 +31,27 @@ char	**lst_to_arr(t_list *lst)
 	return (arr);
 }
 
-t_wildcard	*init_dirent(char *cwd)
+t_dirent	*init_dirent(char *cwd)
 {
-	t_wildcard		*wc;
+	t_dirent		*dirent;
 	DIR				*dirp;
 	struct dirent	*dp;
 
-	wc = gb_malloc(sizeof(t_wildcard));
-	wc->files = NULL;
-	wc->dot_files = NULL;
+	dirent = gb_malloc(sizeof(t_dirent));
+	dirent->files = NULL;
+	dirent->dot_files = NULL;
 	dirp = opendir(cwd);
 	dp = readdir(dirp);
 	while (dp != NULL)
 	{
 		if (dp->d_name[0] == '.')
-			ft_lstadd_back(&wc->dot_files, gb_lstnew(gb_strdup(dp->d_name)));
+			ft_lstadd_back(&dirent->dot_files, gb_lstnew(gb_strdup(dp->d_name)));
 		else
-			ft_lstadd_back(&wc->files, gb_lstnew(gb_strdup(dp->d_name)));
+			ft_lstadd_back(&dirent->files, gb_lstnew(gb_strdup(dp->d_name)));
 		dp = readdir(dirp);
 	}
 	closedir(dirp);
-	sort_lex(wc->files);
-	sort_lex(wc->dot_files);
-	return (wc);
+	sort_lex(dirent->files);
+	sort_lex(dirent->dot_files);
+	return (dirent);
 }
