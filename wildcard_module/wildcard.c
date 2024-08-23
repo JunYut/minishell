@@ -1,13 +1,13 @@
 # include "wildcard.h"
 
-char	**wildcard(char *str, t_env *env)
+char	**wildcard(char *regex, t_env *env)
 {
-	(void)str;
+	(void)regex;
 	t_wildcard	*wc;
 	char		**arr;
 
-	wc = init_wc(fetch_val("PWD", env));
-	wc->token = tokenize(str);
+	wc = init_dirent(fetch_val("PWD", env));
+	wc->token = tokenize(regex);
 	arr = lst_to_arr(wc->files);
 	return (arr);
 }
@@ -30,7 +30,7 @@ char	**lst_to_arr(t_list *lst)
 	return (arr);
 }
 
-t_wildcard	*init_wc(char *cwd)
+t_wildcard	*init_dirent(char *cwd)
 {
 	t_wildcard		*wc;
 	DIR				*dirp;

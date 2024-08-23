@@ -22,10 +22,11 @@ typedef struct s_wildcard
 	char	**pattern;
 }	t_wildcard;
 
-char		**wildcard(char *str, t_env *env);
-char		**lst_to_arr(t_list *lst);
-t_wildcard	*init_wc(char *cwd);
-t_token		*tokenize(char *str);
-int			count_token(char *str);
+char		**wildcard(char *regex, t_env *env);
+t_list		*pattern_match(t_wildcard *wc);
+t_token		*tokenize(char *regex);
+t_wildcard	*init_dirent(char *cwd);
+int			count_token(char *regex);
 void		sort_lex(t_list *lst);
 void		lstswap(t_list *a, t_list *b);
+char		**lst_to_arr(t_list *lst);

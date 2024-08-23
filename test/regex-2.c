@@ -10,7 +10,7 @@ int main(int ac, char **av, char **envp)
 	char		*regex = "*_module";
 
 	set_val(e, "PWD", "..");
-	wc = init_wc(fetch_val("PWD", e));
+	wc = init_dirent(fetch_val("PWD", e));
 	wc->token = tokenize(regex);
 	wc->pattern = ft_split(regex, '*');
 	print_token(wc->token, wc->pattern);
