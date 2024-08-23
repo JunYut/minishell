@@ -18,7 +18,7 @@ t_list	*ent_match(t_wildcard *wc, char *regex)
 			continue ;
 		}
 		match = pattern_match(lst->content, wc->token, wc->pattern);
-		DPRINTF("match: %s\n", match);
+		// DPRINTF("match: %s\n\n", match);
 		if (match)
 			ft_lstadd_back(&match_lst, gb_lstnew(gb_strdup(match)));
 		lst = lst->next;
@@ -30,23 +30,31 @@ t_list	*ent_match(t_wildcard *wc, char *regex)
 char	*pattern_match(char *ent, t_token *token, char **pattern)
 {
 	char	*pos;
+	char	*tmp;
 	int		len;
 	int		i;
+	int		j;
 
+	tmp = ent;
+	j = 0;
 	i = -1;
 	while (token[++i] != T_END)
 	{
-		DPRINTF("ent: %s\n", ent);
-		DPRINTF("pattern: %s\n", pattern[i]);
-		len = ft_strlen(ent);
-		pos = ft_strnstr(ent, pattern[i], len);
+		// DPRINTF("ent: [%s]\n", tmp);
+		// DPRINTF("pattern: [%s]\n", pattern[j]);
+		len = ft_strlen(tmp);
+		pos = ft_strnstr(tmp, pattern[j], len);
 		if (!pos)
 			return (NULL);
-		if (token[i] == T_PATTERN && pos != ent)
+		if (token[i] == T_PATTERN && pos != tmp)
 			return (NULL);
-		else if (token[i + 1] == T_PATTERN && pos == ent)
+		else if (token[i + 1] == T_PATTERN && pos == tmp)
 			return (NULL);
-		ent = pos + ft_strlen(pattern[i]);
+		tmp = pos + ft_strlen(pattern[j]);
+		if (tmp[0] == '\0')
+			return (ent);
+		if (pattern[j + 1])
+			++j;
 	}
 	return (ent);
 }

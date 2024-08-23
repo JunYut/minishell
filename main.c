@@ -1,6 +1,6 @@
 # include "wildcard.h"
 
-# define TEST 2
+# define TEST 4
 
 int main(int ac, char **av, char **envp)
 {
@@ -52,14 +52,7 @@ int main(int ac, char **av, char **envp)
 	char	*regex = "*fail*fail*";
 	# endif
 
-	t_wildcard	wc;
-	wc.dirent = init_dirent(fetch_val("PWD", e));
-	wc.token = tokenize(regex);
-	wc.pattern = ft_split(regex, '*');
-
-	print_token(wc.token, wc.pattern); NEWLINE;
-	print_lst(wc.dirent->files); NEWLINE;
-	print_lst(wc.dirent->dot_files); NEWLINE;
+	print_arr(wildcard(regex, e));
 
 	gb_clear();
 }
