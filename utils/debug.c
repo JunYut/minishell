@@ -12,7 +12,7 @@ void	print_token(t_token *token, char **pattern)
 		if (token[i] == T_WILDCARD)
 			DPRINTF("*");
 		else
-			DPRINTF("%s", pattern[j++]);
+			DPRINTF("[%s]", pattern[j++]);
 		if (token[i + 1] != T_END)
 			DPRINTF(" ");
 	}
@@ -37,7 +37,7 @@ void	print_lst(t_list *lst)
 	curr = lst;
 	while (curr)
 	{
-		DPRINTF("%s\n", (char *)curr->content);
+		DPRINTF("[%s]\n", (char *)curr->content);
 		curr = curr->next;
 	}
 }

@@ -3,14 +3,15 @@
 char	**wildcard(char *regex, t_env *env)
 {
 	t_wildcard	*wc;
-	char		**arr;
+	t_list		*match_lst;
 
 	wc = gb_malloc(sizeof(t_wildcard));
 	wc->dirent = init_dirent(fetch_val("PWD", env));
 	wc->token = tokenize(regex);
 	wc->pattern = ft_split(regex, '*');
-	arr = lst_to_arr(wc->dirent->files);
-	return (arr);
+	match_lst = ent_match(wc, regex);
+	ft_free_s_arr(wc->pattern);
+	return (lst_to_arr(match_lst));
 }
 
 char	**lst_to_arr(t_list *lst)
