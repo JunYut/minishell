@@ -1,6 +1,6 @@
 # include "wildcard.h"
 
-# define TEST 4
+# define TEST 2
 
 int main(int ac, char **av, char **envp)
 {
@@ -13,7 +13,7 @@ int main(int ac, char **av, char **envp)
 	char	*regex = "*";
 	# endif
 	# if TEST == 2
-	char	*regex = "*_module";
+	char	*regex = "*_";
 	# endif
 	# if TEST == 3
 	char	*regex = ".*";
@@ -52,6 +52,7 @@ int main(int ac, char **av, char **envp)
 	char	*regex = "*fail*fail*";
 	# endif
 
+	printf("regex: %s\n\n", regex);
 	print_arr(wildcard(regex, e));
 
 	gb_clear();
