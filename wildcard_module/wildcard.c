@@ -10,6 +10,8 @@ char	**wildcard(char *regex, t_env *env)
 	wc->token = tokenize(regex);
 	wc->pattern = ft_split(regex, '*');
 	match_lst = ent_match(wc, regex);
+	if (match_lst == NULL)
+		ft_lstadd_back(&match_lst, gb_lstnew(gb_strdup(regex)));
 	ft_free_s_arr(wc->pattern);
 	return (lst_to_arr(match_lst));
 }
