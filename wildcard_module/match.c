@@ -36,6 +36,8 @@ char	*pattern_match(char *ent, t_token *token, char **pattern)
 	{
 		if (token[i] == T_PATTERN)
 		{
+			if (token[i + 1] == T_END && *tmp != '\0')
+				return (NULL);
 			pos = ft_strnstr(tmp, pattern[++j], ft_strlen(tmp));
 			if (!pos)
 				return (NULL);

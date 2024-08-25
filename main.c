@@ -16,7 +16,7 @@ int main(int ac, char **av, char **envp)
 	char	*regex = "*_";
 	# endif
 	# if TEST == 3
-	char	*regex = ".*";
+	char	*regex = "w*";
 	# endif
 	# if TEST == 4
 	char	*regex = ".*e";
@@ -51,6 +51,14 @@ int main(int ac, char **av, char **envp)
 	# if TEST == 14
 	char	*regex = "*fail*fail*";
 	# endif
+	# if TEST == 0
+	if (ac != 2)
+	{
+		printf("Usage: %s <regex>\n", av[0]);
+		return (1);
+	}
+	char	*regex = av[1];
+	#endif
 
 	printf("regex: %s\n\n", regex);
 	print_arr(wildcard(regex, e));
