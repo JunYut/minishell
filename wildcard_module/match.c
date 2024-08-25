@@ -41,6 +41,8 @@ char	*pattern_match(char *ent, t_token *token, char **pattern)
 			pos = ft_strnstr(tmp, pattern[++j], ft_strlen(tmp));
 			if (!pos)
 				return (NULL);
+			if (i == 0 && pos != tmp)
+				return (NULL);
 		}
 		if (token[i + 1] == T_WILDCARD)
 			tmp = pos + ft_strlen(pattern[j]);
