@@ -26,8 +26,9 @@ t_env	*dup_env(char *envp[])
 	return (e);
 }
 
-void	env(t_env *e, char lst)
+void	env(char **argv, t_env *e, char lst)
 {
+	(void)argv;
 	t_var	*curr;
 
 	if (lst == VAR)
@@ -96,10 +97,16 @@ void	unset(char **keys, t_env *e)
 	}
 }
 
-void	exit_shell(int status)
+void	exit_shell(char **status)
 {
+	int	exit_status;
+
+	if (status && status[0])
+		exit_status = ft_atoi(status[0]);
 	gb_clear();
-	exit(status);
+	if (!status || !status[0])
+		exit(EXIT_SUCCESS);
+	exit(exit_status);
 }
 
 // a=1 : export: a="1"; var: a=1

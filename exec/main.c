@@ -1,11 +1,12 @@
 # include "exec.h"
 # include "signals.h"
+# include "env.h"
 # include "gbc.h"
 # include "define.h"
 
 volatile sig_atomic_t	g_wait;
 
-# define TEST 0
+# define TEST 9
 
 int main(int ac, char **av, char **envp)
 {
@@ -392,9 +393,10 @@ int main(int ac, char **av, char **envp)
 
 	// exec(&cmd, e);
 	(void)cmd;
-	unset((char *[]){"OLDPWD", NULL}, e);
 
-	exit_shell(ft_atoi(fetch_val("?", e)));
+	exec(&cmd, e);
+
+	exit_shell((char *[]){fetch_val("?", e), NULL});
 
 	return (0);
 }

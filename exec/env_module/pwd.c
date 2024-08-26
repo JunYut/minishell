@@ -1,6 +1,8 @@
 # include "env.h"
 
-void	pwd(t_env *e)
+void	pwd(char **argv, t_env *e)
 {
+	(void)argv;
+
 	printf("%s\n", fetch_val("PWD", e));
 }

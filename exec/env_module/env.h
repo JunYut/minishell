@@ -24,13 +24,13 @@ typedef struct s_env
 	int		last_exp_id;
 }	t_env;
 
-void	env(t_env *e, char lst);
+void	env(char **argv, t_env *e, char lst);
 void	export(char **vars, t_env *e);
 void	unset(char **keys, t_env *e); // TODO: input validation
-void	cd(char *path, t_env *e);
-void	pwd(t_env *e);
+void	cd(char **path, t_env *e);
+void	pwd(char **argv, t_env *e);
 void	echo(char **av);
-void	exit_shell(int status);
+void	exit_shell(char **status);
 
 void	add_ent(t_env *e, char *key, char *val);
 void	set_val(t_env *e, char *key, char *val);

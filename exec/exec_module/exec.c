@@ -19,7 +19,7 @@ int	exec(t_cmd_line *cmd, t_env *e)
 			pipex(&cmd->seq[i], e->envp);
 			close_pipes(cmd->seq[i].pipefd, cmd->seq[i].pipe_count);
 			wait_childs(cmd->seq[i].pid, cmd->seq_count, e);
-			exit_shell(ft_atoi(fetch_val("?", e)));
+			exit_shell((char *[]){fetch_val("?", e), NULL});
 		}
 		wait_status(cmd->pid[i], e);
 	}
@@ -37,7 +37,7 @@ int	pipex(t_pipe *seq, char *envp[])
 		if (seq->pid[i] == -1)
 		{
 			perror("fork");
-			exit_shell(EXIT_FAILURE);
+			exit_shell((char *[]){gb_add(ft_itoa(errno)), NULL});
 		}
 		if (seq->pid[i] == 0)
 		{
@@ -56,7 +56,7 @@ int	exec_cmd(char *path, char *argv[], char *envp[])
 {
 	execve(path, argv, envp);
 	perror(path);
-	exit_shell(EXIT_FAILURE);
+	exit_shell((char *[]){gb_add(ft_itoa(errno)), NULL});
 	return (-1);
 }
 

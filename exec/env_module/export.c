@@ -14,7 +14,7 @@ void	export(char **vars, t_env *e)
 
 	if (vars == NULL || vars[0] == NULL || vars[0][0] == '\0')
 	{
-		env(e, EXPORT);
+		env(vars, e, EXPORT);
 		return ;
 	}
 	i = -1;
