@@ -7,7 +7,7 @@ CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c99 -g
 
 # Directories
 LIBFT_DIR = libft_module
-MODULES_DIR = gbc_module env_module wildcard_module utils
+MODULES_DIR = gbc_module exec_module env_module wildcard_module utils
 OBJ_DIR = obj
 INCL_DIR = -Iinclude -I$(LIBFT_DIR)/include
 

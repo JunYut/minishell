@@ -50,52 +50,6 @@ void	env(t_env *e, char lst)
 	}
 }
 
-// keys should be NULL terminated
-void	unset(char **keys, t_env *e)
-{
-	t_var	*curr;
-	int		i;
-
-	if (keys == NULL || keys[0] == NULL)
-		return ;
-	i = -1;
-	while (keys[++i])
-	{
-		curr = e->var;
-		while (curr->next && curr->id != e->last_var_id)
-		{
-			if (ft_strcmp(curr->next->key, keys[i]) == 0)
-			{
-				if (curr->next->id == e->last_var_id)
-				{
-					e->last_var_id = curr->id;
-					curr->next->next = NULL;
-				}
-				else
-					curr->next = curr->next->next;
-				break;
-			}
-			curr = curr->next;
-		}
-		curr = e->exp;
-		while (curr->next && curr->id != e->last_exp_id)
-		{
-			if (ft_strcmp(curr->next->key, keys[i]) == 0)
-			{
-				if (curr->next->id == e->last_exp_id)
-				{
-					e->last_exp_id = curr->id;
-					curr->next->next = NULL;
-				}
-				else
-					curr->next = curr->next->next;
-				break;
-			}
-			curr = curr->next;
-		}
-	}
-}
-
 // a=1 : export: a="1"; var: a=1
 // a= : export: a=""; var: a=
 // a : export: a; var: [nothing]

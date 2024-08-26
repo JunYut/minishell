@@ -2,6 +2,8 @@
 
 # define TEST 0
 
+volatile	__sig_atomic_t	g_wait = 0;
+
 int main(int ac, char **av, char **envp)
 {
 	(void)ac;
@@ -58,10 +60,10 @@ int main(int ac, char **av, char **envp)
 		return (1);
 	}
 	char	*regex = av[1];
-	#endif
 
 	printf("regex: %s\n\n", regex);
 	print_arr(wildcard(regex, e));
+	#endif
 
 	gb_clear();
 }

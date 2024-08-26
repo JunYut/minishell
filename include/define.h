@@ -21,6 +21,8 @@ typedef enum e_token
 	T_INVALID = -1
 }	t_token;
 
+extern volatile	__sig_atomic_t	g_wait;
+
 # if DEBUG == 1
 	# define DPRINTF printf
 	# define DPRINT_ARR(arr) print_arr(arr)
