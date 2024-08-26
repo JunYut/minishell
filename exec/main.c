@@ -396,7 +396,7 @@ int main(int ac, char **av, char **envp)
 
 	exec(&cmd, e);
 
-	exit_shell((char *[]){fetch_val("?", e), NULL});
+	exit_shell((char *[]){"0", NULL}, e);
 
 	return (0);
 }

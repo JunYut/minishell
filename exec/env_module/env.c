@@ -97,15 +97,24 @@ void	unset(char **keys, t_env *e)
 	}
 }
 
-void	exit_shell(char **status)
+void	exit_shell(char **status, t_env *e)
 {
 	int	exit_status;
 
+	printf("exit\n");
 	if (status && status[0])
-		exit_status = ft_atoi(status[0]);
+	{
+		if (is_numeric(status[0]))
+			exit_status = ft_atoi(status[0]);
+		else
+		{
+			printf("minishell: exit: %s: numeric argument required\n", status[0]);
+			exit_status = 2;
+		}
+	}
+	if (!status || !status[0] || status[0][0] == '\0')
+		exit_status = ft_atoi(fetch_val("?", e));
 	gb_clear();
-	if (!status || !status[0])
-		exit(EXIT_SUCCESS);
 	exit(exit_status);
 }
 

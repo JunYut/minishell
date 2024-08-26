@@ -30,7 +30,7 @@ void	unset(char **keys, t_env *e); // TODO: input validation
 void	cd(char **path, t_env *e);
 void	pwd(char **argv, t_env *e);
 void	echo(char **av);
-void	exit_shell(char **status);
+void	exit_shell(char **status, t_env *e);
 
 void	add_ent(t_env *e, char *key, char *val);
 void	set_val(t_env *e, char *key, char *val);
@@ -42,3 +42,4 @@ char	**split_ent(char *str);
 char	*ft_strndup(char *str, int pos);
 void	ft_strncpy(char *dst, char *src, int len);
 int		find_pos(char *str, char delim);
+int		is_numeric(char *str);
