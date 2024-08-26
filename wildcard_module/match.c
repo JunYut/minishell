@@ -32,20 +32,21 @@ char	*pattern_match(char *ent, t_token *token, char **pattern)
 	tmp = ent;
 	j = -1;
 	i = -1;
-	while (token[++i])
+	while (token[++i] != T_END)
 	{
 		if (token[i] == T_PATTERN)
 		{
-			if (token[i + 1] == T_END && *tmp != '\0')
-				return (NULL);
 			pos = ft_strnstr(tmp, pattern[++j], ft_strlen(tmp));
 			if (!pos)
 				return (NULL);
 			if (i == 0 && pos != tmp)
 				return (NULL);
-		}
-		if (token[i + 1] == T_WILDCARD)
 			tmp = pos + ft_strlen(pattern[j]);
+			// DPRINTF("token: %d\n", token[i + 1]);
+			// DPRINTF("tmp: [%s]\n", tmp);
+			if (token[i + 1] == T_END && *tmp != '\0')
+				return (NULL);
+		}
 	}
 	return (ent);
 }

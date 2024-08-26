@@ -8,24 +8,24 @@ t_token	*tokenize(char *regex)
 	int		j;
 
 	token = gb_malloc(sizeof(t_token) * (count_token(regex) + 1));
-	j = 0;
+	j = -1;
 	i = -1;
 	while (regex[++i])
 	{
 		if (regex[i] == '*')
 		{
-			token[j++] = T_WILDCARD;
+			token[++j] = T_WILDCARD;
 			while (regex[i + 1] && regex[i + 1] == '*')
 				++i;
 		}
 		else
 		{
-			token[j++] = T_PATTERN;
+			token[++j] = T_PATTERN;
 			while (regex[i + 1] && regex[i + 1] != '*')
 				++i;
 		}
 	}
-	token[j] = T_END;
+	token[++j] = T_END;
 	return (token);
 }
 
@@ -33,6 +33,7 @@ int	count_token(char *regex)
 {
 	int	count;
 	int	i;
+
 	count = 0;
 	i = -1;
 	while (regex[++i])
