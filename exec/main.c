@@ -3,6 +3,8 @@
 # include "gbc.h"
 # include "define.h"
 
+volatile sig_atomic_t	g_wait;
+
 # define TEST 0
 
 int main(int ac, char **av, char **envp)
@@ -390,9 +392,7 @@ int main(int ac, char **av, char **envp)
 
 	// exec(&cmd, e);
 	(void)cmd;
-	printf("PWD: %s\n", fetch_val("PWD", e));
-	cd("main.c", e);
-	printf("PWD: %s\n", fetch_val("PWD", e));
+	unset((char *[]){"OLDPWD", NULL}, e);
 
 	exit_shell(ft_atoi(fetch_val("?", e)));
 

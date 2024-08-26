@@ -23,7 +23,7 @@ typedef enum e_token
 	T_INVALID = -1
 }	t_token;
 
-volatile sig_atomic_t	g_wait;
+extern volatile sig_atomic_t	g_wait;
 
 # if DEBUG == 1
 	# define DPRINTF printf
