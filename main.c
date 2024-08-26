@@ -57,6 +57,7 @@ int main(int ac, char **av, char **envp)
 	if (ac != 2)
 	{
 		printf("Usage: %s <regex>\n", av[0]);
+		gb_clear();
 		return (1);
 	}
 	char	*regex = av[1];

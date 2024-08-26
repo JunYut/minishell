@@ -34,6 +34,7 @@ void	echo(char **av);
 void	add_ent(t_env *e, char *key, char *val);
 void	set_val(t_env *e, char *key, char *val);
 char	*fetch_val(char *key, t_env *e);
+void	unset_ent(char *key, t_var *lst, int last_id);
 t_env	*dup_env(char *envp[]);
 void	sort_export(t_var *exp);
 

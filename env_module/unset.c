@@ -3,48 +3,33 @@
 // keys should be NULL terminated
 void	unset(char **keys, t_env *e)
 {
-	t_var	*curr;
-	int		last_id;
-	int		i;
+	int	i;
 
 	if (keys == NULL || keys[0] == NULL)
 		return ;
 	i = -1;
 	while (keys[++i])
 	{
-		curr = e->var;
-		last_id = e->last_var_id;
-		while (curr->next && curr->id != last_id)
+		unset_ent(keys[i], e->exp, e->last_exp_id);
+		unset_ent(keys[i], e->var, e->last_var_id);
+	}
+}
+
+void	unset_ent(char *key, t_var *lst, int last_id)
+{
+	while (lst->next && lst->id != last_id)
+	{
+		if (ft_strcmp(lst->next->key, key) == 0)
 		{
-			if (ft_strcmp(curr->next->key, keys[i]) == 0)
+			if (lst->next->id == last_id)
 			{
-				if (curr->next->id == last_id)
-				{
-					last_id = curr->id;
-					curr->next->next = NULL;
-				}
-				else
-					curr->next = curr->next->next;
-				break;
+				last_id = lst->id;
+				lst->next->next = NULL;
 			}
-			curr = curr->next;
+			else
+				lst->next = lst->next->next;
+			break;
 		}
-		curr = e->exp;
-		last_id = e->last_exp_id;
-		while (curr->next && curr->id != last_id)
-		{
-			if (ft_strcmp(curr->next->key, keys[i]) == 0)
-			{
-				if (curr->next->id == last_id)
-				{
-					last_id = curr->id;
-					curr->next->next = NULL;
-				}
-				else
-					curr->next = curr->next->next;
-				break;
-			}
-			curr = curr->next;
-		}
+		lst = lst->next;
 	}
 }
