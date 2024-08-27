@@ -1,24 +1,31 @@
 # include "env.h"
 
-// a=1 : export: a="1"; var: a=1
-// a= : export: a=""; var: a=
-// a : export: a; var: [nothing]
-char **split_ent(char *str)
+char	**env_to_arr(t_var *var)
 {
-	char	**split;
+	char	**arr;
+	t_var	*curr;
+	int		size;
 
-	if (str == NULL)
-		return (NULL);
-	split = gb_malloc(sizeof(char *) * 2);
-	split[0] = ft_strndup(str, find_pos(str, '='));
-	if (split[0] == NULL)
+	size = 0;
+	curr = var;
+	while (curr->next)
 	{
-		split[0] = ft_strndup(str, find_pos(str, '\0'));
-		split[1] = NULL;
-		return (split);
+		++size;
+		curr = curr->next;
 	}
-	split[1] = ft_strndup(str + find_pos(str, '=') + 1, find_pos(str, '\0'));
-	return (split);
+	arr = gb_malloc(sizeof(char *) * (size + 1));
+	arr[size] = NULL;
+	curr = var;
+	size = -1;
+	while (curr->next)
+	{
+		if (!curr->key || !curr->value)
+			continue ;
+		arr[++size] = gb_add(ft_strjoin(curr->key, "="));
+		arr[size] = gb_add(ft_strjoin(arr[size], curr->value));
+		curr = curr->next;
+	}
+	return (arr);
 }
 
 // copies until pos - 1

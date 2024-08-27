@@ -21,7 +21,7 @@ void	export(char **ent, t_env *e)
 	while (ent[++i])
 	{
 		split = split_ent(ent[i]);
-		if (!valid_key(split[0]))
+		if (!valid_key(split[0], e))
 			continue ;
 		value = fetch_val(split[0], e);
 		if (value)
@@ -29,6 +29,7 @@ void	export(char **ent, t_env *e)
 		else
 			add_ent(e, split[0], split[1]);
 	}
+	e->envp = env_to_arr(e->var);
 }
 
 // if key is not found, return NULL

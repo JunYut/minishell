@@ -7,7 +7,6 @@ t_env	*dup_env(char *envp[])
 	int		i;
 
 	e = gb_malloc(sizeof(t_env));
-	e->envp = envp;
 	e->exp = gb_malloc(sizeof(t_var));
 	e->var = gb_malloc(sizeof(t_var));
 	e->exp->next = NULL;
@@ -23,6 +22,7 @@ t_env	*dup_env(char *envp[])
 	unset((char *[]){"OLDPWD", NULL}, e);
 	add_ent(e, "?", "0");
 	set_val(e, "SHLVL", "1");
+	e->envp = env_to_arr(e->var);
 	return (e);
 }
 
@@ -80,13 +80,14 @@ void	add_ent(t_env *e, char *key, char *val)
 	curr->next->next = NULL;
 }
 
-int	valid_key(char *key)
+int	valid_key(char *key, t_env *e)
 {
 	int	i;
 
 	if (!key || ft_strchr("1234567890", key[0]) != NULL)
 	{
 		printf("minishell: export: `%s`: not a valid identifier\n", key);
+		set_val(e, "?", "1");
 		return (0);
 	}
 	i = -1;
@@ -95,8 +96,30 @@ int	valid_key(char *key)
 		if (ft_strchr("!@#$%^&()_+{}|:\"<>?`~-=[]\\;',./", key[i]) != NULL)
 		{
 			printf("minishell: export: `%s`: not a valid identifier\n", key);
+			set_val(e, "?", "1");
 			return (0);
 		}
 	}
 	return (1);
+}
+
+// a=1 : export: a="1"; var: a=1
+// a= : export: a=""; var: a=
+// a : export: a; var: [nothing]
+char **split_ent(char *str)
+{
+	char	**split;
+
+	if (str == NULL)
+		return (NULL);
+	split = gb_malloc(sizeof(char *) * 2);
+	split[0] = ft_strndup(str, find_pos(str, '='));
+	if (split[0] == NULL)
+	{
+		split[0] = ft_strndup(str, find_pos(str, '\0'));
+		split[1] = NULL;
+		return (split);
+	}
+	split[1] = ft_strndup(str + find_pos(str, '=') + 1, find_pos(str, '\0'));
+	return (split);
 }

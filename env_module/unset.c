@@ -5,17 +5,18 @@ void	unset(char **keys, t_env *e)
 {
 	int	i;
 
-	if (keys == NULL || keys[0] == NULL || !valid_key(keys[0]))
+	if (keys == NULL || keys[0] == NULL || !valid_key(keys[0], e))
 		return ;
 	i = -1;
 	while (keys[++i])
 	{
-		unset_ent(keys[i], e->exp, e->last_exp_id);
-		unset_ent(keys[i], e->var, e->last_var_id);
+		rm_ent(keys[i], e->exp, e->last_exp_id);
+		rm_ent(keys[i], e->var, e->last_var_id);
 	}
+	e->envp = env_to_arr(e->var);
 }
 
-void	unset_ent(char *key, t_var *lst, int last_id)
+void	rm_ent(char *key, t_var *lst, int last_id)
 {
 	while (lst->next && lst->id != last_id)
 	{
