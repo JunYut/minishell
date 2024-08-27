@@ -29,6 +29,7 @@ void	export(char **ent, t_env *e)
 		else
 			add_ent(e, split[0], split[1]);
 	}
+	sort_export(e->exp);
 	e->envp = env_to_arr(e->var);
 }
 

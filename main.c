@@ -27,6 +27,8 @@ int main(int ac, char **av, char **envp)
 	print_arr(e->envp);	NEWLINE;
 	export((char *[]){"a!=1", "b@t=2", "c===3", "d==w=4", "e=t==5", NULL}, e);
 	print_arr(e->envp);	NEWLINE;
+	export((char *[]){"a1=sna", NULL}, e);
+	env(e, EXPORT);	NEWLINE;
 	unset((char *[]){"a", "b", "c", "d", "e", NULL}, e);
 	print_arr(e->envp);
 	# endif
