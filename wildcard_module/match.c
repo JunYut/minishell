@@ -37,16 +37,34 @@ char	*pattern_match(char *ent, t_token *token, char **pattern)
 		if (token[i] == T_PATTERN)
 		{
 			pos = ft_strnstr(tmp, pattern[++j], ft_strlen(tmp));
-			if (!pos)
-				return (NULL);
-			if (i == 0 && pos != tmp)
+			if (token[i + 1] == T_END)
+				pos = r_strnstr(tmp, pattern[j], ft_strlen(tmp));
+			if (!pos || (i == 0 && pos != ent))
 				return (NULL);
 			tmp = pos + ft_strlen(pattern[j]);
-			// DPRINTF("token: %d\n", token[i + 1]);
-			// DPRINTF("tmp: [%s]\n", tmp);
 			if (token[i + 1] == T_END && *tmp != '\0')
 				return (NULL);
 		}
 	}
 	return (ent);
+}
+
+char	*r_strnstr(char *haystack, char *needle, size_t len)
+{
+	char	*pos;
+	size_t	ndl_len;
+
+	if ((!haystack || !needle) && len == 0)
+		return (0);
+	pos = NULL;
+	ndl_len = ft_strlen(needle);
+	if (*needle == '\0')
+		return ((char *)haystack);
+	while (*haystack && len-- >= ndl_len)
+	{
+		if (*haystack == *needle && ft_strncmp(haystack, needle, ndl_len) == 0)
+			pos = (char *)haystack;
+		haystack++;
+	}
+	return (pos);
 }

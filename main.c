@@ -1,6 +1,6 @@
 # include "wildcard.h"
 
-# define TEST 0
+# define TEST 15
 
 volatile	__sig_atomic_t	g_wait = 0;
 
@@ -53,7 +53,7 @@ int main(int ac, char **av, char **envp)
 	# if TEST == 14
 	char	*regex = "*fail*fail*";
 	# endif
-	# if TEST == 0
+	# if TEST == 15
 	if (ac != 2)
 	{
 		printf("Usage: %s <regex>\n", av[0]);
@@ -65,6 +65,12 @@ int main(int ac, char **av, char **envp)
 	printf("regex: %s\n\n", regex);
 	print_arr(wildcard(regex, e));
 	#endif
+	# if TEST == 0
+	(void)e;
+	char	*regex = "hello1llo2llo3";
+	printf("ft_strnstr: [%s]\n", ft_strnstr(regex, "llo", 15));
+	printf("r_strnstr: [%s]\n", r_strnstr(regex, "llo", 15));
+	# endif
 
 	gb_clear();
 }

@@ -30,6 +30,7 @@ typedef struct s_wildcard
 char		**wildcard(char *regex, t_env *env);
 t_list		*ent_match(t_wildcard *wc, char *regex);
 char		*pattern_match(char *ent, t_token *token, char **pattern);
+char		*r_strnstr(char *haystack, char *needle, size_t len);
 t_token		*tokenize(char *regex);
 t_dirent	*init_dirent(char *cwd);
 int			count_token(char *regex);
