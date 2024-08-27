@@ -5,7 +5,7 @@ void	unset(char **keys, t_env *e)
 {
 	int	i;
 
-	if (keys == NULL || keys[0] == NULL)
+	if (keys == NULL || keys[0] == NULL || !valid_key(keys[0]))
 		return ;
 	i = -1;
 	while (keys[++i])

@@ -79,3 +79,24 @@ void	add_ent(t_env *e, char *key, char *val)
 	curr->next = gb_malloc(sizeof(t_var));
 	curr->next->next = NULL;
 }
+
+int	valid_key(char *key)
+{
+	int	i;
+
+	if (!key || ft_strchr("1234567890", key[0]) != NULL)
+	{
+		printf("minishell: export: `%s`: not a valid identifier\n", key);
+		return (0);
+	}
+	i = -1;
+	while (key[++i])
+	{
+		if (ft_strchr("!@#$%^&()_+{}|:\"<>?`~-=[]\\;',./", key[i]) != NULL)
+		{
+			printf("minishell: export: `%s`: not a valid identifier\n", key);
+			return (0);
+		}
+	}
+	return (1);
+}

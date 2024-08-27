@@ -6,21 +6,23 @@
 // a=1 : export: a="1"; var: a=1
 // a= : export: a=""; var: a=
 // a : export: a; var: [nothing]
-void	export(char **vars, t_env *e)
+void	export(char **ent, t_env *e)
 {
 	char	**split;
 	char	*value;
 	int		i;
 
-	if (vars == NULL || vars[0] == NULL || vars[0][0] == '\0')
+	if (ent == NULL || ent[0] == NULL || ent[0][0] == '\0')
 	{
 		env(e, EXPORT);
 		return ;
 	}
 	i = -1;
-	while (vars[++i])
+	while (ent[++i])
 	{
-		split = split_ent(vars[i]);
+		split = split_ent(ent[i]);
+		if (!valid_key(split[0]))
+			continue ;
 		value = fetch_val(split[0], e);
 		if (value)
 			set_val(e, split[0], split[1]);
