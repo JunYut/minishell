@@ -6,7 +6,7 @@
 #    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/06 14:33:10 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/08/28 09:57:38 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/08/28 12:19:15 by kkhai-ki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ PARSER =	parser/parser.c	\
 			parser/node.c	\
 			parser/utils.c
 
-GBC = gbc/gbc.c
+GBC = gbc/gbc.c	\
+	gbc/wrapper.c
 
 EXPANDER = expander/expand.c \
 			expander/env.c \
@@ -44,9 +45,14 @@ EXPANDER = expander/expand.c \
 EXECUTOR = executor/exec.c	\
 			executor/pipe.c
 
+WILDCARD = wildcard/match.c \
+			wildcard/sort.c \
+			wildcard/tokenize.c \
+			wildcard/wildcard.c
+
 MAIN = main.c
 
-SRC =	$(MAIN) $(LEXER) $(PARSER) $(GBC) $(EXPANDER) $(EXECUTOR)
+SRC =	$(MAIN) $(LEXER) $(PARSER) $(GBC) $(EXPANDER) $(EXECUTOR) $(WILDCARD)
 
 OBJ_DIR = obj
 OBJ = $(SRC:%.c=%.o)

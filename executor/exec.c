@@ -6,13 +6,27 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/26 18:38:36 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/28 11:04:29 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_err	ft_check_write(char *file);
+
+int	get_err_msg(t_err err)
+{
+	if (err.msg == ERR_MSG_CMD_NOT_FOUND)
+	{
+		ft_putstr_fd(err.cause, 2);
+		ft_putstr_fd(": command not found\n", 2);
+	}
+	else if (err.msg == ERR_MSG_AMBIGUOUS)
+	{
+		ft_putstr_fd("minishell: *: ambiguous redirect\n", 2);
+	}
+	return (err.exit_status);
+}
 
 int	get_exit_status(int status)
 {
@@ -25,14 +39,12 @@ t_path	get_path(char *cmd, t_minishell *vars)
 {
 	char	*full_cmd;
 
-	if (*cmd == '\0')
-		return ((t_path){(t_err){ERRNO_NOT_FOUND, ERR_MSG_CMD_NOT_FOUND, cmd}, NULL});
 	// if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
 	// 	return ((t_path){check_exec(cmd, false), cmd});
 	full_cmd = parse_path(vars->envp, cmd);
 	if (full_cmd != NULL)
-		return ((t_path){(t_err){ERRNO_SUCCESS, 42, full_cmd}, full_cmd});
-	return ((t_path){(t_err){ERRNO_NOT_FOUND, ERR_MSG_NO_SUCH_FILE, full_cmd}, NULL});
+		return ((t_path){(t_err){ERRNO_SUCCESS, -1, NULL}, full_cmd});
+	return ((t_path){(t_err){ERRNO_NOT_FOUND, ERR_MSG_CMD_NOT_FOUND, cmd}, NULL});
 }
 
 int	exec_child(t_node *node, t_minishell *vars)
@@ -48,13 +60,18 @@ int	exec_child(t_node *node, t_minishell *vars)
 		if (status != ERRNO_SUCCESS)
 			(exit(ERRNO_GENERAL));
 		path_status = get_path(node->exp_args[0], vars);
-		if (execve(path_status.path, node->exp_args, vars->envp) == -1)
+		if (path_status.err.exit_status != ERRNO_SUCCESS)
+		{
+			status = get_err_msg(path_status.err);
+			exit(status);
+		}
+		if (execve(path_status.cmd_path, node->exp_args, vars->envp) == -1)
 			exit(ERRNO_GENERAL);
 		// if (path_status.err.errno != 0)
 		// 	printf("minishell: %s\n", strerror(path_status.err.errno));
 	}
 	waitpid(pid, &status, 0);
-	return (get_exit_status(status)); 
+	return (get_exit_status(status));
 }
 
 int	exec_simple_cmd(t_node *node, bool piped, t_minishell *vars)
@@ -117,18 +134,17 @@ int	check_redir(t_node *node)
 int	redir_out(t_io_node *io_list, int *status)
 {
 	int	fd;
-	// DIR *dir;
 
 	if (io_list->exp_value == NULL || io_list->exp_value[1] != NULL)
 	{
-		*status = 1; //Add a function to handle error messages
+		*status = get_err_msg((t_err){ERRNO_GENERAL, ERR_MSG_AMBIGUOUS, io_list->value});
 		return (*status);
 	}
 	fd = open(io_list->exp_value[0], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
-		*status = 1;
+		*status = errno;
 		return (*status);
 	}
 	dup2(fd, STDOUT_FILENO);
@@ -175,8 +191,6 @@ int	redir_append(t_io_node *io_list, int *status)
 	{
 		*status = 1;
 		printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
-		// temp = ft_check_write(io_list->exp_value[0]);
-		// printf("minishell: %s\n", strerror(temp.errno));
 		return (*status);
 	}
 	printf("It's not NULL :(\n");
@@ -185,19 +199,4 @@ int	redir_append(t_io_node *io_list, int *status)
 	*status = ERRNO_SUCCESS;
 	return (*status);
 	// return (printf("minishell: %s is a directory.\n", io_list->exp_value[0]));
-}
-
-t_err	ft_check_write(char *file)
-{
-	// DIR *dir;
-
-	if (!*file)
-		return ((t_err){ERRNO_GENERAL, ERR_MSG_NO_SUCH_FILE, file});
-	if (access(file, F_OK) == 0)
-	{
-		if (access(file, W_OK) == -1)
-			return ((t_err){ERRNO_GENERAL, ERR_MSG_PERM_DENIED, file});
-		return ((t_err){ERRNO_SUCCESS, 42, NULL});
-	}
-	return ((t_err){ERRNO_NOT_FOUND, ERR_MSG_NO_SUCH_FILE, file});
 }

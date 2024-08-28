@@ -6,11 +6,22 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/25 02:02:59 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/28 12:30:56 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_arr(char **arr)
+{
+	int	i;
+
+	if (!arr)
+		return ;
+	i = -1;
+	while (arr[++i])
+		DPRINTF("%s\n", arr[i]);
+}
 
 void	init_vars(t_minishell *vars, char **envp)
 {
@@ -30,14 +41,15 @@ int	main(int ac, char **av, char **envp)
 	t_minishell	vars;
 	char	*curr_dir;
 
-	((void)ac, (void)av);
+	((void)ac, (void)av, (void)curr_dir);
 	while (1)
 	{
 		init_vars(&vars, envp);
+		// env(vars.env, 2);
 		curr_dir = fetch_val("PWD", vars.env);
 		append_str(&curr_dir, "> ");
-		vars.line = readline(curr_dir);
-		// vars.line = readline("minishell: ");
+		// vars.line = readline(curr_dir);
+		vars.line = readline("minishell> ");
 		if (vars.line == NULL)
 			break ;
 		// if (*vars.line != '\0')
@@ -55,7 +67,7 @@ int	main(int ac, char **av, char **envp)
 		vars.ast = parse(&vars);
 		if (vars.parse_err.type != E_NONE)
 			handle_parse_error(&vars);
-		expand_tree(vars.ast, 0, "root");
+		expand_tree(vars.ast, 0, "root", &vars);
 		exec_node(vars.ast, false, &vars);
 		free(vars.line);
 		clear_ast(&vars.token_list, &vars.ast);

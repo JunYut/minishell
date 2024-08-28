@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:06:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/28 10:01:12 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/28 11:58:58 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "lexer.h"
 # include "parser.h"
 # include "expand.h"
+# include "wildcard.h"
 # include "../libft/include/libft.h"
 
 void	init_vars(t_minishell *vars, char **envp);
@@ -42,5 +43,9 @@ int	redir_append(t_io_node *io_list, int *status);
 
 int		exec_pipeline(t_node *node, t_minishell *vars);
 void	exec_pipe_child(t_node *node, int *fd, int direction, t_minishell *vars);
+int		get_exit_status(int status);
+int		get_err_msg(t_err err);
+
+void	print_arr(char **arr);
 
 #endif

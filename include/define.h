@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:21:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/28 09:48:30 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/28 11:32:38 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef enum e_err_msg
 	ERR_MSG_TOO_MANY_ARGS,
 	ERR_MSG_NUMERIC_REQ
 }	t_err_msg;
-	
+
 typedef enum e_errno
 {
 	ERRNO_SUCCESS,
@@ -88,6 +88,25 @@ typedef enum e_errno
 	ERRNO_EXEC_255 = 255
 }	t_errno;
 
+typedef	enum s_wc_type
+{
+	WC_WILDCARD,
+	WC_PATTERN,
+	WC_END
+} t_wc_type;
+
+typedef struct s_dirent
+{
+	t_list	*files;
+	t_list	*dot_files;
+}	t_dirent;
+
+typedef struct s_wildcard
+{
+	t_dirent	*dirent;
+	t_wc_type		*token;
+	char		**pattern;
+}	t_wildcard;
 
 typedef	struct s_io_node
 {
@@ -119,14 +138,14 @@ typedef struct s_parse_err
 typedef struct s_err
 {
 	t_errno		exit_status;
-	t_err_msg	err_msg;
+	t_err_msg	msg;
 	char	*cause;
 } t_err;
 
 typedef struct s_path
 {
 	t_err	err;
-	char	*path;
+	char	*cmd_path;
 } t_path;
 
 typedef struct s_var
@@ -151,6 +170,12 @@ typedef struct s_file
 	t_token_type	type;
 	char		*file;
 }	t_file;
+
+typedef struct s_gbc
+{
+	void			*addr;
+	struct s_gbc	*next;
+}	t_gbc;
 
 typedef struct s_minishell
 {

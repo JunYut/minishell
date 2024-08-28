@@ -1,31 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gbc.h                                              :+:      :+:    :+:   */
+/*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/20 14:03:14 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/28 11:32:05 by kkhai-ki         ###   ########.fr       */
+/*   Created: 2024/08/28 11:09:40 by kkhai-ki          #+#    #+#             */
+/*   Updated: 2024/08/28 11:09:43 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GBC_H
-# define GBC_H
-
-# include <stdlib.h>
-# include "libft.h"
 # include "wildcard.h"
-# include "define.h"
 
-void	gb_clear(void);
-void	*gb_malloc(size_t size);
-void	gb_free(void *addr);
-t_gbc	*gb_collector(void);
-void	gb_init(t_gbc *collector);
-void	*gb_add(void *addr);
+void	sort_lex(t_list *lst)
+{
+	t_list	*curr;
+	t_list	*tmp;
 
-t_wc_type	*gb_newtoken(t_wc_type token);
-t_list	*gb_lstnew(void *content);
-char	*gb_strdup(const char *s1);
-#endif
+	curr = lst;
+	while (curr)
+	{
+		tmp = curr->next;
+		while (tmp)
+		{
+			if (ft_strcmp(curr->content, tmp->content) > 0)
+				lstswap(curr, tmp);
+			tmp = tmp->next;
+		}
+		curr = curr->next;
+	}
+}
+
+void	lstswap(t_list *a, t_list *b)
+{
+	t_list	*tmp;
+
+	tmp = a->content;
+	a->content = b->content;
+	b->content = tmp;
+}

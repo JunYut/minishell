@@ -6,15 +6,15 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:31:48 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/26 13:39:46 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/28 11:56:13 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand_tree(t_node *node, int depth, char *branch);
-void	expand_node(t_node *node);
-char	**expand_args(char *args);
+void	expand_tree(t_node *node, int depth, char *branch, t_minishell *vars);
+void	expand_node(t_node *node, t_minishell *vars);
+char	**expand_args(char *args, t_minishell *vars);
 char	*expand_params(char	*str);
 char	*handle_squote(char *str, int *i);
 char	*handle_dquote(char *str, int *i);
