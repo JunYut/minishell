@@ -108,17 +108,17 @@ void	exit_shell(char **status, t_env *e)
 	int	exit_status;
 
 	printf("exit\n");
-	if (count_args(status, "exit", e) > 1)
-		exit_status = 1;
 	if (status && status[0])
 	{
-		if (is_numeric(status[0]))
-			exit_status = ft_atoi(status[0]);
-		else
+		if (!is_numeric(status[0]))
 		{
 			printf("minishell: exit: %s: numeric argument required\n", status[0]);
 			exit_status = 2;
 		}
+		else if (count_args(status, "exit", e) > 1)
+			exit_status = 1;
+		else
+			exit_status = ft_atoi(status[0]);
 	}
 	if (!status || !status[0] || status[0][0] == '\0')
 		exit_status = ft_atoi(fetch_val("?", e));

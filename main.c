@@ -26,7 +26,7 @@ int main(int ac, char **av, char **envp)
 	print_arr(wildcard(regex, e));
 	#endif
 	# if TEST == 1
-	exit_shell((char *[]){"", "", NULL}, e);
+	exit_shell((char *[]){"314", "as2", "3uii", NULL}, e);
 	# endif
 
 	status = ft_atoi(fetch_val("?", e));
