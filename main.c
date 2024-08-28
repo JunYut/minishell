@@ -26,9 +26,7 @@ int main(int ac, char **av, char **envp)
 	print_arr(wildcard(regex, e));
 	#endif
 	# if TEST == 1
-	printf("pwd: %s\n", fetch_val("PWD", e));
-	cd((char *[]){"noperm", NULL}, e);
-	printf("pwd: %s\n", fetch_val("PWD", e));
+	exit_shell((char *[]){"", "", NULL}, e);
 	# endif
 
 	status = ft_atoi(fetch_val("?", e));

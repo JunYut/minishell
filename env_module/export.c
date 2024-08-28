@@ -74,6 +74,27 @@ void	set_val(t_env *e, char *key, char *val)
 	}
 }
 
+// a=1 : export: a="1"; var: a=1
+// a= : export: a=""; var: a=
+// a : export: a; var: [nothing]
+char **split_ent(char *str)
+{
+	char	**split;
+
+	if (str == NULL)
+		return (NULL);
+	split = gb_malloc(sizeof(char *) * 2);
+	split[0] = ft_strndup(str, find_pos(str, '='));
+	if (split[0] == NULL)
+	{
+		split[0] = ft_strndup(str, find_pos(str, '\0'));
+		split[1] = NULL;
+		return (split);
+	}
+	split[1] = ft_strndup(str + find_pos(str, '=') + 1, find_pos(str, '\0'));
+	return (split);
+}
+
 void sort_export(t_var *exp)
 {
 	t_var	*curr;

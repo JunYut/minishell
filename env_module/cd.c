@@ -11,7 +11,7 @@ void	cd(char **path, t_env *e)
 {
 	char	*target;
 
-	if (path_count(path, e) > 1)
+	if (count_args(path, "cd", e) > 1)
 		return ;
 	target = *path;
 	if (!*path || **path == '\0' || **path == '~')
@@ -40,7 +40,7 @@ void	cd(char **path, t_env *e)
 	set_val(e, "PWD", gb_add(getcwd(NULL, 0)));
 }
 
-int	path_count(char **path, t_env *e)
+int	count_args(char **path, char *func, t_env *e)
 {
 	int	i;
 
@@ -51,7 +51,7 @@ int	path_count(char **path, t_env *e)
 		i++;
 	if (i > 1)
 	{
-		printf("minishell: cd: too many arguments\n");
+		printf("minishell: %s: too many arguments\n", func);
 		set_val(e, "?", "1");
 	}
 	return (i);

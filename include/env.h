@@ -30,6 +30,7 @@ void	unset(char **keys, t_env *e);
 void	cd(char **path, t_env *e);
 void	pwd(t_env *e);
 void	echo(char **av);
+void	exit_shell(char **status, t_env *e);
 
 void	add_ent(t_env *e, char *key, char *val);
 void	set_val(t_env *e, char *key, char *val);
@@ -40,9 +41,10 @@ char	**env_to_arr(t_var *var);
 void	sort_export(t_var *exp);
 
 int		valid_key(char *key, t_env *e);
-int		path_count(char **path, t_env *e);
+int		count_args(char **path, char *func, t_env *e);
 
 char	**split_ent(char *str);
 char	*ft_strndup(char *str, int pos);
 void	ft_strncpy(char *dst, char *src, int len);
 int		find_pos(char *str, char delim);
+int		is_numeric(char *str);

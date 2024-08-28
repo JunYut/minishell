@@ -103,23 +103,25 @@ int	valid_key(char *key, t_env *e)
 	return (1);
 }
 
-// a=1 : export: a="1"; var: a=1
-// a= : export: a=""; var: a=
-// a : export: a; var: [nothing]
-char **split_ent(char *str)
+void	exit_shell(char **status, t_env *e)
 {
-	char	**split;
+	int	exit_status;
 
-	if (str == NULL)
-		return (NULL);
-	split = gb_malloc(sizeof(char *) * 2);
-	split[0] = ft_strndup(str, find_pos(str, '='));
-	if (split[0] == NULL)
+	printf("exit\n");
+	if (count_args(status, "exit", e) > 1)
+		exit_status = 1;
+	if (status && status[0])
 	{
-		split[0] = ft_strndup(str, find_pos(str, '\0'));
-		split[1] = NULL;
-		return (split);
+		if (is_numeric(status[0]))
+			exit_status = ft_atoi(status[0]);
+		else
+		{
+			printf("minishell: exit: %s: numeric argument required\n", status[0]);
+			exit_status = 2;
+		}
 	}
-	split[1] = ft_strndup(str + find_pos(str, '=') + 1, find_pos(str, '\0'));
-	return (split);
+	if (!status || !status[0] || status[0][0] == '\0')
+		exit_status = ft_atoi(fetch_val("?", e));
+	gb_clear();
+	exit(exit_status);
 }
