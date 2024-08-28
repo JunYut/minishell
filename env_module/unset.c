@@ -5,11 +5,13 @@ void	unset(char **keys, t_env *e)
 {
 	int	i;
 
-	if (keys == NULL || keys[0] == NULL || !valid_key(keys[0], e))
+	if (keys == NULL || keys[0] == NULL)
 		return ;
 	i = -1;
 	while (keys[++i])
 	{
+		if (!valid_key(keys[i], e))
+			continue ;
 		rm_ent(keys[i], e->exp, e->last_exp_id);
 		rm_ent(keys[i], e->var, e->last_var_id);
 	}
