@@ -1,4 +1,5 @@
 # include "wildcard.h"
+# include "env.h"
 
 # define TEST 1
 
@@ -10,6 +11,7 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 
 	t_env	*e = dup_env(envp);
+	int		status;
 
 	# if TEST == 0
 	if (ac != 2)
@@ -24,14 +26,12 @@ int main(int ac, char **av, char **envp)
 	print_arr(wildcard(regex, e));
 	#endif
 	# if TEST == 1
-	print_arr(e->envp);	NEWLINE;
-	export((char *[]){"a!=1", "b@t=2", "c===3", "d==w=4", "e=t==5", NULL}, e);
-	print_arr(e->envp);	NEWLINE;
-	export((char *[]){"a1=sna", NULL}, e);
-	env(e, EXPORT);	NEWLINE;
-	unset((char *[]){"a", "b", "c", "d", "e", NULL}, e);
-	print_arr(e->envp);
+	printf("pwd: %s\n", fetch_val("PWD", e));
+	cd((char *[]){"noperm", NULL}, e);
+	printf("pwd: %s\n", fetch_val("PWD", e));
 	# endif
 
+	status = ft_atoi(fetch_val("?", e));
 	gb_clear();
+	return (status);
 }
