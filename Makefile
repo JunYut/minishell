@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
+#    By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/06 14:33:10 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/08/28 12:19:15 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/08/28 14:57:30 by tjun-yu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,73 +18,68 @@ RED = \033[0;31m
 RESET = \033[0m
 ORANGE = \033[0;38;5;166m
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror $(INCLUDE) #-fsanitize=address -g3
+# Compiler & Flags
+CC = clang
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c99 -g
 
-INCLUDE = -Iinclude -I$(LIBFT_DIR) -I$(LIBFT_DIR)/include
-
-LEXER =	lexer/tokenize.c	\
-		lexer/token_utils.c	\
-		lexer/error.c		\
-		lexer/utils.c
-
-PARSER =	parser/parser.c	\
-			parser/error.c	\
-			parser/node.c	\
-			parser/utils.c
-
-GBC = gbc/gbc.c	\
-	gbc/wrapper.c
-
-EXPANDER = expander/expand.c \
-			expander/env.c \
-			expander/temp.c	\
-			expander/split_args.c \
-			expander/heredoc.c
-
-EXECUTOR = executor/exec.c	\
-			executor/pipe.c
-
-WILDCARD = wildcard/match.c \
-			wildcard/sort.c \
-			wildcard/tokenize.c \
-			wildcard/wildcard.c
-
-MAIN = main.c
-
-SRC =	$(MAIN) $(LEXER) $(PARSER) $(GBC) $(EXPANDER) $(EXECUTOR) $(WILDCARD)
-
-OBJ_DIR = obj
-OBJ = $(SRC:%.c=%.o)
-
+# Directories
 LIBFT_DIR = libft
+MODULES_DIR = executor expander gbc lexer parser wildcard
+OBJ_DIR = obj
+INCL_DIR = -Iinclude -I$(LIBFT_DIR)/include
+
+vpath %.c $(MODULES_DIR)
+
+# Files
+SRC = $(foreach module, $(MODULES_DIR), $(wildcard $(module)/*.c))
+OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
+HEADER = include/*.h $(wildcard $(LIBFT_DIR)/include/*.h)
 LIBFT = $(LIBFT_DIR)/libft.a
+LIB = -L$(LIBFT_DIR) -lft -lreadline
+EXEC = minishell
 
-LIBRARIES = -L$(LIBFT_DIR) -lft -lreadline
+# Debug
+# $(info SRC: $(SRC))
+# $(info OBJ: $(OBJ))
+# $(info HEADER: $(HEADER))
+# $(info INCL_DIR: $(INCL_DIR))
 
-all :
-		@mkdir -p $(OBJ_DIR)
-		@make -C libft
-		@make $(NAME)
+# Rules & Recipes
+all : $(EXEC)
 
-$(OBJ_DIR)/%.o:		$(SRC)%.c | $(OBJ_DIR)
-					@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+$(EXEC) : $(OBJ) $(LIBFT) main.c
+	$(CC) $(CFLAGS) $(INCL_DIR) $(OBJ) main.c $(LIB) -o $@
 
-$(NAME) :	$(OBJ)
-			@printf "$(GREEN)minishell object files created.$(RESET)\n"
-			@$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) -o $(NAME) $(LIBRARIES) && echo "$(GREEN)minishell created.$(RESET)"
+$(LIBFT) :
+	$(MAKE) -C $(LIBFT_DIR)
+
+$(OBJ_DIR)/%.o : %.c $(HEADER)
+	mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCL_DIR) -c $< -o $@
+
+run : $(EXEC)
+	./$(EXEC)
+
+memcheck :
+	$(MAKE) re
+ifeq ($(shell uname), Linux)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(EXEC)
+else
+	leaks --atExit -- ./$(EXEC)
+endif
+
+fsan :
+	$(MAKE) CFLAGS="$(CFLAGS) -fsanitize=address -g3" re
+	$(MAKE) run
 
 clean :
-			@rm $(OBJ) && echo "$(RED)minishell object files deleted.$(RESET)"
-			@make clean -C $(LIBFT_DIR)
+	rm -rf $(OBJ_DIR)
+	$(MAKE) -C $(LIBFT_DIR) clean
 
-fclean:
-			@rm $(OBJ) $(NAME) && echo "$(RED)minishell deleted.$(RESET)"
-#@rm $(OBJ) && echo "$(RED)minishell object files deleted.$(RESET)"
-			@make fclean -C $(LIBFT_DIR)
+fclean : clean
+	rm -rf $(EXEC)
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
-re:			fclean all
+re : fclean all
 
-.PHONY:	clean fclean re all
-
-# TODO: Clean up Makefile and change structure
+.PHONY : all run memcheck clean fclean re
