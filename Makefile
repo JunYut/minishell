@@ -6,7 +6,7 @@
 #    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/06 14:33:10 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/08/14 13:36:50 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/08/28 09:57:38 by kkhai-ki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,9 +41,12 @@ EXPANDER = expander/expand.c \
 			expander/split_args.c \
 			expander/heredoc.c
 
+EXECUTOR = executor/exec.c	\
+			executor/pipe.c
+
 MAIN = main.c
 
-SRC =	$(MAIN) $(LEXER) $(PARSER) $(GBC) $(EXPANDER)
+SRC =	$(MAIN) $(LEXER) $(PARSER) $(GBC) $(EXPANDER) $(EXECUTOR)
 
 OBJ_DIR = obj
 OBJ = $(SRC:%.c=%.o)

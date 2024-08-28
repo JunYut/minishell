@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:21:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/21 12:47:25 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/28 09:48:30 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 # define DEFINE_H
 
 # define READ_SIZE 42
-# define ERRNO_SUCCESS 0
-# define ERRNO_FAIL 1
+# define EXPORT 1
+# define VAR 2
+
+# define NODE_LEFT 1
+# define NODE_RIGHT 2
 
 typedef enum e_token_type
 {
@@ -68,19 +71,21 @@ typedef enum e_err_msg
 {
 	ERR_MSG_CMD_NOT_FOUND,
 	ERR_MSG_NO_SUCH_FILE,
+	ERR_MSG_IS_DIR,
+	ERR_MSG_NOT_DIR,
 	ERR_MSG_PERM_DENIED,
 	ERR_MSG_AMBIGUOUS,
 	ERR_MSG_TOO_MANY_ARGS,
-	ERR_MSG_NUMERIC_REQUI
+	ERR_MSG_NUMERIC_REQ
 }	t_err_msg;
-
+	
 typedef enum e_errno
 {
-	ERR_NO_SUCCESS,
-	ERR_NO_GENERAL,
-	ERR_NO_CANT_EXEC = 126,
-	ERR_NO_NOT_FOUND,
-	ERR_NO_EXEC_255 = 255
+	ERRNO_SUCCESS,
+	ERRNO_GENERAL,
+	ERRNO_CANT_EXEC = 126,
+	ERRNO_NOT_FOUND = 127,
+	ERRNO_EXEC_255 = 255
 }	t_errno;
 
 
@@ -113,7 +118,7 @@ typedef struct s_parse_err
 
 typedef struct s_err
 {
-	t_errno		errno;
+	t_errno		exit_status;
 	t_err_msg	err_msg;
 	char	*cause;
 } t_err;
@@ -123,22 +128,6 @@ typedef struct s_path
 	t_err	err;
 	char	*path;
 } t_path;
-
-typedef struct s_minishell
-{
-	t_token		*token_list;
-	t_token		*curr_token;
-	t_node		*ast;
-	t_parse_err	parse_err;
-	bool		token_err;
-	int			exit_status;
-	char		*line;
-	t_gbc		*gbc;
-	char		**envp;
-}	t_minishell;
-
-# define EXPORT 1
-# define VAR 2
 
 typedef struct s_var
 {
@@ -156,5 +145,25 @@ typedef struct s_env
 	int		last_var_id;
 	int		last_exp_id;
 }	t_env;
+
+typedef struct s_file
+{
+	t_token_type	type;
+	char		*file;
+}	t_file;
+
+typedef struct s_minishell
+{
+	t_token		*token_list;
+	t_token		*curr_token;
+	t_node		*ast;
+	t_parse_err	parse_err;
+	bool		token_err;
+	int			exit_status;
+	char		*line;
+	t_gbc		*gbc;
+	char		**envp;
+	t_env		*env;
+}	t_minishell;
 
 #endif

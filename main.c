@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/14 11:24:09 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/25 02:02:59 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,22 @@ void	init_vars(t_minishell *vars, char **envp)
 	vars->token_err = false;
 	vars->line = NULL;
 	vars->envp = envp;
+	vars->env = dup_env(envp);
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	t_minishell	vars;
+	char	*curr_dir;
 
 	((void)ac, (void)av);
 	while (1)
 	{
 		init_vars(&vars, envp);
-		vars.line = readline("minishell> ");
+		curr_dir = fetch_val("PWD", vars.env);
+		append_str(&curr_dir, "> ");
+		vars.line = readline(curr_dir);
+		// vars.line = readline("minishell: ");
 		if (vars.line == NULL)
 			break ;
 		// if (*vars.line != '\0')
@@ -51,6 +56,7 @@ int	main(int ac, char **av, char **envp)
 		if (vars.parse_err.type != E_NONE)
 			handle_parse_error(&vars);
 		expand_tree(vars.ast, 0, "root");
+		exec_node(vars.ast, false, &vars);
 		free(vars.line);
 		clear_ast(&vars.token_list, &vars.ast);
 	}

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/22 15:04:19 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:48:43 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	expand_node(t_node *node)
 			io->exp_value = expand_args(io->value);
 			pid = fork();
 			if (!pid)
-			heredoc(io, p_fd);
+				heredoc(io, p_fd);
 			waitpid(pid, &pid, 0);
 			io->heredoc = p_fd[0];
 		}
@@ -99,8 +99,7 @@ void	expand_node(t_node *node)
 		// printf("redir: %s\n", io->value);
 		else
 			io->exp_value = expand_args(io->value);
-		printf("redir_type: %d\n", io->type);
-		printf("redir: %s\n", io->value);
+		// printf("redir_type: %d\n", io->type);
 		io = io->next;
 	}
 	// printf("exp_args: %s\n", node->args);
