@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
+#    By: we <we@student.42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/02 17:12:39 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/07/20 13:58:42 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/08/29 12:18:38 by we               ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,10 @@ RED = \033[0;31m
 RESET = \033[0m
 ORANGE = \033[0;38;5;166m
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I
+CC = clang
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c99 -g
 
-INCLUDE = include
+INCLUDE = -Iinclude
 
 SRC_DIR = src
 SRC_FILES =	ft_isalpha			\
