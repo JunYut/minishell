@@ -3,40 +3,43 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+         #
+#    By: we <we@student.42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/06 14:33:10 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/08/28 14:57:30 by tjun-yu          ###   ########.fr        #
+#    Updated: 2024/08/29 13:17:23 by we               ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 # COLORS
-GREEN = \033[0;32m
-RED = \033[0;31m
-RESET = \033[0m
-ORANGE = \033[0;38;5;166m
+GREEN	= \033[0;32m
+RED		= \033[0;31m
+RESET	= \033[0m
+ORANGE	= \033[0;38;5;166m
 
 # Compiler & Flags
-CC = clang
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c99 -g
+CC		= clang
+CFLAGS	= -Wall -Wextra -Werror -Wpedantic -std=c99 -g
 
 # Directories
-LIBFT_DIR = libft
-MODULES_DIR = executor expander gbc lexer parser wildcard
-OBJ_DIR = obj
-INCL_DIR = -Iinclude -I$(LIBFT_DIR)/include
+RL_DIR		= readline
+LIBFT_DIR	= libft
+MODULES_DIR	= executor expander gbc lexer parser wildcard
+OBJ_DIR		= obj
+INCL_DIR	= -Iinclude -I$(RL_DIR) -I$(LIBFT_DIR)/include
 
 vpath %.c $(MODULES_DIR)
 
 # Files
-SRC = $(foreach module, $(MODULES_DIR), $(wildcard $(module)/*.c))
-OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
-HEADER = include/*.h $(wildcard $(LIBFT_DIR)/include/*.h)
-LIBFT = $(LIBFT_DIR)/libft.a
-LIB = -L$(LIBFT_DIR) -lft -lreadline
-EXEC = minishell
+SRC			= $(foreach module, $(MODULES_DIR), $(wildcard $(module)/*.c))
+OBJ			= $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
+HEADER		= include/*.h $(wildcard $(RL_DIR)/*.h) \
+				$(wildcard $(LIBFT_DIR)/include/*.h)
+READLINE	= $(RL_DIR)/libreadline.a $(RL_DIR)/libhistory.a
+LIBFT		= $(LIBFT_DIR)/libft.a
+LIB			= -L$(RL_DIR) -L$(LIBFT_DIR) -lft -lreadline -lncurses
+EXEC		= minishell
 
 # Debug
 # $(info SRC: $(SRC))
@@ -47,8 +50,12 @@ EXEC = minishell
 # Rules & Recipes
 all : $(EXEC)
 
-$(EXEC) : $(OBJ) $(LIBFT) main.c
+$(EXEC) : $(READLINE) $(LIBFT) $(OBJ) main.c
 	$(CC) $(CFLAGS) $(INCL_DIR) $(OBJ) main.c $(LIB) -o $@
+
+$(READLINE) :
+	cd $(RL_DIR) && ./configure && make
+	cd ..
 
 $(LIBFT) :
 	$(MAKE) -C $(LIBFT_DIR)
@@ -74,6 +81,7 @@ fsan :
 
 clean :
 	rm -rf $(OBJ_DIR)
+	$(MAKE) -C $(RL_DIR) clean
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean : clean
