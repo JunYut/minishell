@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:11 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/15 09:04:32 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/29 11:32:15 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
+# include <stdbool.h>
+# include "define.h"
 
 #define FAIL 0
 #define SUCCESS 1

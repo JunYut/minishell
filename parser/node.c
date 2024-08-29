@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   node.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 14:18:06 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/21 16:09:54 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/29 10:31:09 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+# include "parser.h"
+# include "lexer.h"
 
 t_node	*init_new_node(t_node_type type)
 {

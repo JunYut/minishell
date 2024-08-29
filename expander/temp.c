@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "expand.h"
 
 void	append(char *file, char *cmd, char *args[])
 {

@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:21:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/28 11:32:38 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/29 11:13:24 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINE_H
 # define DEFINE_H
+
+# include <stdbool.h>
+# include "libft.h"
 
 # define READ_SIZE 42
 # define EXPORT 1
@@ -104,7 +107,7 @@ typedef struct s_dirent
 typedef struct s_wildcard
 {
 	t_dirent	*dirent;
-	t_wc_type		*token;
+	t_wc_type	*token;
 	char		**pattern;
 }	t_wildcard;
 
@@ -139,7 +142,7 @@ typedef struct s_err
 {
 	t_errno		exit_status;
 	t_err_msg	msg;
-	char	*cause;
+	char		*cause;
 } t_err;
 
 typedef struct s_path
@@ -168,8 +171,9 @@ typedef struct s_env
 typedef struct s_file
 {
 	t_token_type	type;
-	char		*file;
+	char			*file;
 }	t_file;
+
 
 typedef struct s_gbc
 {

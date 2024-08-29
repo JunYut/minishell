@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/28 12:30:56 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/29 11:21:57 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_vars(t_minishell *vars, char **envp)
 int	main(int ac, char **av, char **envp)
 {
 	t_minishell	vars;
-	char	*curr_dir;
+	char		*curr_dir;
 
 	((void)ac, (void)av, (void)curr_dir);
 	while (1)
@@ -53,7 +53,7 @@ int	main(int ac, char **av, char **envp)
 		if (vars.line == NULL)
 			break ;
 		// if (*vars.line != '\0')
-			add_history(vars.line);
+		add_history(vars.line);
 		tokenize(vars.line, &vars);
 		if (vars.token_list == NULL)
 			continue ;

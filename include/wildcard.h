@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:03 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/28 11:32:27 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/29 11:15:01 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# pragma once
+#ifndef WILDCARD_H
+# define WILDCARD_H
 
 # include <dirent.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
-# include "minishell.h"
 # include "libft.h"
 # include "define.h"
 # include "gbc.h"
@@ -35,3 +35,5 @@ int			count_token(char *regex);
 void		sort_lex(t_list *lst);
 void		lstswap(t_list *a, t_list *b);
 char		**lst_to_arr(t_list *lst);
+
+#endif
