@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:18:21 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 11:05:24 by we               ###   ########.fr       */
+/*   Updated: 2024/08/29 16:37:50 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**split_args(char *str)
 	word_count = count_words(str);
 	if (!word_count)
 			return (free(str), NULL);
-	args = ft_calloc(word_count + 1, sizeof(char *));
+	args = gb_add(ft_calloc(word_count + 1, sizeof(char *)));
 	if (!args)
 		return (free(str), NULL);
 	args = allocate_args(str, args);

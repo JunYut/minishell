@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 10:09:56 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/28 10:07:09 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:12:52 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ int	exec_pipeline(t_node *node, t_minishell *vars)
 		{
 			close(fd[0]);
 			close(fd[1]);
-			waitpid(pid_left, &status, 0);
-			waitpid(pid_right, &status, 0);
-			return (get_exit_status(status)); //This should return the most recent exit code
+			status = wait_status(pid_left, vars->env);
+			// waitpid(pid_left, &status, 0);
+			status = wait_status(pid_right, vars->env);
+			// waitpid(pid_right, &status, 0);
+			return (status); //This should return the most recent exit code
 		}
 	}
 	return (ERRNO_SUCCESS);
@@ -57,5 +59,6 @@ void	exec_pipe_child(t_node *node, int *fd, int direction, t_minishell *vars)
 		close(fd[0]);
 	}
 	status = exec_node(node, true, vars);
+	gb_clear();
 	exit(status);
 }

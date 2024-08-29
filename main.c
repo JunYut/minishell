@@ -6,11 +6,13 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 12:24:37 by we               ###   ########.fr       */
+/*   Updated: 2024/08/29 16:13:41 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+volatile __sig_atomic_t	g_wait;
 
 void	print_arr(char **arr)
 {
@@ -32,8 +34,8 @@ void	init_vars(t_minishell *vars, char **envp)
 	vars->parse_err.str = NULL;
 	vars->token_err = false;
 	vars->line = NULL;
-	vars->envp = envp;
 	vars->env = dup_env(envp);
+	vars->envp = vars->env->envp;
 }
 
 int	main(int ac, char **av, char **envp)
@@ -49,7 +51,7 @@ int	main(int ac, char **av, char **envp)
 		curr_dir = fetch_val("PWD", vars.env);
 		append_str(&curr_dir, "> ");
 		// vars.line = readline(curr_dir);
-		vars.line = readline("minishell> ");
+		vars.line = gb_add(readline("minishell> "));
 		if (vars.line == NULL)
 			break ;
 		// if (*vars.line != '\0')
@@ -69,10 +71,9 @@ int	main(int ac, char **av, char **envp)
 			handle_parse_error(&vars);
 		expand_tree(vars.ast, 0, "root", &vars);
 		exec_node(vars.ast, false, &vars);
-		free(vars.line);
 		clear_ast(&vars.token_list, &vars.ast);
 	}
-	gb_clear();
 	clear_history();
+	gb_clear();
 	return (0);
 }

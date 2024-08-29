@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:06:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 11:30:36 by we               ###   ########.fr       */
+/*   Updated: 2024/08/29 16:13:49 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # include "expand.h"
 # include "wildcard.h"
 
+extern volatile __sig_atomic_t	g_wait;
+
 void	init_vars(t_minishell *vars, char **envp);
 
 int		exec_node(t_node *node, bool piped, t_minishell *vars);
@@ -43,6 +45,7 @@ int		redir_append(t_io_node *io_list, int *status);
 
 int		exec_pipeline(t_node *node, t_minishell *vars);
 void	exec_pipe_child(t_node *node, int *fd, int direction, t_minishell *vars);
+int		wait_status(pid_t pid, t_env *e);
 int		get_exit_status(int status);
 int		get_err_msg(t_err err);
 

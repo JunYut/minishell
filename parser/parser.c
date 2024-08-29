@@ -6,12 +6,13 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 10:31:45 by we               ###   ########.fr       */
+/*   Updated: 2024/08/29 16:32:09 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "lexer.h"
+#include "gbc.h"
 
 t_node	*parse(t_minishell *vars)
 {
@@ -93,7 +94,7 @@ bool	join_args(t_minishell *vars, char **args)
 		*args = ft_strjoin_delim(*args, vars->curr_token->value, " "); ///Need to review this later
 		// *args = gnl_strjoin(*args, vars->curr_token->value);
 		if (*args == NULL)
-			return (free(*args), false);
+			return (false);
 		vars->curr_token = vars->curr_token->next;
 	}
 	return (true);

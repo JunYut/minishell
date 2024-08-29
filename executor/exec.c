@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 11:03:35 by we               ###   ########.fr       */
+/*   Updated: 2024/08/29 16:51:01 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_path	get_path(char *cmd, t_minishell *vars)
 	// if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
 	// 	return ((t_path){check_exec(cmd, false), cmd});
 	full_cmd = parse_path(vars->envp, cmd);
+	DPRINTF("full_cmd: %s\n", full_cmd);
 	if (full_cmd != NULL)
 		return ((t_path){(t_err){ERRNO_SUCCESS, -1, NULL}, full_cmd});
 	return ((t_path){(t_err){ERRNO_NOT_FOUND, ERR_MSG_CMD_NOT_FOUND, cmd}, NULL});
@@ -68,8 +69,8 @@ int	exec_child(t_node *node, t_minishell *vars)
 		// if (path_status.err.errno != 0)
 		// 	printf("minishell: %s\n", strerror(path_status.err.errno));
 	}
-	waitpid(pid, &status, 0);
-	return (get_exit_status(status));
+	status = wait_status(pid, vars->env);
+	return (status);
 }
 
 int	exec_simple_cmd(t_node *node, bool piped, t_minishell *vars)
@@ -197,4 +198,27 @@ int	redir_append(t_io_node *io_list, int *status)
 	*status = ERRNO_SUCCESS;
 	return (*status);
 	// return (printf("minishell: %s is a directory.\n", io_list->exp_value[0]));
+}
+
+// returns -1 on abnormal termination
+// returns the exit status of the child process (0-255)
+int	wait_status(pid_t pid, t_env *e)
+{
+	int	status;
+
+	g_wait = 1;
+	if (waitpid(pid, &status, 0) == -1)
+		return (0);
+	else if (WIFEXITED(status))
+	{
+		status = WEXITSTATUS(status);
+		set_val(e, "?", (char *)gb_add(ft_itoa(status)));
+	}
+	else
+	{
+		status = -1;
+		printf("PID %d: terminated abnormally\n", pid);
+	}
+	g_wait = 0;
+	return (status);
 }

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize.c                                         :+:      :+:    :+:   */
+/*   lexer_tokenize.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 11:58:47 by we               ###   ########.fr       */
+/*   Updated: 2024/08/29 16:41:46 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "gbc.h"
 
-// multiple definition
 void	tokenize(char *line, t_minishell *vars)
 {
 	t_token	*token_list;
@@ -37,7 +37,6 @@ void	tokenize(char *line, t_minishell *vars)
 	vars->token_list = token_list;
 }
 
-// multiple definition
 bool	handle_operator_token(char **line, t_token **token_list)
 {
 	if (!ft_strncmp(*line, "<<", 2))
@@ -60,7 +59,6 @@ bool	handle_operator_token(char **line, t_token **token_list)
 		return (append_operator_token(T_R_BRACKET, line, token_list));
 }
 
-// multiple definition
 bool	append_operator_token(t_token_type type, char **line, t_token **token_list)
 {
 	t_token	*token;
@@ -81,7 +79,6 @@ bool	append_operator_token(t_token_type type, char **line, t_token **token_list)
 	return (false);
 }
 
-// multiple definition
 bool	append_word_token(char **line, t_token **token_list, t_minishell *vars)
 {
 	t_token	*token;
