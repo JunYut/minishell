@@ -1,7 +1,7 @@
 # include "env.h"
 
 // keys should be NULL terminated
-void	unset(char **keys, t_env *e)
+int	unset(char **keys, t_env *e)
 {
 	int	i;
 
@@ -16,6 +16,7 @@ void	unset(char **keys, t_env *e)
 		rm_ent(keys[i], e->var, e->last_var_id);
 	}
 	e->envp = env_to_arr(e->var);
+	return (0);
 }
 
 void	rm_ent(char *key, t_var *lst, int last_id)
