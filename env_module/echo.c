@@ -1,6 +1,6 @@
 # include "env.h"
 
-void	echo(char **av)
+int	echo(char **av)
 {
 	int	nl;
 	int	i;
@@ -23,4 +23,5 @@ void	echo(char **av)
 	}
 	if (nl)
 		printf("\n");
+	return (0);
 }
