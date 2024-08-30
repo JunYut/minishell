@@ -24,13 +24,13 @@ typedef struct s_env
 	int		last_exp_id;
 }	t_env;
 
-void	env(t_env *e, char lst);
-void	export(char **ent, t_env *e);
-void	unset(char **keys, t_env *e);
-void	cd(char **path, t_env *e);
-void	pwd(t_env *e);
-void	echo(char **av);
-void	exit_shell(char **status, t_env *e);
+int		env(t_env *e, char lst);
+int		export(char **ent, t_env *e);
+int		unset(char **keys, t_env *e);
+int		cd(char **path, t_env *e);
+int		pwd(t_env *e);
+int		echo(char **av);
+int		exit_shell(char **status, t_env *e);
 
 void	add_ent(t_env *e, char *key, char *val);
 void	set_val(t_env *e, char *key, char *val);
