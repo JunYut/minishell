@@ -6,10 +6,11 @@
 // a=1 : export: a="1"; var: a=1
 // a= : export: a=""; var: a=
 // a : export: a; var: [nothing]
-void	export(char **ent, t_env *e)
+int	export(char **ent, t_env *e)
 {
 	char	**split;
 	char	*value;
+	int		status;
 	int		i;
 
 	if (ent == NULL || ent[0] == NULL || ent[0][0] == '\0')
@@ -17,12 +18,16 @@ void	export(char **ent, t_env *e)
 		env(e, EXPORT);
 		return ;
 	}
+	status = 0;
 	i = -1;
 	while (ent[++i])
 	{
 		split = split_ent(ent[i]);
-		if (!valid_key(split[0], e))
+		if (valid_key(split[0], e) == 1)
+		{
+			status = 1;
 			continue ;
+		}
 		value = fetch_val(split[0], e);
 		if (value)
 			set_val(e, split[0], split[1]);
@@ -31,6 +36,7 @@ void	export(char **ent, t_env *e)
 	}
 	sort_export(e->exp);
 	e->envp = env_to_arr(e->var);
+	return (status);
 }
 
 // if key is not found, return NULL

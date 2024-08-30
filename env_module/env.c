@@ -89,7 +89,7 @@ int	valid_key(char *key, t_env *e)
 	{
 		printf("minishell: export: `%s`: not a valid identifier\n", key);
 		set_val(e, "?", "1");
-		return (0);
+		return (1);
 	}
 	i = -1;
 	while (key[++i])
@@ -98,10 +98,10 @@ int	valid_key(char *key, t_env *e)
 		{
 			printf("minishell: export: `%s`: not a valid identifier\n", key);
 			set_val(e, "?", "1");
-			return (0);
+			return (1);
 		}
 	}
-	return (1);
+	return (0);
 }
 
 void	exit_shell(char **status, t_env *e)
