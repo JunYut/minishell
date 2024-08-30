@@ -26,7 +26,7 @@ t_env	*dup_env(char *envp[])
 	return (e);
 }
 
-void	env(t_env *e, char lst)
+int	env(t_env *e, char lst)
 {
 	t_var	*curr;
 
@@ -48,6 +48,7 @@ void	env(t_env *e, char lst)
 		printf("\n");
 		curr = curr->next;
 	}
+	return (0);
 }
 
 // a=1 : export: a="1"; var: a=1
