@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 16:51:01 by we               ###   ########.fr       */
+/*   Updated: 2024/09/01 14:33:59 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,67 @@ int	get_exit_status(int status)
 	return (WEXITSTATUS(status));
 }
 
+t_err	check_exec(char *file)
+{
+	if (!*file)
+		return ((t_err){ERRNO_GENERAL, ERR_MSG_NO_SUCH_FILE, file});
+	if (access(file, F_OK) == 0)
+	{
+		if (access(file, X_OK) == -1)
+			return ((t_err){ERRNO_CANT_EXEC, ERR_MSG_PERM_DENIED, file});
+		return ((t_err){ERRNO_SUCCESS, -1, NULL});
+	}
+	return ((t_err){ERRNO_NOT_FOUND, ERR_MSG_CMD_NOT_FOUND, file});
+}
+
+bool	is_builtin(char *cmd)
+{
+	if (!cmd)
+		return (false);
+	if (!ft_strcmp(cmd, "cd"))
+		return (true);
+	else if (!ft_strcmp(cmd, "echo"))
+		return (true);
+	else if (!ft_strcmp(cmd, "env"))
+		return (true);
+	else if (!ft_strcmp(cmd, "export"))
+		return (true);
+	else if (!ft_strcmp(cmd, "pwd"))
+		return (true);
+	else if (!ft_strcmp(cmd, "unset"))
+		return (true);
+	else if (!ft_strcmp(cmd, "exit"))
+		return (true);
+	return (false);
+}
+
+int	exec_builtin(char **args, t_env *env)
+{
+	if (!ft_strcmp(args[0], "cd"))
+		return (builtin_cd(args + 1, env));
+	if (!ft_strcmp(args[0], "echo"))
+		return (builtin_echo(args + 1));
+	if (!ft_strcmp(args[0], "env"))
+		return (builtin_env(env, VAR));
+	if (!ft_strcmp(args[0], "export"))
+		return (builtin_export(args + 1, env));
+	if (!ft_strcmp(args[0], "pwd"))
+		return (builtin_pwd(env));
+	if (!ft_strcmp(args[0], "unset"))
+		return (builtin_unset(args + 1, env));
+	exit_shell(args + 1, env);
+	return (ERRNO_GENERAL);
+}
+
+
 t_path	get_path(char *cmd, t_minishell *vars)
 {
 	char	*full_cmd;
 
-	// if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
-	// 	return ((t_path){check_exec(cmd, false), cmd});
+	if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
+		return ((t_path){check_exec(cmd), cmd});
 	full_cmd = parse_path(vars->envp, cmd);
-	DPRINTF("full_cmd: %s\n", full_cmd);
+	// DPRINTF("full_cmd: %s\n", full_cmd);
 	if (full_cmd != NULL)
 		return ((t_path){(t_err){ERRNO_SUCCESS, -1, NULL}, full_cmd});
 	return ((t_path){(t_err){ERRNO_NOT_FOUND, ERR_MSG_CMD_NOT_FOUND, cmd}, NULL});
@@ -52,9 +105,13 @@ int	exec_child(t_node *node, t_minishell *vars)
 	int		status;
 	pid_t	pid;
 
+	// if (is_builtin(node->exp_args[0]) == true)
+	// 		return (exec_builtin(node->exp_args, vars->env));
 	pid = fork();
 	if (pid == 0)
 	{
+		if (is_builtin(node->exp_args[0]) == true)
+			return (exec_builtin(node->exp_args, vars->env));
 		status = check_redir(node);
 		if (status != ERRNO_SUCCESS)
 			(exit(ERRNO_GENERAL));
@@ -158,7 +215,7 @@ int	redir_in(t_io_node *io_list, int *status)
 
 	if (io_list->exp_value == NULL || io_list->exp_value[1] != NULL)
 	{
-		*status = 1; //Add a function to handle error messages
+		*status = get_err_msg((t_err){ERRNO_GENERAL, ERR_MSG_AMBIGUOUS, io_list->value});
 		return (*status);
 	}
 	fd = open(io_list->exp_value[0], O_RDONLY);
@@ -182,7 +239,7 @@ int	redir_append(t_io_node *io_list, int *status)
 
 	if (io_list->exp_value == NULL || io_list->exp_value[1] != NULL)
 	{
-		*status = 1; //Add a function to handle error messages
+		*status = get_err_msg((t_err){ERRNO_GENERAL, ERR_MSG_AMBIGUOUS, io_list->value});
 		return (*status);
 	}
 	fd = open(io_list->exp_value[0], O_CREAT | O_WRONLY | O_APPEND, 0644);

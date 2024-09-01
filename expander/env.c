@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 10:34:09 by we               ###   ########.fr       */
+/*   Updated: 2024/09/01 13:47:41 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_env	*dup_env(char *envp[])
 	int		i;
 
 	e = gb_malloc(sizeof(t_env));
-	e->envp = envp;
 	e->exp = gb_malloc(sizeof(t_var));
 	e->var = gb_malloc(sizeof(t_var));
 	e->exp->next = NULL;
@@ -32,13 +31,14 @@ t_env	*dup_env(char *envp[])
 		split = split_ent(envp[i]);
 		add_ent(e, split[0], split[1]);
 	}
-	unset((char *[]){"OLDPWD", NULL}, e);
+	builtin_unset((char *[]){"OLDPWD", NULL}, e);
 	add_ent(e, "?", "0");
 	set_val(e, "SHLVL", "1");
+	e->envp = env_to_arr(e->var);
 	return (e);
 }
 
-void	env(t_env *e, char lst)
+int	builtin_env(t_env *e, char lst)
 {
 	t_var	*curr;
 
@@ -55,61 +55,62 @@ void	env(t_env *e, char lst)
 			printf("=\"%s\"", curr->value);
 		else if (lst == VAR && curr->value)
 			printf("=%s", curr->value);
-		// else
-		// 	;
+		else
+			;
 		printf("\n");
 		curr = curr->next;
 	}
+	return (0);
 }
 
-void	unset(char **keys, t_env *e)
-{
-	t_var	*curr;
-	int		i;
+// void	unset(char **keys, t_env *e)
+// {
+// 	t_var	*curr;
+// 	int		i;
 
-	if (keys == NULL || keys[0] == NULL)
-		return ;
-	i = -1;
-	while (keys[++i])
-	{
-		curr = e->var;
-		while (curr->next && curr->id != e->last_var_id)
-		{
-			if (ft_strcmp(curr->next->key, keys[i]) == 0)
-			{
-				if (curr->next->id == e->last_var_id)
-				{
-					e->last_var_id = curr->id;
-					curr->next->next = NULL;
-				}
-				else
-					curr->next = curr->next->next;
-				break;
-			}
-			curr = curr->next;
-		}
-		curr = e->exp;
-		while (curr->next && curr->id != e->last_exp_id)
-		{
-			if (ft_strcmp(curr->next->key, keys[i]) == 0)
-			{
-				if (curr->next->id == e->last_exp_id)
-				{
-					e->last_exp_id = curr->id;
-					curr->next->next = NULL;
-				}
-				else
-					curr->next = curr->next->next;
-				break;
-			}
-			curr = curr->next;
-		}
-	}
-}
+// 	if (keys == NULL || keys[0] == NULL)
+// 		return ;
+// 	i = -1;
+// 	while (keys[++i])
+// 	{
+// 		curr = e->var;
+// 		while (curr->next && curr->id != e->last_var_id)
+// 		{
+// 			if (ft_strcmp(curr->next->key, keys[i]) == 0)
+// 			{
+// 				if (curr->next->id == e->last_var_id)
+// 				{
+// 					e->last_var_id = curr->id;
+// 					curr->next->next = NULL;
+// 				}
+// 				else
+// 					curr->next = curr->next->next;
+// 				break;
+// 			}
+// 			curr = curr->next;
+// 		}
+// 		curr = e->exp;
+// 		while (curr->next && curr->id != e->last_exp_id)
+// 		{
+// 			if (ft_strcmp(curr->next->key, keys[i]) == 0)
+// 			{
+// 				if (curr->next->id == e->last_exp_id)
+// 				{
+// 					e->last_exp_id = curr->id;
+// 					curr->next->next = NULL;
+// 				}
+// 				else
+// 					curr->next = curr->next->next;
+// 				break;
+// 			}
+// 			curr = curr->next;
+// 		}
+// 	}
+// }
 
-// a=1 : export: a="1"; var: a=1
-// a= : export: a=""; var: a=
-// a : export: a; var: [nothing]
+// // a=1 : export: a="1"; var: a=1
+// // a= : export: a=""; var: a=
+// // a : export: a; var: [nothing]
 void	add_ent(t_env *e, char *key, char *val)
 {
 	t_var		*curr;
@@ -136,23 +137,23 @@ void	add_ent(t_env *e, char *key, char *val)
 	curr->next->next = NULL;
 }
 
-char **split_ent(char *str)
-{
-	char	**split;
+// char **split_ent(char *str)
+// {
+// 	char	**split;
 
-	if (str == NULL)
-		return (NULL);
-	split = gb_malloc(sizeof(char *) * 2);
-	split[0] = ft_strndup(str, find_pos(str, '='));
-	if (split[0] == NULL)
-	{
-		split[0] = ft_strndup(str, find_pos(str, '\0'));
-		split[1] = NULL;
-		return (split);
-	}
-	split[1] = ft_strndup(str + find_pos(str, '=') + 1, find_pos(str, '\0'));
-	return (split);
-}
+// 	if (str == NULL)
+// 		return (NULL);
+// 	split = gb_malloc(sizeof(char *) * 2);
+// 	split[0] = ft_strndup(str, find_pos(str, '='));
+// 	if (split[0] == NULL)
+// 	{
+// 		split[0] = ft_strndup(str, find_pos(str, '\0'));
+// 		split[1] = NULL;
+// 		return (split);
+// 	}
+// 	split[1] = ft_strndup(str + find_pos(str, '=') + 1, find_pos(str, '\0'));
+// 	return (split);
+// }
 
 int	find_pos(char *str, char delim)
 {
@@ -175,31 +176,31 @@ char	*ft_strndup(char *str, int pos)
 	return (dup);
 }
 
-void	set_val(t_env *e, char *key, char *val)
-{
-	t_var	*curr;
+// void	set_val(t_env *e, char *key, char *val)
+// {
+// 	t_var	*curr;
 
-	curr = e->exp;
-	while (curr->next)
-	{
-		if (ft_strcmp(curr->key, key) == 0)
-		{
-			curr->value = val;
-			break;
-		}
-		curr = curr->next;
-	}
-	curr = e->var;
-	while (curr->next)
-	{
-		if (ft_strcmp(curr->key, key) == 0)
-		{
-			curr->value = val;
-			return ;
-		}
-		curr = curr->next;
-	}
-}
+// 	curr = e->exp;
+// 	while (curr->next)
+// 	{
+// 		if (ft_strcmp(curr->key, key) == 0)
+// 		{
+// 			curr->value = val;
+// 			break;
+// 		}
+// 		curr = curr->next;
+// 	}
+// 	curr = e->var;
+// 	while (curr->next)
+// 	{
+// 		if (ft_strcmp(curr->key, key) == 0)
+// 		{
+// 			curr->value = val;
+// 			return ;
+// 		}
+// 		curr = curr->next;
+// 	}
+// }
 
 void ft_strncpy(char *dst, char *src, int len)
 {
@@ -211,16 +212,44 @@ void ft_strncpy(char *dst, char *src, int len)
 	dst[i] = '\0';
 }
 
-char	*fetch_val(char *key, t_env *e)
-{
-	t_var	*curr;
+// char	*fetch_val(char *key, t_env *e)
+// {
+// 	t_var	*curr;
 
-	curr = e->var;
+// 	curr = e->var;
+// 	while (curr->next)
+// 	{
+// 		if (ft_strcmp(curr->key, key) == 0)
+// 			return (curr->value);
+// 		curr = curr->next;
+// 	}
+// 	return (NULL);
+// }
+
+char	**env_to_arr(t_var *var)
+{
+	char	**arr;
+	t_var	*curr;
+	int		size;
+
+	size = 0;
+	curr = var;
 	while (curr->next)
 	{
-		if (ft_strcmp(curr->key, key) == 0)
-			return (curr->value);
+		++size;
 		curr = curr->next;
 	}
-	return (NULL);
+	arr = gb_malloc(sizeof(char *) * (size + 1));
+	arr[size] = NULL;
+	curr = var;
+	size = -1;
+	while (curr->next)
+	{
+		if (!curr->key || !curr->value)
+			continue ;
+		arr[++size] = gb_add(ft_strjoin(curr->key, "="));
+		arr[size] = gb_add(ft_strjoin(arr[size], curr->value));
+		curr = curr->next;
+	}
+	return (arr);
 }

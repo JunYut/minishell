@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:31:48 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 13:56:05 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 13:57:59 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ char	*handle_reg_str(char *str, int *i);
 char	*handle_dollar(char *str, int *i, t_minishell *vars);
 bool	is_valid_var_char(char c);
 t_env	*dup_env(char *envp[]);
-void	env(t_env *e, char lst);
-void	unset(char **keys, t_env *v);
+int		builtin_env(t_env *e, char lst);
+int		builtin_unset(char **keys, t_env *v);
 void	add_ent(t_env *e, char *key, char *val);
 int		find_pos(char *str, char delim);
 char	**split_ent(char *str);
@@ -40,6 +40,7 @@ char	*ft_strndup(char *str, int pos);
 void	set_val(t_env *e, char *key, char *val);
 void	ft_strncpy(char *dst, char *src, int len);
 char	*fetch_val(char *key, t_env *e);
+char	**env_to_arr(t_var *var);
 
 void	append(char *file, char *cmd, char *args[]);
 void	write_file(char *file, char *content);

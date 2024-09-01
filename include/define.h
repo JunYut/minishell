@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:21:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 11:13:24 by we               ###   ########.fr       */
+/*   Updated: 2024/08/30 10:25:13 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdbool.h>
 # include "libft.h"
+# include <termios.h>
+# include <signal.h>
 
 # define READ_SIZE 42
 # define EXPORT 1
@@ -22,6 +24,9 @@
 
 # define NODE_LEFT 1
 # define NODE_RIGHT 2
+# define ECHOCTL 0x00000040
+
+extern volatile sig_atomic_t	g_wait;
 
 typedef enum e_token_type
 {
@@ -193,6 +198,7 @@ typedef struct s_minishell
 	t_gbc		*gbc;
 	char		**envp;
 	t_env		*env;
+	struct termios term;
 }	t_minishell;
 
 #endif

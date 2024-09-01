@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 16:13:41 by we               ###   ########.fr       */
+/*   Updated: 2024/08/30 13:53:28 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-volatile __sig_atomic_t	g_wait;
+volatile sig_atomic_t g_wait;
+void	setup_terminal(t_minishell *vars);
 
 void	print_arr(char **arr)
 {
@@ -27,15 +27,27 @@ void	print_arr(char **arr)
 
 void	init_vars(t_minishell *vars, char **envp)
 {
-	vars->token_list = NULL;
-	vars->curr_token = NULL;
-	vars->ast = NULL;
-	vars->parse_err.type = E_NONE;
-	vars->parse_err.str = NULL;
-	vars->token_err = false;
-	vars->line = NULL;
+	ft_bzero(vars, sizeof(t_minishell));
+	// vars->token_list = NULL;
+	// vars->curr_token = NULL;
+	// vars->ast = NULL;
+	// vars->parse_err.type = E_NONE;
+	// vars->parse_err.str = NULL;
+	// vars->token_err = false;
+	// vars->line = NULL;
+	vars->envp = envp;
 	vars->env = dup_env(envp);
-	vars->envp = vars->env->envp;
+	// setup_terminal(vars);
+}
+
+void	setup_terminal(t_minishell *vars)
+{
+	g_wait = 0;
+	tcgetattr(STDIN_FILENO, &vars->term);
+	vars->term.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &vars->term);
+	signal(SIGINT, int_sigint);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -43,15 +55,16 @@ int	main(int ac, char **av, char **envp)
 	t_minishell	vars;
 	char		*curr_dir;
 
+	init_vars(&vars, envp);
 	((void)ac, (void)av, (void)curr_dir);
 	while (1)
 	{
-		init_vars(&vars, envp);
+		setup_terminal(&vars);
 		// env(vars.env, 2);
 		curr_dir = fetch_val("PWD", vars.env);
 		append_str(&curr_dir, "> ");
-		// vars.line = readline(curr_dir);
-		vars.line = gb_add(readline("minishell> "));
+		vars.line = readline(curr_dir);
+		// vars.line = gb_add(readline("minishell> "));
 		if (vars.line == NULL)
 			break ;
 		// if (*vars.line != '\0')
@@ -70,6 +83,8 @@ int	main(int ac, char **av, char **envp)
 		if (vars.parse_err.type != E_NONE)
 			handle_parse_error(&vars);
 		expand_tree(vars.ast, 0, "root", &vars);
+		signal(SIGQUIT, int_sigquit);
+		tcsetattr(STDIN_FILENO, TCSANOW, &vars.term);
 		exec_node(vars.ast, false, &vars);
 		clear_ast(&vars.token_list, &vars.ast);
 	}

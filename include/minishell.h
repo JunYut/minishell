@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:06:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 16:13:49 by we               ###   ########.fr       */
+/*   Updated: 2024/09/01 14:08:33 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "parser.h"
 # include "expand.h"
 # include "wildcard.h"
+# include "signals.h"
 
 extern volatile __sig_atomic_t	g_wait;
 
@@ -50,5 +51,25 @@ int		get_exit_status(int status);
 int		get_err_msg(t_err err);
 
 void	print_arr(char **arr);
+
+int		builtin_cd(char **path, t_env *e);
+int	count_args(char **path, char *func, t_env *e);
+
+int	builtin_echo(char **av);
+
+int	builtin_export(char **ent, t_env *e);
+char	*fetch_val(char *key, t_env *e);
+void	set_val(t_env *e, char *key, char *val);
+char **split_ent(char *str);
+void sort_export(t_var *exp);
+
+int	valid_key(char *key, t_env *e);
+int	builtin_unset(char **keys, t_env *e);
+void	rm_ent(char *key, t_var *lst, int last_id);
+
+int	builtin_pwd(t_env *e);\
+
+void	exit_shell(char **status, t_env *e);
+int	is_numeric(char *str);
 
 #endif
