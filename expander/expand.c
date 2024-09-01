@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 15:54:07 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 16:02:49 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,6 +276,8 @@ char	*handle_dollar(char *str, int *i, t_minishell *vars)
 	char	*env_val;
 
 	(*i)++;
+	if (str[*i] == '\0')
+		return (ft_strdup("$"));
 	if (is_valid_var_char(str[*i] == false))
 	{
 		(*i)++;
