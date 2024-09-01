@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 15:50:27 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 17:27:52 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,34 @@ int	get_err_msg(t_err err)
 	{
 		ft_putstr_fd("minishell: *: ambiguous redirect\n", 2);
 	}
+	else if (err.msg == ERR_MSG_PERM_DENIED)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(err.cause, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		return (err.exit_status);
+	}
+	// return (err.exit_status);
+	else if (errno == 21)
+	{
+		// printf("%d\n", errno);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(err.cause, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd("\n", 2);
+		return (ERRNO_CANT_EXEC);
+	}
+	else if (errno == 2)
+	{
+		// printf("%d\n", errno);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(err.cause, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd("\n", 2);
+		return (ERRNO_NOT_FOUND);
+	}
 	return (err.exit_status);
 }
 
@@ -35,8 +63,15 @@ int	get_exit_status(int status)
 
 t_err	check_exec(char *file)
 {
+	int	fd;
+	(void)fd;
+
 	if (!*file)
 		return ((t_err){ERRNO_GENERAL, ERR_MSG_NO_SUCH_FILE, file});
+	fd = open(file, O_WRONLY);
+	// printf("%d\n", errno);
+	if (errno == 21 || errno == 2)
+			return ((t_err){ERRNO_CANT_EXEC, ERR_MSG_NO_SUCH_FILE, file});
 	if (access(file, F_OK) == 0)
 	{
 		if (access(file, X_OK) == -1)
@@ -90,6 +125,7 @@ t_path	get_path(char *cmd, t_minishell *vars)
 {
 	char	*full_cmd;
 
+	// printf("Did it reach get_path?\n");
 	if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
 		return ((t_path){check_exec(cmd), cmd});
 	full_cmd = parse_path(vars->envp, cmd);
@@ -110,6 +146,7 @@ int	exec_child(t_node *node, t_minishell *vars)
 	pid = fork();
 	if (pid == 0)
 	{
+		// printf("Did it reach exec_child\n");
 		if (is_builtin(node->exp_args[0]) == true)
 			return (exec_builtin(node->exp_args, vars->env));
 		status = check_redir(node);
@@ -127,13 +164,14 @@ int	exec_child(t_node *node, t_minishell *vars)
 		// 	printf("minishell: %s\n", strerror(path_status.err.errno));
 	}
 	status = wait_status(pid, vars->env);
+	// printf("it reached wait!\n");
 	return (status);
 }
 
 int	exec_simple_cmd(t_node *node, bool piped, t_minishell *vars)
 {
 	(void)piped;
-	// int	status; 
+	// int	status;
 	return (exec_child(node, vars));
 }
 
@@ -251,7 +289,7 @@ int	redir_append(t_io_node *io_list, int *status)
 		printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
 		return (*status);
 	}
-	printf("It's not NULL :(\n");
+	// printf("It's not NULL :(\n");
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 	*status = ERRNO_SUCCESS;
@@ -273,11 +311,11 @@ int	wait_status(pid_t pid, t_env *e)
 		status = WEXITSTATUS(status);
 		set_val(e, "?", (char *)gb_add(ft_itoa(status)));
 	}
-	else
-	{
-		status = -1;
-		printf("PID %d: terminated abnormally\n", pid);
-	}
+	// else
+	// {
+	// 	status = -1;
+	// 	printf("PID %d: terminated abnormally\n", pid);
+	// }
 	g_wait = 0;
 	return (status);
 }

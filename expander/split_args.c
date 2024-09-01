@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:18:21 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 16:37:50 by we               ###   ########.fr       */
+/*   Updated: 2024/09/01 17:41:50 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ char	**split_args(char *str)
 	args = allocate_args(str, args);
 	if (!args)
 		return (ft_free_s_arr(args), NULL);
-	// printf("String: %s\n", str);
-	// printf("Count: %d\n", count);
 	return (fill_args(str, args));
 }
 
@@ -104,7 +102,7 @@ char	**fill_args(char *str, char **args)
 
 	i = 0;
 	j = 0;
-	while (str[i] && str[i] != ' ')
+	while (str[i])
 	{
 		if (str[i] != ' ')
 		{

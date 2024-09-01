@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 16:02:49 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 17:42:00 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ char	**expand_args(char *args, t_minishell *vars)
 	i = -1;
 	buffer = gb_add(expand_params(args, vars));
 	expanded = split_args(buffer);
+	// printf("Did it split?\n");
+	if (!expanded)
+		return (NULL);
 	while (expanded[++i])
 	// while (++i <= 2)
 	{
@@ -125,6 +128,7 @@ char	**expand_args(char *args, t_minishell *vars)
 			free(globbed);
 		}
 	}
+	// printf("Did it return expanded?\n");
 	i = -1;
 	while (expanded[++i])
 	{
@@ -138,7 +142,7 @@ char	**expand_args(char *args, t_minishell *vars)
 
 bool	is_valid_regex(char *str)
 {
-	if (!str || *str == '\'' || *str == '"')
+	if (!str || *str == '\'' || *str == '"' || !*str)
 		return (false);
 	return (is_in_set('*', str));
 }
@@ -215,6 +219,7 @@ char	*expand_params(char	*str, t_minishell *vars)
 		else
 			expanded_str = gnl_strjoin(expanded_str, handle_reg_str(str, &i));
 	}
+	// printf("did it expand finish?\n");
 	return (expanded_str);
 }
 
@@ -287,7 +292,9 @@ char	*handle_dollar(char *str, int *i, t_minishell *vars)
 	while (is_valid_var_char(str[*i]) == true)
 		(*i)++;
 	val = ft_substr(str, start, *i - start);
+	// printf("ft_substr\n");
 	env_val = fetch_val(val, vars->env);
+	// printf("Fetch val!\n");
 	if (env_val == NULL)
 		return (free(val), ft_strdup(""));
 	return (free(val), env_val);
@@ -307,6 +314,9 @@ char	*remove_quotes(char *str)
 	char	*new_str;
 	char	quote;
 
+	// printf("reach remove_quotes?\n");
+	if (!str || !*str)
+		return (ft_strdup(""));
 	i = -1;
 	j = 0;
 	quote = 0;
