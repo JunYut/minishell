@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 15:51:08 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 18:32:13 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	init_vars(t_minishell *vars, char **envp)
 	// vars->line = NULL;
 	vars->envp = envp;
 	vars->env = dup_env(envp);
+	vars->stdin = dup(STDIN_FILENO);
+	vars->stdout = dup(STDOUT_FILENO);
 	// setup_terminal(vars);
 }
 

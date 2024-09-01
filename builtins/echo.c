@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:05:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 13:05:54 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 18:43:56 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,15 @@ int	builtin_echo(char **av)
 		i = -1;
 		while (av[++i])
 		{
-			printf("%s", av[i]);
+			// printf("%s", av[i]);
+			ft_putstr_fd(av[i], STDOUT_FILENO);
 			if (av[i + 1])
-				printf(" ");
+				// printf(" ");
+				ft_putstr_fd(" ", STDOUT_FILENO);
 		}
 	}
 	if (nl)
-		printf("\n");
+		// printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:15:23 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 14:27:04 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 19:36:32 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ int	valid_key(char *key, t_env *e)
 
 	if (!key || ft_strchr("1234567890", key[0]) != NULL)
 	{
-		printf("Did it reach here?\n");
 		printf("minishell: export: `%s`: not a valid identifier\n", key);
 		set_val(e, "?", "1");
 		return (1);

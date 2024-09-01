@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 17:42:00 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 19:11:07 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	init_heredocs(t_node *node, t_minishell *vars)
 		}
 		else
 			io->exp_value = expand_args(io->value, vars);
+		// printf("%s\n", io->exp_value[0]);
 		io = io->next;
 	}
 }
@@ -137,6 +138,7 @@ char	**expand_args(char *args, t_minishell *vars)
 	}
 	// if (globbed)
 	// 	print_arr(globbed);
+	// printf("Test string: %s\n", expanded[0]);
 	return (expanded);
 }
 

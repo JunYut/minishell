@@ -6,11 +6,19 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 17:27:52 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 19:33:21 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_reset_stds(bool piped, t_minishell *vars)
+{
+	if (piped)
+		return ;
+	dup2(vars->stdin, 0);
+	dup2(vars->stdout, 1);
+}
 
 int	get_err_msg(t_err err)
 {
@@ -147,8 +155,6 @@ int	exec_child(t_node *node, t_minishell *vars)
 	if (pid == 0)
 	{
 		// printf("Did it reach exec_child\n");
-		if (is_builtin(node->exp_args[0]) == true)
-			return (exec_builtin(node->exp_args, vars->env));
 		status = check_redir(node);
 		if (status != ERRNO_SUCCESS)
 			(exit(ERRNO_GENERAL));
@@ -171,7 +177,20 @@ int	exec_child(t_node *node, t_minishell *vars)
 int	exec_simple_cmd(t_node *node, bool piped, t_minishell *vars)
 {
 	(void)piped;
-	// int	status;
+	int	status;
+	if (!node->exp_args)
+	{
+		status = check_redir(node);
+		return (ft_reset_stds(piped, vars), (status && ERRNO_GENERAL));
+	}
+	if (is_builtin(node->exp_args[0]) == true)
+	{
+		status = check_redir(node);
+		if (status != ERRNO_SUCCESS)
+			return (ft_reset_stds(piped, vars), ERRNO_GENERAL);
+		status = exec_builtin(node->exp_args, vars->env);
+		return(ft_reset_stds(piped, vars), status);
+	}
 	return (exec_child(node, vars));
 }
 
@@ -180,6 +199,9 @@ int	exec_node(t_node *node, bool piped, t_minishell *vars)
 	int	status;
 
 	expand_node(node, vars);
+	// printf("String: %s\n", node->io_list->exp_value[0]);
+	// if (!node->io_list->exp_value)
+	// 	printf("ITS NULL!\n");
 	if (!node)
 		return (ERRNO_GENERAL);
 	if (node->type == N_PIPE)
@@ -211,6 +233,7 @@ int	check_redir(t_node *node)
 	temp_io = node->io_list;
 	while (temp_io)
 	{
+		// printf("String: %s\n", temp_io->exp_value[0]);
 		if (temp_io->type == IO_OUT && redir_out(temp_io, &status) != ERRNO_SUCCESS)
 			return (status);
 		else if (temp_io->type == IO_IN && redir_in(temp_io, &status) != ERRNO_SUCCESS)
@@ -239,7 +262,12 @@ int	redir_out(t_io_node *io_list, int *status)
 	fd = open(io_list->exp_value[0], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
+		// printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(io_list->exp_value[0], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd("\n", 2);
 		*status = errno;
 		return (*status);
 	}
@@ -261,7 +289,12 @@ int	redir_in(t_io_node *io_list, int *status)
 	fd = open(io_list->exp_value[0], O_RDONLY);
 	if (fd == -1)
 	{
-		printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
+		// printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(io_list->exp_value[0], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd("\n", 2);
 		*status = 1;
 		return (*status);
 	}
@@ -276,17 +309,22 @@ int	redir_append(t_io_node *io_list, int *status)
 	int	fd;
 	// t_err temp;
 	// (void)temp;
-
 	if (io_list->exp_value == NULL || io_list->exp_value[1] != NULL)
 	{
 		*status = get_err_msg((t_err){ERRNO_GENERAL, ERR_MSG_AMBIGUOUS, io_list->value});
 		return (*status);
 	}
+
 	fd = open(io_list->exp_value[0], O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
 	{
 		*status = 1;
-		printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
+		// printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(io_list->exp_value[0], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd("\n", 2);
 		return (*status);
 	}
 	// printf("It's not NULL :(\n");

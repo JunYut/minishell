@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:21:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/30 10:25:13 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 17:59:34 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,8 @@ typedef struct s_minishell
 	char		**envp;
 	t_env		*env;
 	struct termios term;
+	int			stdin;
+	int			stdout;
 }	t_minishell;
 
 #endif
