@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/30 13:53:28 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 15:19:35 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,31 @@ void	setup_terminal(t_minishell *vars)
 	signal(SIGQUIT, SIG_IGN);
 }
 
+void	init_heredoc(t_node *node, t_minishell *vars)
+{
+	t_io_node	*io;
+	int	p_fd[2];
+	pid_t	pid;
+
+	io = node->io_list;
+	while (io != NULL)
+	{
+		if (io->type == IO_HEREDOC)
+		{
+			pipe(p_fd);
+			io->exp_value = expand_args(io->value, vars);
+			pid = fork();
+			if (!pid)
+				heredoc(io, p_fd);
+			waitpid(pid, &pid, 0);
+			io->heredoc = p_fd[0];
+		}
+		else
+			io->exp_value = expand_args(io->value, vars);
+		io = io->next;
+	}
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_minishell	vars;
@@ -82,7 +107,8 @@ int	main(int ac, char **av, char **envp)
 		vars.ast = parse(&vars);
 		if (vars.parse_err.type != E_NONE)
 			handle_parse_error(&vars);
-		expand_tree(vars.ast, 0, "root", &vars);
+		init_heredocs(vars.ast, &vars);
+		// init_heredoc(vars.ast, &vars);
 		signal(SIGQUIT, int_sigquit);
 		tcsetattr(STDIN_FILENO, TCSANOW, &vars.term);
 		exec_node(vars.ast, false, &vars);

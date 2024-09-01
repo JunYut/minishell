@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 13:57:31 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 15:20:34 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,52 +39,19 @@ void	print_tree(t_node *node, int depth, char *branch)
 	printf("Node(%s): %s | Value: %s\n", branch, get_node_type(node->type), node->args);
 }
 
-void	expand_tree(t_node *node, int depth, char *branch, t_minishell *vars)
-{
-	// char **envp = environ;
-	(void)branch;
-	if (node == NULL)
-		return ;
-	// print_tree(node, depth, branch);
-	if (node->type ==  N_PIPE || node->type == N_AND || node->type == N_OR)
-	{
-		expand_tree(node->left, depth + 1, "left", vars);
-		expand_tree(node->right, depth + 1, "right", vars);
-	}
-	expand_node(node, vars);
-	// if (node->io_list != NULL && node->io_list->type == IO_OUT)
-	// 	append(node->io_list->value, parse_path(envp, node->exp_args[0]), node->exp_args);
-	// else if (node->io_list != NULL && node->io_list->type == IO_HEREDOC)
-	// {
-	// 	pid_t pid = fork();
-	// 	if (pid == 0)
-	// 	{
-	// 		while (node->io_list->next != NULL)
-	// 			node->io_list = node->io_list->next;
-	// 		dup2(node->io_list->heredoc, STDIN_FILENO);
-	// 		close(node->io_list->heredoc);
-	// 		execve(parse_path(envp, node->exp_args[0]), node->exp_args, environ);
-	// 	}
-	// 	wait(NULL);
-	// }
-	// else
-	// {
-	// 	pid_t pid = fork();
-	// 	if (pid == 0)
-	// 		if (execve(parse_path(envp, node->exp_args[0]), node->exp_args, environ) == -1)
-	// 			exit(1);
-	// 	wait(NULL);
-	// }
-}
-
-void	expand_node(t_node *node, t_minishell *vars)
+void	init_heredocs(t_node *node, t_minishell *vars)
 {
 	t_io_node	*io;
-	int			p_fd[2];
-	pid_t		pid;
+	int	p_fd[2];
+	pid_t	pid;
 
-	if (node->args)
-		node->exp_args = expand_args(node->args, vars);
+	if (node == NULL)
+		return ;
+	if (node->type ==  N_PIPE || node->type == N_AND || node->type == N_OR)
+	{
+		init_heredocs(node->left, vars);
+		init_heredocs(node->right, vars);
+	}
 	io = node->io_list;
 	while (io != NULL)
 	{
@@ -98,13 +65,40 @@ void	expand_node(t_node *node, t_minishell *vars)
 			waitpid(pid, &pid, 0);
 			io->heredoc = p_fd[0];
 		}
-		// printf("redir_type: %d\n", io->type);
-		// printf("redir: %s\n", io->value);
 		else
 			io->exp_value = expand_args(io->value, vars);
-		// printf("redir_type: %d\n", io->type);
 		io = io->next;
 	}
+}
+
+void	expand_node(t_node *node, t_minishell *vars)
+{
+	// t_io_node	*io;
+	// int			p_fd[2];
+	// pid_t		pid;
+
+	if (node->args)
+		node->exp_args = expand_args(node->args, vars);
+	// io = node->io_list;
+	// while (io != NULL)
+	// {
+	// 	// if (io->type == IO_HEREDOC)
+	// 	// {
+	// 	// 	pipe(p_fd);
+	// 	// 	io->exp_value = expand_args(io->value, vars);
+	// 	// 	pid = fork();
+	// 	// 	if (!pid)
+	// 	// 		heredoc(io, p_fd);
+	// 	// 	waitpid(pid, &pid, 0);
+	// 	// 	io->heredoc = p_fd[0];
+	// 	// }
+	// 	// // printf("redir_type: %d\n", io->type);
+	// 	// // printf("redir: %s\n", io->value);
+	// 	// else
+	// 		io->exp_value = expand_args(io->value, vars);
+	// 	// printf("redir_type: %d\n", io->type);
+	// 	io = io->next;
+	// }
 	// printf("exp_args: %s\n", node->args);
 }
 

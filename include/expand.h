@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:31:48 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 13:57:59 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 15:19:17 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # include "define.h"
 # include "gbc.h"
 
-void	expand_tree(t_node *node, int depth, char *branch, t_minishell *vars);
+// void	expand_tree(t_node *node, int depth, char *branch, t_minishell *vars);
+void	init_heredocs(t_node *node, t_minishell *vars);
 void	expand_node(t_node *node, t_minishell *vars);
 char	**expand_args(char *args, t_minishell *vars);
 char	*expand_params(char	*str, t_minishell *vars);
@@ -62,5 +63,7 @@ void	heredoc(t_io_node *io, int *p_fd);
 char	*read_doc(char *delimiter);
 
 char *remove_quotes(char *str);
+
+void	init_heredoc(t_node *node, t_minishell *vars);
 
 #endif

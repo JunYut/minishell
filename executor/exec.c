@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 14:33:59 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 14:48:41 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ int	exec_node(t_node *node, bool piped, t_minishell *vars)
 {
 	int	status;
 
+	expand_node(node, vars);
 	if (!node)
 		return (ERRNO_GENERAL);
 	if (node->type == N_PIPE)
