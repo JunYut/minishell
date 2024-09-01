@@ -16,7 +16,7 @@ int	export(char **ent, t_env *e)
 	if (ent == NULL || ent[0] == NULL || ent[0][0] == '\0')
 	{
 		env(e, EXPORT);
-		return ;
+		return (0);
 	}
 	status = 0;
 	i = -1;
