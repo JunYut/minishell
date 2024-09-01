@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:31:48 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 11:07:26 by we               ###   ########.fr       */
+/*   Updated: 2024/09/01 13:56:05 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@
 void	expand_tree(t_node *node, int depth, char *branch, t_minishell *vars);
 void	expand_node(t_node *node, t_minishell *vars);
 char	**expand_args(char *args, t_minishell *vars);
-char	*expand_params(char	*str);
+char	*expand_params(char	*str, t_minishell *vars);
 char	*handle_squote(char *str, int *i);
-char	*handle_dquote(char *str, int *i);
+char	*handle_dquote(char *str, int *i, t_minishell *vars);
 char	*handle_reg_str(char *str, int *i);
-char	*handle_dollar(char *str, int *i);
+char	*handle_dollar(char *str, int *i, t_minishell *vars);
 bool	is_valid_var_char(char c);
 t_env	*dup_env(char *envp[]);
 void	env(t_env *e, char lst);

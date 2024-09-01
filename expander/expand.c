@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 16:33:13 by we               ###   ########.fr       */
+/*   Updated: 2024/09/01 13:55:36 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 #include "wildcard.h"
 
-extern char **environ;
 bool	is_valid_regex(char *str);
 char **insert_string_array(char **dest, char **src, int insert_index);
 int count_strings(char **array);
@@ -119,7 +118,7 @@ char	**expand_args(char *args, t_minishell *vars)
 	(void)globbed;
 
 	i = -1;
-	buffer = gb_add(expand_params(args));
+	buffer = gb_add(expand_params(args, vars));
 	expanded = split_args(buffer);
 	while (expanded[++i])
 	// while (++i <= 2)
@@ -204,7 +203,7 @@ char **insert_string_array(char **dest, char **src, int insert_index) {
 	return (new_dest);
 }
 
-char	*expand_params(char	*str)
+char	*expand_params(char	*str, t_minishell *vars)
 {
 	char	*expanded_str;
 	int		i;
@@ -216,9 +215,9 @@ char	*expand_params(char	*str)
 		if (str[i] == '\'')
 			expanded_str = gnl_strjoin(expanded_str, handle_squote(str, &i));
 		else if (str[i] == '"')
-			expanded_str = gnl_strjoin(expanded_str, handle_dquote(str, &i));
+			expanded_str = gnl_strjoin(expanded_str, handle_dquote(str, &i, vars));
 		else if (str[i] == '$')
-			expanded_str = gnl_strjoin(expanded_str, handle_dollar(str, &i));
+			expanded_str = gnl_strjoin(expanded_str, handle_dollar(str, &i, vars));
 		else
 			expanded_str = gnl_strjoin(expanded_str, handle_reg_str(str, &i));
 	}
@@ -257,7 +256,7 @@ char	*handle_dquote_str(char *str, int *i)
 	return (ft_substr(str, start, *i - start));
 }
 
-char	*handle_dquote(char *str, int *i)
+char	*handle_dquote(char *str, int *i, t_minishell *vars)
 {
 	char	*ret_str;
 
@@ -267,7 +266,7 @@ char	*handle_dquote(char *str, int *i)
 	while (str[*i] != '"')
 	{
 		if (str[*i] == '$')
-			ret_str = gnl_strjoin(ret_str, handle_dollar(str, i));
+			ret_str = gnl_strjoin(ret_str, handle_dollar(str, i, vars));
 		else
 			ret_str = gnl_strjoin(ret_str, handle_dquote_str(str, i));
 	}
@@ -276,7 +275,7 @@ char	*handle_dquote(char *str, int *i)
 	// return (ret_str);
 }
 
-char	*handle_dollar(char *str, int *i)
+char	*handle_dollar(char *str, int *i, t_minishell *vars)
 {
 	int		start;
 	char	*val;
@@ -292,7 +291,7 @@ char	*handle_dollar(char *str, int *i)
 	while (is_valid_var_char(str[*i]) == true)
 		(*i)++;
 	val = ft_substr(str, start, *i - start);
-	env_val = fetch_val(val, dup_env(environ));
+	env_val = fetch_val(val, vars->env);
 	if (env_val == NULL)
 		return (free(val), ft_strdup(""));
 	return (free(val), env_val);
