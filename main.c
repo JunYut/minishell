@@ -6,11 +6,13 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 18:32:13 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 20:54:05 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <unistd.h>
+#include <stdio.h>
 volatile sig_atomic_t g_wait;
 void	setup_terminal(t_minishell *vars);
 
@@ -91,7 +93,8 @@ int	main(int ac, char **av, char **envp)
 		// curr_dir = fetch_val("PWD", vars.env);
 		// append_str(&curr_dir, "> ");
 		// vars.line = readline(curr_dir);
-		vars.line = gb_add(readline("minishell> "));
+		if (isatty(fileno(stdin)))
+			vars.line = gb_add(readline("minishell> "));
 		if (vars.line == NULL)
 			break ;
 		// if (*vars.line != '\0')
@@ -109,11 +112,12 @@ int	main(int ac, char **av, char **envp)
 		vars.ast = parse(&vars);
 		if (vars.parse_err.type != E_NONE)
 			handle_parse_error(&vars);
-		init_heredocs(vars.ast, &vars);
 		// init_heredoc(vars.ast, &vars);
 		signal(SIGQUIT, int_sigquit);
+		init_heredocs(vars.ast, &vars);
 		tcsetattr(STDIN_FILENO, TCSANOW, &vars.term);
 		vars.exit_status = exec_node(vars.ast, false, &vars);
+		set_val(vars.env, "?", (char *)gb_add(ft_itoa(vars.exit_status)));
 		// printf("Exit: %d\n", vars.exit_status);
 		clear_ast(&vars.token_list, &vars.ast);
 	}

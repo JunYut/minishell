@@ -6,7 +6,7 @@
 #    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/06 14:33:10 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/08/30 10:53:34 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/09/01 20:29:32 by kkhai-ki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ ORANGE	= \033[0;38;5;166m
 
 # Compiler & Flags
 CC		= clang
-CFLAGS	= -Wall -Wextra -Werror -Wpedantic -std=c99 -g
+CFLAGS	= -Wall -Wextra -Werror -Wpedantic -g #-std=c99
 
 # Directories
 RL_DIR		= readline
