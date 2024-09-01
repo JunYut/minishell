@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 15:20:34 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 15:54:07 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,7 +293,7 @@ char	*handle_dollar(char *str, int *i, t_minishell *vars)
 
 bool	is_valid_var_char(char c)
 {
-	if (ft_isalnum(c) || c == '_')
+	if (ft_isalnum(c) || c == '_' || c == '?')
 		return (true);
 	return (false);
 }

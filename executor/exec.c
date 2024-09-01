@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 14:48:41 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 15:50:27 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ int	exec_child(t_node *node, t_minishell *vars)
 int	exec_simple_cmd(t_node *node, bool piped, t_minishell *vars)
 {
 	(void)piped;
+	// int	status; 
 	return (exec_child(node, vars));
 }
 

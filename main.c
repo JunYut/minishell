@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 15:19:35 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/01 15:51:08 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ int	main(int ac, char **av, char **envp)
 	{
 		setup_terminal(&vars);
 		// env(vars.env, 2);
-		curr_dir = fetch_val("PWD", vars.env);
-		append_str(&curr_dir, "> ");
-		vars.line = readline(curr_dir);
-		// vars.line = gb_add(readline("minishell> "));
+		// curr_dir = fetch_val("PWD", vars.env);
+		// append_str(&curr_dir, "> ");
+		// vars.line = readline(curr_dir);
+		vars.line = gb_add(readline("minishell> "));
 		if (vars.line == NULL)
 			break ;
 		// if (*vars.line != '\0')
@@ -111,10 +111,11 @@ int	main(int ac, char **av, char **envp)
 		// init_heredoc(vars.ast, &vars);
 		signal(SIGQUIT, int_sigquit);
 		tcsetattr(STDIN_FILENO, TCSANOW, &vars.term);
-		exec_node(vars.ast, false, &vars);
+		vars.exit_status = exec_node(vars.ast, false, &vars);
+		// printf("Exit: %d\n", vars.exit_status);
 		clear_ast(&vars.token_list, &vars.ast);
 	}
 	clear_history();
 	gb_clear();
-	return (0);
+	return (vars.exit_status);
 }
