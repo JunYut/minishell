@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 14:06:53 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 14:08:28 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:54:42 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exit_shell(char **status, t_env *e)
 	{
 		if (!is_numeric(status[0]))
 		{
-			printf("minishell: exit: %s: numeric argument required\n", status[0]);
+			print_builtin_err("exit", status[0], "numeric argument required");
 			exit_status = 2;
 		}
 		else if (count_args(status, "exit", e) > 1)

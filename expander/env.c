@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 13:47:41 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:06:33 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,8 @@ char	*ft_strndup(char *str, int pos)
 {
 	char	*dup;
 
+	if (pos < 1)
+		return (NULL);
 	dup = gb_malloc(pos + 1);
 	ft_strncpy(dup, str, pos);
 	return (dup);

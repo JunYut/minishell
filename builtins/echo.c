@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:05:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 18:43:56 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:42:34 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,12 @@ int	builtin_echo(char **av)
 		i = -1;
 		while (av[++i])
 		{
-			// printf("%s", av[i]);
-			ft_putstr_fd(av[i], STDOUT_FILENO);
+			printf("%s", av[i]);
 			if (av[i + 1])
-				// printf(" ");
-				ft_putstr_fd(" ", STDOUT_FILENO);
+				printf(" ");
 		}
 	}
 	if (nl)
-		// printf("\n");
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		printf("\n");
 	return (0);
 }

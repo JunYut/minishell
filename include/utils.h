@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:57:24 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/02 10:33:54 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/02 10:48:51 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "define.h"
 # include "libft.h"
 
+int	print_builtin_err(char *builtin, char *cause, char *error);
 int	print_err(char *cause, char *error);
 
 # endif
