@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 10:53:12 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/30 13:46:04 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:39:37 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	builtin_cd(char **path, t_env *e)
 		target = fetch_val("OLDPWD", e);
 	if (*path && ft_strcmp(*path, "-") == 0 && !target)
 	{
-		printf("minishell: cd: OLDPWD not set\n");
+		print_err("cd", "OLDPWD not set");
 		set_val(e, "?", "1");
 		return (1);
 	}
@@ -58,7 +58,7 @@ int	count_args(char **path, char *func, t_env *e)
 		i++;
 	if (i > 1)
 	{
-		printf("minishell: %s: too many arguments\n", func);
+		print_err(func, "too many arguments");
 		set_val(e, "?", "1");
 	}
 	return (i);

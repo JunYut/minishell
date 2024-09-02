@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 19:33:21 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:36:54 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,20 @@ int	get_err_msg(t_err err)
 	}
 	else if (err.msg == ERR_MSG_PERM_DENIED)
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(err.cause, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
+		print_err(err.cause, "Permission denied");
 		return (err.exit_status);
 	}
 	// return (err.exit_status);
 	else if (errno == 21)
 	{
 		// printf("%d\n", errno);
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(err.cause, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
+		print_err(err.cause, strerror(errno));
 		return (ERRNO_CANT_EXEC);
 	}
 	else if (errno == 2)
 	{
 		// printf("%d\n", errno);
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(err.cause, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
+		print_err(err.cause, strerror(errno));
 		return (ERRNO_NOT_FOUND);
 	}
 	return (err.exit_status);
