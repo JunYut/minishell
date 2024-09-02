@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:37:24 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 14:26:55 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:11:42 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int	builtin_unset(char **keys, t_env *e)
 	i = -1;
 	while (keys[++i])
 	{
-		if (valid_key(keys[i], e))
-			continue ;
 		rm_ent(keys[i], e->exp, e->last_exp_id);
 		rm_ent(keys[i], e->var, e->last_var_id);
 	}
