@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/02 10:28:13 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:40:04 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	**expand_args(char *args, t_minishell *vars)
 	while (expanded[++i])
 	{
 		expanded[i] = gb_add(remove_quotes(expanded[i]));
-		printf("Final string: %s\n", expanded[i]);
+		// printf("Final string: %s\n", expanded[i]);
 	}
 	// if (globbed)
 	// 	print_arr(globbed);

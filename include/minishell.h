@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:06:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 15:19:14 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:39:14 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ extern volatile __sig_atomic_t	g_wait;
 void	init_vars(t_minishell *vars, char **envp);
 
 int		exec_node(t_node *node, bool piped, t_minishell *vars);
+int		exec_subshell(t_node *subshell_node, t_minishell *vars);
 t_path	get_path(char *cmd, t_minishell *vars);
 int		exec_child(t_node *node, t_minishell *vars);
 int		exec_simple_cmd(t_node *node, bool piped, t_minishell *vars);

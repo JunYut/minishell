@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 16:32:09 by we               ###   ########.fr       */
+/*   Updated: 2024/09/03 13:55:16 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_node	*parse(t_minishell *vars)
 t_node	*get_term(t_minishell *vars)
 {
 	t_node	*node;
+	t_node	*subshell_node;
 
 	if (vars->parse_err.type != E_NONE)
 		return (NULL);
@@ -42,8 +43,12 @@ t_node	*get_term(t_minishell *vars)
 			return (NULL);
 		if (vars->curr_token == NULL || vars->curr_token->type != T_R_BRACKET)
 			return (set_parse_err_type(vars, E_SYNTAX), node);
+		subshell_node = init_new_node(N_SUBSHELL);
+		if (subshell_node == NULL)
+			return (set_parse_err_type(vars, E_MEM), NULL);
+		subshell_node->left = node;
 		vars->curr_token = vars->curr_token->next;
-		return (node);
+		return (subshell_node);
 	}
 	else
 		return (get_simple_cmd(vars));
