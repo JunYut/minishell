@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/03 10:39:49 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 09:36:18 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,10 @@ int	main(int ac, char **av, char **envp)
 		if (isatty(fileno(stdin)))
 			vars.line = gb_add(readline("minishell> "));
 		if (vars.line == NULL)
+		{
+			printf("exit\n");
 			break ;
+		}
 		// if (*vars.line != '\0')
 		add_history(vars.line);
 		tokenize(vars.line, &vars);
