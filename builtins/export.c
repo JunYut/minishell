@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:15:23 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 11:05:30 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 11:07:42 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	set_val(t_env *e, char *key, char *val)
 		if (ft_strcmp(curr->key, key) == 0)
 		{
 			curr->value = val;
-			break;
+			break ;
 		}
 		curr = curr->next;
 	}
@@ -86,7 +86,7 @@ void	set_val(t_env *e, char *key, char *val)
 	}
 }
 
-void sort_export(t_var *exp)
+void	sort_export(t_var *exp)
 {
 	t_var	*curr;
 	char	*tmp;
@@ -115,7 +115,6 @@ int	valid_key(char *key, t_env *e)
 
 	if (!key || ft_strchr("1234567890", key[0]) != NULL)
 	{
-		// printf("minishell: export: `%s': not a valid identifier\n", key);
 		print_builtin_err("export", key, "not a valid identifier");
 		set_val(e, "?", "1");
 		return (1);

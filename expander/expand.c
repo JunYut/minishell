@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/03 10:40:04 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:46:58 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
+#include "minishell.h"
 #include "wildcard.h"
 
 bool	is_valid_regex(char *str);
-char **insert_string_array(char **dest, char **src, int insert_index);
-int count_strings(char **array);
+char	**insert_string_array(char **dest, char **src, int insert_index);
+int		count_strings(char **array);
 
 void	expand_node(t_node *node, t_minishell *vars)
 {
@@ -51,8 +52,8 @@ void	expand_node(t_node *node, t_minishell *vars)
 void	init_heredocs(t_node *node, t_minishell *vars)
 {
 	t_io_node	*io;
-	int	p_fd[2];
-	pid_t	pid;
+	int			p_fd[2];
+	pid_t		pid;
 
 	io = node->io_list;
 	while (io != NULL)
@@ -63,8 +64,13 @@ void	init_heredocs(t_node *node, t_minishell *vars)
 			io->exp_value = expand_args(io->value, vars);
 			pid = fork();
 			if (!pid)
+			{
+				signal(SIGINT, SIG_DFL);
+				signal(SIGQUIT, SIG_IGN);
 				heredoc(io, p_fd);
-			waitpid(pid, &pid, 0);
+				exit(0);
+			}
+			wait_status(pid, vars->env);
 			io->heredoc = p_fd[0];
 		}
 		else
@@ -79,8 +85,6 @@ char	**expand_args(char *args, t_minishell *vars)
 	char	**globbed;
 	char	*buffer;
 	int		i;
-	(void)vars;
-	(void)globbed;
 
 	i = -1;
 	buffer = gb_add(expand_params(args, vars));
