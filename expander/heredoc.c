@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 11:38:25 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/30 10:27:09 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:27:14 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	heredoc(t_io_node *io, int *p_fd)
 	// dup2(p_fd[0], STDIN_FILENO);
 	// close(p_fd[0]);
 	// free(doc);
-	// exit(0);
+	exit(0);
 }
 
 char	*read_doc(char *delimiter)

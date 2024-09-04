@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/03 10:40:04 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:20:39 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ void	init_heredocs(t_node *node, t_minishell *vars)
 	int	p_fd[2];
 	pid_t	pid;
 
+	if (node == NULL)
+		return ;
+	// printf("Node type: %d\n", node->type);
+	init_heredocs(node->left, vars);
+	init_heredocs(node->right, vars);
 	io = node->io_list;
 	while (io != NULL)
 	{

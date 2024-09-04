@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/03 10:38:21 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 10:53:23 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,12 +198,12 @@ int	exec_node(t_node *node, bool piped, t_minishell *vars)
 {
 	int	status;
 
-	expand_node(node, vars);
+	if (!node)
+		return (ERRNO_GENERAL);
 	// printf("String: %s\n", node->io_list->exp_value[0]);
 	// if (!node->io_list->exp_value)
 	// 	printf("ITS NULL!\n");
-	if (!node)
-		return (ERRNO_GENERAL);
+	expand_node(node, vars);
 	if (node->type == N_PIPE)
 		return (exec_pipeline(node, vars));
 	else if (node->type == N_AND)
