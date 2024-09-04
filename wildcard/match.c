@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   match.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:09:27 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/28 11:23:25 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 09:39:44 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "wildcard.h"
+# include "utils.h"
 
 t_list	*ent_match(t_wildcard *wc, char *regex)
 {

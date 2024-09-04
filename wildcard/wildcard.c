@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:10:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 11:09:29 by we               ###   ########.fr       */
+/*   Updated: 2024/09/04 09:40:01 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "wildcard.h"
 # include "expand.h"
+# include "utils.h"
 
 char	**wildcard(char *regex, t_env *env_var)
 {
