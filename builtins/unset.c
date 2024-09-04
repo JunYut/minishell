@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:37:24 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/02 15:11:42 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 10:25:33 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	rm_ent(char *key, t_var *lst, int last_id)
 			}
 			else
 				lst->next = lst->next->next;
-			break;
+			break ;
 		}
 		lst = lst->next;
 	}

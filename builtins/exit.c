@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 14:06:53 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/02 10:54:42 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 10:18:27 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	exit_shell(char **status, t_env *e)
 
 int	is_numeric(char *str)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (str[++i])

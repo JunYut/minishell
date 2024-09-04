@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:57:24 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/04 09:45:59 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 10:46:41 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,10 @@ t_wc_type	*gb_newtoken(t_wc_type token);
 t_list		*gb_lstnew(void *content);
 char		*gb_itoa(int n);
 char		*gb_strdup(const char *s1);
+
+int			find_pos(char *str, char delim);
+char		*ft_strndup(char *str, int pos);
+void		ft_strncpy(char *dst, char *src, int len);
+
 
 # endif

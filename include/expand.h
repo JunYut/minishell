@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:31:48 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 15:19:17 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 10:48:45 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,8 @@ t_env	*dup_env(char *envp[]);
 int		builtin_env(t_env *e, char lst);
 int		builtin_unset(char **keys, t_env *v);
 void	add_ent(t_env *e, char *key, char *val);
-int		find_pos(char *str, char delim);
 char	**split_ent(char *str);
-char	*ft_strndup(char *str, int pos);
 void	set_val(t_env *e, char *key, char *val);
-void	ft_strncpy(char *dst, char *src, int len);
 char	*fetch_val(char *key, t_env *e);
 char	**env_to_arr(t_var *var);
 
@@ -62,7 +59,7 @@ void	fill_word(char *str, char **args, int *i, int j);
 void	heredoc(t_io_node *io, int *p_fd);
 char	*read_doc(char *delimiter);
 
-char *remove_quotes(char *str);
+char	*remove_quotes(char *str);
 
 void	init_heredoc(t_node *node, t_minishell *vars);
 

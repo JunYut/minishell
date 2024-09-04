@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 09:48:52 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 10:48:08 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,8 @@ int	main(int ac, char **av, char **envp)
 	{
 		setup_terminal(&vars);
 		// env(vars.env, 2);
-		// curr_dir = fetch_val("PWD", vars.env);
-		// append_str(&curr_dir, "> ");
-		// vars.line = readline(curr_dir);
+		curr_dir = fetch_val("PWD", vars.env);
+		append_str(&curr_dir, "> ");
 		if (isatty(fileno(stdin)))
 			vars.line = gb_add(readline("minishell> "));
 		if (vars.line == NULL)
