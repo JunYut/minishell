@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 10:52:23 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 11:05:43 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,51 +62,6 @@ int	builtin_env(t_env *e, char lst)
 	return (0);
 }
 
-// void	unset(char **keys, t_env *e)
-// {
-// 	t_var	*curr;
-// 	int		i;
-
-// 	if (keys == NULL || keys[0] == NULL)
-// 		return ;
-// 	i = -1;
-// 	while (keys[++i])
-// 	{
-// 		curr = e->var;
-// 		while (curr->next && curr->id != e->last_var_id)
-// 		{
-// 			if (ft_strcmp(curr->next->key, keys[i]) == 0)
-// 			{
-// 				if (curr->next->id == e->last_var_id)
-// 				{
-// 					e->last_var_id = curr->id;
-// 					curr->next->next = NULL;
-// 				}
-// 				else
-// 					curr->next = curr->next->next;
-// 				break;
-// 			}
-// 			curr = curr->next;
-// 		}
-// 		curr = e->exp;
-// 		while (curr->next && curr->id != e->last_exp_id)
-// 		{
-// 			if (ft_strcmp(curr->next->key, keys[i]) == 0)
-// 			{
-// 				if (curr->next->id == e->last_exp_id)
-// 				{
-// 					e->last_exp_id = curr->id;
-// 					curr->next->next = NULL;
-// 				}
-// 				else
-// 					curr->next = curr->next->next;
-// 				break;
-// 			}
-// 			curr = curr->next;
-// 		}
-// 	}
-// }
-
 // // a=1 : export: a="1"; var: a=1
 // // a= : export: a=""; var: a=
 // // a : export: a; var: [nothing]
@@ -136,63 +91,26 @@ void	add_ent(t_env *e, char *key, char *val)
 	curr->next->next = NULL;
 }
 
-// char **split_ent(char *str)
-// {
-// 	char	**split;
+// a=1 : export: a="1"; var: a=1
+// a= : export: a=""; var: a=
+// a : export: a; var: [nothing]
+char	**split_ent(char *str)
+{
+	char	**split;
 
-// 	if (str == NULL)
-// 		return (NULL);
-// 	split = gb_malloc(sizeof(char *) * 2);
-// 	split[0] = ft_strndup(str, find_pos(str, '='));
-// 	if (split[0] == NULL)
-// 	{
-// 		split[0] = ft_strndup(str, find_pos(str, '\0'));
-// 		split[1] = NULL;
-// 		return (split);
-// 	}
-// 	split[1] = ft_strndup(str + find_pos(str, '=') + 1, find_pos(str, '\0'));
-// 	return (split);
-// }
-
-// void	set_val(t_env *e, char *key, char *val)
-// {
-// 	t_var	*curr;
-
-// 	curr = e->exp;
-// 	while (curr->next)
-// 	{
-// 		if (ft_strcmp(curr->key, key) == 0)
-// 		{
-// 			curr->value = val;
-// 			break;
-// 		}
-// 		curr = curr->next;
-// 	}
-// 	curr = e->var;
-// 	while (curr->next)
-// 	{
-// 		if (ft_strcmp(curr->key, key) == 0)
-// 		{
-// 			curr->value = val;
-// 			return ;
-// 		}
-// 		curr = curr->next;
-// 	}
-// }
-
-// char	*fetch_val(char *key, t_env *e)
-// {
-// 	t_var	*curr;
-
-// 	curr = e->var;
-// 	while (curr->next)
-// 	{
-// 		if (ft_strcmp(curr->key, key) == 0)
-// 			return (curr->value);
-// 		curr = curr->next;
-// 	}
-// 	return (NULL);
-// }
+	if (str == NULL)
+		return (NULL);
+	split = gb_malloc(sizeof(char *) * 2);
+	split[0] = ft_strndup(str, find_pos(str, '='));
+	if (split[0] == NULL)
+	{
+		split[0] = ft_strndup(str, find_pos(str, '\0'));
+		split[1] = NULL;
+		return (split);
+	}
+	split[1] = ft_strndup(str + find_pos(str, '=') + 1, find_pos(str, '\0'));
+	return (split);
+}
 
 char	**env_to_arr(t_var *var)
 {

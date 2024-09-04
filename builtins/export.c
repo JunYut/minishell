@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:15:23 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/02 15:06:53 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 11:05:30 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,27 +84,6 @@ void	set_val(t_env *e, char *key, char *val)
 		}
 		curr = curr->next;
 	}
-}
-
-// a=1 : export: a="1"; var: a=1
-// a= : export: a=""; var: a=
-// a : export: a; var: [nothing]
-char **split_ent(char *str)
-{
-	char	**split;
-
-	if (str == NULL)
-		return (NULL);
-	split = gb_malloc(sizeof(char *) * 2);
-	split[0] = ft_strndup(str, find_pos(str, '='));
-	if (split[0] == NULL)
-	{
-		split[0] = ft_strndup(str, find_pos(str, '\0'));
-		split[1] = NULL;
-		return (split);
-	}
-	split[1] = ft_strndup(str + find_pos(str, '=') + 1, find_pos(str, '\0'));
-	return (split);
 }
 
 void sort_export(t_var *exp)
