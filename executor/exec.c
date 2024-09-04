@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 13:08:20 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:08:54 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ t_path	get_path(char *cmd, t_minishell *vars)
 	char	*full_cmd;
 
 	// printf("Did it reach get_path?\n");
-	if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
+	if (ft_strnstr(cmd, "/", ft_strlen(cmd))) //Put a check for PATH here
 		return ((t_path){check_exec(cmd), cmd});
 	full_cmd = parse_path(vars->env->envp, cmd);
 	// DPRINTF("full_cmd: %s\n", full_cmd);

@@ -79,10 +79,11 @@ char	*parse_path(char *envp[], char *cmd)
 	i = -1;
 	while (envp[++i] && ft_strncmp(envp[i], "PATH=", 5))
 		;
+	if (envp[i] == NULL)
+		return (NULL);
 	path_list = ft_split(envp[i], ':');
 	prepend_cmd(path_list, cmd);
 	trim_path(path_list[0], "PATH=");
-	path = NULL;
 	i = -1;
 	while (path_list[++i] && !path)
 		if (access(path_list[i], X_OK) == 0)	// not considering directories
