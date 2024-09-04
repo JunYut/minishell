@@ -6,7 +6,7 @@
 #    By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/06 14:33:10 by kkhai-ki          #+#    #+#              #
-#    Updated: 2024/09/04 09:30:04 by tjun-yu          ###   ########.fr        #
+#    Updated: 2024/09/04 10:59:02 by tjun-yu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,11 +81,11 @@ fsan :
 
 clean :
 	rm -rf $(OBJ_DIR)
-	$(MAKE) -C $(RL_DIR) clean
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean : clean
 	rm -rf $(EXEC)
+	$(MAKE) -C $(RL_DIR) clean
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re : fclean all
