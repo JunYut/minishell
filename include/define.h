@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 15:21:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/02 09:51:40 by tjun-yu          ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/09/04 09:30:55 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef DEFINE_H
 # define DEFINE_H
@@ -56,6 +57,7 @@ typedef enum e_node_type
 	N_AND,
 	N_OR,
 	N_CMD,
+	N_SUBSHELL,
 }	t_node_type;
 
 typedef enum e_io_type

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 19:11:07 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:40:04 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,61 +16,6 @@
 bool	is_valid_regex(char *str);
 char **insert_string_array(char **dest, char **src, int insert_index);
 int count_strings(char **array);
-
-char	*get_node_type(int type)
-{
-	if (type == N_PIPE)
-		return ("PIPE");
-	else if (type == N_AND)
-		return ("AND");
-	else if (type == N_OR)
-		return ("OR");
-	else
-		return ("CMD");
-}
-
-void	print_tree(t_node *node, int depth, char *branch)
-{
-	if (depth != 0)
-		printf("├─");
-	for (int i = 1; i < depth; ++i) {
-		printf("─");  // Indentation based on depth
-	}
-	printf("Node(%s): %s | Value: %s\n", branch, get_node_type(node->type), node->args);
-}
-
-void	init_heredocs(t_node *node, t_minishell *vars)
-{
-	t_io_node	*io;
-	int	p_fd[2];
-	pid_t	pid;
-
-	if (node == NULL)
-		return ;
-	if (node->type ==  N_PIPE || node->type == N_AND || node->type == N_OR)
-	{
-		init_heredocs(node->left, vars);
-		init_heredocs(node->right, vars);
-	}
-	io = node->io_list;
-	while (io != NULL)
-	{
-		if (io->type == IO_HEREDOC)
-		{
-			pipe(p_fd);
-			io->exp_value = expand_args(io->value, vars);
-			pid = fork();
-			if (!pid)
-				heredoc(io, p_fd);
-			waitpid(pid, &pid, 0);
-			io->heredoc = p_fd[0];
-		}
-		else
-			io->exp_value = expand_args(io->value, vars);
-		// printf("%s\n", io->exp_value[0]);
-		io = io->next;
-	}
-}
 
 void	expand_node(t_node *node, t_minishell *vars)
 {
@@ -101,6 +46,31 @@ void	expand_node(t_node *node, t_minishell *vars)
 	// 	io = io->next;
 	// }
 	// printf("exp_args: %s\n", node->args);
+}
+
+void	init_heredocs(t_node *node, t_minishell *vars)
+{
+	t_io_node	*io;
+	int	p_fd[2];
+	pid_t	pid;
+
+	io = node->io_list;
+	while (io != NULL)
+	{
+		if (io->type == IO_HEREDOC)
+		{
+			pipe(p_fd);
+			io->exp_value = expand_args(io->value, vars);
+			pid = fork();
+			if (!pid)
+				heredoc(io, p_fd);
+			waitpid(pid, &pid, 0);
+			io->heredoc = p_fd[0];
+		}
+		else
+			io->exp_value = expand_args(io->value, vars);
+		io = io->next;
+	}
 }
 
 char	**expand_args(char *args, t_minishell *vars)
@@ -283,8 +253,16 @@ char	*handle_dollar(char *str, int *i, t_minishell *vars)
 	char	*env_val;
 
 	(*i)++;
-	if (str[*i] == '\0')
+	if (str[*i] == '\0' || str[*i] == '"' || str[*i] == ' ')
+	{
+		(*i)++;
 		return (ft_strdup("$"));
+	}
+	if (str[*i] == '?')
+	{
+		(*i)++;
+		return (fetch_val("?", vars->env));
+	}
 	if (is_valid_var_char(str[*i] == false))
 	{
 		(*i)++;

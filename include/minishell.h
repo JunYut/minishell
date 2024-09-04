@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 13:06:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/02 10:17:45 by tjun-yu          ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/09/04 09:31:08 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -37,6 +38,7 @@ extern volatile __sig_atomic_t	g_wait;
 void	init_vars(t_minishell *vars, char **envp);
 
 int		exec_node(t_node *node, bool piped, t_minishell *vars);
+int		exec_subshell(t_node *subshell_node, t_minishell *vars);
 t_path	get_path(char *cmd, t_minishell *vars);
 int		exec_child(t_node *node, t_minishell *vars);
 int		exec_simple_cmd(t_node *node, bool piped, t_minishell *vars);

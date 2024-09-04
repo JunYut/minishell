@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/02 10:36:54 by tjun-yu          ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/09/04 09:30:28 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -210,9 +211,29 @@ int	exec_node(t_node *node, bool piped, t_minishell *vars)
 			return (status);
 		return (exec_node(node->right, false, vars));
 	}
+	else if (node->type == N_SUBSHELL)
+	{
+		status = exec_subshell(node, vars);
+		if (status == ERRNO_SUCCESS)
+			return (status);
+	}
 	else
 		return (exec_simple_cmd(node, piped, vars));
 	return (ERRNO_GENERAL);
+}
+
+int	exec_subshell(t_node *subshell_node, t_minishell *vars)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (!pid)
+		exit(exec_node(subshell_node->left, false, vars));
+	else if (pid == -1)
+		return (ERRNO_GENERAL);
+	else
+		return (wait_status(pid, vars->env));
+	return(ERRNO_GENERAL);
 }
 
 int	check_redir(t_node *node)

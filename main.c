@@ -3,16 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 18:32:13 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:39:49 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <unistd.h>
+#include <stdio.h>
 volatile sig_atomic_t g_wait;
 void	setup_terminal(t_minishell *vars);
+
+char	*get_node_type(int type)
+{
+	if (type == N_PIPE)
+		return ("PIPE");
+	else if (type == N_AND)
+		return ("AND");
+	else if (type == N_OR)
+		return ("OR");
+	else
+		return ("CMD");
+}
 
 void	print_arr(char **arr)
 {
@@ -23,6 +37,25 @@ void	print_arr(char **arr)
 	i = -1;
 	while (arr[++i])
 		DPRINTF("%s\n", arr[i]);
+}
+
+void	print_tree(t_node *node, int depth, char *branch)
+{
+	if (depth != 0)
+		printf("├─");
+	for (int i = 1; i < depth; ++i) {
+		printf("─");  // Indentation based on depth
+	}
+	printf("Node(%s): %s | Value: %s\n", branch, get_node_type(node->type), node->args);
+}
+
+void	show_tree(t_node *node, int depth, char *branch)
+{
+	if (node == NULL)
+		return ;
+	print_tree(node, depth, branch);
+	show_tree(node->left, depth + 1, "left");
+	show_tree(node->right, depth + 1, "right");
 }
 
 void	init_vars(t_minishell *vars, char **envp)
@@ -46,35 +79,10 @@ void	setup_terminal(t_minishell *vars)
 {
 	g_wait = 0;
 	tcgetattr(STDIN_FILENO, &vars->term);
-	vars->term.c_lflag |= ECHOCTL;
+	vars->term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &vars->term);
 	signal(SIGINT, int_sigint);
 	signal(SIGQUIT, SIG_IGN);
-}
-
-void	init_heredoc(t_node *node, t_minishell *vars)
-{
-	t_io_node	*io;
-	int	p_fd[2];
-	pid_t	pid;
-
-	io = node->io_list;
-	while (io != NULL)
-	{
-		if (io->type == IO_HEREDOC)
-		{
-			pipe(p_fd);
-			io->exp_value = expand_args(io->value, vars);
-			pid = fork();
-			if (!pid)
-				heredoc(io, p_fd);
-			waitpid(pid, &pid, 0);
-			io->heredoc = p_fd[0];
-		}
-		else
-			io->exp_value = expand_args(io->value, vars);
-		io = io->next;
-	}
 }
 
 int	main(int ac, char **av, char **envp)
@@ -91,7 +99,8 @@ int	main(int ac, char **av, char **envp)
 		// curr_dir = fetch_val("PWD", vars.env);
 		// append_str(&curr_dir, "> ");
 		// vars.line = readline(curr_dir);
-		vars.line = gb_add(readline("minishell> "));
+		if (isatty(fileno(stdin)))
+			vars.line = gb_add(readline("minishell> "));
 		if (vars.line == NULL)
 			break ;
 		// if (*vars.line != '\0')
@@ -107,13 +116,15 @@ int	main(int ac, char **av, char **envp)
 		// 	vars.token_list = vars.token_list->next;
 		// }
 		vars.ast = parse(&vars);
+		// show_tree(vars.ast, 0, "root");
 		if (vars.parse_err.type != E_NONE)
 			handle_parse_error(&vars);
-		init_heredocs(vars.ast, &vars);
 		// init_heredoc(vars.ast, &vars);
 		signal(SIGQUIT, int_sigquit);
+		init_heredocs(vars.ast, &vars);
 		tcsetattr(STDIN_FILENO, TCSANOW, &vars.term);
 		vars.exit_status = exec_node(vars.ast, false, &vars);
+		set_val(vars.env, "?", (char *)gb_add(ft_itoa(vars.exit_status)));
 		// printf("Exit: %d\n", vars.exit_status);
 		clear_ast(&vars.token_list, &vars.ast);
 	}
