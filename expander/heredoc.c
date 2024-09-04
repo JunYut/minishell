@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 11:38:25 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 14:44:54 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 14:54:42 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ void	heredoc(t_io_node *io, int *p_fd)
 	char	*doc;
 
 	doc = read_doc(io->exp_value[0]);
-	pipe(p_fd);
+	// pipe(p_fd);
 	write(p_fd[1], doc, ft_strlen(doc));
-	close(p_fd[1]);
+	// close(p_fd[1]);
 	// dup2(p_fd[0], STDIN_FILENO);
 	// close(p_fd[0]);
 	free(doc);
-	// exit(0);
+	exit(0);
 }
 
 char	*read_doc(char *delimiter)

@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 14:43:49 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 14:55:46 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,6 @@ int	main(int ac, char **av, char **envp)
 		}
 		// init_heredoc(vars.ast, &vars);
 		init_heredocs(vars.ast, &vars); //Init redirections/IO
-		signal(SIGQUIT, int_sigquit);
-		init_heredocs(vars.ast, &vars);
 		signal(SIGQUIT, int_sigquit);
 		tcsetattr(STDIN_FILENO, TCSANOW, &vars.term);
 		vars.exit_status = exec_node(vars.ast, false, &vars);
