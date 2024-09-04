@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 12:22:03 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 13:10:28 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	setup_terminal(t_minishell *vars)
 {
 	g_wait = 0;
 	tcgetattr(STDIN_FILENO, &vars->term);
-	vars->term.c_lflag &= ~ECHOCTL;
+	vars->term.c_lflag |= ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &vars->term);
 	signal(SIGINT, int_sigint);
 	signal(SIGQUIT, SIG_IGN);
