@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/04 09:30:28 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 09:49:21 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,7 +358,7 @@ int	wait_status(pid_t pid, t_env *e)
 	else if (WIFEXITED(status))
 	{
 		status = WEXITSTATUS(status);
-		set_val(e, "?", (char *)gb_add(ft_itoa(status)));
+		set_val(e, "?", gb_itoa(status));
 	}
 	// else
 	// {

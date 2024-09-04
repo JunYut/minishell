@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wrapper.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:24:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/28 11:25:29 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 09:48:02 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 t_list	*gb_lstnew(void *content)
 {
 	return (gb_add(ft_lstnew(content)));
+}
+
+char	*gb_itoa(int n)
+{
+	return (gb_add(ft_itoa(n)));
 }
 
 char	*gb_strdup(const char *s1)

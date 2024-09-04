@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 09:36:18 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 09:48:52 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int	main(int ac, char **av, char **envp)
 		init_heredocs(vars.ast, &vars);
 		tcsetattr(STDIN_FILENO, TCSANOW, &vars.term);
 		vars.exit_status = exec_node(vars.ast, false, &vars);
-		set_val(vars.env, "?", (char *)gb_add(ft_itoa(vars.exit_status)));
+		set_val(vars.env, "?", gb_itoa(vars.exit_status));
 		// printf("Exit: %d\n", vars.exit_status);
 		clear_ast(&vars.token_list, &vars.ast);
 	}
