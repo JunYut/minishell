@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/04 09:31:08 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 10:11:35 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,24 @@ int		get_err_msg(t_err err);
 void	print_arr(char **arr);
 
 int		builtin_cd(char **path, t_env *e);
-int	count_args(char **path, char *func, t_env *e);
+char	*set_target(char **path, t_env *e);
+int		count_args(char **path, char *func, t_env *e);
 
-int	builtin_echo(char **av);
+int		builtin_echo(char **av);
 
-int	builtin_export(char **ent, t_env *e);
+int		builtin_export(char **ent, t_env *e);
 char	*fetch_val(char *key, t_env *e);
 void	set_val(t_env *e, char *key, char *val);
-char **split_ent(char *str);
-void sort_export(t_var *exp);
+char 	**split_ent(char *str);
+void 	sort_export(t_var *exp);
 
-int	valid_key(char *key, t_env *e);
-int	builtin_unset(char **keys, t_env *e);
+int		valid_key(char *key, t_env *e);
+int		builtin_unset(char **keys, t_env *e);
 void	rm_ent(char *key, t_var *lst, int last_id);
 
-int	builtin_pwd(t_env *e);\
+int		builtin_pwd(t_env *e);\
 
 void	exit_shell(char **status, t_env *e);
-int	is_numeric(char *str);
+int		is_numeric(char *str);
 
 #endif

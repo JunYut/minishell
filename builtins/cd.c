@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 10:53:12 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/02 10:51:19 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 10:16:12 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,13 @@ int	builtin_cd(char **path, t_env *e)
 
 	if (count_args(path, "cd", e) > 1)
 		return (1);
-	target = *path;
-	if (!*path || **path == '\0' || **path == '~')
-		target = fetch_val("HOME", e);
-	else if (ft_strcmp(*path, "-") == 0)
-		target = fetch_val("OLDPWD", e);
-	if (*path && ft_strcmp(*path, "-") == 0 && !target)
+	target = set_target(path, e);
+	if (!target)
 	{
 		print_err("cd", "OLDPWD not set");
 		set_val(e, "?", "1");
 		return (1);
 	}
-	else if (*path && ft_strcmp(*path, "-") == 0 && target)
-		printf("%s\n", target);
-	if (*path && **path == '~' && *(*path + 1) != '\0')
-		target = ft_strjoin(target, *path + 1); // Changed this from joining "/home/" to target
 	if (!fetch_val("OLDPWD", e))
 		add_ent(e, "OLDPWD", fetch_val("PWD", e));
 	if (chdir(target) == -1)
@@ -45,6 +37,24 @@ int	builtin_cd(char **path, t_env *e)
 		set_val(e, "OLDPWD", fetch_val("PWD", e));
 	set_val(e, "PWD", gb_add(getcwd(NULL, 0)));
 	return (0);
+}
+
+char	*set_target(char **path, t_env *e)
+{
+	char	*target;
+
+	target = *path;
+	if (!*path || **path == '\0' || **path == '~')
+		target = fetch_val("HOME", e);
+	else if (ft_strcmp(*path, "-") == 0)
+		target = fetch_val("OLDPWD", e);
+	if (*path && ft_strcmp(*path, "-") == 0 && !target)
+		return (NULL);
+	else if (*path && ft_strcmp(*path, "-") == 0 && target)
+		printf("%s\n", target);
+	if (*path && **path == '~' && *(*path + 1) != '\0')
+		target = ft_strjoin(target, *path + 1);
+	return (target);
 }
 
 int	count_args(char **path, char *func, t_env *e)
