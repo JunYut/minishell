@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 11:46:58 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 12:05:17 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	init_heredocs(t_node *node, t_minishell *vars)
 			if (!pid)
 			{
 				signal(SIGINT, SIG_DFL);
-				signal(SIGQUIT, SIG_IGN);
 				heredoc(io, p_fd);
 				exit(0);
 			}

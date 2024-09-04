@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 10:48:08 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 12:22:03 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,9 @@ int	main(int ac, char **av, char **envp)
 	{
 		setup_terminal(&vars);
 		// env(vars.env, 2);
-		curr_dir = fetch_val("PWD", vars.env);
-		append_str(&curr_dir, "> ");
+		// curr_dir = fetch_val("PWD", vars.env);
+		// append_str(&curr_dir, "> ");
+		// vars.line = gb_add(readline(curr_dir));
 		if (isatty(fileno(stdin)))
 			vars.line = gb_add(readline("minishell> "));
 		if (vars.line == NULL)
@@ -122,8 +123,8 @@ int	main(int ac, char **av, char **envp)
 		if (vars.parse_err.type != E_NONE)
 			handle_parse_error(&vars);
 		// init_heredoc(vars.ast, &vars);
-		signal(SIGQUIT, int_sigquit);
 		init_heredocs(vars.ast, &vars);
+		signal(SIGQUIT, int_sigquit);
 		tcsetattr(STDIN_FILENO, TCSANOW, &vars.term);
 		vars.exit_status = exec_node(vars.ast, false, &vars);
 		set_val(vars.env, "?", gb_itoa(vars.exit_status));

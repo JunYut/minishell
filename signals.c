@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:56:46 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/30 10:28:27 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:59:29 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ void	int_sigint(int sig)
 void	int_sigquit(int sig)
 {
 	(void)sig;
-	// if (!g_wait)
-	printf("Quit\n");
+	if (!g_wait)
+		printf("Quit\n");
 }
