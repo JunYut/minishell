@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 14:05:51 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:48:51 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	init_heredocs(t_node *node, t_minishell *vars)
 			}
 			waitpid(pid, &pid, 0);
 			io->heredoc = p_fd[0];
+			close(p_fd[1]);
 		}
 		else
 			io->exp_value = expand_args(io->value, vars);
