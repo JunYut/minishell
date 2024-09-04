@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/03 13:55:16 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:56:31 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_node	*get_term(t_minishell *vars)
 		return (NULL);
 	if (is_logic_op_or_pipe(vars->curr_token) || vars->curr_token->type == T_R_BRACKET)
 		return (set_parse_err_type(vars, E_SYNTAX), NULL);
-	else if (vars->curr_token->type == T_L_BRACKET)
+	if (vars->curr_token->type == T_L_BRACKET)
 	{
 		vars->curr_token = vars->curr_token->next;
 		node = get_expression(vars, 0);
@@ -69,12 +69,16 @@ t_node	*get_simple_cmd(t_minishell *vars)
 		{
 			if (join_args(vars, &(node->args)) == false)
 				// return (clear_cmd_node(node), set_parse_err_type(vars, E_MEM), NULL);
-				return (clear_cmd_node(node), NULL);
+				// return (clear_cmd_node(node), NULL);
+				break ;
+			// join_args(vars, &(node->args));
 		}
 		else if (is_redirection(vars->curr_token->type))
 		{
 			if (get_io_list(vars, &(node->io_list)) == false)
-				return (free(node->args), free(node), NULL);
+			// 	return (free(node->args), free(node), NULL);
+				break ;
+			// get_io_list(vars, &(node->io_list));
 		}
 	}
 	return (node);

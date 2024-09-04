@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/04 14:16:41 by kkhai-ki         ###   ########.fr       */
+/*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
+/*   Updated: 2024/09/04 14:39:15 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ t_path	get_path(char *cmd, t_minishell *vars)
 	// printf("Did it reach get_path?\n");
 	if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
 		return ((t_path){check_exec(cmd), cmd});
-	full_cmd = parse_path(vars->envp, cmd);
+	full_cmd = parse_path(vars->env->envp, cmd);
 	// DPRINTF("full_cmd: %s\n", full_cmd);
 	if (full_cmd != NULL)
 		return ((t_path){(t_err){ERRNO_SUCCESS, -1, NULL}, full_cmd});
@@ -155,7 +155,7 @@ int	exec_child(t_node *node, t_minishell *vars)
 			status = get_err_msg(path_status.err);
 			exit(status);
 		}
-		if (execve(path_status.cmd_path, node->exp_args, vars->envp) == -1)
+		if (execve(path_status.cmd_path, node->exp_args, vars->env->envp) == -1)
 			exit(ERRNO_GENERAL);
 		// if (path_status.err.errno != 0)
 		// 	printf("minishell: %s\n", strerror(path_status.err.errno));
@@ -189,12 +189,12 @@ int	exec_node(t_node *node, bool piped, t_minishell *vars)
 {
 	int	status;
 
-	expand_node(node, vars);
+	if (!node)
+		return (ERRNO_GENERAL);
 	// printf("String: %s\n", node->io_list->exp_value[0]);
 	// if (!node->io_list->exp_value)
 	// 	printf("ITS NULL!\n");
-	if (!node)
-		return (ERRNO_GENERAL);
+	expand_node(node, vars);
 	if (node->type == N_PIPE)
 		return (exec_pipeline(node, vars));
 	else if (node->type == N_AND)
