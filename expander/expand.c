@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 12:05:17 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/04 14:17:22 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ void	init_heredocs(t_node *node, t_minishell *vars)
 			{
 				signal(SIGINT, SIG_DFL);
 				heredoc(io, p_fd);
-				exit(0);
 			}
 			wait_status(pid, vars->env);
 			io->heredoc = p_fd[0];
+			kill(0, 0);
 		}
 		else
 			io->exp_value = expand_args(io->value, vars);
