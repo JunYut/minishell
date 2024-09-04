@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 20:06:34 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 11:25:10 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:44:21 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	handle_parse_error(t_minishell *vars)
 			ft_putstr_fd("'\n", 2);
 			vars->exit_status = 2;
 		}
-		clear_ast(&vars->token_list, &vars->ast);
+		// clear_ast(&vars->token_list, &vars->ast);
 		ft_bzero(&vars->parse_err, sizeof(t_parse_err));
 	}
 }

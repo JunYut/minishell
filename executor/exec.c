@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 10:53:23 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 13:08:20 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ t_path	get_path(char *cmd, t_minishell *vars)
 	// printf("Did it reach get_path?\n");
 	if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
 		return ((t_path){check_exec(cmd), cmd});
-	full_cmd = parse_path(vars->envp, cmd);
+	full_cmd = parse_path(vars->env->envp, cmd);
 	// DPRINTF("full_cmd: %s\n", full_cmd);
 	if (full_cmd != NULL)
 		return ((t_path){(t_err){ERRNO_SUCCESS, -1, NULL}, full_cmd});
@@ -164,7 +164,7 @@ int	exec_child(t_node *node, t_minishell *vars)
 			status = get_err_msg(path_status.err);
 			exit(status);
 		}
-		if (execve(path_status.cmd_path, node->exp_args, vars->envp) == -1)
+		if (execve(path_status.cmd_path, node->exp_args, vars->env->envp) == -1)
 			exit(ERRNO_GENERAL);
 		// if (path_status.err.errno != 0)
 		// 	printf("minishell: %s\n", strerror(path_status.err.errno));

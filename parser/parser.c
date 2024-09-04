@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 11:16:14 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:56:31 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,16 @@ t_node	*get_simple_cmd(t_minishell *vars)
 		{
 			if (join_args(vars, &(node->args)) == false)
 				// return (clear_cmd_node(node), set_parse_err_type(vars, E_MEM), NULL);
-				return (clear_cmd_node(node), NULL);
+				// return (clear_cmd_node(node), NULL);
+				break ;
+			// join_args(vars, &(node->args));
 		}
 		else if (is_redirection(vars->curr_token->type))
 		{
 			if (get_io_list(vars, &(node->io_list)) == false)
-				return (free(node->args), free(node), NULL);
+			// 	return (free(node->args), free(node), NULL);
+				break ;
+			// get_io_list(vars, &(node->io_list));
 		}
 	}
 	return (node);
