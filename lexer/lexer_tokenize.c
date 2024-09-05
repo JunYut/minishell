@@ -6,11 +6,12 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 12:43:08 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 12:51:41 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "utils.h"
 #include "gbc.h"
 
 void	tokenize(char *line, t_minishell *vars)

@@ -1,40 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   char.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 09:32:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 12:50:46 by we               ###   ########.fr       */
+/*   Created: 2024/09/05 12:48:22 by we                #+#    #+#             */
+/*   Updated: 2024/09/05 12:48:58 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "utils.h"
 
-bool	is_quote_closed(char *line, int	*i)
+int	is_space(char c)
 {
-	char	quote_type;
-
-	quote_type = line[*i];
-	if (ft_strchr(line + *i + 1, quote_type))
-	{
-		(*i)++;
-		while ((line[*i]) != quote_type)
-			(*i)++;
-		(*i)++;
-		return (true);
-	}
-	return (false);
+	if (c == ' ' || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
 }
 
-void	skip_quote_string(char *line, int *i)
+int	is_seperator(char *s)
 {
-	char	quote_type;
+	if (!ft_strncmp(s, "&&", 2) || is_space(*s) || *s == '>' || *s == '<'
+		|| *s == '|' || *s == '(' || *s == ')')
+		return (1);
+	return (0);
+}
 
-	quote_type = line[*i];
-	(*i)++;
-	while (line[*i] != quote_type)
-		(*i)++;
-	(*i)++;
+int	is_quote(char c)
+{
+	if (c == '\'' || c == '"')
+		return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:50:19 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/05 12:02:27 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 12:50:43 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,10 @@ void	ft_strncpy(char *dst, char *src, int len)
 	while (++i < len && src[i])
 		dst[i] = src[i];
 	dst[i] = '\0';
+}
+
+void	skip_spaces(char **line)
+{
+	while (**line && is_space(**line))
+		(*line)++;
 }

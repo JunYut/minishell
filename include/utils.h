@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:57:24 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/04 10:46:41 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/05 12:50:26 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ char		*gb_strdup(const char *s1);
 int			find_pos(char *str, char delim);
 char		*ft_strndup(char *str, int pos);
 void		ft_strncpy(char *dst, char *src, int len);
-
+int			is_space(char c);
+int			is_quote(char c);
+int			is_seperator(char *s);
+void		skip_spaces(char **line);
 
 # endif
