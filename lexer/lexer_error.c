@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   lexer_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:39:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 11:58:22 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 12:55:00 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,12 @@ void	handle_quote_err(char quote, t_minishell *vars)
 }
 
 // multiple definition
-void	handle_open_quote(char **line, char **buffer, int *char_count, char quote)
+void	handle_open_quote(char **line, char **buffer, int *count, char quote)
 {
 	char	*read_line;
 	char	*appended_str;
 	char	*trimmed_str;
 
-	// printf("quote type: %c\n", quote);
 	read_line = NULL;
 	appended_str = ft_strdup(*line);
 	while (is_quote_balance(appended_str, quote) == false)
@@ -41,15 +40,10 @@ void	handle_open_quote(char **line, char **buffer, int *char_count, char quote)
 			break ;
 		appended_str = ft_strjoin_delim(appended_str, read_line, "\n");
 	}
-	// if (read_line != NULL)
-		trimmed_str = ft_trim_str(appended_str, quote);
-	// else
-	// 	trimmed_str = appended_str;
-	// printf("trimmed: %s\n", trimmed_str);
-	*char_count = ft_strlen(trimmed_str);
+	trimmed_str = ft_trim_str(appended_str, quote);
+	*count = ft_strlen(trimmed_str);
 	*line = appended_str;
 	*buffer = appended_str;
-	// printf("char_count: %d\n", *char_count);
 }
 
 // multiple definition
@@ -57,8 +51,6 @@ bool	is_quote_balance(char *str, char quote)
 {
 	int	count;
 
-	// printf("string: %s\n\n", str);
-	// printf("quote type: %c\n\n", quote);
 	count = 0;
 	while (*str != '\0')
 	{
