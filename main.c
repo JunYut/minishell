@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 14:55:46 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/05 11:56:13 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,13 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		setup_terminal(&vars);
-		set_val(vars.env, "?", (char *)gb_add(ft_itoa(vars.exit_status)));
+		set_val(vars.env, "?", (char *)gbc_add(ft_itoa(vars.exit_status)));
 		// env(vars.env, 2);
 		// curr_dir = fetch_val("PWD", vars.env);
 		// append_str(&curr_dir, "> ");
-		// vars.line = gb_add(readline(curr_dir));
+		// vars.line = gbc_add(readline(curr_dir));
 		if (isatty(fileno(stdin)))
-			vars.line = gb_add(readline("minishell> "));
+			vars.line = gbc_add(readline("minishell> "));
 		if (vars.line == NULL)
 		{
 			printf("exit\n");
@@ -135,7 +135,7 @@ int	main(int ac, char **av, char **envp)
 		// printf("Exit: %d\n", vars.exit_status);
 		clear_ast(&vars.token_list, &vars.ast);
 	}
-	// gb_clear();
+	// gbc_clear();
 	clear_history();
 	return (vars.exit_status);
 }

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   gbc.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 13:54:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/07/22 12:26:45 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/05 11:56:13 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "gbc.h"
+#include "gbc.h"
 
-void	gb_clear(void)
+void	gbc_clear(void)
 {
 	t_gbc	*current;
 	t_gbc	*next;
 
-	current = gb_collector();
+	current = gbc_collector();
 	while (current)
 	{
 		free(current->addr);
@@ -28,51 +28,34 @@ void	gb_clear(void)
 	free(current);
 }
 
-void	*gb_malloc(size_t size)
+void	*gbc_malloc(size_t size)
 {
 	void	*addr;
-	t_gbc 	*current;
+	t_gbc	*current;
 
 	addr = malloc(size);
-	current = gb_collector();
+	current = gbc_collector();
 	while (current->next)
 		current = current->next;
 	current->addr = addr;
 	current->next = malloc(sizeof(t_gbc));
-	gb_init(current->next);
+	gbc_init(current->next);
 	return (addr);
 }
 
-void	gb_free(void *addr)
-{
-	t_gbc	*current;
-
-	current = gb_collector();
-	while (current)
-	{
-		if (current->addr == addr)
-		{
-			free(current->addr);
-			current->addr = NULL;
-			break ;
-		}
-		current = current->next;
-	}
-}
-
-t_gbc	*gb_collector(void)
+t_gbc	*gbc_collector(void)
 {
 	static t_gbc	*collector;
 
 	if (collector == NULL)
 	{
 		collector = malloc(sizeof(t_gbc));
-		gb_init(collector);
+		gbc_init(collector);
 	}
 	return (collector);
 }
 
-void	gb_init(t_gbc *collector)
+void	gbc_init(t_gbc *collector)
 {
 	if (collector != NULL)
 	{
@@ -81,15 +64,15 @@ void	gb_init(t_gbc *collector)
 	}
 }
 
-void	*gb_add(void *addr)
+void	*gbc_add(void *addr)
 {
 	t_gbc	*current;
 
-	current = gb_collector();
+	current = gbc_collector();
 	while (current->next)
 		current = current->next;
 	current->addr = addr;
 	current->next = malloc(sizeof(t_gbc));
-	gb_init(current->next);
+	gbc_init(current->next);
 	return (addr);
 }

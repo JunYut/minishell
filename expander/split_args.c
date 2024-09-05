@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:18:21 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 17:41:50 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/05 11:56:13 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**split_args(char *str)
 	word_count = count_words(str);
 	if (!word_count)
 			return (free(str), NULL);
-	args = gb_add(ft_calloc(word_count + 1, sizeof(char *)));
+	args = gbc_add(ft_calloc(word_count + 1, sizeof(char *)));
 	if (!args)
 		return (free(str), NULL);
 	args = allocate_args(str, args);

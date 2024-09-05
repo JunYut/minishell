@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 11:05:43 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/05 11:56:13 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ t_env	*dup_env(char *envp[])
 	char	**split;
 	int		i;
 
-	e = gb_malloc(sizeof(t_env));
-	e->exp = gb_malloc(sizeof(t_var));
-	e->var = gb_malloc(sizeof(t_var));
+	e = gbc_malloc(sizeof(t_env));
+	e->exp = gbc_malloc(sizeof(t_var));
+	e->var = gbc_malloc(sizeof(t_var));
 	e->exp->next = NULL;
 	e->var->next = NULL;
 	e->last_exp_id = 0;
@@ -76,7 +76,7 @@ void	add_ent(t_env *e, char *key, char *val)
 	curr->id = e->last_exp_id;
 	curr->key = key;
 	curr->value = val;
-	curr->next = gb_malloc(sizeof(t_var));
+	curr->next = gbc_malloc(sizeof(t_var));
 	curr->next->next = NULL;
 	if (val == NULL)
 		return ;
@@ -87,7 +87,7 @@ void	add_ent(t_env *e, char *key, char *val)
 	curr->id = e->last_var_id;
 	curr->key = key;
 	curr->value = val;
-	curr->next = gb_malloc(sizeof(t_var));
+	curr->next = gbc_malloc(sizeof(t_var));
 	curr->next->next = NULL;
 }
 
@@ -100,7 +100,7 @@ char	**split_ent(char *str)
 
 	if (str == NULL)
 		return (NULL);
-	split = gb_malloc(sizeof(char *) * 2);
+	split = gbc_malloc(sizeof(char *) * 2);
 	split[0] = ft_strndup(str, find_pos(str, '='));
 	if (split[0] == NULL)
 	{
@@ -125,7 +125,7 @@ char	**env_to_arr(t_var *var)
 		++size;
 		curr = curr->next;
 	}
-	arr = gb_malloc(sizeof(char *) * (size + 1));
+	arr = gbc_malloc(sizeof(char *) * (size + 1));
 	arr[size] = NULL;
 	curr = var;
 	size = -1;
@@ -133,8 +133,8 @@ char	**env_to_arr(t_var *var)
 	{
 		if (!curr->key || !curr->value)
 			continue ;
-		arr[++size] = gb_add(ft_strjoin(curr->key, "="));
-		arr[size] = gb_add(ft_strjoin(arr[size], curr->value));
+		arr[++size] = gbc_add(ft_strjoin(curr->key, "="));
+		arr[size] = gbc_add(ft_strjoin(arr[size], curr->value));
 		curr = curr->next;
 	}
 	return (arr);

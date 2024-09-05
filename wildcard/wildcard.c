@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:10:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 09:40:01 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/05 11:55:51 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**wildcard(char *regex, t_env *env_var)
 	t_wildcard	*wc;
 	t_list		*match_lst;
 
-	wc = gb_malloc(sizeof(t_wildcard));
+	wc = gbc_malloc(sizeof(t_wildcard));
 	wc->dirent = init_dirent(fetch_val("PWD", env_var));
 	wc->token = tokenize_wc(regex);
 	wc->pattern = ft_split(regex, '*');
@@ -36,7 +36,7 @@ char	**lst_to_arr(t_list *lst)
 	t_list	*tmp;
 	int		i;
 
-	arr = gb_malloc(sizeof(char *) * (ft_lstsize(lst) + 1));
+	arr = gbc_malloc(sizeof(char *) * (ft_lstsize(lst) + 1));
 	tmp = lst;
 	i = -1;
 	while (tmp)
@@ -54,7 +54,7 @@ t_dirent	*init_dirent(char *cwd)
 	DIR				*dirp;
 	struct dirent	*dp;
 
-	dirent = gb_malloc(sizeof(t_dirent));
+	dirent = gbc_malloc(sizeof(t_dirent));
 	dirent->files = NULL;
 	dirent->dot_files = NULL;
 	dirp = opendir(cwd);

@@ -60,7 +60,7 @@ void	append_str(char **str1, char *str2)
 
 	i = -1;
 	j = -1;
-	new = gb_malloc(ft_strlen(*str1) + ft_strlen(str2) + 1);
+	new = gbc_malloc(ft_strlen(*str1) + ft_strlen(str2) + 1);
 	while ((*str1)[++i])
 		new[i] = (*str1)[i];
 	while (str2[++j])

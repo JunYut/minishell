@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 14:54:29 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/05 11:56:13 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	**expand_args(char *args, t_minishell *vars)
 	int		i;
 
 	i = -1;
-	buffer = gb_add(expand_params(args, vars));
+	buffer = gbc_add(expand_params(args, vars));
 	expanded = split_args(buffer);
 	// printf("Did it split?\n");
 	if (!expanded)
@@ -111,7 +111,7 @@ char	**expand_args(char *args, t_minishell *vars)
 	i = -1;
 	while (expanded[++i])
 	{
-		expanded[i] = gb_add(remove_quotes(expanded[i]));
+		expanded[i] = gbc_add(remove_quotes(expanded[i]));
 		// printf("Final string: %s\n", expanded[i]);
 	}
 	// if (globbed)
@@ -210,7 +210,7 @@ char	*handle_reg_str(char *str, int *i)
 	start = *i;
 	while (str[*i] != '\0' && str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
 		(*i)++;
-	return (gb_add(ft_substr(str, start, *i - start)));
+	return (gbc_add(ft_substr(str, start, *i - start)));
 }
 
 char	*handle_squote(char *str, int *i)

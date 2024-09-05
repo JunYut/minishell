@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:50:19 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/04 10:51:51 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/05 11:55:51 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_strndup(char *str, int pos)
 
 	if (pos < 1)
 		return (NULL);
-	dup = gb_malloc(pos + 1);
+	dup = gbc_malloc(pos + 1);
 	ft_strncpy(dup, str, pos);
 	return (dup);
 }

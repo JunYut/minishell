@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 14:06:53 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 12:44:33 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/05 11:55:35 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	exit_shell(char **status, t_env *e)
 	}
 	if (!status || !status[0] || status[0][0] == '\0')
 		exit_status = ft_atoi(fetch_val("?", e));
-	gb_clear();
+	gbc_clear();
 	exit(exit_status);
 }
 

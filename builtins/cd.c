@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 10:53:12 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 11:47:51 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 11:56:13 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	builtin_cd(char **path, t_env *e)
 	}
 	else
 		set_val(e, "OLDPWD", fetch_val("PWD", e));
-	set_val(e, "PWD", gb_add(getcwd(NULL, 0)));
+	set_val(e, "PWD", gbc_add(getcwd(NULL, 0)));
 	return (0);
 }
 
