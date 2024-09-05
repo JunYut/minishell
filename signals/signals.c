@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:56:46 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 13:11:39 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/05 12:01:17 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "signals.h"
+#include "signals.h"
 
 void	int_sigint(int sig)
 {

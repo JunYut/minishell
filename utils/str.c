@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:50:19 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/05 11:55:51 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 12:02:27 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_strndup(char *str, int pos)
 	return (dup);
 }
 
-void ft_strncpy(char *dst, char *src, int len)
+void	ft_strncpy(char *dst, char *src, int len)
 {
 	int	i;
 
