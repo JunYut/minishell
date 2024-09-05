@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 10:09:56 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 11:55:35 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 18:03:23 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	exec_pipeline(t_node *node, t_minishell *vars)
 {
-	int	status;
-	int	fd[2];
+	int		status;
+	int		fd[2];
 	pid_t	pid_left;
 	pid_t	pid_right;
 
@@ -33,10 +33,8 @@ int	exec_pipeline(t_node *node, t_minishell *vars)
 			close(fd[0]);
 			close(fd[1]);
 			status = wait_status(pid_left, vars->env);
-			// waitpid(pid_left, &status, 0);
 			status = wait_status(pid_right, vars->env);
-			// waitpid(pid_right, &status, 0);
-			return (status); //This should return the most recent exit code
+			return (status);
 		}
 	}
 	return (ERRNO_SUCCESS);

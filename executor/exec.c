@@ -6,10 +6,9 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 16:50:35 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 18:08:45 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -37,16 +36,13 @@ int	get_err_msg(t_err err)
 		print_err(err.cause, "Permission denied");
 		return (err.exit_status);
 	}
-	// return (err.exit_status);
 	else if (errno == 21)
 	{
-		// printf("%d\n", errno);
 		print_err(err.cause, strerror(errno));
 		return (ERRNO_CANT_EXEC);
 	}
 	else if (errno == 2)
 	{
-		// printf("%d\n", errno);
 		print_err(err.cause, strerror(errno));
 		return (ERRNO_NOT_FOUND);
 	}
@@ -63,14 +59,13 @@ int	get_exit_status(int status)
 t_err	check_exec(char *file)
 {
 	int	fd;
-	(void)fd;
 
+	(void)fd;
 	if (!*file)
 		return ((t_err){ERRNO_GENERAL, ERR_MSG_NO_SUCH_FILE, file});
 	fd = open(file, O_WRONLY);
-	// printf("%d\n", errno);
 	if (errno == 21 || errno == 2)
-			return ((t_err){ERRNO_CANT_EXEC, ERR_MSG_NO_SUCH_FILE, file});
+		return ((t_err){ERRNO_CANT_EXEC, ERR_MSG_NO_SUCH_FILE, file});
 	if (access(file, F_OK) == 0)
 	{
 		if (access(file, X_OK) == -1)
@@ -119,16 +114,13 @@ int	exec_builtin(char **args, t_env *env)
 	return (ERRNO_GENERAL);
 }
 
-
 t_path	get_path(char *cmd, t_minishell *vars)
 {
 	char	*full_cmd;
 
-	// printf("Did it reach get_path?\n");
 	if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
 		return ((t_path){check_exec(cmd), cmd});
 	full_cmd = parse_path(vars->env->envp, cmd);
-	// DPRINTF("full_cmd: %s\n", full_cmd);
 	if (full_cmd != NULL)
 		return ((t_path){(t_err){ERRNO_SUCCESS, -1, NULL}, full_cmd});
 	return ((t_path){(t_err){ERRNO_NOT_FOUND, ERR_MSG_CMD_NOT_FOUND, cmd}, NULL});
@@ -140,12 +132,9 @@ int	exec_child(t_node *node, t_minishell *vars)
 	int		status;
 	pid_t	pid;
 
-	// if (is_builtin(node->exp_args[0]) == true)
-	// 		return (exec_builtin(node->exp_args, vars->env));
 	pid = fork();
 	if (pid == 0)
 	{
-		// printf("Did it reach exec_child\n");
 		status = check_redir(node);
 		if (status != ERRNO_SUCCESS)
 			(exit(ERRNO_GENERAL));
@@ -157,18 +146,16 @@ int	exec_child(t_node *node, t_minishell *vars)
 		}
 		if (execve(path_status.cmd_path, node->exp_args, vars->env->envp) == -1)
 			exit(ERRNO_GENERAL);
-		// if (path_status.err.errno != 0)
-		// 	printf("minishell: %s\n", strerror(path_status.err.errno));
 	}
 	status = wait_status(pid, vars->env);
-	// printf("it reached wait!\n");
 	return (status);
 }
 
 int	exec_simple_cmd(t_node *node, bool piped, t_minishell *vars)
 {
-	(void)piped;
 	int	status;
+
+	(void)piped;
 	if (!node->exp_args)
 	{
 		status = check_redir(node);
@@ -180,7 +167,7 @@ int	exec_simple_cmd(t_node *node, bool piped, t_minishell *vars)
 		if (status != ERRNO_SUCCESS)
 			return (ft_reset_stds(piped, vars), ERRNO_GENERAL);
 		status = exec_builtin(node->exp_args, vars->env);
-		return(ft_reset_stds(piped, vars), status);
+		return (ft_reset_stds(piped, vars), status);
 	}
 	return (exec_child(node, vars));
 }
@@ -191,9 +178,6 @@ int	exec_node(t_node *node, bool piped, t_minishell *vars)
 
 	if (!node)
 		return (ERRNO_GENERAL);
-	// printf("String: %s\n", node->io_list->exp_value[0]);
-	// if (!node->io_list->exp_value)
-	// 	printf("ITS NULL!\n");
 	expand_node(node, vars);
 	if (node->type == N_PIPE)
 		return (exec_pipeline(node, vars));
@@ -233,7 +217,7 @@ int	exec_subshell(t_node *subshell_node, t_minishell *vars)
 		return (ERRNO_GENERAL);
 	else
 		return (wait_status(pid, vars->env));
-	return(ERRNO_GENERAL);
+	return (ERRNO_GENERAL);
 }
 
 int	check_redir(t_node *node)
@@ -244,7 +228,6 @@ int	check_redir(t_node *node)
 	temp_io = node->io_list;
 	while (temp_io)
 	{
-		// printf("String: %s\n", temp_io->exp_value[0]);
 		if (temp_io->type == IO_OUT && redir_out(temp_io, &status) != ERRNO_SUCCESS)
 			return (status);
 		else if (temp_io->type == IO_IN && redir_in(temp_io, &status) != ERRNO_SUCCESS)
@@ -273,7 +256,6 @@ int	redir_out(t_io_node *io_list, int *status)
 	fd = open(io_list->exp_value[0], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		// printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(io_list->exp_value[0], 2);
 		ft_putstr_fd(": ", 2);
@@ -300,7 +282,6 @@ int	redir_in(t_io_node *io_list, int *status)
 	fd = open(io_list->exp_value[0], O_RDONLY);
 	if (fd == -1)
 	{
-		// printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(io_list->exp_value[0], 2);
 		ft_putstr_fd(": ", 2);
@@ -318,8 +299,7 @@ int	redir_in(t_io_node *io_list, int *status)
 int	redir_append(t_io_node *io_list, int *status)
 {
 	int	fd;
-	// t_err temp;
-	// (void)temp;
+
 	if (io_list->exp_value == NULL || io_list->exp_value[1] != NULL)
 	{
 		*status = get_err_msg((t_err){ERRNO_GENERAL, ERR_MSG_AMBIGUOUS, io_list->value});
@@ -330,7 +310,6 @@ int	redir_append(t_io_node *io_list, int *status)
 	if (fd == -1)
 	{
 		*status = 1;
-		// printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(io_list->exp_value[0], 2);
 		ft_putstr_fd(": ", 2);
@@ -338,12 +317,10 @@ int	redir_append(t_io_node *io_list, int *status)
 		ft_putstr_fd("\n", 2);
 		return (*status);
 	}
-	// printf("It's not NULL :(\n");
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 	*status = ERRNO_SUCCESS;
 	return (*status);
-	// return (printf("minishell: %s is a directory.\n", io_list->exp_value[0]));
 }
 
 // returns -1 on abnormal termination
@@ -360,11 +337,6 @@ int	wait_status(pid_t pid, t_env *e)
 		status = WEXITSTATUS(status);
 		set_val(e, "?", gbc_itoa(status));
 	}
-	// else
-	// {
-	// 	status = -1;
-	// 	printf("PID %d: terminated abnormally\n", pid);
-	// }
 	g_wait = 0;
 	return (status);
 }
