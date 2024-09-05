@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+         #
+#    By: we <we@student.42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/09/04 14:44:15 by tjun-yu          ###   ########.fr        #
+#    Updated: 2024/09/05 11:59:50 by we               ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,14 +26,14 @@ CFLAGS	= -Wall -Wextra -Werror -Wpedantic -g
 # Directories
 RL_DIR		= readline
 LIBFT_DIR	= libft
-MODULES_DIR	= executor expander gbc lexer parser wildcard builtins utils
+MODULES_DIR	= executor expander gbc lexer parser wildcard builtins signals utils
 OBJ_DIR		= obj
 INCL_DIR	= -Iinclude -I$(RL_DIR) -I$(LIBFT_DIR)/include
 
 vpath %.c $(MODULES_DIR)
 
 # Files
-SRC			= $(foreach module, $(MODULES_DIR), $(wildcard $(module)/*.c)) signals.c
+SRC			= $(foreach module, $(MODULES_DIR), $(wildcard $(module)/*.c))
 OBJ			= $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
 HEADER		= include/*.h $(wildcard $(RL_DIR)/*.h) \
 				$(wildcard $(LIBFT_DIR)/include/*.h)
