@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:53:06 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 11:02:58 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 12:10:45 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_token	*init_new_token(t_token_type type, char *value)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = ft_calloc(1, sizeof(t_token));
 	if (!token)
@@ -33,7 +33,7 @@ void	add_token_to_list(t_token **token_list, t_token *token)
 	if (*token_list == NULL)
 	{
 		*token_list = token;
-		return	;
+		return ;
 	}
 	current = *token_list;
 	while (current != NULL && current->next != NULL)

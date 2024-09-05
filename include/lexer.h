@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:11 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 11:34:09 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 12:34:18 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ bool	append_word_token(char **line, t_token **token_list, t_minishell *vars);
 bool	is_quote_balance(char *str, char quote);
 char	get_quote_type(char *str);
 void	skip_quote_string(char *line, int *i);
+bool	init_word_token(char **line, char *buffer, int count, t_token **lst);
 
 #endif

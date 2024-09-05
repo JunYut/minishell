@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 16:41:46 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 12:43:08 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ void	tokenize(char *line, t_minishell *vars)
 		if (token_err == true)
 		{
 			clear_token_list(&token_list);
-			break	;
+			break ;
 		}
 		skip_spaces(&line);
 		if (!ft_strncmp(line, "&&", 2) || is_in_set(*line, OPERATORS_SET))
 			token_err = handle_operator_token(&line, &token_list);
 		else
 			token_err = append_word_token(&line, &token_list, vars);
-		// printf("Line: %s\n", line);
 	}
 	vars->token_list = token_list;
 }
@@ -59,72 +58,78 @@ bool	handle_operator_token(char **line, t_token **token_list)
 		return (append_operator_token(T_R_BRACKET, line, token_list));
 }
 
-bool	append_operator_token(t_token_type type, char **line, t_token **token_list)
+bool	append_operator_token(t_token_type type, char **line, t_token **lst)
 {
 	t_token	*token;
 	char	*value;
-	int		char_count;
+	int		count;
 
-	char_count = 1;
+	count = 1;
 	if (type == T_HEREDOC || type == T_APPEND || type == T_OR || type == T_AND)
-		char_count++;
-	value = ft_substr(*line, 0, char_count);
+		count++;
+	value = ft_substr(*line, 0, count);
 	if (!value)
 		return (true);
 	token = init_new_token(type, value);
 	if (!token)
 		return (free(value), true);
-	add_token_to_list(token_list, token);
-	*line += char_count;
+	add_token_to_list(lst, token);
+	*line += count;
 	return (false);
 }
 
 bool	append_word_token(char **line, t_token **token_list, t_minishell *vars)
 {
-	t_token	*token;
-	char	*value;
-	int		char_count;
+	int		count;
 	char	*buffer;
 
 	if (!vars)
 		return (0);
 	buffer = *line;
-	char_count = 0;
-	while (buffer[char_count] && !is_seperator(buffer + char_count))
+	count = 0;
+	while (buffer[count] && !is_seperator(buffer + count))
 	{
-		if (is_quote(buffer[char_count]))
+		if (is_quote(buffer[count]))
 		{
-			// if (is_quote_closed(buffer, &char_count) == false)
-			if (is_quote_balance(buffer + char_count, buffer[char_count]) == true)
-			{
-				skip_quote_string(buffer, &char_count);
-				// break ;
-			}
+			if (is_quote_balance(buffer + count, buffer[count]) == true)
+				skip_quote_string(buffer, &count);
 			else
 			{
-				handle_open_quote(&(*line), &buffer, &char_count, buffer[char_count]);
+				handle_open_quote(&(*line), &buffer, &count, buffer[count]);
 				break ;
 			}
-			// else
-			// 	char_count++;
 		}
 		else
-			char_count++;
+			count++;
 	}
-	value = ft_substr(buffer, 0, char_count);
+	return (init_word_token(line, buffer, count, token_list));
+}
+
+bool	init_word_token(char **line, char *buffer, int count, t_token **lst)
+{
+	char	*value;
+	t_token	*token;
+
+	value = ft_substr(buffer, 0, count);
 	if (!value)
 		return (true);
 	token = init_new_token(T_WORD, value);
 	if (!token)
 		return (free(value), true);
-	*line += char_count;
-	add_token_to_list(token_list, token);
+	*line += count;
+	add_token_to_list(lst, token);
 	return (false);
 }
 
-//NOTES: When encountering multiple syntax errors, Bash will report the first one
+/*
+NOTES:	When encountering multiple syntax errors, Bash will report the first
+		one
+*/
 //NOTES: We can tokenize first then validate or validate sequentially
-//NOTES: Multiple string literals without any seperators that are not in quotes in-between are considered 1 token only e.g. "ls""-l" is treated as ls-l
+/*
+NOTES:	Multiple string literals without any seperators that are not in quotes
+		in-between are considered 1 token only e.g. "ls""-l" is treated as ls-l
+*/
 
 //TODO: move error handling for quotes to parser
 //TODO: handle open quotes or brackets
