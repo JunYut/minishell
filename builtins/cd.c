@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 10:53:12 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 10:16:12 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/05 11:47:51 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,21 @@ char	*set_target(char **path, t_env *e)
 	if (*path && **path == '~' && *(*path + 1) != '\0')
 		target = ft_strjoin(target, *path + 1);
 	return (target);
+}
+
+// if key is not found, return NULL
+char	*fetch_val(char *key, t_env *e)
+{
+	t_var	*curr;
+
+	curr = e->var;
+	while (curr->next)
+	{
+		if (ft_strcmp(curr->key, key) == 0)
+			return (curr->value);
+		curr = curr->next;
+	}
+	return (NULL);
 }
 
 int	count_args(char **path, char *func, t_env *e)

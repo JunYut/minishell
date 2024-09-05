@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:15:23 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 11:07:42 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/05 11:51:47 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	builtin_export(char **ent, t_env *e)
 {
 	char	**split;
-	char	*value;
 	int		status;
 	int		i;
 
@@ -29,35 +28,28 @@ int	builtin_export(char **ent, t_env *e)
 	while (ent[++i])
 	{
 		split = split_ent(ent[i]);
-		if (valid_key(split[0], e) == 1)
+		if (!valid_key(split[0], e))
 		{
 			status = 1;
 			continue ;
 		}
-		value = fetch_val(split[0], e);
-		if (value)
-			set_val(e, split[0], split[1]);
-		else
-			add_ent(e, split[0], split[1]);
+		export(split[0], split[1], e);
 	}
 	sort_export(e->exp);
 	e->envp = env_to_arr(e->var);
 	return (status);
 }
 
-// if key is not found, return NULL
-char	*fetch_val(char *key, t_env *e)
+int	export(char *key, char *val, t_env *e)
 {
-	t_var	*curr;
+	char	*value;
 
-	curr = e->var;
-	while (curr->next)
-	{
-		if (ft_strcmp(curr->key, key) == 0)
-			return (curr->value);
-		curr = curr->next;
-	}
-	return (NULL);
+	value = fetch_val(key, e);
+	if (value)
+		set_val(e, key, val);
+	else
+		add_ent(e, key, val);
+	return (0);
 }
 
 void	set_val(t_env *e, char *key, char *val)
@@ -117,7 +109,7 @@ int	valid_key(char *key, t_env *e)
 	{
 		print_builtin_err("export", key, "not a valid identifier");
 		set_val(e, "?", "1");
-		return (1);
+		return (0);
 	}
 	i = -1;
 	while (key[++i])
@@ -126,8 +118,8 @@ int	valid_key(char *key, t_env *e)
 		{
 			print_builtin_err("export", key, "not a valid identifier");
 			set_val(e, "?", "1");
-			return (1);
+			return (0);
 		}
 	}
-	return (0);
+	return (1);
 }

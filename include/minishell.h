@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/04 10:11:35 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/05 11:51:17 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int		count_args(char **path, char *func, t_env *e);
 int		builtin_echo(char **av);
 
 int		builtin_export(char **ent, t_env *e);
+int		export(char *key, char *val, t_env *e);
 char	*fetch_val(char *key, t_env *e);
 void	set_val(t_env *e, char *key, char *val);
 char 	**split_ent(char *str);
