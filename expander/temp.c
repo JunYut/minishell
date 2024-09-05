@@ -76,11 +76,12 @@ char	*parse_path(char *envp[], char *cmd)
 	char	*path;
 	int		i;
 
-	i = -1;
-	while (envp[++i] && ft_strncmp(envp[i], "PATH=", 5))
-		;
+	i = 0;
+	path = NULL;
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
+		i++;
 	if (envp[i] == NULL)
-		return (NULL);
+		return (path);
 	path_list = ft_split(envp[i], ':');
 	prepend_cmd(path_list, cmd);
 	trim_path(path_list[0], "PATH=");

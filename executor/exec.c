@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 15:08:54 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:11:27 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,9 @@ t_path	get_path(char *cmd, t_minishell *vars)
 {
 	char	*full_cmd;
 
-	// printf("Did it reach get_path?\n");
 	if (ft_strnstr(cmd, "/", ft_strlen(cmd))) //Put a check for PATH here
 		return ((t_path){check_exec(cmd), cmd});
 	full_cmd = parse_path(vars->env->envp, cmd);
-	// DPRINTF("full_cmd: %s\n", full_cmd);
 	if (full_cmd != NULL)
 		return ((t_path){(t_err){ERRNO_SUCCESS, -1, NULL}, full_cmd});
 	return ((t_path){(t_err){ERRNO_NOT_FOUND, ERR_MSG_CMD_NOT_FOUND, cmd}, NULL});
@@ -149,12 +147,9 @@ int	exec_child(t_node *node, t_minishell *vars)
 	int		status;
 	pid_t	pid;
 
-	// if (is_builtin(node->exp_args[0]) == true)
-	// 		return (exec_builtin(node->exp_args, vars->env));
 	pid = fork();
 	if (pid == 0)
 	{
-		// printf("Did it reach exec_child\n");
 		status = check_redir(node);
 		if (status != ERRNO_SUCCESS)
 			(exit(ERRNO_GENERAL));
