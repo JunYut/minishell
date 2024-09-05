@@ -6,18 +6,18 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:10:16 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 11:55:51 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 12:04:10 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "wildcard.h"
+#include "wildcard.h"
 
 // Returns an array of tokens terminated by T_END
 t_wc_type	*tokenize_wc(char *regex)
 {
 	t_wc_type	*token;
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
 	token = gbc_malloc(sizeof(t_wc_type) * (count_token(regex) + 1));
 	j = -1;

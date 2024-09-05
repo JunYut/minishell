@@ -6,13 +6,13 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:10:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 11:55:51 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 12:06:26 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "wildcard.h"
-# include "expand.h"
-# include "utils.h"
+#include "wildcard.h"
+#include "expand.h"
+#include "utils.h"
 
 char	**wildcard(char *regex, t_env *env_var)
 {
@@ -50,25 +50,25 @@ char	**lst_to_arr(t_list *lst)
 
 t_dirent	*init_dirent(char *cwd)
 {
-	t_dirent		*dirent;
+	t_dirent		*ent;
 	DIR				*dirp;
 	struct dirent	*dp;
 
-	dirent = gbc_malloc(sizeof(t_dirent));
-	dirent->files = NULL;
-	dirent->dot_files = NULL;
+	ent = gbc_malloc(sizeof(t_dirent));
+	ent->files = NULL;
+	ent->dot_files = NULL;
 	dirp = opendir(cwd);
 	dp = readdir(dirp);
 	while (dp != NULL)
 	{
 		if (dp->d_name[0] == '.')
-			ft_lstadd_back(&dirent->dot_files, gb_lstnew(gb_strdup(dp->d_name)));
+			ft_lstadd_back(&ent->dot_files, gb_lstnew(gb_strdup(dp->d_name)));
 		else
-			ft_lstadd_back(&dirent->files, gb_lstnew(gb_strdup(dp->d_name)));
+			ft_lstadd_back(&ent->files, gb_lstnew(gb_strdup(dp->d_name)));
 		dp = readdir(dirp);
 	}
 	closedir(dirp);
-	sort_lex(dirent->files);
-	sort_lex(dirent->dot_files);
-	return (dirent);
+	sort_lex(ent->files);
+	sort_lex(ent->dot_files);
+	return (ent);
 }

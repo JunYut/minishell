@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:09:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/28 11:09:43 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:04:20 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "wildcard.h"
+#include "wildcard.h"
 
 void	sort_lex(t_list *lst)
 {

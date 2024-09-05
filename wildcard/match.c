@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   match.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:09:27 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 09:39:44 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/05 12:03:41 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "wildcard.h"
-# include "utils.h"
+#include "wildcard.h"
+#include "utils.h"
 
 t_list	*ent_match(t_wildcard *wc, char *regex)
 {
@@ -26,7 +26,6 @@ t_list	*ent_match(t_wildcard *wc, char *regex)
 	while (lst)
 	{
 		match = pattern_match(lst->content, wc->token, wc->pattern);
-		// DPRINTF("match: %s\n\n", match);
 		if (match)
 			ft_lstadd_back(&match_lst, gb_lstnew(gb_strdup(match)));
 		lst = lst->next;
