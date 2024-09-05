@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/05 11:51:17 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 16:16:32 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void	exec_pipe_child(t_node *node, int *fd, int direction, t_minishell *vars);
 int		wait_status(pid_t pid, t_env *e);
 int		get_exit_status(int status);
 int		get_err_msg(t_err err);
-
-void	print_arr(char **arr);
 
 int		builtin_cd(char **path, t_env *e);
 char	*set_target(char **path, t_env *e);

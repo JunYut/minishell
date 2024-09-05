@@ -6,13 +6,14 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:57:24 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/05 12:50:26 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 16:27:39 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
+# include <unistd.h>
 # include <errno.h>
 # include <stdio.h>
 # include "define.h"
@@ -34,5 +35,10 @@ int			is_space(char c);
 int			is_quote(char c);
 int			is_seperator(char *s);
 void		skip_spaces(char **line);
+
+void		show_tree(t_node *node, int depth, char *branch);
+void		print_tree(t_node *node, int depth, char *branch);
+void		print_arr(char **arr);
+char		*get_node_type(int type);
 
 # endif
