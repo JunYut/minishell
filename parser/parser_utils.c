@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 14:02:19 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 11:00:15 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 17:32:53 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	token_precedence(t_token_type type)
 
 bool	is_redirection(t_token_type type)
 {
-	if (type == T_REDIRECT_IN || type == T_REDIRECT_OUT || type == T_HEREDOC || type == T_APPEND)
+	if (type == T_REDIRECT_IN || type == T_REDIRECT_OUT || type == T_HEREDOC
+		|| type == T_APPEND)
 		return (true);
 	return (false);
 }
