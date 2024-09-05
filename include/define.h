@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/04 14:15:46 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/05 16:38:27 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,19 +189,19 @@ typedef struct s_gbc
 
 typedef struct s_minishell
 {
-	t_token		*token_list;
-	t_token		*curr_token;
-	t_node		*ast;
-	t_parse_err	parse_err;
-	bool		token_err;
-	int			exit_status;
-	char		*line;
-	t_gbc		*gbc;
-	char		**envp;
-	t_env		*env;
-	struct termios term;
-	int			stdin;
-	int			stdout;
+	t_token			*token_list;
+	t_token			*curr_token;
+	t_node			*ast;
+	t_parse_err		parse_err;
+	bool			token_err;
+	int				exit_status;
+	char			*line;
+	t_gbc			*gbc;
+	char			**envp;
+	t_env			*env;
+	struct termios	term;
+	int				stdin;
+	int				stdout;
 }	t_minishell;
 
 #endif

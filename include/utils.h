@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:57:24 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/05 16:27:39 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 16:50:41 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 int			print_builtin_err(char *builtin, char *cause, char *error);
 int			print_err(char *cause, char *error);
 
-t_wc_type	*gb_newtoken(t_wc_type token);
-t_list		*gb_lstnew(void *content);
-char		*gb_itoa(int n);
-char		*gb_strdup(const char *s1);
+t_wc_type	*gbc_newtoken(t_wc_type token);
+t_list		*gbc_lstnew(void *content);
+char		*gbc_itoa(int n);
+char		*gbc_strdup(const char *s1);
 
 int			find_pos(char *str, char delim);
 char		*ft_strndup(char *str, int pos);

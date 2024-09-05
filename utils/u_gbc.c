@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wrapper.c                                          :+:      :+:    :+:   */
+/*   u_gbc.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:24:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 12:01:50 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 16:50:45 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "gbc.h"
+#include "utils.h"
 
-t_list	*gb_lstnew(void *content)
+t_list	*gbc_lstnew(void *content)
 {
 	return (gbc_add(ft_lstnew(content)));
 }
 
-char	*gb_itoa(int n)
+char	*gbc_itoa(int n)
 {
 	return (gbc_add(ft_itoa(n)));
 }
 
-char	*gb_strdup(const char *s1)
+char	*gbc_strdup(const char *s1)
 {
 	return (gbc_add(ft_strdup(s1)));
 }
 
-t_wc_type	*gb_newtoken(t_wc_type token)
+t_wc_type	*gbc_newtoken(t_wc_type token)
 {
 	t_wc_type	*new;
 

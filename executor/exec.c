@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 14:39:15 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/05 16:50:35 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,7 +358,7 @@ int	wait_status(pid_t pid, t_env *e)
 	else if (WIFEXITED(status))
 	{
 		status = WEXITSTATUS(status);
-		set_val(e, "?", gb_itoa(status));
+		set_val(e, "?", gbc_itoa(status));
 	}
 	// else
 	// {

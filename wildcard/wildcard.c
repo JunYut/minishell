@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:10:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 12:06:26 by we               ###   ########.fr       */
+/*   Updated: 2024/09/05 16:51:23 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**wildcard(char *regex, t_env *env_var)
 	wc->pattern = ft_split(regex, '*');
 	match_lst = ent_match(wc, regex);
 	if (match_lst == NULL)
-		ft_lstadd_back(&match_lst, gb_lstnew(gb_strdup(regex)));
+		ft_lstadd_back(&match_lst, gbc_lstnew(gbc_strdup(regex)));
 	ft_free_s_arr(wc->pattern);
 	return (lst_to_arr(match_lst));
 }
@@ -62,9 +62,9 @@ t_dirent	*init_dirent(char *cwd)
 	while (dp != NULL)
 	{
 		if (dp->d_name[0] == '.')
-			ft_lstadd_back(&ent->dot_files, gb_lstnew(gb_strdup(dp->d_name)));
+			ft_lstadd_back(&ent->dot_files, gbc_lstnew(gbc_strdup(dp->d_name)));
 		else
-			ft_lstadd_back(&ent->files, gb_lstnew(gb_strdup(dp->d_name)));
+			ft_lstadd_back(&ent->files, gbc_lstnew(gbc_strdup(dp->d_name)));
 		dp = readdir(dirp);
 	}
 	closedir(dirp);
