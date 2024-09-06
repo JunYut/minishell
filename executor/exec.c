@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/06 13:10:31 by we               ###   ########.fr       */
+/*   Updated: 2024/09/06 13:15:17 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	exec_simple_cmd(t_node *node, bool piped, t_minishell *vars)
 {
 	int	status;
 
-	(void)piped;
 	if (!node->exp_args)
 	{
 		status = check_redir(node);

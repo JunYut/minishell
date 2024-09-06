@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:51:35 by we                #+#    #+#             */
-/*   Updated: 2024/09/06 13:13:10 by we               ###   ########.fr       */
+/*   Updated: 2024/09/06 14:30:19 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,14 @@ int	check_redir(t_node *node)
 	temp_io = node->io_list;
 	while (temp_io)
 	{
-		if (temp_io->type == IO_OUT && redir_out(temp_io, &status) != ERRNO_SUCCESS)
+		if (temp_io->type == IO_OUT
+			&& redir_out(temp_io, &status) != ERRNO_SUCCESS)
 			return (status);
-		else if (temp_io->type == IO_IN && redir_in(temp_io, &status) != ERRNO_SUCCESS)
+		else if (temp_io->type == IO_IN
+			&& redir_in(temp_io, &status) != ERRNO_SUCCESS)
 			return (status);
-		else if (temp_io->type == IO_APPEND && redir_append(temp_io, &status) != ERRNO_SUCCESS)
+		else if (temp_io->type == IO_APPEND
+			&& redir_append(temp_io, &status) != ERRNO_SUCCESS)
 			return (status);
 		else if (temp_io->type == IO_HEREDOC)
 		{
@@ -42,7 +45,8 @@ int	redir_out(t_io_node *io_list, int *status)
 
 	if (io_list->exp_value == NULL || io_list->exp_value[1] != NULL)
 	{
-		*status = get_err_msg((t_err){ERRNO_GENERAL, ERR_MSG_AMBIGUOUS, io_list->value});
+		*status = get_err_msg((t_err){ERRNO_GENERAL, ERR_MSG_AMBIGUOUS,
+				io_list->value});
 		return (*status);
 	}
 	fd = open(io_list->exp_value[0], O_CREAT | O_WRONLY | O_TRUNC, 0644);
@@ -68,7 +72,8 @@ int	redir_in(t_io_node *io_list, int *status)
 
 	if (io_list->exp_value == NULL || io_list->exp_value[1] != NULL)
 	{
-		*status = get_err_msg((t_err){ERRNO_GENERAL, ERR_MSG_AMBIGUOUS, io_list->value});
+		*status = get_err_msg((t_err){ERRNO_GENERAL, ERR_MSG_AMBIGUOUS,
+				io_list->value});
 		return (*status);
 	}
 	fd = open(io_list->exp_value[0], O_RDONLY);
@@ -94,7 +99,8 @@ int	redir_append(t_io_node *io_list, int *status)
 
 	if (io_list->exp_value == NULL || io_list->exp_value[1] != NULL)
 	{
-		*status = get_err_msg((t_err){ERRNO_GENERAL, ERR_MSG_AMBIGUOUS, io_list->value});
+		*status = get_err_msg((t_err){ERRNO_GENERAL, ERR_MSG_AMBIGUOUS,
+				io_list->value});
 		return (*status);
 	}
 	fd = open(io_list->exp_value[0], O_CREAT | O_WRONLY | O_APPEND, 0644);
