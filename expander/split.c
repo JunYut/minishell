@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_args.c                                       :+:      :+:    :+:   */
+/*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:18:21 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/06 15:21:12 by we               ###   ########.fr       */
+/*   Updated: 2024/09/06 15:47:48 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,45 +29,6 @@ char	**split_args(char *str)
 	if (!args)
 		return (ft_free_s_arr(args), NULL);
 	return (fill_args(str, args));
-}
-
-void	skip_word(char *str, int *i)
-{
-	char	quote;
-
-	quote = 0;
-	while (str[*i] && str[*i] != ' ')
-	{
-		if (str[*i] != '\'' && str[*i] != '"')
-			(*i)++;
-		else
-		{
-			quote = str[(*i)++];
-			while (str[*i] != quote)
-				(*i)++;
-			(*i)++;
-		}
-	}
-}
-
-int	count_words(char *str)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		if (str[i] != ' ')
-		{
-			count++;
-			skip_word(str, &i);
-		}
-		while (str[i] && str[i] == ' ')
-			i++;
-	}
-	return (count);
 }
 
 char	**allocate_args(char *str, char **args)

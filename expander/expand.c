@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/06 15:24:49 by we               ###   ########.fr       */
+/*   Updated: 2024/09/06 15:47:01 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char	**insert_string_array(char **dest, char **src, int insert_index)
 	int		dest_size;
 	int		src_size;
 
-	dest_size == count_strings(dest);
+	dest_size = count_strings(dest);
 	src_size = count_strings(src);
 	if (insert_index < 0 || insert_index > dest_size)
 	{
