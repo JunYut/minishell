@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:18:21 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 11:56:13 by we               ###   ########.fr       */
+/*   Updated: 2024/09/06 15:21:12 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**split_args(char *str)
 		return (NULL);
 	word_count = count_words(str);
 	if (!word_count)
-			return (free(str), NULL);
+		return (free(str), NULL);
 	args = gbc_add(ft_calloc(word_count + 1, sizeof(char *)));
 	if (!args)
 		return (free(str), NULL);
@@ -123,7 +123,7 @@ void	fill_word(char *str, char **args, int *i, int j)
 	k = 0;
 	while (str[*i] && str[*i] != ' ')
 	{
-		if (str[*i] != '\'' && str[*i] !='"')
+		if (str[*i] != '\'' && str[*i] != '"')
 			args[j][k++] = str[(*i)++];
 		else
 		{

@@ -6,14 +6,14 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 11:38:25 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/06 15:18:52 by we               ###   ########.fr       */
+/*   Updated: 2024/09/06 15:20:35 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 #include "utils.h"
 
-extern char **environ;
+extern char	**environ;
 
 void	heredoc(t_io_node *io, int *p_fd)
 {
@@ -39,7 +39,7 @@ char	*read_doc(char *delimiter)
 		line = readline("> ");
 		if (!line)
 			ft_putstr_fd("minishell: warning: here-document delimited by "
-			"end-of-file (wanted `eof')\n", 2);
+				"end-of-file (wanted `eof')\n", 2);
 		if (!line || !ft_strcmp(line, delimiter))
 		{
 			free(line);

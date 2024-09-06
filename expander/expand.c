@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/06 15:16:56 by we               ###   ########.fr       */
+/*   Updated: 2024/09/06 15:24:49 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,47 +93,49 @@ bool	is_valid_regex(char *str)
 	return (is_in_set('*', str));
 }
 
-int count_strings(char **array)
+int	count_strings(char **array)
 {
-	int count = 0;
+	int	count;
 
+	count = 0;
 	if (!array || !array[0])
 		return (0);
-	while (array[count] != NULL) {
+	while (array[count] != NULL)
 		count++;
-	}
-	return count;
+	return (count);
 }
 
-char **insert_string_array(char **dest, char **src, int insert_index) {
-	int dest_size = count_strings(dest);
-	int src_size = count_strings(src);
+char	**insert_string_array(char **dest, char **src, int insert_index)
+{
+	int		dest_size;
+	int		src_size;
 
-	if (insert_index < 0 || insert_index > dest_size) {
+	dest_size == count_strings(dest);
+	src_size = count_strings(src);
+	if (insert_index < 0 || insert_index > dest_size)
+	{
 		printf("Invalid insertion index.\n");
 		return (NULL);
 	}
-
-	char **new_dest = malloc((dest_size + src_size + 1) * sizeof(char *));
-	if (new_dest == NULL) {
+	char	**new_dest = malloc((dest_size + src_size + 1) * sizeof(char *));
+	if (new_dest == NULL)
+	{
 		perror("Failed to allocate memory");
 		exit(EXIT_FAILURE);
 	}
-
-	for (int i = 0; i < insert_index; i++) {
+	for (int i = 0; i < insert_index; i++)
+	{
 		new_dest[i] = (dest)[i];
 	}
-
-	for (int i = 0; i < src_size; i++) {
+	for (int i = 0; i < src_size; i++)
+	{
 		new_dest[insert_index + i] = src[i];
 	}
-
-	for (int i = insert_index; i < dest_size; i++) {
+	for (int i = insert_index; i < dest_size; i++)
+	{
 		new_dest[src_size + i] = (dest)[i + 1];
 	}
-
 	new_dest[dest_size + src_size] = NULL;
-
 	free(dest);
 	return (new_dest);
 }
