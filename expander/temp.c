@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   temp.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/06 15:18:06 by we                #+#    #+#             */
+/*   Updated: 2024/09/06 15:18:07 by we               ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "expand.h"
 
 void	append(char *file, char *cmd, char *args[])
@@ -27,7 +39,6 @@ void	write_file(char *file, char *content)
 	int	fd;
 
 	fd = open(file, O_TRUNC | O_WRONLY | O_CREAT, 0644);
-	// fd = open(file, O_APPEND | O_WRONLY | O_CREAT, 0644);
 	write(fd, content, ft_strlen(content));
 	close(fd);
 }
@@ -66,7 +77,6 @@ void	append_str(char **str1, char *str2)
 	while (str2[++j])
 		new[i + j] = str2[j];
 	new[i + j] = '\0';
-	// free(*str1);
 	*str1 = new;
 }
 
@@ -85,7 +95,7 @@ char	*parse_path(char *envp[], char *cmd)
 	path = NULL;
 	i = -1;
 	while (path_list[++i] && !path)
-		if (access(path_list[i], X_OK) == 0)	// not considering directories
+		if (access(path_list[i], X_OK) == 0)
 			path = ft_strdup(path_list[i]);
 	ft_free_s_arr(path_list);
 	return (path);

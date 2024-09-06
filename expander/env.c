@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 11:56:13 by we               ###   ########.fr       */
+/*   Updated: 2024/09/06 15:19:17 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int	builtin_env(t_env *e, char lst)
 	return (0);
 }
 
-// // a=1 : export: a="1"; var: a=1
-// // a= : export: a=""; var: a=
-// // a : export: a; var: [nothing]
+// a=1 : export: a="1"; var: a=1
+// a= : export: a=""; var: a=
+// a : export: a; var: [nothing]
 void	add_ent(t_env *e, char *key, char *val)
 {
 	t_var		*curr;

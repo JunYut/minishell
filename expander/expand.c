@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 11:56:13 by we               ###   ########.fr       */
+/*   Updated: 2024/09/06 15:16:56 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,8 @@ int		count_strings(char **array);
 
 void	expand_node(t_node *node, t_minishell *vars)
 {
-	// t_io_node	*io;
-	// int			p_fd[2];
-	// pid_t		pid;
-
 	if (node->args)
 		node->exp_args = expand_args(node->args, vars);
-	// io = node->io_list;
-	// while (io != NULL)
-	// {
-	// 	// if (io->type == IO_HEREDOC)
-	// 	// {
-	// 	// 	pipe(p_fd);
-	// 	// 	io->exp_value = expand_args(io->value, vars);
-	// 	// 	pid = fork();
-	// 	// 	if (!pid)
-	// 	// 		heredoc(io, p_fd);
-	// 	// 	waitpid(pid, &pid, 0);
-	// 	// 	io->heredoc = p_fd[0];
-	// 	// }
-	// 	// // printf("redir_type: %d\n", io->type);
-	// 	// // printf("redir: %s\n", io->value);
-	// 	// else
-	// 		io->exp_value = expand_args(io->value, vars);
-	// 	// printf("redir_type: %d\n", io->type);
-	// 	io = io->next;
-	// }
-	// printf("exp_args: %s\n", node->args);
 }
 
 void	init_heredocs(t_node *node, t_minishell *vars)
@@ -57,7 +32,6 @@ void	init_heredocs(t_node *node, t_minishell *vars)
 
 	if (node == NULL)
 		return ;
-	// printf("Node type: %d\n", node->type);
 	init_heredocs(node->left, vars);
 	init_heredocs(node->right, vars);
 	io = node->io_list;
@@ -93,30 +67,22 @@ char	**expand_args(char *args, t_minishell *vars)
 	i = -1;
 	buffer = gbc_add(expand_params(args, vars));
 	expanded = split_args(buffer);
-	// printf("Did it split?\n");
 	if (!expanded)
 		return (NULL);
 	while (expanded[++i])
-	// while (++i <= 2)
 	{
 		if (is_valid_regex(expanded[i]) == true)
 		{
 			globbed = wildcard(expanded[i], vars->env);
 			expanded = insert_string_array(expanded, globbed, i);
-			// print_arr(expanded); DPRINTF("\n");
 			free(globbed);
 		}
 	}
-	// printf("Did it return expanded?\n");
 	i = -1;
 	while (expanded[++i])
 	{
 		expanded[i] = gbc_add(remove_quotes(expanded[i]));
-		// printf("Final string: %s\n", expanded[i]);
 	}
-	// if (globbed)
-	// 	print_arr(globbed);
-	// printf("Test string: %s\n", expanded[0]);
 	return (expanded);
 }
 
@@ -140,44 +106,35 @@ int count_strings(char **array)
 }
 
 char **insert_string_array(char **dest, char **src, int insert_index) {
-	// Count the size of dest and src arrays
 	int dest_size = count_strings(dest);
 	int src_size = count_strings(src);
 
-	// Check if the insertion index is valid
 	if (insert_index < 0 || insert_index > dest_size) {
 		printf("Invalid insertion index.\n");
 		return (NULL);
 	}
 
-	// Allocate memory for the new array size (dest_size + src_size + 1 for the NULL terminator)
 	char **new_dest = malloc((dest_size + src_size + 1) * sizeof(char *));
 	if (new_dest == NULL) {
 		perror("Failed to allocate memory");
 		exit(EXIT_FAILURE);
 	}
 
-	// Copy elements before the insertion index
 	for (int i = 0; i < insert_index; i++) {
 		new_dest[i] = (dest)[i];
 	}
 
-	// Insert the new elements from the source array
 	for (int i = 0; i < src_size; i++) {
 		new_dest[insert_index + i] = src[i];
 	}
 
-	// Copy the remaining elements after the insertion index
 	for (int i = insert_index; i < dest_size; i++) {
 		new_dest[src_size + i] = (dest)[i + 1];
 	}
 
-	// Add the NULL terminator at the end
 	new_dest[dest_size + src_size] = NULL;
 
-	// Update the destination array pointer
-	free(dest);  // Free the old array if it was dynamically allocated
-	// *dest = new_dest;
+	free(dest);
 	return (new_dest);
 }
 
@@ -199,7 +156,6 @@ char	*expand_params(char	*str, t_minishell *vars)
 		else
 			expanded_str = gnl_strjoin(expanded_str, handle_reg_str(str, &i));
 	}
-	// printf("did it expand finish?\n");
 	return (expanded_str);
 }
 
@@ -240,7 +196,6 @@ char	*handle_dquote(char *str, int *i, t_minishell *vars)
 	char	*ret_str;
 
 	ret_str = ft_strdup("\"");
-	// ret_str = ft_strdup("");
 	(*i)++;
 	while (str[*i] != '"')
 	{
@@ -251,7 +206,6 @@ char	*handle_dquote(char *str, int *i, t_minishell *vars)
 	}
 	(*i)++;
 	return (gnl_strjoin(ret_str, "\""));
-	// return (ret_str);
 }
 
 char	*handle_dollar(char *str, int *i, t_minishell *vars)
@@ -280,9 +234,7 @@ char	*handle_dollar(char *str, int *i, t_minishell *vars)
 	while (is_valid_var_char(str[*i]) == true)
 		(*i)++;
 	val = ft_substr(str, start, *i - start);
-	// printf("ft_substr\n");
 	env_val = fetch_val(val, vars->env);
-	// printf("Fetch val!\n");
 	if (env_val == NULL)
 		return (free(val), ft_strdup(""));
 	return (free(val), env_val);
@@ -302,7 +254,6 @@ char	*remove_quotes(char *str)
 	char	*new_str;
 	char	quote;
 
-	// printf("reach remove_quotes?\n");
 	if (!str || !*str)
 		return (ft_strdup(""));
 	i = -1;
