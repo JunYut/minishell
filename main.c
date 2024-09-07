@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 15:53:00 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/07 21:33:41 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		setup_terminal(&vars);
-		set_val(vars.env, "?", (char *)gb_add(ft_itoa(vars.exit_status)));
+		// set_val(vars.env, "?", (char *)gb_add(ft_itoa(vars.exit_status)));
 		// env(vars.env, 2);
 		// curr_dir = fetch_val("PWD", vars.env);
 		// append_str(&curr_dir, "> ");

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/01 13:47:41 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/07 21:28:13 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_env	*dup_env(char *envp[])
 		add_ent(e, split[0], split[1]);
 	}
 	builtin_unset((char *[]){"OLDPWD", NULL}, e);
-	add_ent(e, "?", "0");
+	// add_ent(e, "?", "0");
 	set_val(e, "SHLVL", "1");
 	e->envp = env_to_arr(e->var);
 	return (e);
