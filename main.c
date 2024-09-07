@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 13:05:54 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:53:00 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	main(int ac, char **av, char **envp)
 		// curr_dir = fetch_val("PWD", vars.env);
 		// append_str(&curr_dir, "> ");
 		// vars.line = readline(curr_dir);
-		if (isatty(fileno(stdin)))
+		// if (isatty(fileno(stdin)))
 			vars.line = gb_add(readline("minishell> "));
 		if (vars.line == NULL)
 			break ;

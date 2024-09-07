@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 14:48:51 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/07 21:06:50 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 bool	is_valid_regex(char *str);
 char **insert_string_array(char **dest, char **src, int insert_index);
 int count_strings(char **array);
+int	find_result_len(char *input, int len);
+char *remove_outer_quotes(char *input);
+char	*build_result_string(char *input, int len, int result_len);
 
 void	expand_node(t_node *node, t_minishell *vars)
 {
@@ -111,7 +114,8 @@ char	**expand_args(char *args, t_minishell *vars)
 	i = -1;
 	while (expanded[++i])
 	{
-		expanded[i] = gb_add(remove_quotes(expanded[i]));
+		// expanded[i] = gb_add(remove_quotes(expanded[i]));
+		expanded[i] = gb_add(remove_outer_quotes(expanded[i]));
 		// printf("Final string: %s\n", expanded[i]);
 	}
 	// if (globbed)
@@ -269,7 +273,8 @@ char	*handle_dollar(char *str, int *i, t_minishell *vars)
 	if (str[*i] == '?')
 	{
 		(*i)++;
-		return (fetch_val("?", vars->env));
+		// return (fetch_val("?", vars->env));
+		return (ft_strdup(ft_itoa(vars->exit_status)));
 	}
 	if (is_valid_var_char(str[*i] == false))
 	{
@@ -325,4 +330,68 @@ char	*remove_quotes(char *str)
 	}
 	free(str);
 	return (new_str);
+}
+
+char	*remove_outer_quotes(char *input)
+{
+	int	len;
+	int	result_len;
+	char	*result_str;
+
+	len = ft_strlen(input);
+	result_len = find_result_len(input, len);
+	result_str = build_result_string(input, len, result_len);
+	return (result_str);
+}
+
+int	find_result_len(char *input, int len)
+{
+	int	result_len;
+	int	i;
+	char	quote;
+
+	result_len = 0;
+	i = 0;
+	while (i < len)
+	{
+		if (input[i] == '\'' || input[i] == '"')
+		{
+			quote = input[i++];
+			while (i < len && input[i] != quote)
+			{
+				result_len++;
+				i++;
+			}
+		}
+		else
+			result_len++;
+		i++;
+	}
+	return (result_len);
+}
+
+char	*build_result_string(char *input, int len, int result_len)
+{
+	char	*result;
+	int		i;
+	int		j;
+	char	quote;
+
+	result = malloc(result_len + 1);
+	i = 0;
+	j = 0;
+	while (i < len)
+	{
+		if (input[i] == '\'' || input[i] == '"')
+		{
+			quote = input[i++];
+			while (i < len && input[i] != quote)
+				result[j++] = input[i++];
+		}
+		else
+			result[j++] = input[i];
+		i++;
+	}
+	result[j] = '\0';
+	return (result);
 }

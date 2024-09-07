@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 14:11:27 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:35:46 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,12 +133,24 @@ t_path	get_path(char *cmd, t_minishell *vars)
 {
 	char	*full_cmd;
 
-	if (ft_strnstr(cmd, "/", ft_strlen(cmd))) //Put a check for PATH here
+	if (ft_strnstr(cmd, "/", ft_strlen(cmd)) || is_valid_path(vars->env->envp) == false) //Put a check for PATH here
 		return ((t_path){check_exec(cmd), cmd});
 	full_cmd = parse_path(vars->env->envp, cmd);
 	if (full_cmd != NULL)
 		return ((t_path){(t_err){ERRNO_SUCCESS, -1, NULL}, full_cmd});
 	return ((t_path){(t_err){ERRNO_NOT_FOUND, ERR_MSG_CMD_NOT_FOUND, cmd}, NULL});
+}
+
+bool	is_valid_path(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
+		i++;
+	if (envp[i] == NULL)
+		return (false);
+	return (true);
 }
 
 int	exec_child(t_node *node, t_minishell *vars)

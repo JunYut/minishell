@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 11:56:31 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:56:36 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ bool	join_args(t_minishell *vars, char **args)
 		return (false);
 	while (vars->curr_token && vars->curr_token->type == T_WORD)
 	{
-		// printf("Token value: %s\n", vars->curr_token->value);
 		quote = get_quote_type(vars->curr_token->value);
 		if (quote != 0 && is_quote_balance(vars->curr_token->value, quote) == false)
 			return (handle_quote_err(quote, vars), false);
