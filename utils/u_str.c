@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:50:19 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/08 13:17:29 by we               ###   ########.fr       */
+/*   Updated: 2024/09/08 13:23:36 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 char	**insert_string_array(char **dest, char **src, int insert_index)
 {
+	char	**new_dest;
 	int		dest_size;
 	int		src_size;
+	int		i;
 
 	dest_size = count_strings(dest);
 	src_size = count_strings(src);
@@ -24,24 +26,21 @@ char	**insert_string_array(char **dest, char **src, int insert_index)
 		printf("Invalid insertion index.\n");
 		return (NULL);
 	}
-	char	**new_dest = malloc((dest_size + src_size + 1) * sizeof(char *));
+	new_dest = malloc((dest_size + src_size + 1) * sizeof(char *));
 	if (new_dest == NULL)
 	{
 		perror("Failed to allocate memory");
 		exit(EXIT_FAILURE);
 	}
-	for (int i = 0; i < insert_index; i++)
-	{
-		new_dest[i] = (dest)[i];
-	}
-	for (int i = 0; i < src_size; i++)
-	{
+	i = -1;
+	while (++i < insert_index)
+		new_dest[i] = dest[i];
+	i = -1;
+	while (++i < src_size)
 		new_dest[insert_index + i] = src[i];
-	}
-	for (int i = insert_index; i < dest_size; i++)
-	{
-		new_dest[src_size + i] = (dest)[i + 1];
-	}
+	i = insert_index - 1;
+	while (++i < dest_size)
+		new_dest[src_size + i] = dest[i];
 	new_dest[dest_size + src_size] = NULL;
 	free(dest);
 	return (new_dest);
