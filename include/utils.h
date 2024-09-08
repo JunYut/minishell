@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:57:24 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/05 16:50:41 by we               ###   ########.fr       */
+/*   Updated: 2024/09/08 13:18:02 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_list		*gbc_lstnew(void *content);
 char		*gbc_itoa(int n);
 char		*gbc_strdup(const char *s1);
 
+
+char		**insert_string_array(char **dest, char **src, int insert_index);
 int			find_pos(char *str, char delim);
 char		*ft_strndup(char *str, int pos);
 void		ft_strncpy(char *dst, char *src, int len);

@@ -6,17 +6,13 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/06 15:47:01 by we               ###   ########.fr       */
+/*   Updated: 2024/09/08 13:17:36 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 #include "minishell.h"
 #include "wildcard.h"
-
-bool	is_valid_regex(char *str);
-char	**insert_string_array(char **dest, char **src, int insert_index);
-int		count_strings(char **array);
 
 void	expand_node(t_node *node, t_minishell *vars)
 {
@@ -84,60 +80,6 @@ char	**expand_args(char *args, t_minishell *vars)
 		expanded[i] = gbc_add(remove_quotes(expanded[i]));
 	}
 	return (expanded);
-}
-
-bool	is_valid_regex(char *str)
-{
-	if (!str || *str == '\'' || *str == '"' || !*str)
-		return (false);
-	return (is_in_set('*', str));
-}
-
-int	count_strings(char **array)
-{
-	int	count;
-
-	count = 0;
-	if (!array || !array[0])
-		return (0);
-	while (array[count] != NULL)
-		count++;
-	return (count);
-}
-
-char	**insert_string_array(char **dest, char **src, int insert_index)
-{
-	int		dest_size;
-	int		src_size;
-
-	dest_size = count_strings(dest);
-	src_size = count_strings(src);
-	if (insert_index < 0 || insert_index > dest_size)
-	{
-		printf("Invalid insertion index.\n");
-		return (NULL);
-	}
-	char	**new_dest = malloc((dest_size + src_size + 1) * sizeof(char *));
-	if (new_dest == NULL)
-	{
-		perror("Failed to allocate memory");
-		exit(EXIT_FAILURE);
-	}
-	for (int i = 0; i < insert_index; i++)
-	{
-		new_dest[i] = (dest)[i];
-	}
-	for (int i = 0; i < src_size; i++)
-	{
-		new_dest[insert_index + i] = src[i];
-	}
-	for (int i = insert_index; i < dest_size; i++)
-	{
-		new_dest[src_size + i] = (dest)[i + 1];
-	}
-	new_dest[dest_size + src_size] = NULL;
-	free(dest);
-	return (new_dest);
 }
 
 char	*expand_params(char	*str, t_minishell *vars)
@@ -240,13 +182,6 @@ char	*handle_dollar(char *str, int *i, t_minishell *vars)
 	if (env_val == NULL)
 		return (free(val), ft_strdup(""));
 	return (free(val), env_val);
-}
-
-bool	is_valid_var_char(char c)
-{
-	if (ft_isalnum(c) || c == '_' || c == '?')
-		return (true);
-	return (false);
 }
 
 char	*remove_quotes(char *str)
