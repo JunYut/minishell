@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/07 21:33:41 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:19:50 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,11 @@ void	init_vars(t_minishell *vars, char **envp)
 
 void	setup_terminal(t_minishell *vars)
 {
+	(void)vars;
 	g_wait = 0;
-	tcgetattr(STDIN_FILENO, &vars->term);
-	vars->term.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &vars->term);
+	// tcgetattr(STDIN_FILENO, &vars->term);
+	// vars->term.c_lflag &= ~ECHOCTL;
+	// tcsetattr(STDIN_FILENO, TCSANOW, &vars->term);
 	signal(SIGINT, int_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
@@ -99,8 +100,8 @@ int	main(int ac, char **av, char **envp)
 		// env(vars.env, 2);
 		// curr_dir = fetch_val("PWD", vars.env);
 		// append_str(&curr_dir, "> ");
-		// vars.line = readline(curr_dir);
-		// if (isatty(fileno(stdin)))
+		// vars.line = readline("minishell> ");
+		if (isatty(fileno(stdin)))
 			vars.line = gb_add(readline("minishell> "));
 		if (vars.line == NULL)
 			break ;
@@ -127,7 +128,7 @@ int	main(int ac, char **av, char **envp)
 		// init_heredoc(vars.ast, &vars);
 		init_heredocs(vars.ast, &vars); //Init redirections/IO
 		signal(SIGQUIT, int_sigquit);
-		tcsetattr(STDIN_FILENO, TCSANOW, &vars.term);
+		// tcsetattr(STDIN_FILENO, TCSANOW, &vars.term);
 		vars.exit_status = exec_node(vars.ast, false, &vars);
 		// printf("Exit: %d\n", vars.exit_status);
 		clear_ast(&vars.token_list, &vars.ast);

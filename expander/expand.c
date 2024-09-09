@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/07 21:06:50 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/09 13:14:21 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	init_heredocs(t_node *node, t_minishell *vars)
 
 	if (node == NULL)
 		return ;
-	// printf("Node type: %d\n", node->type);
 	init_heredocs(node->left, vars);
 	init_heredocs(node->right, vars);
 	io = node->io_list;
@@ -71,9 +70,7 @@ void	init_heredocs(t_node *node, t_minishell *vars)
 			io->exp_value = expand_args(io->value, vars);
 			pid = fork();
 			if (!pid)
-			{
 				heredoc(io, p_fd);
-			}
 			waitpid(pid, &pid, 0);
 			io->heredoc = p_fd[0];
 			close(p_fd[1]);
@@ -266,10 +263,7 @@ char	*handle_dollar(char *str, int *i, t_minishell *vars)
 
 	(*i)++;
 	if (str[*i] == '\0' || str[*i] == '"' || str[*i] == ' ')
-	{
-		(*i)++;
 		return (ft_strdup("$"));
-	}
 	if (str[*i] == '?')
 	{
 		(*i)++;
@@ -334,13 +328,14 @@ char	*remove_quotes(char *str)
 
 char	*remove_outer_quotes(char *input)
 {
-	int	len;
-	int	result_len;
+	int		len;
+	int		result_len;
 	char	*result_str;
 
 	len = ft_strlen(input);
 	result_len = find_result_len(input, len);
 	result_str = build_result_string(input, len, result_len);
+	free(input);
 	return (result_str);
 }
 

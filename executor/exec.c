@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 14:35:46 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:47:13 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	print_err(char *cause, char *error)
+{
+	if (!cause)
+		return (0);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(cause, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(error, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	return (1);
+}
 
 void	ft_reset_stds(bool piped, t_minishell *vars)
 {
@@ -33,15 +45,10 @@ int	get_err_msg(t_err err)
 	}
 	else if (err.msg == ERR_MSG_PERM_DENIED)
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(err.cause, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-		return (err.exit_status);
+		print_err(err.cause, "Permission denied\n");
 	}
-	// return (err.exit_status);
 	else if (errno == 21)
 	{
-		// printf("%d\n", errno);
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(err.cause, 2);
 		ft_putstr_fd(": ", 2);
@@ -51,7 +58,6 @@ int	get_err_msg(t_err err)
 	}
 	else if (errno == 2)
 	{
-		// printf("%d\n", errno);
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(err.cause, 2);
 		ft_putstr_fd(": ", 2);
@@ -135,6 +141,8 @@ t_path	get_path(char *cmd, t_minishell *vars)
 
 	if (ft_strnstr(cmd, "/", ft_strlen(cmd)) || is_valid_path(vars->env->envp) == false) //Put a check for PATH here
 		return ((t_path){check_exec(cmd), cmd});
+	if (*cmd == '\0')
+		return ((t_path){(t_err){ERRNO_NOT_FOUND, ERR_MSG_CMD_NOT_FOUND, "''"}, NULL});
 	full_cmd = parse_path(vars->env->envp, cmd);
 	if (full_cmd != NULL)
 		return ((t_path){(t_err){ERRNO_SUCCESS, -1, NULL}, full_cmd});
@@ -260,7 +268,6 @@ int	check_redir(t_node *node)
 	temp_io = node->io_list;
 	while (temp_io)
 	{
-		// printf("String: %s\n", temp_io->exp_value[0]);
 		if (temp_io->type == IO_OUT && redir_out(temp_io, &status) != ERRNO_SUCCESS)
 			return (status);
 		else if (temp_io->type == IO_IN && redir_in(temp_io, &status) != ERRNO_SUCCESS)
@@ -289,13 +296,12 @@ int	redir_out(t_io_node *io_list, int *status)
 	fd = open(io_list->exp_value[0], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		// printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(io_list->exp_value[0], 2);
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 2);
-		*status = errno;
+		*status = ERRNO_GENERAL;
 		return (*status);
 	}
 	dup2(fd, STDOUT_FILENO);
@@ -316,13 +322,12 @@ int	redir_in(t_io_node *io_list, int *status)
 	fd = open(io_list->exp_value[0], O_RDONLY);
 	if (fd == -1)
 	{
-		// printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(io_list->exp_value[0], 2);
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 2);
-		*status = 1;
+		*status = ERRNO_GENERAL;
 		return (*status);
 	}
 	dup2(fd, STDIN_FILENO);
@@ -334,32 +339,26 @@ int	redir_in(t_io_node *io_list, int *status)
 int	redir_append(t_io_node *io_list, int *status)
 {
 	int	fd;
-	// t_err temp;
-	// (void)temp;
 	if (io_list->exp_value == NULL || io_list->exp_value[1] != NULL)
 	{
 		*status = get_err_msg((t_err){ERRNO_GENERAL, ERR_MSG_AMBIGUOUS, io_list->value});
 		return (*status);
 	}
-
 	fd = open(io_list->exp_value[0], O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		*status = 1;
-		// printf("minishell: %s: %s\n", io_list->exp_value[0], strerror(errno)); //Replace with a err handler
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(io_list->exp_value[0], 2);
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 2);
+		*status = ERRNO_GENERAL;
 		return (*status);
 	}
-	// printf("It's not NULL :(\n");
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 	*status = ERRNO_SUCCESS;
 	return (*status);
-	// return (printf("minishell: %s is a directory.\n", io_list->exp_value[0]));
 }
 
 // returns -1 on abnormal termination
