@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:29:31 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/09 12:32:03 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:00:53 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int		redir_append(t_io_node *io_list, int *status);
 void	ft_reset_stds(bool piped, t_minishell *vars);
 int		wait_status(pid_t pid, t_env *e);
 t_path	get_path(char *cmd, t_minishell *vars);
+bool	is_valid_path(char **envp);
 int		get_err_msg(t_err err);
 t_err	check_exec(char *file);
 int		check_redir(t_node *node);
