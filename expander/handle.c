@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:21:12 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/09 11:25:38 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/09 12:36:25 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,10 @@ char	*handle_dollar(char *str, int *i, t_minishell *vars)
 	char	*env_val;
 
 	(*i)++;
-	if ((str[*i] == '\0') || (str[*i] == '"') || (str[*i] == ' ')
-		|| (str[*i] == '?' || is_valid_var_char(str[*i]) == false))
-		(*i)++;
 	if (str[*i] == '\0' || str[*i] == '"' || str[*i] == ' ')
 		return (ft_strdup("$"));
+	if (str[*i] == '?' || is_valid_var_char(str[*i]) == false)
+		(*i)++;
 	if (str[*i] == '?')
 		return (fetch_val("?", vars->env));
 	if (is_valid_var_char(str[*i] == false))
