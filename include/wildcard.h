@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:03 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/29 11:15:01 by we               ###   ########.fr       */
+/*   Updated: 2024/09/09 12:24:48 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 # include "define.h"
 # include "gbc.h"
 
-# ifndef DPRINTF
-	# define DPRINTF(...) printf(__VA_ARGS__)
-# endif
+// # ifndef DPRINTF
+// 	# define DPRINTF(...) printf(__VA_ARGS__)
+// # endif
 
 char		**wildcard(char *regex, t_env *env);
 t_list		*ent_match(t_wildcard *wc, char *regex);

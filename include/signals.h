@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:57:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/08/30 10:25:00 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/09 12:23:46 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# pragma once
-
+#ifndef SIGNALS_H
+# define SIGNALS_H
 /*
 Allowed functions:  signal, sigaction, sigemptyset, sigaddset
 
@@ -36,3 +36,5 @@ Interactive actions in minishell: prompt, <<heredoc, unclosed quotes
 
 void	int_sigint(int sig);
 void	int_sigquit(int sig);
+
+#endif

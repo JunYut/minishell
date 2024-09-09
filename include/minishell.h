@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/06 12:06:55 by we               ###   ########.fr       */
+/*   Created: 2024/09/09 12:29:31 by tjun-yu           #+#    #+#             */
+/*   Updated: 2024/09/09 12:32:03 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -38,7 +37,8 @@ extern volatile __sig_atomic_t	g_wait;
 void	init_vars(t_minishell *vars, char **envp);
 
 int		exec_pipeline(t_node *node, t_minishell *vars);
-void	exec_pipe_child(t_node *node, int *fd, int direction, t_minishell *vars);
+void	exec_pipe_child(t_node *node, int *fd, int direction,
+			t_minishell *vars);
 int		exec_node(t_node *node, bool piped, t_minishell *vars);
 int		exec_child(t_node *node, t_minishell *vars);
 int		exec_subshell(t_node *subshell_node, t_minishell *vars);
@@ -58,8 +58,8 @@ int		builtin_export(char **ent, t_env *e);
 int		export(char *key, char *val, t_env *e);
 char	*fetch_val(char *key, t_env *e);
 void	set_val(t_env *e, char *key, char *val);
-char 	**split_ent(char *str);
-void 	sort_export(t_var *exp);
+char	**split_ent(char *str);
+void	sort_export(t_var *exp);
 
 int		builtin_cd(char **path, t_env *e);
 char	*set_target(char **path, t_env *e);
@@ -70,7 +70,7 @@ void	rm_ent(char *key, t_var *lst, int last_id);
 
 int		builtin_echo(char **av);
 
-int		builtin_pwd(t_env *e);\
+int		builtin_pwd(t_env *e);
 
 void	exit_shell(char **status, t_env *e);
 

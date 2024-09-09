@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/05 16:38:27 by we               ###   ########.fr       */
+/*   Created: 2024/09/09 12:25:49 by tjun-yu           #+#    #+#             */
+/*   Updated: 2024/09/09 12:27:50 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef DEFINE_H
 # define DEFINE_H
@@ -97,12 +96,12 @@ typedef enum e_errno
 	ERRNO_EXEC_255 = 255
 }	t_errno;
 
-typedef	enum s_wc_type
+typedef enum s_wc_type
 {
 	WC_WILDCARD,
 	WC_PATTERN,
 	WC_END
-} t_wc_type;
+}	t_wc_type;
 
 typedef struct s_dirent
 {
@@ -117,7 +116,7 @@ typedef struct s_wildcard
 	char		**pattern;
 }	t_wildcard;
 
-typedef	struct s_io_node
+typedef struct s_io_node
 {
 	t_io_type			type;
 	int					heredoc;
@@ -126,7 +125,6 @@ typedef	struct s_io_node
 	struct s_io_node	*prev;
 	struct s_io_node	*next;
 }	t_io_node;
-
 
 typedef struct s_node
 {
@@ -149,13 +147,13 @@ typedef struct s_err
 	t_errno		exit_status;
 	t_err_msg	msg;
 	char		*cause;
-} t_err;
+}	t_err;
 
 typedef struct s_path
 {
 	t_err	err;
 	char	*cmd_path;
-} t_path;
+}	t_path;
 
 typedef struct s_var
 {
@@ -179,7 +177,6 @@ typedef struct s_file
 	t_token_type	type;
 	char			*file;
 }	t_file;
-
 
 typedef struct s_gbc
 {

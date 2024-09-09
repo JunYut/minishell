@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:57:24 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/09 11:10:00 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/09 12:38:32 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_list		*gbc_lstnew(void *content);
 char		*gbc_itoa(int n);
 char		*gbc_strdup(const char *s1);
 
-
 char		**insert_string_array(char **dest, char **src, int insert_index);
 char		**insert(char **dest, char **src, int insert_index);
 int			count_strings(char **array);
@@ -45,4 +44,4 @@ void		print_tree(t_node *node, int depth, char *branch);
 void		print_arr(char **arr);
 char		*get_node_type(int type);
 
-# endif
+#endif
