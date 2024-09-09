@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 11:38:25 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/06 15:20:35 by we               ###   ########.fr       */
+/*   Updated: 2024/09/09 11:34:41 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	heredoc(t_io_node *io, int *p_fd)
 		exit(0);
 	write(p_fd[1], doc, ft_strlen(doc));
 	free(doc);
-	exit(0);
 }
 
 char	*read_doc(char *delimiter)
