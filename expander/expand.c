@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/09 11:40:03 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/09 12:00:41 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	init_heredocs(t_node *node, t_minishell *vars)
 	io = node->io_list;
 	while (io != NULL)
 	{
+			DPRINTF("something\n");
 		if (io->type == IO_HEREDOC)
 		{
 			pipe(p_fd);

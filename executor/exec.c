@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/06 14:38:10 by we               ###   ########.fr       */
+/*   Updated: 2024/09/09 11:50:06 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,7 @@ int	exec_node(t_node *node, bool piped, t_minishell *vars)
 		if (status == ERRNO_SUCCESS)
 			return (status);
 	}
-	else
-		return (exec_simple_cmd(node, piped, vars));
-	return (ERRNO_GENERAL);
+	return (exec_simple_cmd(node, piped, vars));
 }
 
 int	exec_subshell(t_node *subshell_node, t_minishell *vars)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 17:29:33 by we               ###   ########.fr       */
+/*   Updated: 2024/09/09 12:07:08 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,15 @@ int	process_line(t_minishell *vars)
 {
 	tokenize(vars->line, vars);
 	if (vars->token_list == NULL)
-		return (0);
+		return (1);
 	vars->ast = parse(vars);
 	if (vars->parse_err.type != E_NONE)
+	{
 		handle_parse_error(vars);
+		init_heredocs(vars->ast, vars);
+		return (1);
+	}
+	init_heredocs(vars->ast, vars);
 	return (0);
 }
 
