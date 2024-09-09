@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:21:12 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/09 12:36:25 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:12:30 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ char	*handle_dollar(char *str, int *i, t_minishell *vars)
 		return (ft_strdup("$"));
 	if (str[*i] == '?' || is_valid_var_char(str[*i]) == false)
 		(*i)++;
-	if (str[*i] == '?')
-		return (fetch_val("?", vars->env));
+	if (str[*i - 1] == '?')
+		return (ft_strdup(ft_itoa(vars->exit_status)));
 	if (is_valid_var_char(str[*i] == false))
 		return (ft_strdup(""));
 	start = *i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/09 12:07:08 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:09:18 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	process_line(t_minishell *vars)
 
 int	init_prompt(t_minishell *vars)
 {
-	set_val(vars->env, "?", gbc_itoa(vars->exit_status));
 	setup_terminal(vars);
 	if (isatty(fileno(stdin)))
 		vars->line = gbc_add(readline("minishell> "));

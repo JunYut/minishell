@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/06 15:19:17 by we               ###   ########.fr       */
+/*   Updated: 2024/09/09 17:05:46 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_env	*dup_env(char *envp[])
 		add_ent(e, split[0], split[1]);
 	}
 	builtin_unset((char *[]){"OLDPWD", NULL}, e);
-	add_ent(e, "?", "0");
 	set_val(e, "SHLVL", "1");
 	e->envp = env_to_arr(e->var);
 	return (e);
