@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/09 12:24:37 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/09 14:02:40 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**expand_args(char *args, t_minishell *vars)
 	i = -1;
 	while (expanded[++i])
 	{
-		expanded[i] = gbc_add(remove_quotes(expanded[i]));
+		expanded[i] = gbc_add(remove_outer_quotes(expanded[i]));
 	}
 	return (expanded);
 }

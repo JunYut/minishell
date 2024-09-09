@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:31:48 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/09 11:39:15 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/09 14:14:56 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include "define.h"
 # include "gbc.h"
 
-// void	expand_tree(t_node *node, int depth, char *branch, t_minishell *vars);
 void	init_heredocs(t_node *node, t_minishell *vars);
 void	heredoc_child(t_io_node *io, int *p_fd, pid_t pid);
 void	expand_node(t_node *node, t_minishell *vars);
@@ -61,6 +60,8 @@ void	fill_word(char *str, char **args, int *i, int j);
 void	heredoc(t_io_node *io, int *p_fd);
 char	*read_doc(char *delimiter);
 
-char	*remove_quotes(char *str);
+char	*remove_outer_quotes(char *str);
+int		find_result_len(char *input, int len);
+char	*build_result_string(char *input, int len, int result_len);
 
 #endif

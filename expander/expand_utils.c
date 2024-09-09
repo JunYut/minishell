@@ -6,39 +6,75 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 13:13:22 by we                #+#    #+#             */
-/*   Updated: 2024/09/09 11:19:12 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/09 14:17:38 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 
-char	*remove_quotes(char *str)
+char	*remove_outer_quotes(char *str)
 {
+	char	*result_str;
+	int		result_len;
+	int		len;
+
+	len = ft_strlen(str);
+	result_len = find_result_len(str, len);
+	result_str = build_result_string(str, len, result_len);
+	free(str);
+	return (result_str);
+}
+
+char	*build_result_string(char *input, int len, int result_len)
+{
+	char	*result;
+	char	quote;
 	int		i;
 	int		j;
-	char	*new_str;
-	char	quote;
 
-	if (!str || !*str)
-		return (ft_strdup(""));
-	i = -1;
+	result = malloc(result_len + 1);
+	i = 0;
 	j = 0;
-	quote = 0;
-	while (str[++i])
+	while (i < len)
 	{
-		if (quote == 0 && (str[i] == '"' || str[i] == '\''))
-			quote = str[i];
-		if (str[i] == quote)
-			j++;
+		if (input[i] == '\'' || input[i] == '"')
+		{
+			quote = input[i++];
+			while (i < len && input[i] != quote)
+				result[j++] = input[i++];
+		}
+		else
+			result[j++] = input[i];
+		i++;
 	}
-	new_str = ft_calloc(ft_strlen(str) - j + 1, sizeof(char));
-	i = -1;
-	j = 0;
-	while (str[++i])
-		if (str[i] != quote)
-			new_str[j++] = str[i];
-	free(str);
-	return (new_str);
+	result[j] = '\0';
+	return (result);
+}
+
+int	find_result_len(char *input, int len)
+{
+	char	quote;
+	int		result_len;
+	int		i;
+
+	result_len = 0;
+	i = 0;
+	while (i < len)
+	{
+		if (input[i] == '\'' || input[i] == '"')
+		{
+			quote = input[i++];
+			while (i < len && input[i] != quote)
+			{
+				result_len++;
+				i++;
+			}
+		}
+		else
+			result_len++;
+		i++;
+	}
+	return (result_len);
 }
 
 bool	is_valid_regex(char *str)
