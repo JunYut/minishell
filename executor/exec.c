@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/09 11:50:06 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/09 12:54:30 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,16 @@ int	exec_node(t_node *node, bool piped, t_minishell *vars)
 	expand_node(node, vars);
 	if (node->type == N_PIPE)
 		return (exec_pipeline(node, vars));
-	else if (node->type == N_AND)
+	if (node->type == N_AND || node->type == N_OR)
 	{
 		status = exec_node(node->left, false, vars);
-		if (status == ERRNO_SUCCESS)
+		if (node->type == N_AND && status == ERRNO_SUCCESS)
+			return (exec_node(node->right, false, vars));
+		if (node->type == N_OR && status != ERRNO_SUCCESS)
 			return (exec_node(node->right, false, vars));
 		return (status);
 	}
-	else if (node->type == N_OR)
-	{
-		status = exec_node(node->left, false, vars);
-		if (status == ERRNO_SUCCESS)
-			return (status);
-		return (exec_node(node->right, false, vars));
-	}
-	else if (node->type == N_SUBSHELL)
+	if (node->type == N_SUBSHELL)
 	{
 		status = exec_subshell(node, vars);
 		if (status == ERRNO_SUCCESS)
