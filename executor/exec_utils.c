@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:55:04 by we                #+#    #+#             */
-/*   Updated: 2024/09/06 11:59:18 by we               ###   ########.fr       */
+/*   Updated: 2024/09/09 13:10:28 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ t_path	get_path(char *cmd, t_minishell *vars)
 
 	if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
 		return ((t_path){check_exec(cmd), cmd});
+	if (*cmd == '\0')
+		return ((t_path){(t_err){ERRNO_NOT_FOUND, ERR_MSG_CMD_NOT_FOUND, "''"},
+			NULL});
 	full_cmd = parse_path(vars->env->envp, cmd);
 	if (full_cmd != NULL)
 		return ((t_path){(t_err){ERRNO_SUCCESS, -1, NULL}, full_cmd});
