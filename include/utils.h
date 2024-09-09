@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:57:24 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/08 13:20:45 by we               ###   ########.fr       */
+/*   Updated: 2024/09/09 11:10:00 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char		*gbc_strdup(const char *s1);
 
 
 char		**insert_string_array(char **dest, char **src, int insert_index);
+char		**insert(char **dest, char **src, int insert_index);
 int			count_strings(char **array);
 int			find_pos(char *str, char delim);
 char		*ft_strndup(char *str, int pos);
