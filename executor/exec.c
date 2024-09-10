@@ -6,14 +6,17 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 12:52:12 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 13:35:19 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_builtin(char **args, int status, t_env *env)
+int	exec_builtin(char **args, int status, t_minishell *vars)
 {
+	t_env	*env;
+
+	env = vars->env;
 	if (!ft_strcmp(args[0], "cd"))
 		return (builtin_cd(args + 1, env));
 	if (!ft_strcmp(args[0], "echo"))
@@ -26,7 +29,7 @@ int	exec_builtin(char **args, int status, t_env *env)
 		return (builtin_pwd(env));
 	if (!ft_strcmp(args[0], "unset"))
 		return (builtin_unset(args + 1, env));
-	exit_shell(args + 1, status, env);
+	exit_shell(args + 1, status, vars);
 	return (ERRNO_GENERAL);
 }
 
@@ -69,7 +72,7 @@ int	exec_simple_cmd(t_node *node, bool piped, t_minishell *vars)
 		status = check_redir(node);
 		if (status != ERRNO_SUCCESS)
 			return (ft_reset_stds(piped, vars), ERRNO_GENERAL);
-		status = exec_builtin(node->exp_args, vars->exit_status, vars->env);
+		status = exec_builtin(node->exp_args, vars->exit_status, vars);
 		return (ft_reset_stds(piped, vars), status);
 	}
 	return (exec_child(node, vars));

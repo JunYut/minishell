@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:29:31 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/10 12:51:06 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 13:34:31 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		exec_node(t_node *node, bool piped, t_minishell *vars);
 int		exec_child(t_node *node, t_minishell *vars);
 int		exec_subshell(t_node *subshell_node, t_minishell *vars);
 int		exec_simple_cmd(t_node *node, bool piped, t_minishell *vars);
-int		exec_builtin(char **args, int status, t_env *env);
+int		exec_builtin(char **args, int status, t_minishell *vars);
 int		redir_out(t_io_node *io_list, int *status);
 int		redir_in(t_io_node *io_list, int *status);
 int		redir_append(t_io_node *io_list, int *status);
@@ -73,7 +73,7 @@ int		builtin_echo(char **av);
 
 int		builtin_pwd(t_env *e);
 
-void	exit_shell(char **argv, int status, t_env *e);
+void	exit_shell(char **argv, int status, t_minishell *vars);
 
 int		valid_key(char *key, t_env *e);
 int		is_numeric(char *str);

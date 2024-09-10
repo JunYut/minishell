@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 13:20:04 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 13:47:25 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	setup_terminal(t_minishell *vars)
 void	init_vars(t_minishell *vars, char **envp)
 {
 	ft_bzero(vars, sizeof(t_minishell));
-	vars->envp = envp;
 	vars->env = dup_env(envp);
 	vars->stdin = dup(STDIN_FILENO);
 	vars->stdout = dup(STDOUT_FILENO);
