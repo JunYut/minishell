@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:58:21 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/09 16:59:37 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/10 10:59:35 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ t_path	get_path(char *cmd, t_minishell *vars)
 {
 	char	*full_cmd;
 
-	if (ft_strnstr(cmd, "/", ft_strlen(cmd)) || is_valid_path(vars->env->envp) == false)
+	if (ft_strnstr(cmd, "/", ft_strlen(cmd))
+		|| is_valid_path(vars->env->envp) == false)
 		return ((t_path){check_exec(cmd), cmd});
 	if (*cmd == '\0')
 		return ((t_path){(t_err){ERRNO_NOT_FOUND, ERR_MSG_CMD_NOT_FOUND, "''"},
