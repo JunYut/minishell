@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 13:35:19 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:09:23 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ int	exec_child(t_node *node, t_minishell *vars)
 	{
 		status = check_redir(node);
 		if (status != ERRNO_SUCCESS)
-			(exit(ERRNO_GENERAL));
+			(clear(vars), exit(ERRNO_GENERAL));
 		path_status = get_path(node->exp_args[0], vars);
 		if (path_status.err.exit_status != ERRNO_SUCCESS)
 		{
 			status = get_err_msg(path_status.err);
-			exit(status);
+			clear(vars), exit(status);
 		}
 		if (execve(path_status.cmd_path, node->exp_args, vars->env->envp) == -1)
-			exit(ERRNO_GENERAL);
+			clear(vars), exit(ERRNO_GENERAL);
 	}
 	status = wait_status(pid, vars->env);
 	return (status);
@@ -108,10 +108,15 @@ int	exec_node(t_node *node, bool piped, t_minishell *vars)
 int	exec_subshell(t_node *subshell_node, t_minishell *vars)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (!pid)
-		exit(exec_node(subshell_node->left, false, vars));
+	{
+		status = exec_node(subshell_node->left, false, vars);
+		clear(vars);
+		exit(status);
+	}
 	else if (pid == -1)
 		return (ERRNO_GENERAL);
 	else

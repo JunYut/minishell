@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:52:25 by we                #+#    #+#             */
-/*   Updated: 2024/09/06 15:53:25 by we               ###   ########.fr       */
+/*   Updated: 2024/09/10 15:05:35 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,12 @@ void	append_str(char **str1, char *str2)
 
 	i = -1;
 	j = -1;
-	new = gbc_malloc(ft_strlen(*str1) + ft_strlen(str2) + 1);
+	new = malloc(ft_strlen(*str1) + ft_strlen(str2) + 1);
 	while ((*str1)[++i])
 		new[i] = (*str1)[i];
 	while (str2[++j])
 		new[i + j] = str2[j];
 	new[i + j] = '\0';
+	free(*str1);
 	*str1 = new;
 }

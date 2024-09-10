@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/09 14:02:40 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 14:57:43 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	init_heredocs(t_node *node, t_minishell *vars)
 			pipe(p_fd);
 			io->exp_value = expand_args(io->value, vars);
 			pid = fork();
-			heredoc_child(io, p_fd, pid);
+			heredoc_child(io, p_fd, pid, vars);
 			wait_status(pid, vars->env);
 			io->heredoc = p_fd[0];
 			close(p_fd[1]);
@@ -99,12 +99,13 @@ void	init_heredocs(t_node *node, t_minishell *vars)
 	}
 }
 
-void	heredoc_child(t_io_node *io, int *p_fd, pid_t pid)
+void	heredoc_child(t_io_node *io, int *p_fd, pid_t pid, t_minishell *vars)
 {
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
 		heredoc(io, p_fd);
+		clear(vars);
 		exit(0);
 	}
 }

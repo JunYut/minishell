@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 10:09:56 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 18:03:23 by we               ###   ########.fr       */
+/*   Updated: 2024/09/10 15:08:37 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,6 @@ void	exec_pipe_child(t_node *node, int *fd, int direction, t_minishell *vars)
 		close(fd[0]);
 	}
 	status = exec_node(node, true, vars);
-	gbc_clear();
+	clear(vars);
 	exit(status);
 }

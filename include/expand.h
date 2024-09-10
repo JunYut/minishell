@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:31:48 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/09 14:14:56 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 14:57:53 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "gbc.h"
 
 void	init_heredocs(t_node *node, t_minishell *vars);
-void	heredoc_child(t_io_node *io, int *p_fd, pid_t pid);
+void	heredoc_child(t_io_node *io, int *p_fd, pid_t pid, t_minishell *vars);
 void	expand_node(t_node *node, t_minishell *vars);
 char	**expand_args(char *args, t_minishell *vars);
 char	*expand_params(char	*str, t_minishell *vars);

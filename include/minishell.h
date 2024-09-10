@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:29:31 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/10 13:34:31 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 14:52:16 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int		builtin_echo(char **av);
 int		builtin_pwd(t_env *e);
 
 void	exit_shell(char **argv, int status, t_minishell *vars);
+int		clear(t_minishell *vars);
 
 int		valid_key(char *key, t_env *e);
 int		is_numeric(char *str);
