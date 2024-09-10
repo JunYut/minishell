@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 13:16:38 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 13:20:04 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ int	main(int ac, char **av, char **envp)
 		if (vars.line == NULL)
 			break ;
 		process_line(&vars);
-		if (vars.token_list == NULL)
-			continue ;
-		if (vars.parse_err.type != E_NONE)
+		if (vars.token_list == NULL || vars.parse_err.type != E_NONE)
 			continue ;
 		signal(SIGQUIT, int_sigquit);
 		tcsetattr(STDIN_FILENO, TCSANOW, &vars.term);
