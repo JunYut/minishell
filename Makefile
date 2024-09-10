@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: we <we@student.42.fr>                      +#+  +:+       +#+         #
+#    By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/09/05 11:59:50 by we               ###   ########.fr        #
+#    Updated: 2024/09/10 11:15:19 by tjun-yu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,9 +86,11 @@ clean :
 
 fclean : clean
 	rm -rf $(EXEC)
-	$(MAKE) -C $(RL_DIR) clean
 	$(MAKE) -C $(LIBFT_DIR) fclean
+
+rlclean :
+	$(MAKE) -C $(RL_DIR) clean
 
 re : fclean all
 
-.PHONY : all run memcheck clean fclean re
+.PHONY : all run memcheck clean fclean rlclean re
