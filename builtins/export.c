@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:15:23 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 15:45:01 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 21:44:13 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	set_val(t_env *e, char *key, char *val)
 		if (ft_strcmp(curr->key, key) == 0)
 		{
 			curr->value = val;
-			return ;
+			break ;
 		}
 		curr = curr->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:29:31 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/10 15:40:27 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 21:41:34 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int		exec_builtin(char **args, int status, t_minishell *vars);
 int		redir_out(t_io_node *io_list, int *status);
 int		redir_in(t_io_node *io_list, int *status);
 int		redir_append(t_io_node *io_list, int *status);
+int		set_shlvl(t_minishell *vars);
 void	ft_reset_stds(bool piped, t_minishell *vars);
 int		wait_status(pid_t pid, t_env *e);
 t_path	get_path(char *cmd, t_minishell *vars);

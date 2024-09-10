@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:55:04 by we                #+#    #+#             */
-/*   Updated: 2024/09/09 16:58:55 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/10 21:43:08 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	set_shlvl(t_minishell *vars)
+{
+	int	shlvl;
+
+	shlvl = ft_atoi(fetch_val("SHLVL", vars->env));
+	set_val(vars->env, "SHLVL", ft_itoa(shlvl + 1));
+	return (0);
+}
 
 int	get_err_msg(t_err err)
 {
