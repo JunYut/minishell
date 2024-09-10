@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 13:47:25 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:56:34 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,12 @@
 
 volatile sig_atomic_t	g_wait;
 
-int		process_line(t_minishell *vars);
-int		init_prompt(t_minishell *vars);
-void	setup_terminal(t_minishell *vars);
-void	init_vars(t_minishell *vars, char **envp);
-
 int	main(int ac, char **av, char **envp)
 {
 	t_minishell	vars;
-	char		*curr_dir;
 
-	((void)ac, (void)av, (void)curr_dir);
-	init_vars(&vars, envp);
+	(void)ac;
+	init_vars(&vars, av[0], envp);
 	while (1)
 	{
 		init_prompt(&vars);
@@ -33,14 +27,16 @@ int	main(int ac, char **av, char **envp)
 			break ;
 		process_line(&vars);
 		if (vars.token_list == NULL || vars.parse_err.type != E_NONE)
+		{
+			clear_ast(&vars.token_list, &vars.ast);
 			continue ;
+		}
 		signal(SIGQUIT, int_sigquit);
 		tcsetattr(STDIN_FILENO, TCSANOW, &vars.term);
 		vars.exit_status = exec_node(vars.ast, false, &vars);
 		clear_ast(&vars.token_list, &vars.ast);
 	}
-	clear_history();
-	gbc_clear();
+	clear(&vars);
 	return (vars.exit_status);
 }
 
@@ -83,10 +79,11 @@ void	setup_terminal(t_minishell *vars)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	init_vars(t_minishell *vars, char **envp)
+void	init_vars(t_minishell *vars, char *name, char **envp)
 {
 	ft_bzero(vars, sizeof(t_minishell));
+	vars->name = name;
 	vars->env = dup_env(envp);
-	vars->stdin = dup(STDIN_FILENO);
-	vars->stdout = dup(STDOUT_FILENO);
+	vars->ms_stdin = dup(STDIN_FILENO);
+	vars->ms_stdout = dup(STDOUT_FILENO);
 }

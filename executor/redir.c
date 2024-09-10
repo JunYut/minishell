@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:51:35 by we                #+#    #+#             */
-/*   Updated: 2024/09/06 14:30:19 by we               ###   ########.fr       */
+/*   Updated: 2024/09/10 15:37:08 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,6 @@ void	ft_reset_stds(bool piped, t_minishell *vars)
 {
 	if (piped)
 		return ;
-	dup2(vars->stdin, 0);
-	dup2(vars->stdout, 1);
+	dup2(vars->ms_stdin, 0);
+	dup2(vars->ms_stdout, 1);
 }

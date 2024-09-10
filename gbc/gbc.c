@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gbc.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 13:54:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 11:56:13 by we               ###   ########.fr       */
+/*   Updated: 2024/09/10 15:17:38 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	gbc_clear(void)
 	while (current)
 	{
 		free(current->addr);
+		current->addr = NULL;
 		next = current->next;
 		free(current);
 		current = next;

@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 14:06:53 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 13:35:58 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:17:10 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ void	exit_shell(char **argv, int status, t_minishell *vars)
 	}
 	if (!argv || !argv[0] || argv[0][0] == '\0')
 		exit_status = status;
-	clear_history();
-	clear_ast(&vars->token_list, &vars->ast);
-	gbc_clear();
+	clear(vars);
 	exit(exit_status);
 }
 

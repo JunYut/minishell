@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:29:31 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/10 14:52:16 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:40:27 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@
 
 extern volatile __sig_atomic_t	g_wait;
 
-void	init_vars(t_minishell *vars, char **envp);
+void	init_vars(t_minishell *vars, char *name, char **envp);
+int		process_line(t_minishell *vars);
+int		init_prompt(t_minishell *vars);
+void	setup_terminal(t_minishell *vars);
 
 int		exec_pipeline(t_node *node, t_minishell *vars);
 void	exec_pipe_child(t_node *node, int *fd, int direction,

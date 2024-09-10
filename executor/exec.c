@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 15:09:23 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:48:24 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ int	exec_child(t_node *node, t_minishell *vars)
 		{
 			status = get_err_msg(path_status.err);
 			clear(vars), exit(status);
+		}
+		if (ft_strcmp(path_status.cmd_path, vars->name) == 0)
+		{
+			set_val(vars->env, "SHLVL", ft_itoa(ft_atoi(fetch_val("SHLVL", vars->env)) + 1));
+			printf("SHLVL: [%s]\n", fetch_val("SHLVL", vars->env));
 		}
 		if (execve(path_status.cmd_path, node->exp_args, vars->env->envp) == -1)
 			clear(vars), exit(ERRNO_GENERAL);
