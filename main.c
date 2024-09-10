@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 12:28:48 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 13:16:38 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	init_prompt(t_minishell *vars)
 	if (isatty(fileno(stdin)))
 		vars->line = gbc_add(readline("minishell> "));
 	if (vars->line == NULL)
-		printf("exit\n");
+		ft_putstr_fd("exit\n", 2);
 	if (vars->line == NULL)
 		return (0);
 	add_history(vars->line);

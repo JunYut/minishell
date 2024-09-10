@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 14:06:53 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 12:48:27 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/10 13:14:50 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	exit_shell(char **argv, int status, t_env *e)
 {
 	int	exit_status;
 
-	printf("exit\n");
+	ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (argv && argv[0])
 	{
 		if (!is_numeric(argv[0]))
