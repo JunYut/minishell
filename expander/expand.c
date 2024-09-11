@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/11 08:58:03 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/11 14:03:02 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	heredoc_child(t_io_node *io, int *p_fd, pid_t pid, t_minishell *vars)
 	if (pid == 0)
 	{
 		signal(SIGINT, heredoc_sigint);
-		heredoc(io, p_fd);
+		heredoc(io, p_fd, vars);
 		clear(vars);
 		exit(0);
 	}

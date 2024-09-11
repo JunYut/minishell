@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:31:48 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 14:57:53 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/11 14:09:24 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ char	**allocate_args(char *str, char **args);
 char	**fill_args(char *str, char **args);
 void	fill_word(char *str, char **args, int *i, int j);
 
-void	heredoc(t_io_node *io, int *p_fd);
-char	*read_doc(char *delimiter);
+void	heredoc(t_io_node *io, int *p_fd, t_minishell *vars);
+char	*read_doc(char *delimiter, t_minishell *vars);
+char	*expand_heredoc(char *line, t_minishell *vars);
+char	*handle_non_var(char *line, int *i);
 
 char	*remove_outer_quotes(char *str);
 int		find_result_len(char *input, int len);

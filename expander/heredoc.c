@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 11:38:25 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/11 10:42:55 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/11 14:10:14 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@
 
 extern char	**environ;
 
-void	heredoc(t_io_node *io, int *p_fd)
+void	heredoc(t_io_node *io, int *p_fd, t_minishell *vars)
 {
 	char	*doc;
 
-	doc = read_doc(io->exp_value[0]);
+	doc = read_doc(io->exp_value[0], vars);
 	if (!doc)
 		exit(0);
 	write(p_fd[1], doc, ft_strlen(doc));
 	free(doc);
 }
 
-char	*read_doc(char *delimiter)
+char	*read_doc(char *delimiter, t_minishell *vars)
 {
 	char	*doc;
 	char	*line;
@@ -45,10 +45,39 @@ char	*read_doc(char *delimiter)
 			free(line);
 			break ;
 		}
+		line = expand_heredoc(line, vars);
 		append_str(&doc, line);
 		append_str(&doc, "\n");
 		init_vars(NULL, NULL)->doc = doc;
 		free(line);
 	}
 	return (doc);
+}
+
+char	*expand_heredoc(char *line, t_minishell *vars)
+{
+	char	*expanded;
+	int		i;
+
+	expanded = ft_strdup("");
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] == '$')
+			expanded = gnl_strjoin(expanded, handle_dollar(line, &i, vars));
+		else
+			expanded = gnl_strjoin(expanded, handle_non_var(line, &i));
+	}
+	free(line);
+	return (expanded);
+}
+
+char	*handle_non_var(char *line, int *i)
+{
+	int		start;
+
+	start = *i;
+	while (line[*i] && line[*i] != '$')
+		(*i)++;
+	return (ft_substr(line, start, *i - start));
 }

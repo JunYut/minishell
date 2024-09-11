@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:21:12 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/09 17:12:30 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:07:43 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*handle_reg_str(char *str, int *i)
 	while (str[*i] != '\0' && str[*i] != '\''
 		&& str[*i] != '"' && str[*i] != '$')
 		(*i)++;
-	return (gbc_add(ft_substr(str, start, *i - start)));
+	return (ft_substr(str, start, *i - start));
 }
 
 char	*handle_squote(char *str, int *i)
