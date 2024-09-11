@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:39:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 12:55:00 by we               ###   ########.fr       */
+/*   Updated: 2024/09/11 12:23:33 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "parser.h"
 
-// multiple definition
 void	handle_quote_err(char quote, t_minishell *vars)
 {
 	ft_putstr_fd("minishell: unexpected EOF while looking for matching `", 2);
@@ -24,7 +23,6 @@ void	handle_quote_err(char quote, t_minishell *vars)
 	vars->exit_status = 2;
 }
 
-// multiple definition
 void	handle_open_quote(char **line, char **buffer, int *count, char quote)
 {
 	char	*read_line;
@@ -46,7 +44,6 @@ void	handle_open_quote(char **line, char **buffer, int *count, char quote)
 	*buffer = appended_str;
 }
 
-// multiple definition
 bool	is_quote_balance(char *str, char quote)
 {
 	int	count;

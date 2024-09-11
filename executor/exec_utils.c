@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:55:04 by we                #+#    #+#             */
-/*   Updated: 2024/09/10 21:43:08 by we               ###   ########.fr       */
+/*   Updated: 2024/09/11 12:15:25 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,15 @@ int	set_shlvl(t_minishell *vars)
 int	get_err_msg(t_err err)
 {
 	if (err.msg == ERR_MSG_CMD_NOT_FOUND)
-	{
-		ft_putstr_fd(err.cause, 2);
-		ft_putstr_fd(": command not found\n", 2);
-	}
+		print_err(err.cause, "command not found");
 	else if (err.msg == ERR_MSG_AMBIGUOUS)
-	{
 		ft_putstr_fd("minishell: *: ambiguous redirect\n", 2);
-	}
 	else if (err.msg == ERR_MSG_PERM_DENIED)
-	{
 		print_err(err.cause, "Permission denied");
-		return (err.exit_status);
-	}
-	else if (errno == 21)
-	{
-		print_err(err.cause, strerror(errno));
-		return (ERRNO_CANT_EXEC);
-	}
-	else if (errno == 2)
-	{
-		print_err(err.cause, strerror(errno));
-		return (ERRNO_NOT_FOUND);
-	}
+	else if (err.msg == ERR_MSG_IS_DIR)
+		print_err(err.cause, "Is a directory");
+	else if (err.msg == ERR_MSG_NO_SUCH_FILE)
+		print_err(err.cause, "No such file or directory");
 	return (err.exit_status);
 }
 
@@ -58,8 +44,10 @@ t_err	check_exec(char *file)
 	if (!*file)
 		return ((t_err){ERRNO_GENERAL, ERR_MSG_NO_SUCH_FILE, file});
 	fd = open(file, O_WRONLY);
-	if (errno == 21 || errno == 2)
-		return ((t_err){ERRNO_CANT_EXEC, ERR_MSG_NO_SUCH_FILE, file});
+	if (errno == 21)
+		return ((t_err){ERRNO_IS_DIR, ERR_MSG_IS_DIR, file});
+	else if (errno == 2)
+		return ((t_err){ERRNO_NOT_FOUND, ERR_MSG_NO_SUCH_FILE, file});
 	if (access(file, F_OK) == 0)
 	{
 		if (access(file, X_OK) == -1)

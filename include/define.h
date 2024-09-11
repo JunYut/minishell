@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:25:49 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/11 10:56:40 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/11 12:11:39 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef enum e_errno
 	ERRNO_SUCCESS,
 	ERRNO_GENERAL,
 	ERRNO_CANT_EXEC = 126,
+	ERRNO_IS_DIR = 126,
 	ERRNO_NOT_FOUND = 127,
 	ERRNO_EXEC_255 = 255
 }	t_errno;

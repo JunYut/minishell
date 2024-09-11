@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_tokenize.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 12:51:41 by we               ###   ########.fr       */
+/*   Updated: 2024/09/11 12:23:42 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,16 +121,3 @@ bool	init_word_token(char **line, char *buffer, int count, t_token **lst)
 	add_token_to_list(lst, token);
 	return (false);
 }
-
-/*
-NOTES:	When encountering multiple syntax errors, Bash will report the first
-		one
-*/
-//NOTES: We can tokenize first then validate or validate sequentially
-/*
-NOTES:	Multiple string literals without any seperators that are not in quotes
-		in-between are considered 1 token only e.g. "ls""-l" is treated as ls-l
-*/
-
-//TODO: move error handling for quotes to parser
-//TODO: handle open quotes or brackets

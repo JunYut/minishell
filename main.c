@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/11 09:30:57 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/11 11:56:08 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int ac, char **av, char **envp)
 		process_line(vars);
 		if (vars->token_list == NULL || vars->parse_err.type != E_NONE)
 		{
+			ft_bzero(&vars->parse_err, sizeof(t_parse_err));
 			clear_ast(&vars->token_list, &vars->ast);
 			continue ;
 		}
@@ -61,8 +62,7 @@ int	process_line(t_minishell *vars)
 int	init_prompt(t_minishell *vars)
 {
 	setup_terminal(vars);
-	if (isatty(fileno(stdin)))
-		vars->line = gbc_add(readline("minishell> "));
+	vars->line = gbc_add(readline("minishell> "));
 	if (vars->line == NULL)
 		ft_putstr_fd("exit\n", 2);
 	if (vars->line == NULL)
