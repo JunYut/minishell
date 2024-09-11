@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/11 11:56:08 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/11 21:43:42 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	process_line(t_minishell *vars)
 	tokenize(vars->line, vars);
 	if (vars->token_list == NULL)
 		return (1);
+	free(vars->line);
 	vars->ast = parse(vars);
 	if (vars->parse_err.type != E_NONE)
 	{
@@ -62,7 +63,7 @@ int	process_line(t_minishell *vars)
 int	init_prompt(t_minishell *vars)
 {
 	setup_terminal(vars);
-	vars->line = gbc_add(readline("minishell> "));
+	vars->line = readline("minishell> ");
 	if (vars->line == NULL)
 		ft_putstr_fd("exit\n", 2);
 	if (vars->line == NULL)

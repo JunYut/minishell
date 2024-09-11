@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/11 14:03:02 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/11 21:50:08 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ char	**expand_args(char *args, t_minishell *vars)
 	int		i;
 
 	i = -1;
-	buffer = gbc_add(expand_params(args, vars));
+	buffer = expand_params(args, vars);
 	expanded = split_args(buffer);
+	free(buffer);
 	if (!expanded)
 		return (NULL);
 	while (expanded[++i])
@@ -43,9 +44,7 @@ char	**expand_args(char *args, t_minishell *vars)
 	}
 	i = -1;
 	while (expanded[++i])
-	{
 		expanded[i] = gbc_add(remove_outer_quotes(expanded[i]));
-	}
 	return (expanded);
 }
 

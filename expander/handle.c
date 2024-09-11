@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:21:12 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/11 19:45:33 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/11 21:40:49 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*handle_dquote(char *str, int *i, t_minishell *vars)
 			ret_str = gnl_strjoin(ret_str, handle_dquote_str(str, i));
 	}
 	(*i)++;
-	return (gnl_strjoin(ret_str, "\""));
+	return (gbc_add(gnl_strjoin(ret_str, "\"")));
 }
 
 char	*handle_dollar(char *str, int *i, t_minishell *vars)

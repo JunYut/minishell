@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/11 12:23:42 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/11 21:11:58 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ bool	append_word_token(char **line, t_token **token_list, t_minishell *vars)
 {
 	int		count;
 	char	*buffer;
+	bool	error;
 
 	if (!vars)
 		return (0);
@@ -103,7 +104,8 @@ bool	append_word_token(char **line, t_token **token_list, t_minishell *vars)
 		else
 			count++;
 	}
-	return (init_word_token(line, buffer, count, token_list));
+	error = init_word_token(line, buffer, count, token_list);
+	return (error);
 }
 
 bool	init_word_token(char **line, char *buffer, int count, t_token **lst)
