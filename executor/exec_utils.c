@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:55:04 by we                #+#    #+#             */
-/*   Updated: 2024/09/11 12:15:25 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/11 13:23:37 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,16 @@ int	get_err_msg(t_err err)
 t_err	check_exec(char *file)
 {
 	int	fd;
+	int	open_errno;
 
-	(void)fd;
 	if (!*file)
 		return ((t_err){ERRNO_GENERAL, ERR_MSG_NO_SUCH_FILE, file});
 	fd = open(file, O_WRONLY);
-	if (errno == 21)
+	open_errno = errno;
+	close(fd);
+	if (open_errno == 21)
 		return ((t_err){ERRNO_IS_DIR, ERR_MSG_IS_DIR, file});
-	else if (errno == 2)
+	else if (open_errno == 2)
 		return ((t_err){ERRNO_NOT_FOUND, ERR_MSG_NO_SUCH_FILE, file});
 	if (access(file, F_OK) == 0)
 	{
