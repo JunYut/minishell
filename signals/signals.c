@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:56:46 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/11 09:04:04 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/11 10:45:44 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 void	heredoc_sigint(int sig)
 {
 	(void)sig;
+	free(init_vars(NULL, NULL)->doc);
 	clear(init_vars(NULL, NULL));
 	exit(130);
 }

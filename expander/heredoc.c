@@ -6,11 +6,12 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 11:38:25 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/09 11:58:49 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/11 10:42:55 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
+#include "minishell.h"
 #include "utils.h"
 
 extern char	**environ;
@@ -46,6 +47,7 @@ char	*read_doc(char *delimiter)
 		}
 		append_str(&doc, line);
 		append_str(&doc, "\n");
+		init_vars(NULL, NULL)->doc = doc;
 		free(line);
 	}
 	return (doc);
