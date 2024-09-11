@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 21:43:47 by we               ###   ########.fr       */
+/*   Updated: 2024/09/11 09:08:35 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,28 @@ volatile sig_atomic_t	g_wait;
 
 int	main(int ac, char **av, char **envp)
 {
-	t_minishell	vars;
+	t_minishell	*vars;
 
 	(void)ac;
-	init_vars(&vars, av[0], envp);
+	vars = init_vars(av[0], envp);
 	while (1)
 	{
-		init_prompt(&vars);
-		if (vars.line == NULL)
+		init_prompt(vars);
+		if (vars->line == NULL)
 			break ;
-		process_line(&vars);
-		if (vars.token_list == NULL || vars.parse_err.type != E_NONE)
+		process_line(vars);
+		if (vars->token_list == NULL || vars->parse_err.type != E_NONE)
 		{
-			clear_ast(&vars.token_list, &vars.ast);
+			clear_ast(&vars->token_list, &vars->ast);
 			continue ;
 		}
 		signal(SIGQUIT, int_sigquit);
-		tcsetattr(STDIN_FILENO, TCSANOW, &vars.term);
-		vars.exit_status = exec_node(vars.ast, false, &vars);
-		clear_ast(&vars.token_list, &vars.ast);
+		tcsetattr(STDIN_FILENO, TCSANOW, &vars->term);
+		vars->exit_status = exec_node(vars->ast, false, vars);
+		clear_ast(&vars->token_list, &vars->ast);
 	}
-	clear(&vars);
-	return (vars.exit_status);
+	clear(vars);
+	return (vars->exit_status);
 }
 
 int	process_line(t_minishell *vars)
@@ -79,11 +79,20 @@ void	setup_terminal(t_minishell *vars)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	init_vars(t_minishell *vars, char *name, char **envp)
+t_minishell	*init_vars(char *name, char **envp)
 {
-	ft_bzero(vars, sizeof(t_minishell));
-	vars->name = name;
-	vars->env = dup_env(envp);
-	vars->ms_stdin = dup(STDIN_FILENO);
-	vars->ms_stdout = dup(STDOUT_FILENO);
+	static t_minishell	*vars;
+
+	if (vars == NULL)
+	{
+		vars = gbc_malloc(sizeof(t_minishell));
+		if (vars == NULL)
+			exit(1);
+		ft_bzero(vars, sizeof(t_minishell));
+		vars->name = name;
+		vars->env = dup_env(envp);
+		vars->ms_stdin = dup(STDIN_FILENO);
+		vars->ms_stdout = dup(STDOUT_FILENO);
+	}
+	return (vars);
 }

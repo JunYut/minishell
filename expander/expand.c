@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 14:57:43 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/11 08:58:03 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	heredoc_child(t_io_node *io, int *p_fd, pid_t pid, t_minishell *vars)
 {
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, heredoc_sigint);
 		heredoc(io, p_fd);
 		clear(vars);
 		exit(0);

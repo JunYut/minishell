@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:56:46 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 12:01:17 by we               ###   ########.fr       */
+/*   Updated: 2024/09/11 09:04:04 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
+#include "minishell.h"
+
+void	heredoc_sigint(int sig)
+{
+	(void)sig;
+	clear(init_vars(NULL, NULL));
+	exit(130);
+}
 
 void	int_sigint(int sig)
 {
