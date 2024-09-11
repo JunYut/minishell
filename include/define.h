@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:25:49 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/11 10:42:16 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/11 10:56:40 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,16 +190,16 @@ typedef struct s_minishell
 	char			*line;
 	char			*doc;
 	t_token			*token_list;
-	t_token			*curr_token;
 	t_node			*ast;
-	t_parse_err		parse_err;
 	t_env			*env;
 	struct termios	term;
-	bool			token_err;
+	t_gbc			*gbc;
 	int				ms_stdin;
 	int				ms_stdout;
 	int				exit_status;
-	t_gbc			*gbc;
+	t_token			*curr_token;
+	bool			token_err;
+	t_parse_err		parse_err;
 }	t_minishell;
 
 #endif

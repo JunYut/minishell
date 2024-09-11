@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:56:46 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/11 10:45:44 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/11 10:53:58 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ void	int_sigquit(int sig)
 {
 	(void)sig;
 	if (g_wait)
-		printf("Quit\n");
+		ft_putstr_fd("Quit\n", STDERR_FILENO);
 }
