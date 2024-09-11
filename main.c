@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/11 09:08:35 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/11 09:30:57 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ volatile sig_atomic_t	g_wait;
 int	main(int ac, char **av, char **envp)
 {
 	t_minishell	*vars;
+	int			status;
 
 	(void)ac;
 	vars = init_vars(av[0], envp);
@@ -36,8 +37,9 @@ int	main(int ac, char **av, char **envp)
 		vars->exit_status = exec_node(vars->ast, false, vars);
 		clear_ast(&vars->token_list, &vars->ast);
 	}
+	status = vars->exit_status;
 	clear(vars);
-	return (vars->exit_status);
+	return (status);
 }
 
 int	process_line(t_minishell *vars)
