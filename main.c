@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/11 21:43:42 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:29:08 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ t_minishell	*init_vars(char *name, char **envp)
 		vars->env = dup_env(envp);
 		vars->ms_stdin = dup(STDIN_FILENO);
 		vars->ms_stdout = dup(STDOUT_FILENO);
+		set_val(vars->env, "SHELL", name);
 	}
 	return (vars);
 }
