@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 11:38:25 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/11 14:10:14 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/12 12:56:12 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,5 @@ char	*handle_non_var(char *line, int *i)
 	start = *i;
 	while (line[*i] && line[*i] != '$')
 		(*i)++;
-	return (ft_substr(line, start, *i - start));
+	return (gbc_add(ft_substr(line, start, *i - start)));
 }
