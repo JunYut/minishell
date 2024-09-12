@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 13:56:48 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/11 21:48:08 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:39:31 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	clear(t_minishell *vars)
 {
-	clear_history();
+	rl_clear_history();
 	clear_ast(&vars->token_list, &vars->ast);
 	gbc_clear();
 	return (0);
