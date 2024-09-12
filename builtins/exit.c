@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 14:06:53 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 15:17:10 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/12 12:22:39 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	exit_shell(char **argv, int status, t_minishell *vars)
 			print_builtin_err("exit", argv[0], "numeric argument required");
 			exit_status = 2;
 		}
-		else if (count_args(argv, "exit", vars->env) > 1)
+		else if (count_args(argv, "exit") > 1)
 			exit_status = 1;
 		else
 			exit_status = ft_atoi(argv[0]);

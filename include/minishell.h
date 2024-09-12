@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:29:31 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/11 09:08:15 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/12 12:22:12 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int			redir_in(t_io_node *io_list, int *status);
 int			redir_append(t_io_node *io_list, int *status);
 int			set_shlvl(t_minishell *vars);
 void		ft_reset_stds(bool piped, t_minishell *vars);
-int			wait_status(pid_t pid, t_env *e);
+int			wait_status(pid_t pid);
 t_path		get_path(char *cmd, t_minishell *vars);
 bool		is_valid_path(char **envp);
 int			get_err_msg(t_err err);
@@ -68,7 +68,7 @@ void		sort_export(t_var *exp);
 
 int			builtin_cd(char **path, t_env *e);
 char		*set_target(char **path, t_env *e);
-int			count_args(char **path, char *func, t_env *e);
+int			count_args(char **path, char *func);
 
 int			builtin_unset(char **keys, t_env *e);
 void		rm_ent(char *key, t_var *lst, int last_id);
@@ -80,7 +80,7 @@ int			builtin_pwd(t_env *e);
 void		exit_shell(char **argv, int status, t_minishell *vars);
 int			clear(t_minishell *vars);
 
-int			valid_key(char *key, t_env *e);
+int			valid_key(char *key);
 int			is_numeric(char *str);
 bool		is_builtin(char *cmd);
 

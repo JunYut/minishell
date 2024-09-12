@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 10:09:56 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/10 15:08:37 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/12 12:19:58 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	exec_pipeline(t_node *node, t_minishell *vars)
 		{
 			close(fd[0]);
 			close(fd[1]);
-			status = wait_status(pid_left, vars->env);
-			status = wait_status(pid_right, vars->env);
+			status = wait_status(pid_left);
+			status = wait_status(pid_right);
 			return (status);
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/11 13:22:38 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/12 12:19:30 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	exec_child(t_node *node, t_minishell *vars)
 		if (execve(path_status.cmd_path, node->exp_args, vars->env->envp) == -1)
 			(clear(vars), exit(ERRNO_GENERAL));
 	}
-	status = wait_status(pid, vars->env);
+	status = wait_status(pid);
 	return (status);
 }
 
@@ -122,6 +122,6 @@ int	exec_subshell(t_node *subshell_node, t_minishell *vars)
 	else if (pid == -1)
 		return (ERRNO_GENERAL);
 	else
-		return (wait_status(pid, vars->env));
+		return (wait_status(pid));
 	return (ERRNO_GENERAL);
 }

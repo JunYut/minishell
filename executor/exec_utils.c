@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:55:04 by we                #+#    #+#             */
-/*   Updated: 2024/09/11 13:23:37 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/12 12:18:49 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ bool	is_builtin(char *cmd)
 
 // returns -1 on abnormal termination
 // returns the exit status of the child process (0-255)
-int	wait_status(pid_t pid, t_env *e)
+int	wait_status(pid_t pid)
 {
 	int	status;
 
@@ -90,10 +90,7 @@ int	wait_status(pid_t pid, t_env *e)
 	if (waitpid(pid, &status, 0) == -1)
 		return (0);
 	else if (WIFEXITED(status))
-	{
-		status = WEXITSTATUS(status);
-		set_val(e, "?", gbc_itoa(status));
-	}
+		init_vars(NULL, NULL)->exit_status = WEXITSTATUS(status);
 	g_wait = 0;
 	return (status);
 }
