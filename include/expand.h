@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:31:48 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/11 14:09:24 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/16 09:01:27 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPAND_H
 # define EXPAND_H
 
-# include <readline/readline.h>
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <stdbool.h>
 # include <stdio.h>
+# include "readline.h"
 # include "define.h"
 # include "gbc.h"
 

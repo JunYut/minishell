@@ -6,15 +6,15 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:28:19 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/09 12:29:13 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/16 09:01:52 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-# include <readline/readline.h>
 # include <stdbool.h>
+# include "readline.h"
 # include "define.h"
 # include "libft.h"
 

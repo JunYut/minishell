@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:29:31 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/12 12:22:12 by we               ###   ########.fr       */
+/*   Updated: 2024/09/16 09:00:09 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 # include <stdio.h>
 # include <stdbool.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <dirent.h>
 # include <errno.h>
+# include "readline.h"
+# include "history.h"
 # include "libft.h"
 # include "define.h"
 # include "gbc.h"
@@ -32,7 +32,7 @@
 # include "signals.h"
 # include "utils.h"
 
-extern volatile __sig_atomic_t	g_wait;
+extern volatile sig_atomic_t	g_wait;
 
 t_minishell	*init_vars(char *name, char **envp);
 int			process_line(t_minishell *vars);

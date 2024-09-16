@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+         #
+#    By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/09/11 20:05:19 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2024/09/16 09:13:00 by tjun-yu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,14 +21,14 @@ ORANGE	= \033[0;38;5;166m
 
 # Compiler & Flags
 CC		= clang
-CFLAGS	= -Wall -Wextra -Werror -Wpedantic -g
+CFLAGS	= -Wall -Wextra -Werror -Wpedantic -g -DREADLINE_LIBRARY
 
 # Directories
 RL_DIR		= readline
 LIBFT_DIR	= libft
 MODULES_DIR	= executor expander gbc lexer parser wildcard builtins signals utils
 OBJ_DIR		= obj
-INCL_DIR	= -Iinclude -I$(RL_DIR) -I$(LIBFT_DIR)/include
+INCL_DIR	= -I$(RL_DIR) -I$(LIBFT_DIR)/include -Iinclude
 
 vpath %.c $(MODULES_DIR)
 
