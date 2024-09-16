@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:55:04 by we                #+#    #+#             */
-/*   Updated: 2024/09/12 12:18:49 by we               ###   ########.fr       */
+/*   Updated: 2024/09/16 12:31:23 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ int	wait_status(pid_t pid)
 
 	g_wait = 1;
 	if (waitpid(pid, &status, 0) == -1)
-		return (0);
+		return (WEXITSTATUS(status));
 	else if (WIFEXITED(status))
 		init_vars(NULL, NULL)->exit_status = WEXITSTATUS(status);
 	g_wait = 0;
-	return (status);
+	return (WEXITSTATUS(status));
 }

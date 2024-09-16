@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/12 12:20:09 by we               ###   ########.fr       */
+/*   Updated: 2024/09/16 12:32:00 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ char	*expand_params(char	*str, t_minishell *vars)
 	return (expanded);
 }
 
-void	init_heredocs(t_node *node, t_minishell *vars)
+int	init_heredocs(t_node *node, t_minishell *vars)
 {
 	t_io_node	*io;
 	int			p_fd[2];
 	pid_t		pid;
 
 	if (node == NULL)
-		return ;
+		return (0);
 	init_heredocs(node->left, vars);
 	init_heredocs(node->right, vars);
 	io = node->io_list;
@@ -88,7 +88,8 @@ void	init_heredocs(t_node *node, t_minishell *vars)
 			io->exp_value = expand_args(io->value, vars);
 			pid = fork();
 			heredoc_child(io, p_fd, pid, vars);
-			wait_status(pid);
+			if (wait_status(pid))
+				return (1);
 			io->heredoc = p_fd[0];
 			close(p_fd[1]);
 		}
@@ -96,9 +97,10 @@ void	init_heredocs(t_node *node, t_minishell *vars)
 			io->exp_value = expand_args(io->value, vars);
 		io = io->next;
 	}
+	return (0);
 }
 
-void	heredoc_child(t_io_node *io, int *p_fd, pid_t pid, t_minishell *vars)
+int	heredoc_child(t_io_node *io, int *p_fd, pid_t pid, t_minishell *vars)
 {
 	if (pid == 0)
 	{
@@ -107,4 +109,5 @@ void	heredoc_child(t_io_node *io, int *p_fd, pid_t pid, t_minishell *vars)
 		clear(vars);
 		exit(0);
 	}
+	return (0);
 }

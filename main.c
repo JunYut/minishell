@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/12 14:29:08 by we               ###   ########.fr       */
+/*   Updated: 2024/09/16 12:22:10 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int	main(int ac, char **av, char **envp)
 		init_prompt(vars);
 		if (vars->line == NULL)
 			break ;
-		process_line(vars);
-		if (vars->token_list == NULL || vars->parse_err.type != E_NONE)
+		if (process_line(vars) || vars->token_list == NULL || vars->parse_err.type != E_NONE)
 		{
 			ft_bzero(&vars->parse_err, sizeof(t_parse_err));
 			clear_ast(&vars->token_list, &vars->ast);
@@ -51,12 +50,12 @@ int	process_line(t_minishell *vars)
 	free(vars->line);
 	vars->ast = parse(vars);
 	if (vars->parse_err.type != E_NONE)
-	{
 		handle_parse_error(vars);
-		init_heredocs(vars->ast, vars);
+	if (init_heredocs(vars->ast, vars) == 1)
+	{
+		vars->exit_status = 1;
 		return (1);
 	}
-	init_heredocs(vars->ast, vars);
 	return (0);
 }
 

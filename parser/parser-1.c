@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser-1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 17:59:22 by we                #+#    #+#             */
-/*   Updated: 2024/09/05 17:59:55 by we               ###   ########.fr       */
+/*   Updated: 2024/09/16 11:24:26 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,12 @@ bool	join_args(t_minishell *vars, char **args)
 		vars->curr_token = vars->curr_token->next;
 	}
 	return (true);
+}
+
+void	get_subshell_node(t_minishell *v, t_node *node, t_node *subshell_node)
+{
+	subshell_node->left = node;
+	v->curr_token = v->curr_token->next;
+	if (v->curr_token != NULL && is_redirection(v->curr_token->type))
+		get_io_list(v, &(subshell_node->io_list));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/16 10:32:34 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/16 11:24:43 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,10 @@ t_node	*get_term(t_minishell *vars)
 		subshell_node = init_new_node(N_SUBSHELL);
 		if (subshell_node == NULL)
 			return (set_parse_err_type(vars, E_MEM), NULL);
-		subshell_node->left = node;
-		vars->curr_token = vars->curr_token->next;
-		if (vars->curr_token != NULL && is_redirection(vars->curr_token->type))
-		{
-			if (get_io_list(vars, &(subshell_node->io_list)) == false)
-				return (clear_ast(&vars->token_list, &subshell_node), NULL);
-		}
+		get_subshell_node(vars, node, subshell_node);
 		return (subshell_node);
 	}
-	else
-		return (get_simple_cmd(vars));
+	return (get_simple_cmd(vars));
 }
 
 t_node	*get_simple_cmd(t_minishell *vars)
