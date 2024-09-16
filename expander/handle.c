@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:21:12 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/11 21:40:49 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:15:41 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*handle_squote(char *str, int *i)
 
 	start = *i;
 	(*i)++;
-	while (str[*i] != '\'')
+	while (str[*i] && str[*i] != '\'')
 		(*i)++;
 	(*i)++;
 	return (gbc_add(ft_substr(str, start, *i - start)));
@@ -40,7 +40,7 @@ char	*handle_dquote_str(char *str, int *i)
 	int		start;
 
 	start = *i;
-	while (str[*i] != '"' && str[*i] != '$')
+	while (str[*i] && str[*i] != '"' && str[*i] != '$')
 		(*i)++;
 	return (gbc_add(ft_substr(str, start, *i - start)));
 }
@@ -51,7 +51,7 @@ char	*handle_dquote(char *str, int *i, t_minishell *vars)
 
 	ret_str = ft_strdup("\"");
 	(*i)++;
-	while (str[*i] != '"')
+	while (str[*i] && str[*i] != '"')
 	{
 		if (str[*i] == '$')
 			ret_str = gnl_strjoin(ret_str, handle_dollar(str, i, vars));
@@ -69,7 +69,7 @@ char	*handle_dollar(char *str, int *i, t_minishell *vars)
 	char	*env_val;
 
 	(*i)++;
-	if (str[*i] == '\0' || str[*i] == '"' || str[*i] == ' ')
+	if (str[*i] && (str[*i] == '\0' || str[*i] == '"' || str[*i] == ' '))
 		return (gbc_add(ft_strdup("$")));
 	start = *i;
 	if (str[*i] == '?' || is_valid_var_char(str[*i]) == false)
