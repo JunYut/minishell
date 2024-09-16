@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 17:59:22 by we                #+#    #+#             */
-/*   Updated: 2024/09/16 11:24:26 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/16 13:59:33 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool	join_args(t_minishell *vars, char **args)
 	return (true);
 }
 
-void	get_subshell_node(t_minishell *v, t_node *node, t_node *subshell_node)
+void	get_subsh_node(t_minishell *v, t_node *node, t_node *subshell_node)
 {
 	subshell_node->left = node;
 	v->curr_token = v->curr_token->next;

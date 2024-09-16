@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:11 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/16 11:46:09 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/16 13:59:33 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_node		*init_new_node(t_node_type type);
 t_io_node	*init_new_io_node(t_token_type type, char *value);
 t_node		*build_operator_node(t_minishell *vars, t_token_type token_type,
 				t_node *left, t_node *right);
-void		get_subshell_node(t_minishell *v, t_node *node, t_node *subshell_node);
+void		get_subsh_node(t_minishell *v, t_node *node, t_node *subshell_node);
 void		clear_cmd_node(t_node *node);
 void		recursive_clear_ast(t_node *node);
 void		clear_ast(t_token **token_list, t_node **ast);

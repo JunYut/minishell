@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/16 12:32:00 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/16 14:02:02 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,13 @@ int	init_heredocs(t_node *node, t_minishell *vars)
 
 	if (node == NULL)
 		return (0);
-	init_heredocs(node->left, vars);
-	init_heredocs(node->right, vars);
+	(init_heredocs(node->left, vars), init_heredocs(node->right, vars));
 	io = node->io_list;
 	while (io != NULL)
 	{
 		if (io->type == IO_HEREDOC)
 		{
-			pipe(p_fd);
-			io->exp_value = expand_args(io->value, vars);
+			(pipe(p_fd), io->exp_value = expand_args(io->value, vars));
 			pid = fork();
 			heredoc_child(io, p_fd, pid, vars);
 			if (wait_status(pid))

@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/16 12:22:10 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/16 13:58:35 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	main(int ac, char **av, char **envp)
 		init_prompt(vars);
 		if (vars->line == NULL)
 			break ;
-		if (process_line(vars) || vars->token_list == NULL || vars->parse_err.type != E_NONE)
+		if (process_line(vars) || vars->token_list == NULL
+			|| vars->parse_err.type != E_NONE)
 		{
 			ft_bzero(&vars->parse_err, sizeof(t_parse_err));
 			clear_ast(&vars->token_list, &vars->ast);
