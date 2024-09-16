@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/12 12:19:30 by we               ###   ########.fr       */
+/*   Updated: 2024/09/16 11:05:02 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ int	exec_node(t_node *node, bool piped, t_minishell *vars)
 	if (node->type == N_SUBSHELL)
 	{
 		status = exec_subshell(node, vars);
-		if (status == ERRNO_SUCCESS)
-			return (status);
+		ft_reset_stds(piped, vars);
+		return (status);
 	}
 	return (exec_simple_cmd(node, piped, vars));
 }
@@ -112,6 +112,9 @@ int	exec_subshell(t_node *subshell_node, t_minishell *vars)
 	pid_t	pid;
 	int		status;
 
+	status = check_redir(subshell_node);
+	if (status != ERRNO_SUCCESS)
+		return (status);
 	pid = fork();
 	if (!pid)
 	{
@@ -122,6 +125,9 @@ int	exec_subshell(t_node *subshell_node, t_minishell *vars)
 	else if (pid == -1)
 		return (ERRNO_GENERAL);
 	else
-		return (wait_status(pid));
+	{
+		status = wait_status(pid);
+		return (status);
+	}
 	return (ERRNO_GENERAL);
 }

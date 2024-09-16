@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 17:59:40 by we               ###   ########.fr       */
+/*   Updated: 2024/09/16 10:32:34 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ t_node	*get_term(t_minishell *vars)
 			return (set_parse_err_type(vars, E_MEM), NULL);
 		subshell_node->left = node;
 		vars->curr_token = vars->curr_token->next;
+		if (vars->curr_token != NULL && is_redirection(vars->curr_token->type))
+		{
+			if (get_io_list(vars, &(subshell_node->io_list)) == false)
+				return (clear_ast(&vars->token_list, &subshell_node), NULL);
+		}
 		return (subshell_node);
 	}
 	else
