@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:39:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/11 21:18:57 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:58:16 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	handle_open_quote(char **line, char **buffer, int *count, char quote)
 
 	read_line = NULL;
 	appended_str = ft_strdup(*line);
-	while (is_quote_balance(appended_str, quote) == false)
+	while (is_quote_balance(appended_str + *count, quote) == false)
 	{
 		read_line = readline("> ");
 		if (read_line == NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 09:32:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 12:50:46 by we               ###   ########.fr       */
+/*   Updated: 2024/09/16 13:20:47 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	skip_quote_string(char *line, int *i)
 
 	quote_type = line[*i];
 	(*i)++;
-	while (line[*i] != quote_type)
+	while (line[*i] && line[*i] != quote_type)
 		(*i)++;
 	(*i)++;
 }
