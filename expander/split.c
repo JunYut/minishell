@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:18:21 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/06 15:47:48 by we               ###   ########.fr       */
+/*   Updated: 2024/09/16 12:42:09 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ char	**split_args(char *str)
 		return (NULL);
 	word_count = count_words(str);
 	if (!word_count)
-		return (free(str), NULL);
+		return (NULL);
 	args = gbc_add(ft_calloc(word_count + 1, sizeof(char *)));
 	if (!args)
-		return (free(str), NULL);
+		return (NULL);
 	args = allocate_args(str, args);
 	if (!args)
 		return (ft_free_s_arr(args), NULL);
