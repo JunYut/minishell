@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:55:04 by we                #+#    #+#             */
-/*   Updated: 2024/09/16 12:31:23 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/16 13:54:40 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,16 @@ int	wait_status(pid_t pid)
 	g_wait = 1;
 	if (waitpid(pid, &status, 0) == -1)
 		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			return (131);
+		else if (WTERMSIG(status) == SIGINT)
+			return (130);
+	}
 	else if (WIFEXITED(status))
 		init_vars(NULL, NULL)->exit_status = WEXITSTATUS(status);
+	printf("exit status: %d\n", init_vars(NULL, NULL)->exit_status);
 	g_wait = 0;
 	return (WEXITSTATUS(status));
 }
