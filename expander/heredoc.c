@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 11:38:25 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/16 14:07:29 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:55:48 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ char	*read_doc(char *delimiter, t_minishell *vars)
 	char	*doc;
 	char	*line;
 
-	doc = malloc(1);
-	doc[0] = '\0';
+	doc = ft_strdup("");
 	while (1)
 	{
 		line = readline("> ");

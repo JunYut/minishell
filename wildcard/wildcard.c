@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:10:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 16:51:23 by we               ###   ########.fr       */
+/*   Updated: 2024/09/17 15:17:37 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,34 @@
 #include "expand.h"
 #include "utils.h"
 
+void	del(void *content)
+{
+	if (content)
+	{
+		free(content);
+		content = NULL;
+	}
+}
 char	**wildcard(char *regex, t_env *env_var)
 {
-	t_wildcard	*wc;
+	t_wildcard	wc;
 	t_list		*match_lst;
+	char		**result;
 
-	wc = gbc_malloc(sizeof(t_wildcard));
-	wc->dirent = init_dirent(fetch_val("PWD", env_var));
-	wc->token = tokenize_wc(regex);
-	wc->pattern = ft_split(regex, '*');
-	match_lst = ent_match(wc, regex);
+	wc.dirent = init_dirent(fetch_val("PWD", env_var));
+	wc.token = tokenize_wc(regex);
+	wc.pattern = ft_split(regex, '*');
+	match_lst = ent_match(&wc, regex);
 	if (match_lst == NULL)
-		ft_lstadd_back(&match_lst, gbc_lstnew(gbc_strdup(regex)));
-	ft_free_s_arr(wc->pattern);
-	return (lst_to_arr(match_lst));
+		ft_lstadd_back(&match_lst, ft_lstnew(ft_strdup(regex)));
+	ft_free_s_arr(wc.pattern);
+	result = lst_to_arr(match_lst);
+	ft_lstclear(&match_lst, del);
+	ft_lstclear(&wc.dirent->dot_files, del);
+	ft_lstclear(&wc.dirent->files, del);
+	free(wc.dirent);
+	free(wc.token);
+	return (result);
 }
 
 char	**lst_to_arr(t_list *lst)
@@ -41,7 +55,7 @@ char	**lst_to_arr(t_list *lst)
 	i = -1;
 	while (tmp)
 	{
-		arr[++i] = tmp->content;
+		arr[++i] = ft_strdup(tmp->content);
 		tmp = tmp->next;
 	}
 	arr[++i] = NULL;
@@ -54,7 +68,9 @@ t_dirent	*init_dirent(char *cwd)
 	DIR				*dirp;
 	struct dirent	*dp;
 
-	ent = gbc_malloc(sizeof(t_dirent));
+	ent = malloc(sizeof(t_dirent));
+	if (!ent)
+		return (NULL);
 	ent->files = NULL;
 	ent->dot_files = NULL;
 	dirp = opendir(cwd);
@@ -62,9 +78,9 @@ t_dirent	*init_dirent(char *cwd)
 	while (dp != NULL)
 	{
 		if (dp->d_name[0] == '.')
-			ft_lstadd_back(&ent->dot_files, gbc_lstnew(gbc_strdup(dp->d_name)));
+			ft_lstadd_back(&ent->dot_files, ft_lstnew(ft_strdup(dp->d_name)));
 		else
-			ft_lstadd_back(&ent->files, gbc_lstnew(gbc_strdup(dp->d_name)));
+			ft_lstadd_back(&ent->files, ft_lstnew(ft_strdup(dp->d_name)));
 		dp = readdir(dirp);
 	}
 	closedir(dirp);

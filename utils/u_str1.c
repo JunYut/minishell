@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   u_str1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 13:20:12 by we                #+#    #+#             */
-/*   Updated: 2024/09/17 10:45:00 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 16:01:53 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	**insert_string_array(char **dest, char **src, int insert_index)
 		printf("Failed to insert string array.\n");
 		return (NULL);
 	}
+	ft_free_s_arr(dest);
 	return (inserted);
 }
 
@@ -41,7 +42,7 @@ char	**insert(char **dest, char **src, int insert_index)
 
 	dest_size = count_strings(dest);
 	src_size = count_strings(src);
-	new_dest = gbc_malloc((dest_size + src_size + 1) * sizeof(char *));
+	new_dest = malloc((dest_size + src_size + 1) * sizeof(char *));
 	if (new_dest == NULL)
 	{
 		perror("Failed to allocate memory");
@@ -49,13 +50,13 @@ char	**insert(char **dest, char **src, int insert_index)
 	}
 	i = -1;
 	while (++i < insert_index)
-		new_dest[i] = (dest)[i];
+		new_dest[i] = ft_strdup(dest[i]);
 	i = -1;
 	while (++i < src_size)
-		new_dest[insert_index + i] = src[i];
-	i = insert_index - 1;
+		new_dest[insert_index + i] = ft_strdup(src[i]);
+	i = insert_index;
 	while (++i < dest_size)
-		new_dest[src_size + i] = (dest)[i + 1];
+		new_dest[src_size + i] = ft_strdup(dest[i]);
 	new_dest[dest_size + src_size] = NULL;
 	return (new_dest);
 }

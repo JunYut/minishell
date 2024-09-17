@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   match.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:09:27 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 16:51:23 by we               ###   ########.fr       */
+/*   Updated: 2024/09/17 15:11:58 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_list	*ent_match(t_wildcard *wc, char *regex)
 	{
 		match = pattern_match(lst->content, wc->token, wc->pattern);
 		if (match)
-			ft_lstadd_back(&match_lst, gbc_lstnew(gbc_strdup(match)));
+			ft_lstadd_back(&match_lst, ft_lstnew(ft_strdup(match)));
 		lst = lst->next;
 	}
 	return (match_lst);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:18:21 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 10:30:45 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 15:56:29 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**split_args(char *str)
 	word_count = count_words(str);
 	if (!word_count)
 		return (NULL);
-	args = gbc_add(ft_calloc(word_count + 1, sizeof(char *)));
+	args = ft_calloc(word_count + 1, sizeof(char *));
 	if (!args)
 		return (NULL);
 	args = allocate_args(str, args);
@@ -45,7 +45,7 @@ char	**allocate_args(char *str, char **args)
 		{
 			start = i;
 			skip_word(str, &i);
-			args[j] = gbc_add(ft_calloc(i - start + 1, sizeof(char)));
+			args[j] = ft_calloc(i - start + 1, sizeof(char));
 			if (!args[j])
 				return (NULL);
 			j++;
@@ -73,6 +73,8 @@ char	**fill_args(char *str, char **args)
 		while (str[i] && str[i] == ' ')
 			i++;
 	}
+	printf("j = %d\n", j);
+	printf("What's in J: %s\n", args[j]);
 	return (args);
 }
 

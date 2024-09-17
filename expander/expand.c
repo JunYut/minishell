@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 10:43:59 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 16:03:37 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,13 @@ char	**expand_args(char *args, t_minishell *vars)
 		{
 			globbed = wildcard(expanded[i], vars->env);
 			expanded = insert_string_array(expanded, globbed, i);
+			ft_free_s_arr(globbed);
+			i--;
 		}
 	}
 	i = -1;
 	while (expanded[++i])
-		expanded[i] = gbc_add(remove_outer_quotes(expanded[i]));
+		expanded[i] = remove_outer_quotes(expanded[i]);
 	return (expanded);
 }
 

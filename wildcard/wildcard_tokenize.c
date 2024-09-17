@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard_tokenize.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:10:16 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/05 12:04:10 by we               ###   ########.fr       */
+/*   Updated: 2024/09/17 15:14:11 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_wc_type	*tokenize_wc(char *regex)
 	int			i;
 	int			j;
 
-	token = gbc_malloc(sizeof(t_wc_type) * (count_token(regex) + 1));
+	token = malloc(sizeof(t_wc_type) * (count_token(regex) + 1));
 	j = -1;
 	i = -1;
 	while (regex[++i])

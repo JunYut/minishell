@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:52:25 by we                #+#    #+#             */
-/*   Updated: 2024/09/10 15:05:35 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 14:55:14 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	append_str(char **str1, char *str2)
 	i = -1;
 	j = -1;
 	new = malloc(ft_strlen(*str1) + ft_strlen(str2) + 1);
+	if (!new)
+		return ;
 	while ((*str1)[++i])
 		new[i] = (*str1)[i];
 	while (str2[++j])
