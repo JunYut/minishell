@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:57:09 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/17 13:26:59 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 14:21:56 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	clear_env(t_env **e)
 	ft_free_s_arr((*e)->envp);
 	(*e)->envp = NULL;
 	clear_ent(&(*e)->exp);
+	printf("\n");
 	clear_ent(&(*e)->var);
 	ft_free((void **)e);
 }
@@ -32,14 +33,14 @@ void	clear_ent(t_var ** lst)
 	{
 		// printf("curr: %p, key: %p, value: %p\n",
 		// 	(void *)curr, (void *)curr->key, (void *)curr->value);
-		printf("key: [%s], value: [%s]\n", curr->key, curr->value);
+		// printf("key: [%s], value: [%s]\n", curr->key, curr->value);
 		next = curr->next;
-		// ft_free((void **)&curr->key);
-		// ft_free((void **)&curr->value);
-		// ft_free((void **)&curr);
+		ft_free((void **)&curr->key);
+		ft_free((void **)&curr->value);
+		ft_free((void **)&curr);
 		curr = next;
 	}
-	// ft_free((void **)lst);
+	*lst = NULL;
 }
 
 void	new_ent(t_var *lst, char *key, char *val)
@@ -47,8 +48,8 @@ void	new_ent(t_var *lst, char *key, char *val)
 	t_var	*new;
 
 	new = malloc(sizeof(t_var));
-	new->key = key;
-	new->value = val;
+	new->key = ft_strdup(key);
+	new->value = ft_strdup(val);
 	new->next = NULL;
 	while (lst->next)
 		lst = lst->next;

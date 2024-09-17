@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 13:24:11 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 14:06:47 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_env	*dup_env(char *envp[])
 	{
 		split = split_ent(envp[i]);
 		add_ent(e, split[0], split[1]);
+		ft_free_s_arr(split);
 	}
 	builtin_unset((char *[]){"OLDPWD", NULL}, e);
 	e->envp = env_to_arr(e->var);
@@ -67,8 +68,8 @@ void	add_ent(t_env *e, char *key, char *val)
 	if (e->exp == NULL)
 	{
 		e->exp = malloc(sizeof(t_var));
-		e->exp->key = key;
-		e->exp->value = val;
+		e->exp->key = ft_strdup(key);
+		e->exp->value = ft_strdup(val);
 		e->exp->next = NULL;
 	}
 	new_ent(e->exp, key, val);
@@ -78,8 +79,8 @@ void	add_ent(t_env *e, char *key, char *val)
 	if (e->var == NULL)
 	{
 		e->var = malloc(sizeof(t_var));
-		e->var->key = key;
-		e->var->value = val;
+		e->var->key = ft_strdup(key);
+		e->var->value = ft_strdup(val);
 		e->var->next = NULL;
 	}
 	new_ent(e->var, key, val);
@@ -94,7 +95,7 @@ char	**split_ent(char *str)
 
 	if (str == NULL)
 		return (NULL);
-	split = malloc(sizeof(char *) * 2);
+	split = malloc(sizeof(char *) * 3);
 	split[0] = ft_strndup(str, find_pos(str, '='));
 	if (split[0] == NULL)
 	{
@@ -103,6 +104,7 @@ char	**split_ent(char *str)
 		return (split);
 	}
 	split[1] = ft_strndup(str + find_pos(str, '=') + 1, find_pos(str, '\0'));
+	split[2] = NULL;
 	return (split);
 }
 
