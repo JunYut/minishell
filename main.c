@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/16 13:58:35 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 14:03:10 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	process_line(t_minishell *vars)
 	tokenize(vars->line, vars);
 	if (vars->token_list == NULL)
 		return (1);
-	free(vars->line);
+	// free(vars->line);
 	vars->ast = parse(vars);
 	if (vars->parse_err.type != E_NONE)
 		handle_parse_error(vars);
