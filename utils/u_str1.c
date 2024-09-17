@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 13:20:12 by we                #+#    #+#             */
-/*   Updated: 2024/09/17 10:26:01 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 10:45:00 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	**insert_string_array(char **dest, char **src, int insert_index)
 		printf("Failed to insert string array.\n");
 		return (NULL);
 	}
-	// free(dest);
 	return (inserted);
 }
 
