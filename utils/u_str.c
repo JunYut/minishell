@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:50:19 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/17 10:49:22 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 16:00:11 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	ft_strncpy(char *dst, char *src, int len)
 	dst[i] = '\0';
 }
 
-void	skip_spaces(char **line)
+void	skip_spaces(char *line, int *i)
 {
-	while (**line && is_space(**line))
-		(*line)++;
+	while (line[*i] && is_space(line[*i]))
+		(*i)++;
 }

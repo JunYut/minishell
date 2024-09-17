@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:39:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/16 13:58:16 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:20:54 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	handle_quote_err(char quote, t_minishell *vars)
 	vars->exit_status = 2;
 }
 
-void	handle_open_quote(char **line, char **buffer, int *count, char quote)
+void	handle_open_quote(char **line, char **buffer, int *i, int *count, char quote)
 {
 	char	*read_line;
 	char	*appended_str;
@@ -34,18 +34,22 @@ void	handle_open_quote(char **line, char **buffer, int *count, char quote)
 	appended_str = ft_strdup(*line);
 	while (is_quote_balance(appended_str + *count, quote) == false)
 	{
+		// printf("appended: %s\n\n", appended_str);
+		// printf("String: (%s)\n\n", appended_str + *count);
 		read_line = readline("> ");
 		if (read_line == NULL)
 			break ;
 		appended_str = ft_strjoin_delim(appended_str, read_line, "\n");
 		free(read_line);
 	}
-	gbc_add(appended_str);
-	trimmed_str = ft_trim_str(appended_str, quote);
+	trimmed_str = ft_trim_str(appended_str + *i, quote);
 	*count = ft_strlen(trimmed_str);
+	// printf("Final string: (%s)\n\n", appended_str);
 	free(trimmed_str);
+	free(*line);
 	*line = appended_str;
-	*buffer = appended_str;
+	free(*buffer);
+	*buffer = ft_strdup(appended_str + *i);
 }
 
 bool	is_quote_balance(char *str, char quote)

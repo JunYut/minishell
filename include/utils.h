@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:57:24 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/17 11:07:45 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 16:00:03 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		ft_strncpy(char *dst, char *src, int len);
 int			is_space(char c);
 int			is_quote(char c);
 int			is_seperator(char *s);
-void		skip_spaces(char **line);
+void		skip_spaces(char *line, int *i);
 
 void		show_tree(t_node *node, int depth, char *branch);
 void		print_tree(t_node *node, int depth, char *branch);
