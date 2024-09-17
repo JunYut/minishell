@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/16 14:02:02 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 10:29:47 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**expand_args(char *args, t_minishell *vars)
 		{
 			globbed = wildcard(expanded[i], vars->env);
 			expanded = insert_string_array(expanded, globbed, i);
-			free(globbed);
+			// free(globbed);
 		}
 	}
 	i = -1;

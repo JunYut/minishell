@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 13:13:22 by we                #+#    #+#             */
-/*   Updated: 2024/09/09 14:17:38 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 10:29:12 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*remove_outer_quotes(char *str)
 	len = ft_strlen(str);
 	result_len = find_result_len(str, len);
 	result_str = build_result_string(str, len, result_len);
-	free(str);
+	// free(str);
 	return (result_str);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 13:20:12 by we                #+#    #+#             */
-/*   Updated: 2024/09/09 11:11:38 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 10:26:01 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**insert_string_array(char **dest, char **src, int insert_index)
 		printf("Failed to insert string array.\n");
 		return (NULL);
 	}
-	free(dest);
+	// free(dest);
 	return (inserted);
 }
 
@@ -42,7 +42,7 @@ char	**insert(char **dest, char **src, int insert_index)
 
 	dest_size = count_strings(dest);
 	src_size = count_strings(src);
-	new_dest = malloc((dest_size + src_size + 1) * sizeof(char *));
+	new_dest = gbc_malloc((dest_size + src_size + 1) * sizeof(char *));
 	if (new_dest == NULL)
 	{
 		perror("Failed to allocate memory");

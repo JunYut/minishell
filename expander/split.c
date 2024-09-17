@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:18:21 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/16 12:42:09 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 10:30:45 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**allocate_args(char *str, char **args)
 		{
 			start = i;
 			skip_word(str, &i);
-			args[j] = ft_calloc(i - start + 1, sizeof(char));
+			args[j] = gbc_add(ft_calloc(i - start + 1, sizeof(char)));
 			if (!args[j])
 				return (NULL);
 			j++;
