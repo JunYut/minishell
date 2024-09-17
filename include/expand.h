@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:31:48 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 13:17:48 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 15:43:10 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ char	*handle_reg_str(char *str, int *i);
 char	*handle_dollar(char *str, int *i, t_minishell *vars);
 bool	is_valid_var_char(char c);
 bool	is_valid_regex(char *str);
-t_env	*dup_env(char *envp[]);
+t_env	*dup_env(char *envp[], char *name);
 void	clear_env(t_env **e);
 void	clear_ent(t_var ** lst);
 int		builtin_env(t_env *e, char lst);
 int		builtin_unset(char **keys, t_env *v);
 void	add_ent(t_env *e, char *key, char *val);
-void	new_ent(t_var *lst, char *key, char *val);
+void	new_ent(t_var **lst, char *key, char *val);
 char	**split_ent(char *str);
 void	set_val(t_env *e, char *key, char *val);
 char	*fetch_val(char *key, t_env *e);

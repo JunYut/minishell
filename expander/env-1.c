@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:57:09 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/17 14:21:56 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 15:48:52 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ void	clear_ent(t_var ** lst)
 	curr = *lst;
 	while (curr)
 	{
-		// printf("curr: %p, key: %p, value: %p\n",
-		// 	(void *)curr, (void *)curr->key, (void *)curr->value);
-		// printf("key: [%s], value: [%s]\n", curr->key, curr->value);
 		next = curr->next;
 		ft_free((void **)&curr->key);
 		ft_free((void **)&curr->value);
@@ -43,7 +40,7 @@ void	clear_ent(t_var ** lst)
 	*lst = NULL;
 }
 
-void	new_ent(t_var *lst, char *key, char *val)
+void	new_ent(t_var **lst, char *key, char *val)
 {
 	t_var	*new;
 
@@ -51,7 +48,8 @@ void	new_ent(t_var *lst, char *key, char *val)
 	new->key = ft_strdup(key);
 	new->value = ft_strdup(val);
 	new->next = NULL;
-	while (lst->next)
-		lst = lst->next;
-	lst->next = new;
+	while (*lst)
+		lst = &(*lst)->next;
+	*lst = new;
+
 }

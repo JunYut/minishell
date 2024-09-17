@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:37:24 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/04 10:25:33 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 15:57:27 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,26 @@ int	builtin_unset(char **keys, t_env *e)
 		rm_ent(keys[i], e->exp, e->last_exp_id);
 		rm_ent(keys[i], e->var, e->last_var_id);
 	}
+	// print_arr(e->envp);
+	ft_free_s_arr(e->envp);
 	e->envp = env_to_arr(e->var);
 	return (0);
 }
 
 void	rm_ent(char *key, t_var *lst, int last_id)
 {
-	while (lst->next && lst->id != last_id)
+	while (lst)
 	{
-		if (ft_strcmp(lst->next->key, key) == 0)
+		// printf("lst->key: [%s]\n", lst->key);
+		if (ft_strcmp(lst->key, key) == 0)
 		{
-			if (lst->next->id == last_id)
-			{
-				last_id = lst->id;
-				lst->next->next = NULL;
-			}
+			ft_free((void **)&lst->key);
+			ft_free((void **)&lst->value);
+			if (last_id == 0)
+				lst = lst->next;
 			else
 				lst->next = lst->next->next;
-			break ;
+			return ;
 		}
 		lst = lst->next;
 	}

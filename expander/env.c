@@ -6,14 +6,15 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 14:06:47 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 15:52:29 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
+#include "minishell.h"
 #include "utils.h"
 
-t_env	*dup_env(char *envp[])
+t_env	*dup_env(char *envp[], char *name)
 {
 	t_env	*e;
 	char	**split;
@@ -32,6 +33,8 @@ t_env	*dup_env(char *envp[])
 		ft_free_s_arr(split);
 	}
 	builtin_unset((char *[]){"OLDPWD", NULL}, e);
+	set_val(e, "SHELL", name);
+	sort_export(e->exp);
 	e->envp = env_to_arr(e->var);
 	return (e);
 }
@@ -72,7 +75,7 @@ void	add_ent(t_env *e, char *key, char *val)
 		e->exp->value = ft_strdup(val);
 		e->exp->next = NULL;
 	}
-	new_ent(e->exp, key, val);
+	new_ent(&e->exp, key, val);
 	if (val == NULL)
 		return ;
 	e->last_var_id += 1;
@@ -83,7 +86,7 @@ void	add_ent(t_env *e, char *key, char *val)
 		e->var->value = ft_strdup(val);
 		e->var->next = NULL;
 	}
-	new_ent(e->var, key, val);
+	new_ent(&e->var, key, val);
 }
 
 // a=1 : export: a="1"; var: a=1
@@ -116,7 +119,7 @@ char	**env_to_arr(t_var *var)
 
 	size = 0;
 	curr = var;
-	while (curr->next)
+	while (curr)
 	{
 		++size;
 		curr = curr->next;
@@ -125,10 +128,8 @@ char	**env_to_arr(t_var *var)
 	arr[size] = NULL;
 	curr = var;
 	size = -1;
-	while (curr->next)
+	while (curr)
 	{
-		if (!curr->key || !curr->value)
-			continue ;
 		arr[++size] = ft_strjoin(curr->key, "=");
 		arr[size] = ft_strjoin(arr[size], curr->value);
 		curr = curr->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:15:23 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/12 12:20:45 by we               ###   ########.fr       */
+/*   Updated: 2024/09/17 15:57:21 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	builtin_export(char **ent, t_env *e)
 		export(split[0], split[1], e);
 	}
 	sort_export(e->exp);
+	ft_free_s_arr(e->envp);
 	e->envp = env_to_arr(e->var);
 	return (status);
 }
@@ -59,9 +60,9 @@ void	set_val(t_env *e, char *key, char *val)
 	curr = e->exp;
 	while (curr->next)
 	{
-		if (ft_strcmp(curr->key, key) == 0)
+		if (curr->key && ft_strcmp(curr->key, key) == 0)
 		{
-			curr->value = val;
+			curr->value = ft_strdup(val);
 			break ;
 		}
 		curr = curr->next;
@@ -69,13 +70,14 @@ void	set_val(t_env *e, char *key, char *val)
 	curr = e->var;
 	while (curr->next)
 	{
-		if (ft_strcmp(curr->key, key) == 0)
+		if (curr->key && ft_strcmp(curr->key, key) == 0)
 		{
-			curr->value = val;
+			curr->value = ft_strdup(val);
 			break ;
 		}
 		curr = curr->next;
 	}
+	ft_free_s_arr(e->envp);
 	e->envp = env_to_arr(e->var);
 }
 
@@ -85,9 +87,10 @@ void	sort_export(t_var *exp)
 	char	*tmp;
 
 	curr = exp;
-	while (curr->next && curr->next->next)
+	while (curr && curr->next)
 	{
-		if (ft_strcmp(curr->key, curr->next->key) > 0)
+		if (curr->key && curr->next->key
+			&& ft_strcmp(curr->key, curr->next->key) > 0)
 		{
 			tmp = curr->key;
 			curr->key = curr->next->key;

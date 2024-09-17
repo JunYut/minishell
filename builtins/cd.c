@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 10:53:12 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/12 12:22:31 by we               ###   ########.fr       */
+/*   Updated: 2024/09/17 15:16:19 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*fetch_val(char *key, t_env *e)
 	curr = e->var;
 	while (curr->next)
 	{
-		if (ft_strcmp(curr->key, key) == 0)
+		if (curr->key && ft_strcmp(curr->key, key) == 0)
 			return (curr->value);
 		curr = curr->next;
 	}
