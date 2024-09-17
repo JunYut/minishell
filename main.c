@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/16 13:58:35 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 11:47:41 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_minishell	*init_vars(char *name, char **envp)
 		vars->env = dup_env(envp);
 		vars->ms_stdin = dup(STDIN_FILENO);
 		vars->ms_stdout = dup(STDOUT_FILENO);
-		set_val(vars->env, "SHELL", name);
+		set_val(vars->env, "SHELL", ft_strdup(name));
 	}
 	return (vars);
 }

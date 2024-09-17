@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:57:24 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/09 12:38:32 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 11:07:45 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ void		show_tree(t_node *node, int depth, char *branch);
 void		print_tree(t_node *node, int depth, char *branch);
 void		print_arr(char **arr);
 char		*get_node_type(int type);
+
+void		ft_free(void **addr);
 
 #endif

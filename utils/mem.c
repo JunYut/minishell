@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear.c                                            :+:      :+:    :+:   */
+/*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/10 13:56:48 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/17 11:06:17 by tjun-yu          ###   ########.fr       */
+/*   Created: 2024/09/17 10:59:34 by tjun-yu           #+#    #+#             */
+/*   Updated: 2024/09/17 11:04:33 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
-int	clear(t_minishell *vars)
+void	ft_free(void **addr)
 {
-	rl_clear_history();
-	clear_ast(&vars->token_list, &vars->ast);
-	clear_env(&vars->env);
-	gbc_clear();
-	return (0);
+	if (addr != NULL && *addr != NULL)
+	{
+		free(*addr);
+		*addr = NULL;
+	}
 }

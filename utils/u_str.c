@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:50:19 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/09 10:58:04 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/17 10:49:22 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_strndup(char *str, int pos)
 
 	if (pos < 1)
 		return (NULL);
-	dup = gbc_malloc(pos + 1);
+	dup = malloc(pos + 1);
 	ft_strncpy(dup, str, pos);
 	return (dup);
 }
