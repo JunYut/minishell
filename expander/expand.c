@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 16:03:37 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:16:37 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ char	**expand_args(char *args, t_minishell *vars)
 		return (NULL);
 	while (expanded[++i])
 	{
+		// printf("test addr %s\n", (void *)expanded[i]);
 		if (is_valid_regex(expanded[i]) == true)
 		{
 			globbed = wildcard(expanded[i], vars->env);
 			expanded = insert_string_array(expanded, globbed, i);
 			ft_free_s_arr(globbed);
-			i--;
 		}
 	}
 	i = -1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:10:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 15:17:37 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:36:08 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**lst_to_arr(t_list *lst)
 	t_list	*tmp;
 	int		i;
 
-	arr = gbc_malloc(sizeof(char *) * (ft_lstsize(lst) + 1));
+	arr = ft_calloc((ft_lstsize(lst) + 1), sizeof(char *));
 	tmp = lst;
 	i = -1;
 	while (tmp)

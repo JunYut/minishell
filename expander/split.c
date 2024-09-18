@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:18:21 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 15:56:29 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:02:16 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ char	**fill_args(char *str, char **args)
 		while (str[i] && str[i] == ' ')
 			i++;
 	}
-	printf("j = %d\n", j);
-	printf("What's in J: %s\n", args[j]);
 	return (args);
 }
 

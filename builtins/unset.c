@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:37:24 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 15:57:27 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/18 16:34:33 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	builtin_unset(char **keys, t_env *e)
 		rm_ent(keys[i], e->var, e->last_var_id);
 	}
 	// print_arr(e->envp);
-	ft_free_s_arr(e->envp);
+	// if (e->envp != NULL)
+	// ft_free_s_arr(e->envp);
 	e->envp = env_to_arr(e->var);
 	return (0);
 }

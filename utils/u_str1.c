@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   u_str1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 13:20:12 by we                #+#    #+#             */
-/*   Updated: 2024/09/17 16:01:53 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:31:01 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**insert(char **dest, char **src, int insert_index)
 
 	dest_size = count_strings(dest);
 	src_size = count_strings(src);
-	new_dest = malloc((dest_size + src_size + 1) * sizeof(char *));
+	new_dest = ft_calloc((dest_size + src_size + 1), sizeof(char *));
 	if (new_dest == NULL)
 	{
 		perror("Failed to allocate memory");
@@ -57,7 +57,6 @@ char	**insert(char **dest, char **src, int insert_index)
 	i = insert_index;
 	while (++i < dest_size)
 		new_dest[src_size + i] = ft_strdup(dest[i]);
-	new_dest[dest_size + src_size] = NULL;
 	return (new_dest);
 }
 
