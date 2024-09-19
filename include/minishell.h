@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:29:31 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/16 09:00:09 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/19 23:11:26 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char		*set_target(char **path, t_env *e);
 int			count_args(char **path, char *func);
 
 int			builtin_unset(char **keys, t_env *e);
-void		rm_ent(char *key, t_var *lst, int last_id);
+void		rm_ent(char *key, t_var **lst);
 
 int			builtin_echo(char **av);
 
