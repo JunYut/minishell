@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 10:53:12 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 15:16:19 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/19 12:10:04 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,12 @@ char	*set_target(char **path, t_env *e)
 // if key is not found, return NULL
 char	*fetch_val(char *key, t_env *e)
 {
-	t_var	*curr;
+	t_var	*ent;
 
-	curr = e->var;
-	while (curr->next)
-	{
-		if (curr->key && ft_strcmp(curr->key, key) == 0)
-			return (curr->value);
-		curr = curr->next;
-	}
-	return (NULL);
+	ent = find_ent(key, e->var);
+	if (!ent)
+		return (NULL);
+	return (ent->value);
 }
 
 int	count_args(char **path, char *func)

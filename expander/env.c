@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 15:52:29 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/19 15:06:20 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_env	*dup_env(char *envp[], char *name)
 	int		i;
 
 	e = malloc(sizeof(t_env));
+	e->envp = NULL;
 	e->exp = NULL;
 	e->var = NULL;
 	e->last_exp_id = 0;
@@ -68,25 +69,11 @@ int	builtin_env(t_env *e, char lst)
 void	add_ent(t_env *e, char *key, char *val)
 {
 	e->last_exp_id += 1;
-	if (e->exp == NULL)
-	{
-		e->exp = malloc(sizeof(t_var));
-		e->exp->key = ft_strdup(key);
-		e->exp->value = ft_strdup(val);
-		e->exp->next = NULL;
-	}
-	new_ent(&e->exp, key, val);
+	new_ent(&e->exp, key, val, e->last_exp_id);
 	if (val == NULL)
 		return ;
 	e->last_var_id += 1;
-	if (e->var == NULL)
-	{
-		e->var = malloc(sizeof(t_var));
-		e->var->key = ft_strdup(key);
-		e->var->value = ft_strdup(val);
-		e->var->next = NULL;
-	}
-	new_ent(&e->var, key, val);
+	new_ent(&e->var, key, val, e->last_var_id);
 }
 
 // a=1 : export: a="1"; var: a=1

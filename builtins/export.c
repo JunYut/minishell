@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:15:23 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 15:57:21 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/19 15:06:23 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,27 +55,19 @@ int	export(char *key, char *val, t_env *e)
 
 void	set_val(t_env *e, char *key, char *val)
 {
-	t_var	*curr;
+	t_var	*ent;
 
-	curr = e->exp;
-	while (curr->next)
+	ent = find_ent(key, e->var);
+	if (ent)
 	{
-		if (curr->key && ft_strcmp(curr->key, key) == 0)
-		{
-			curr->value = ft_strdup(val);
-			break ;
-		}
-		curr = curr->next;
+		ft_free((void **)&ent->value);
+		ent->value = ft_strdup(val);
 	}
-	curr = e->var;
-	while (curr->next)
+	ent = find_ent(key, e->exp);
+	if (ent)
 	{
-		if (curr->key && ft_strcmp(curr->key, key) == 0)
-		{
-			curr->value = ft_strdup(val);
-			break ;
-		}
-		curr = curr->next;
+		ft_free((void **)&ent->value);
+		ent->value = ft_strdup(val);
 	}
 	ft_free_s_arr(e->envp);
 	e->envp = env_to_arr(e->var);

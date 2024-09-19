@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:31:48 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 15:43:10 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/19 12:11:16 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ void	clear_ent(t_var ** lst);
 int		builtin_env(t_env *e, char lst);
 int		builtin_unset(char **keys, t_env *v);
 void	add_ent(t_env *e, char *key, char *val);
-void	new_ent(t_var **lst, char *key, char *val);
+void	new_ent(t_var **lst, char *key, char *val, int last_id);
 char	**split_ent(char *str);
 void	set_val(t_env *e, char *key, char *val);
 char	*fetch_val(char *key, t_env *e);
+t_var	*find_ent(char *key, t_var *lst);
 char	**env_to_arr(t_var *var);
 
 void	append(char *file, char *cmd, char *args[]);
