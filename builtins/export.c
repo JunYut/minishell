@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:15:23 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/20 10:51:01 by we               ###   ########.fr       */
+/*   Updated: 2024/09/20 11:20:22 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	builtin_export(char **ent, t_env *e)
 			continue ;
 		}
 		export(split[0], split[1], e);
+		ft_free_s_arr(split);
 	}
 	sort_export(e->exp);
 	ft_free_s_arr(e->envp);
@@ -43,10 +44,10 @@ int	builtin_export(char **ent, t_env *e)
 
 int	export(char *key, char *val, t_env *e)
 {
-	char	*value;
+	t_var	*ent;
 
-	value = fetch_val(key, e);
-	if (value)
+	ent = find_ent(key, e->var);
+	if (ent)
 		set_val(e, key, val);
 	else
 		add_ent(e, key, val);
