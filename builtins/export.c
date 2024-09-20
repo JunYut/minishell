@@ -6,13 +6,12 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:15:23 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/19 16:58:27 by we               ###   ########.fr       */
+/*   Updated: 2024/09/20 10:51:01 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// TODO: only display new entry1 after new entry2 is added
 int	builtin_export(char **ent, t_env *e)
 {
 	char	**split;
@@ -48,15 +47,9 @@ int	export(char *key, char *val, t_env *e)
 
 	value = fetch_val(key, e);
 	if (value)
-	{
-		printf("[%s]: [%s] -> [%s]\n", key, value, val);
 		set_val(e, key, val);
-	}
 	else
-	{
-		printf("[NULL] ->[%s]: [%s]\n", key, val);
 		add_ent(e, key, val);
-	}
 	return (0);
 }
 

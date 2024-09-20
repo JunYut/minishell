@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/19 15:06:20 by we               ###   ########.fr       */
+/*   Updated: 2024/09/20 10:47:25 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	builtin_env(t_env *e, char lst)
 		curr = e->var;
 	else
 		curr = e->exp;
-	while (curr->next)
+	while (curr)
 	{
 		if (lst == EXPORT)
 			printf("declare -x ");
