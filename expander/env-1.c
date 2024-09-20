@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:57:09 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/19 12:12:14 by we               ###   ########.fr       */
+/*   Updated: 2024/09/20 11:06:12 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 void	clear_env(t_env **e)
 {
 	ft_free_s_arr((*e)->envp);
-	(*e)->envp = NULL;
 	clear_ent(&(*e)->exp);
 	clear_ent(&(*e)->var);
 	ft_free((void **)e);

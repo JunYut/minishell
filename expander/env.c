@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/20 10:47:25 by we               ###   ########.fr       */
+/*   Updated: 2024/09/20 11:15:12 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_env	*dup_env(char *envp[], char *name)
 	builtin_unset((char *[]){"OLDPWD", NULL}, e);
 	set_val(e, "SHELL", name);
 	sort_export(e->exp);
+	ft_free_s_arr(e->envp);
 	e->envp = env_to_arr(e->var);
 	return (e);
 }
@@ -118,7 +119,7 @@ char	**env_to_arr(t_var *var)
 	while (curr)
 	{
 		arr[++size] = ft_strjoin(curr->key, "=");
-		arr[size] = ft_strjoin(arr[size], curr->value);
+		arr[size] = gnl_strjoin(arr[size], curr->value);
 		curr = curr->next;
 	}
 	return (arr);
