@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:29:31 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/19 23:11:26 by we               ###   ########.fr       */
+/*   Updated: 2024/09/20 11:40:30 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int			builtin_pwd(t_env *e);
 
 void		exit_shell(char **argv, int status, t_minishell *vars);
 int			clear(t_minishell *vars);
+
+void		update_envp(t_env *e);
 
 int			valid_key(char *key);
 int			is_numeric(char *str);

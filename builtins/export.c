@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:15:23 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/20 11:28:44 by we               ###   ########.fr       */
+/*   Updated: 2024/09/20 12:03:35 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,29 @@ int	builtin_export(char **ent, t_env *e)
 		ft_free_s_arr(split);
 	}
 	sort_export(e->exp);
-	ft_free_s_arr(e->envp);
-	e->envp = env_to_arr(e->var);
+	update_envp(e);
 	return (status);
 }
 
+// if both list doesn't have the key, add to both list
+// if var list has the key, update the value of both list
+// if only exp list has the key, update the value, add to var list
 int	export(char *key, char *val, t_env *e)
 {
-	t_var	*ent;
+	t_var	*ent_var;
+	t_var	*ent_exp;
 
-	ent = find_ent(key, e->exp);
-	if (ent)
-		set_val(e, key, val);
-	else
+	ent_var = find_ent(key, e->var);
+	ent_exp = find_ent(key, e->exp);
+	if (!ent_var && !ent_exp)
 		add_ent(e, key, val);
+	else if (ent_exp && !ent_var)
+	{
+		set_val(e, key, val);
+		add_ent(e, key, val);
+	}
+	else if (ent_var)
+		set_val(e, key, val);
 	return (0);
 }
 
@@ -76,8 +85,7 @@ void	set_val(t_env *e, char *key, char *val)
 		else
 			ent->value = ft_strdup(val);
 	}
-	ft_free_s_arr(e->envp);
-	e->envp = env_to_arr(e->var);
+	update_envp(e);
 }
 
 void	sort_export(t_var *exp)

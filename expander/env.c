@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:16:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/20 11:15:12 by we               ###   ########.fr       */
+/*   Updated: 2024/09/20 11:59:01 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ t_env	*dup_env(char *envp[], char *name)
 	builtin_unset((char *[]){"OLDPWD", NULL}, e);
 	set_val(e, "SHELL", name);
 	sort_export(e->exp);
-	ft_free_s_arr(e->envp);
-	e->envp = env_to_arr(e->var);
+	update_envp(e);
 	return (e);
 }
 
@@ -70,7 +69,8 @@ int	builtin_env(t_env *e, char lst)
 void	add_ent(t_env *e, char *key, char *val)
 {
 	e->last_exp_id += 1;
-	new_ent(&e->exp, key, val, e->last_exp_id);
+	if (!find_ent(key, e->exp))
+		new_ent(&e->exp, key, val, e->last_exp_id);
 	if (val == NULL)
 		return ;
 	e->last_var_id += 1;

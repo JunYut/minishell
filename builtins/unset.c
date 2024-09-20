@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:37:24 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/19 23:11:28 by we               ###   ########.fr       */
+/*   Updated: 2024/09/20 11:41:49 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,11 @@ int	builtin_unset(char **keys, t_env *e)
 		rm_ent(keys[i], &e->exp);
 		rm_ent(keys[i], &e->var);
 	}
-	ft_free_s_arr(e->envp);
-	e->envp = env_to_arr(e->var);
+	update_envp(e);
 	return (0);
 }
 
-void rm_ent(char *key, t_var **lst)
+void	rm_ent(char *key, t_var **lst)
 {
 	t_var	*curr;
 	t_var	*prev;
@@ -47,9 +46,15 @@ void rm_ent(char *key, t_var **lst)
 			ft_free((void **)&curr->key);
 			ft_free((void **)&curr->value);
 			free(curr);
-			return;
+			return ;
 		}
 		prev = curr;
 		curr = curr->next;
 	}
+}
+
+void	update_envp(t_env *e)
+{
+	ft_free_s_arr(e->envp);
+	e->envp = env_to_arr(e->var);
 }
