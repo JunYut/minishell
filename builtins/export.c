@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:15:23 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/20 11:20:22 by we               ###   ########.fr       */
+/*   Updated: 2024/09/20 11:28:44 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	export(char *key, char *val, t_env *e)
 {
 	t_var	*ent;
 
-	ent = find_ent(key, e->var);
+	ent = find_ent(key, e->exp);
 	if (ent)
 		set_val(e, key, val);
 	else
@@ -62,13 +62,19 @@ void	set_val(t_env *e, char *key, char *val)
 	if (ent)
 	{
 		ft_free((void **)&ent->value);
-		ent->value = ft_strdup(val);
+		if (!val)
+			ent->value = NULL;
+		else
+			ent->value = ft_strdup(val);
 	}
 	ent = find_ent(key, e->exp);
 	if (ent)
 	{
 		ft_free((void **)&ent->value);
-		ent->value = ft_strdup(val);
+		if (!val)
+			ent->value = NULL;
+		else
+			ent->value = ft_strdup(val);
 	}
 	ft_free_s_arr(e->envp);
 	e->envp = env_to_arr(e->var);

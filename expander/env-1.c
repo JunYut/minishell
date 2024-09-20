@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:57:09 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/20 11:06:12 by we               ###   ########.fr       */
+/*   Updated: 2024/09/20 11:24:04 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ void	new_ent(t_var **lst, char *key, char *val, int last_id)
 
 	new = malloc(sizeof(t_var));
 	new->key = ft_strdup(key);
-	new->value = ft_strdup(val);
+	if (!val)
+		new->value = NULL;
+	else
+		new->value = ft_strdup(val);
 	new->next = NULL;
 	if (*lst == NULL)
 	{
