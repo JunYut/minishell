@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/18 16:16:37 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/23 09:23:44 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	**expand_args(char *args, t_minishell *vars)
 char	*expand_params(char	*str, t_minishell *vars)
 {
 	char	*expanded;
+	char	*buffer;
 	int		i;
 
 	expanded = ft_strdup("");
@@ -59,13 +60,15 @@ char	*expand_params(char	*str, t_minishell *vars)
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\'')
-			expanded = gnl_strjoin(expanded, handle_squote(str, &i));
+			buffer = handle_squote(str, &i);
 		else if (str[i] == '"')
-			expanded = gnl_strjoin(expanded, handle_dquote(str, &i, vars));
+			buffer = handle_dquote(str, &i, vars);
 		else if (str[i] == '$')
-			expanded = gnl_strjoin(expanded, handle_dollar(str, &i, vars));
+			buffer = handle_dollar(str, &i, vars);
 		else
-			expanded = gnl_strjoin(expanded, handle_reg_str(str, &i));
+			buffer = handle_reg_str(str, &i);
+		expanded = gnl_strjoin(expanded, buffer);
+		free(buffer);
 	}
 	return (expanded);
 }
