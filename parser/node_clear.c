@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node_clear.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 17:38:34 by we                #+#    #+#             */
-/*   Updated: 2024/09/11 21:44:27 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/23 09:29:06 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	recursive_clear_ast(t_node *node)
 {
 	if (node == NULL)
 		return ;
+	ft_free_s_arr(node->exp_args);
 	if (node->type == N_CMD)
 		clear_cmd_node(node);
 	else
