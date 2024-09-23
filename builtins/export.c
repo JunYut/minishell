@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:15:23 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/20 12:03:35 by we               ###   ########.fr       */
+/*   Updated: 2024/09/23 09:13:12 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	builtin_export(char **ent, t_env *e)
 		split = split_ent(ent[i]);
 		if (!valid_key(split[0]))
 		{
-			status = 1;
+			(ft_free_s_arr(split), status = 1);
 			continue ;
 		}
 		export(split[0], split[1], e);
