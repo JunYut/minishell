@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_tokenize.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 14:43:40 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/23 09:57:09 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ bool	append_operator_token(t_token_type type, char *line, int *i, t_token **lst)
 	char	*value;
 	int		count;
 
-	line += *i;
+	// line += *i;
 	count = 1;
 	if (type == T_HEREDOC || type == T_APPEND || type == T_OR || type == T_AND)
 		count++;
@@ -109,10 +109,8 @@ bool	append_word_token(char **line, int *i, t_token **token_list, t_minishell *v
 		else
 			count++;
 	}
-	// printf("count: %d\n\n", count);
 	error = init_word_token(line, buffer, count, token_list);
 	*i += count;
-	// printf("i: %d\n", *i);
 	free(buffer);
 	return (error);
 }
@@ -129,7 +127,6 @@ bool	init_word_token(char **line, char *buffer, int count, t_token **lst)
 	token = init_new_token(T_WORD, value);
 	if (!token)
 		return (free(value), true);
-	// *line += count;
 	add_token_to_list(lst, token);
 	return (false);
 }
