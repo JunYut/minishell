@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 13:56:48 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/17 11:06:17 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/23 13:51:03 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ int	clear(t_minishell *vars)
 	rl_clear_history();
 	clear_ast(&vars->token_list, &vars->ast);
 	clear_env(&vars->env);
-	gbc_clear();
+	free(vars);
 	return (0);
 }

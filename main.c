@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 16:10:56 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:44:42 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_minishell	*init_vars(char *name, char **envp)
 
 	if (vars == NULL)
 	{
-		vars = gbc_malloc(sizeof(t_minishell));
+		vars = malloc(sizeof(t_minishell));
 		if (vars == NULL)
 			exit(1);
 		ft_bzero(vars, sizeof(t_minishell));
