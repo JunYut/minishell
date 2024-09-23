@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_tokenize.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/23 09:57:09 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/23 16:16:22 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	tokenize(char *line, t_minishell *vars)
 			break ;
 		}
 		skip_spaces(line, &i);
+		if (line[i] == '\0')
+			break ;
 		if (!ft_strncmp(line + i, "&&", 2) || is_in_set(line[i], OPERATORS_SET))
 			token_err = handle_operator_token(line, &i, &token_list);
 		else

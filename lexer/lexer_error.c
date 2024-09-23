@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:39:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 14:20:54 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:16:01 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	handle_open_quote(char **line, char **buffer, int *i, int *count, char quot
 	appended_str = ft_strdup(*line);
 	while (is_quote_balance(appended_str + *count, quote) == false)
 	{
-		// printf("appended: %s\n\n", appended_str);
-		// printf("String: (%s)\n\n", appended_str + *count);
 		read_line = readline("> ");
 		if (read_line == NULL)
 			break ;
@@ -44,7 +42,6 @@ void	handle_open_quote(char **line, char **buffer, int *i, int *count, char quot
 	}
 	trimmed_str = ft_trim_str(appended_str + *i, quote);
 	*count = ft_strlen(trimmed_str);
-	// printf("Final string: (%s)\n\n", appended_str);
 	free(trimmed_str);
 	free(*line);
 	*line = appended_str;
