@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:29:42 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/23 09:23:44 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/23 11:47:28 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char	**expand_args(char *args, t_minishell *vars)
 		return (NULL);
 	while (expanded[++i])
 	{
-		// printf("test addr %s\n", (void *)expanded[i]);
 		if (is_valid_regex(expanded[i]) == true)
 		{
 			globbed = wildcard(expanded[i], vars->env);

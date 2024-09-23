@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 10:53:12 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/19 12:10:04 by we               ###   ########.fr       */
+/*   Updated: 2024/09/23 11:46:54 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	builtin_cd(char **path, t_env *e)
 	if (!target)
 	{
 		print_err("cd", "OLDPWD not set");
-		init_vars(NULL, NULL)->exit_status = 1;
+		(init_vars(NULL, NULL)->exit_status = 1, ft_free((void **)&target));
 		return (1);
 	}
 	if (!fetch_val("OLDPWD", e))
@@ -30,12 +30,13 @@ int	builtin_cd(char **path, t_env *e)
 	if (chdir(target) == -1)
 	{
 		perror("minishell: cd");
-		init_vars(NULL, NULL)->exit_status = 1;
+		(init_vars(NULL, NULL)->exit_status = 1, ft_free((void **)&target));
 		return (1);
 	}
 	else
 		set_val(e, "OLDPWD", fetch_val("PWD", e));
 	set_val(e, "PWD", gbc_add(getcwd(NULL, 0)));
+	ft_free((void **)&target);
 	return (0);
 }
 
@@ -48,12 +49,14 @@ char	*set_target(char **path, t_env *e)
 		target = fetch_val("HOME", e);
 	else if (ft_strcmp(*path, "-") == 0)
 		target = fetch_val("OLDPWD", e);
+	if (target)
+		target = ft_strdup(target);
 	if (*path && ft_strcmp(*path, "-") == 0 && !target)
 		return (NULL);
 	else if (*path && ft_strcmp(*path, "-") == 0 && target)
 		printf("%s\n", target);
 	if (*path && **path == '~' && *(*path + 1) != '\0')
-		target = ft_strjoin(target, *path + 1);
+		target = gnl_strjoin(target, *path + 1);
 	return (target);
 }
 
