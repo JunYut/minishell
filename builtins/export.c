@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 13:15:23 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/23 09:13:12 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/23 09:38:20 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	builtin_export(char **ent, t_env *e)
 	return (status);
 }
 
+// if key is found but val is NULL do nothing
 // if both list doesn't have the key, add to both list
 // if var list has the key, update the value of both list
 // if only exp list has the key, update the value, add to var list
@@ -51,6 +52,8 @@ int	export(char *key, char *val, t_env *e)
 
 	ent_var = find_ent(key, e->var);
 	ent_exp = find_ent(key, e->exp);
+	if (ent_exp && !val)
+		return (0);
 	if (!ent_var && !ent_exp)
 		add_ent(e, key, val);
 	else if (ent_exp && !ent_var)
