@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:21:12 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/23 10:30:28 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/23 10:46:19 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ char	*handle_dollar(char *str, int *i, t_minishell *vars)
 	while (is_valid_var_char(str[*i]) == true)
 		(*i)++;
 	val = ft_substr(str, start, *i - start);
-	env_val = ft_strdup(fetch_val(val, vars->env));
+	env_val = fetch_val(val, vars->env);
 	if (env_val == NULL)
 		return (free(val), ft_strdup(""));
-	return (free(val), env_val);
+	return (free(val), ft_strdup(env_val));
 }
