@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:31:48 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/20 11:39:21 by we               ###   ########.fr       */
+/*   Updated: 2024/09/24 10:38:22 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	is_valid_var_char(char c);
 bool	is_valid_regex(char *str);
 t_env	*dup_env(char *envp[], char *name);
 void	clear_env(t_env **e);
-void	clear_ent(t_var ** lst);
+void	clear_ent(t_var **lst);
 int		builtin_env(t_env *e, char lst);
 int		builtin_unset(char **keys, t_env *v);
 void	add_ent(t_env *e, char *key, char *val);
