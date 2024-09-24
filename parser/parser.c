@@ -6,13 +6,12 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:34:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/16 13:59:33 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/24 15:07:58 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "lexer.h"
-#include "gbc.h"
 
 t_node	*parse(t_minishell *vars)
 {

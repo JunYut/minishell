@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 10:53:12 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/23 11:46:54 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/24 15:13:36 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	builtin_cd(char **path, t_env *e)
 {
 	char	*target;
+	char	cwd[1024];
 
 	if (count_args(path, "cd") > 1)
 		return (1);
@@ -35,7 +36,7 @@ int	builtin_cd(char **path, t_env *e)
 	}
 	else
 		set_val(e, "OLDPWD", fetch_val("PWD", e));
-	set_val(e, "PWD", gbc_add(getcwd(NULL, 0)));
+	(getcwd(cwd, 1024), set_val(e, "PWD", cwd));
 	ft_free((void **)&target);
 	return (0);
 }

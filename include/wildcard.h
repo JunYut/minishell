@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:03 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/09 12:24:48 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/24 15:05:19 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <stdio.h>
 # include "libft.h"
 # include "define.h"
-# include "gbc.h"
 
 // # ifndef DPRINTF
 // 	# define DPRINTF(...) printf(__VA_ARGS__)

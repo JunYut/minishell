@@ -6,13 +6,12 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:39:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/24 14:58:18 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/24 15:07:38 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "parser.h"
-#include "gbc.h"
 
 void	handle_quote_err(char quote, t_minishell *vars)
 {

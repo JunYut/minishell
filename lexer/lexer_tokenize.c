@@ -6,13 +6,12 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/24 14:59:46 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/24 15:07:47 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "utils.h"
-#include "gbc.h"
 
 void	tokenize(char *line, t_minishell *vars)
 {

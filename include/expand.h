@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:31:48 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/24 10:38:22 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/24 15:05:07 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <stdio.h>
 # include "readline.h"
 # include "define.h"
-# include "gbc.h"
 
 int		init_heredocs(t_node *node, t_minishell *vars);
 int		heredoc_child(t_io_node *io, int *p_fd, pid_t pid, t_minishell *vars);

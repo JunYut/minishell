@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 11:38:25 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/17 14:55:48 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:07:22 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char	*read_doc(char *delimiter, t_minishell *vars)
 char	*expand_heredoc(char *line, t_minishell *vars)
 {
 	char	*expanded;
+	char	*tmp;
 	int		i;
 
 	expanded = ft_strdup("");
@@ -61,9 +62,11 @@ char	*expand_heredoc(char *line, t_minishell *vars)
 	while (line[i] != '\0')
 	{
 		if (line[i] == '$')
-			expanded = gnl_strjoin(expanded, handle_dollar(line, &i, vars));
+			tmp = handle_dollar(line, &i, vars);
 		else
-			expanded = gnl_strjoin(expanded, handle_non_var(line, &i));
+			tmp = handle_non_var(line, &i);
+		expanded = gnl_strjoin(expanded, tmp);
+		free(tmp);
 	}
 	free(line);
 	return (expanded);
@@ -76,5 +79,5 @@ char	*handle_non_var(char *line, int *i)
 	start = *i;
 	while (line[*i] && line[*i] != '$')
 		(*i)++;
-	return (gbc_add(ft_substr(line, start, *i - start)));
+	return (ft_substr(line, start, *i - start));
 }
