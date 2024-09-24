@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:39:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/24 15:07:38 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/24 22:33:16 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	handle_open_quote(char **line, char **buffer, int *i, int *count)
 	char	*trimmed_str;
 	char	quote;
 
-	quote = *buffer[*count];
+	quote = (*buffer)[*count];
 	read_line = NULL;
 	appended_str = ft_strdup(*line);
 	while (is_quote_balance(appended_str + *count, quote) == false)
