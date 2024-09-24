@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:21:12 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/23 11:40:41 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/24 22:22:29 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,18 @@ char	*handle_dquote_str(char *str, int *i)
 char	*handle_dquote(char *str, int *i, t_minishell *vars)
 {
 	char	*ret_str;
+	char	*tmp;
 
 	ret_str = ft_strdup("\"");
 	(*i)++;
 	while (str[*i] && str[*i] != '"')
 	{
 		if (str[*i] == '$')
-			ret_str = gnl_strjoin(ret_str, handle_dollar(str, i, vars));
+			tmp = handle_dollar(str, i, vars);
 		else
-			ret_str = gnl_strjoin(ret_str, handle_dquote_str(str, i));
+			tmp = handle_dquote_str(str, i);
+		ret_str = gnl_strjoin(ret_str, tmp);
+		free(tmp);
 	}
 	(*i)++;
 	return (gnl_strjoin(ret_str, "\""));
