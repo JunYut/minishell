@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:28:19 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/24 11:30:50 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/24 14:57:24 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ bool	is_quote_closed(char *line, int	*i);
 void	clear_token_list(t_token **token_list);
 void	tokenize(char *line, t_minishell *vars);
 void	handle_quote_err(char quote, t_minishell *vars);
-void	handle_open_quote(char **line, char **buffer, int *i, int *count,
-			char quote);
+void	handle_open_quote(char **line, char **buffer, int *i, int *count);
 bool	append_word_token(char **line, int *i, t_token **lst,
 			t_minishell *vars);
 bool	is_quote_balance(char *str, char quote);

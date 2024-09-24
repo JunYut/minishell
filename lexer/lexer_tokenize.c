@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/24 12:57:36 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/24 14:59:46 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ bool	append_word_token(char **line, int *i, t_token **lst, t_minishell *vars)
 				skip_quote_string(buffer, &count);
 			else
 			{
-				handle_open_quote(line, &buffer, i, &count, buffer[count]);
+				handle_open_quote(line, &buffer, i, &count);
 				break ;
 			}
 		}
