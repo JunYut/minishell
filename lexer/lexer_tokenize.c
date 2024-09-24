@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/24 11:28:51 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/24 11:32:44 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,7 @@ bool	append_word_token(char **line, int *i, t_token **lst, t_minishell *vars)
 	}
 	error = init_word_token(line, buffer, count, lst);
 	*i += count;
-	free(buffer);
-	return (error);
+	return (free(buffer), error);
 }
 
 bool	init_word_token(char **line, char *buffer, int count, t_token **lst)
