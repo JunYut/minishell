@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:52:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/24 10:41:04 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/24 11:28:51 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ bool	handle_operator_token(char *line, int *i, t_token **token_list)
 		return (append_operator_token(T_R_BRACKET, line, i, token_list));
 }
 
-bool	append_operator_token(t_token_type type, char *line, int *i, t_token **lst)
+bool	append_operator_token(t_token_type type, char *line, int *i,
+		t_token **lst)
 {
 	t_token	*token;
 	char	*value;
@@ -85,7 +86,7 @@ bool	append_operator_token(t_token_type type, char *line, int *i, t_token **lst)
 	return (false);
 }
 
-bool	append_word_token(char **line, int *i, t_token **token_list, t_minishell *vars)
+bool	append_word_token(char **line, int *i, t_token **lst, t_minishell *vars)
 {
 	int		count;
 	char	*buffer;
@@ -110,7 +111,7 @@ bool	append_word_token(char **line, int *i, t_token **token_list, t_minishell *v
 		else
 			count++;
 	}
-	error = init_word_token(line, buffer, count, token_list);
+	error = init_word_token(line, buffer, count, lst);
 	*i += count;
 	free(buffer);
 	return (error);
