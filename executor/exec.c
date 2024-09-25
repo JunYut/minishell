@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:29:01 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/16 13:55:39 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/25 14:00:36 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ int	exec_child(t_node *node, t_minishell *vars)
 	pid_t	pid;
 
 	pid = fork();
+	path_status = get_path(node->exp_args[0], vars);
 	if (pid == 0)
 	{
 		status = check_redir(node);
 		if (status != ERRNO_SUCCESS)
 			(clear(vars), exit(ERRNO_GENERAL));
-		path_status = get_path(node->exp_args[0], vars);
 		if (path_status.err.exit_status != ERRNO_SUCCESS)
 		{
 			status = get_err_msg(path_status.err);
@@ -56,6 +56,8 @@ int	exec_child(t_node *node, t_minishell *vars)
 		if (execve(path_status.cmd_path, node->exp_args, vars->env->envp) == -1)
 			(clear(vars), exit(ERRNO_GENERAL));
 	}
+	if (ft_strcmp(path_status.cmd_path, vars->name) == 0)
+		(signal(SIGINT, SIG_IGN), signal(SIGQUIT, SIG_IGN));
 	status = wait_status(pid);
 	return (status);
 }
