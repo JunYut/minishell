@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 11:38:25 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/24 15:07:22 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/25 12:39:17 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ char	*read_doc(char *delimiter, t_minishell *vars)
 			free(line);
 			break ;
 		}
-		line = expand_heredoc(line, vars);
+		if (is_in_set('\'', delimiter) || is_in_set('"', delimiter))
+			line = expand_heredoc(line, vars);
 		append_str(&doc, line);
 		append_str(&doc, "\n");
 		init_vars(NULL, NULL)->doc = doc;

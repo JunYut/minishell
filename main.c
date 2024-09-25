@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:21:49 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/23 14:40:57 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/25 12:48:01 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	process_line(t_minishell *vars)
 	vars->ast = parse(vars);
 	if (vars->parse_err.type != E_NONE)
 		handle_parse_error(vars);
-	if (init_heredocs(vars->ast, vars) == 1)
+	if (vars->parse_err.type != E_EOF && init_heredocs(vars->ast, vars) == 1)
 	{
 		vars->exit_status = 1;
 		return (1);
