@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:47:26 by we                #+#    #+#             */
-/*   Updated: 2024/09/06 15:47:45 by we               ###   ########.fr       */
+/*   Updated: 2024/09/25 09:47:43 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ void	skip_word(char *str, int *i)
 		else
 		{
 			quote = str[(*i)++];
-			while (str[*i] != quote)
+			while (str[*i] && str[*i] != quote)
 				(*i)++;
-			(*i)++;
+			if (str[*i])
+				(*i)++;
 		}
 	}
 }

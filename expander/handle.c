@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:21:12 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/09/24 22:22:29 by we               ###   ########.fr       */
+/*   Updated: 2024/09/25 09:40:51 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ char	*handle_squote(char *str, int *i)
 	(*i)++;
 	while (str[*i] && str[*i] != '\'')
 		(*i)++;
-	(*i)++;
+	if (str[*i])
+		(*i)++;
 	return (ft_substr(str, start, *i - start));
 }
 
@@ -61,7 +62,8 @@ char	*handle_dquote(char *str, int *i, t_minishell *vars)
 		ret_str = gnl_strjoin(ret_str, tmp);
 		free(tmp);
 	}
-	(*i)++;
+	if (str[*i])
+		(*i)++;
 	return (gnl_strjoin(ret_str, "\""));
 }
 

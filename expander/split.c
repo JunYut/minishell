@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:18:21 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/18 16:02:16 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2024/09/25 09:51:05 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,11 @@ void	fill_word(char *str, char **args, int *i, int j)
 		{
 			quote = str[(*i)++];
 			args[j][k++] = quote;
-			while (str[*i] != quote)
+			while (str[*i] && str[*i] != quote)
 				args[j][k++] = str[(*i)++];
-			args[j][k++] = str[(*i)++];
+			args[j][k++] = str[*i];
+			if (str[*i])
+				(*i)++;
 		}
 	}
 }
