@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:55:04 by we                #+#    #+#             */
-/*   Updated: 2024/09/16 14:05:45 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2024/09/25 14:32:28 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 int	set_shlvl(t_minishell *vars)
 {
-	int	shlvl;
+	char	*shlvl;
+	int		tmp;
 
-	shlvl = ft_atoi(fetch_val("SHLVL", vars->env));
-	set_val(vars->env, "SHLVL", ft_itoa(shlvl + 1));
+	tmp = ft_atoi(fetch_val("SHLVL", vars->env));
+	shlvl = ft_itoa(tmp + 1);
+	set_val(vars->env, "SHLVL", shlvl);
+	free(shlvl);
 	return (0);
 }
 
