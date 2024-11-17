@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 10:09:56 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2024/09/12 12:19:58 by we               ###   ########.fr       */
+/*   Updated: 2024/11/17 16:43:43 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	exec_pipe_child(t_node *node, int *fd, int direction, t_minishell *vars)
 {
 	int	status;
 
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (direction == NODE_LEFT)
 	{
 		close(fd[0]);
